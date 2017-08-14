@@ -10,6 +10,10 @@
 		A6DE8E841F41A77E006E082B /* WalleeSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6DE8E7A1F41A77D006E082B /* WalleeSDK.framework */; };
 		A6DE8E891F41A77E006E082B /* WalleeSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DE8E881F41A77E006E082B /* WalleeSDKTests.m */; };
 		A6DE8E8B1F41A77E006E082B /* WalleeSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = A6DE8E7D1F41A77D006E082B /* WalleeSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A6DE8ED61F41CFA9006E082B /* Credentials.h in Headers */ = {isa = PBXBuildFile; fileRef = A6DE8ED41F41CFA9006E082B /* Credentials.h */; };
+		A6DE8ED71F41CFA9006E082B /* Credentials.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DE8ED51F41CFA9006E082B /* Credentials.m */; };
+		A6DE8EDB1F41F9F7006E082B /* WALErrorDomain.h in Headers */ = {isa = PBXBuildFile; fileRef = A6DE8ED91F41F9F7006E082B /* WALErrorDomain.h */; };
+		A6DE8EDC1F41F9F7006E082B /* WALErrorDomain.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DE8EDA1F41F9F7006E082B /* WALErrorDomain.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +33,10 @@
 		A6DE8E831F41A77E006E082B /* WalleeSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WalleeSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6DE8E881F41A77E006E082B /* WalleeSDKTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WalleeSDKTests.m; sourceTree = "<group>"; };
 		A6DE8E8A1F41A77E006E082B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A6DE8ED41F41CFA9006E082B /* Credentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Credentials.h; sourceTree = "<group>"; };
+		A6DE8ED51F41CFA9006E082B /* Credentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Credentials.m; sourceTree = "<group>"; };
+		A6DE8ED91F41F9F7006E082B /* WALErrorDomain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALErrorDomain.h; sourceTree = "<group>"; };
+		A6DE8EDA1F41F9F7006E082B /* WALErrorDomain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALErrorDomain.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +79,8 @@
 		A6DE8E7C1F41A77D006E082B /* WalleeSDK */ = {
 			isa = PBXGroup;
 			children = (
+				A6DE8ED31F41CF82006E082B /* Credentials */,
+				A6DE8ED81F41F9DB006E082B /* Util */,
 				A6DE8E7D1F41A77D006E082B /* WalleeSDK.h */,
 				A6DE8E7E1F41A77D006E082B /* Info.plist */,
 			);
@@ -86,6 +96,24 @@
 			path = WalleeSDKTests;
 			sourceTree = "<group>";
 		};
+		A6DE8ED31F41CF82006E082B /* Credentials */ = {
+			isa = PBXGroup;
+			children = (
+				A6DE8ED41F41CFA9006E082B /* Credentials.h */,
+				A6DE8ED51F41CFA9006E082B /* Credentials.m */,
+			);
+			path = Credentials;
+			sourceTree = "<group>";
+		};
+		A6DE8ED81F41F9DB006E082B /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				A6DE8ED91F41F9F7006E082B /* WALErrorDomain.h */,
+				A6DE8EDA1F41F9F7006E082B /* WALErrorDomain.m */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -94,6 +122,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A6DE8E8B1F41A77E006E082B /* WalleeSDK.h in Headers */,
+				A6DE8ED61F41CFA9006E082B /* Credentials.h in Headers */,
+				A6DE8EDB1F41F9F7006E082B /* WALErrorDomain.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,6 +227,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6DE8ED71F41CFA9006E082B /* Credentials.m in Sources */,
+				A6DE8EDC1F41F9F7006E082B /* WALErrorDomain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
