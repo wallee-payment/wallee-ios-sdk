@@ -15,12 +15,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 extern const NSTimeInterval WALCredentialsThreshold;
 
-@interface Credentials : NSObject
+@interface WALCredentials : NSObject
 
-@property (nonatomic, readonly, copy) NSString *credentials;
 @property (nonatomic, readonly, assign) NSUInteger transactionId;
 @property (nonatomic, readonly, assign) NSUInteger spaceId;
 @property (nonatomic, readonly, assign) NSUInteger timestamp;
+@property (nonatomic, readonly, copy) NSString *appendum;
 
 /**
  -
@@ -30,6 +30,8 @@ extern const NSTimeInterval WALCredentialsThreshold;
  @return a @c Credentials constructed with the given credential string
  */
 + (instancetype)credentialsWithCredentials:(NSString*)credentials error:(NSError **)error;
+
+-(instancetype) init __attribute__((unavailable("use the static credentialsWithCredentials:")));  
 
 /**
  An NSString object initialized by using format as a template into which the remaining argument values are substituted according to the system locale. The returned object may be different from the original receiver.
@@ -41,7 +43,7 @@ extern const NSTimeInterval WALCredentialsThreshold;
  @param timestamp the timestamp (seconds since 1970-01-01) when the credentials will expire on.
  @return A Credentials Object initialized with the given ids and timestamp.
  */
-- (instancetype)initWithSpaceId:(NSUInteger)spaceId transactionId:(NSUInteger)transactionId timestamp:(NSUInteger)timestamp NS_DESIGNATED_INITIALIZER;
+//-(instancetype)initWithSpaceId:(NSUInteger)spaceId transactionId:(NSUInteger)transactionId timestamp:(NSUInteger)timestamp appendum:(NSString *)appendum NS_DESIGNATED_INITIALIZER;
 
 /**
  
@@ -58,7 +60,7 @@ extern const NSTimeInterval WALCredentialsThreshold;
  * @param error If an error occurs, upon returns contains an NSError object that describes the problem. If you are not interested in possible errors, pass in NULL.
  * @return YES if @c other is a valid replacement
  */
-- (BOOL)checkCredentials:(Credentials *)other error:(NSError**)error;
+- (BOOL)checkCredentials:(WALCredentials *)other error:(NSError**)error;
 @end
 
 NS_ASSUME_NONNULL_END

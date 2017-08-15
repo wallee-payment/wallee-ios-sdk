@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "Credentials.h"
+#import "WALCredentials.h"
 #import "WALErrorDomain.h"
 
 @interface WalleeSDKTests : XCTestCase
@@ -28,7 +28,7 @@
 
 - (void)testCredentialsInvalid {
     NSError *error;
-    Credentials *credentials = [Credentials credentialsWithCredentials:@"" error:&error];
+    WALCredentials *credentials = [WALCredentials credentialsWithCredentials:@"" error:&error];
     NSLog(@"error: %@", error);
     XCTAssertNil(credentials, "Credentials should not be initialized");
     XCTAssertNotNil(error, "NSError should be populated");
@@ -36,7 +36,7 @@
 
 - (void)testCredentialsInvalid2 {
     NSError *error2 = nil;
-    Credentials *credentials = [Credentials credentialsWithCredentials:@"abc-def-cg" error:&error2];
+    WALCredentials *credentials = [WALCredentials credentialsWithCredentials:@"abc-def-cg" error:&error2];
     NSLog(@"error: %@", error2);
     XCTAssertNil(credentials, "Credentials should not be initialized");
     XCTAssertNotNil(error2, "NSError should be populated");
@@ -48,15 +48,14 @@
     NSError *error;
     NSTimeInterval validTimestamp = [[NSDate date] timeIntervalSince1970] - 60;
     NSString *validCredentials = [NSString stringWithFormat:@"316-16005-%.0f-c4LUhOqIiFrwEcNU3YAJl4_28x3_b2iQAeqJI7V6yP8-grantedUser419", validTimestamp];
-    Credentials *credentials = [Credentials credentialsWithCredentials:validCredentials error:&error];
+    WALCredentials *credentials = [WALCredentials credentialsWithCredentials:validCredentials error:&error];
     XCTAssertNotNil(credentials, "Credentials should be initialized");
     
 }
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+
+- (void)testWip {
+    WALCredentials *credentials = [[WALCredentials alloc] init];
+    
 }
 
 @end

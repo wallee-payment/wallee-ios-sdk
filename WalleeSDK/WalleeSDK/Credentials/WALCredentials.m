@@ -6,21 +6,21 @@
 //  Copyright © 2017 smoca AG. All rights reserved.
 //
 
-#import "Credentials.h"
+#import "WALCredentials.h"
 #import "WALErrorDomain.h"
 
 const NSTimeInterval WALCredentialsThreshold = 2 * 60;
 
-@interface Credentials ()
+@interface WALCredentials ()
 @property (nonatomic, copy) NSString *credentials;
 @property (nonatomic, assign) NSUInteger transactionId;
 @property (nonatomic, assign) NSUInteger spaceId;
 @property (nonatomic, assign) NSUInteger timestamp;
 @end
 
-@implementation Credentials
+@implementation WALCredentials
 
--(instancetype)initWithSpaceId:(NSUInteger)spaceId transactionId:(NSUInteger)transactionId timestamp:(NSUInteger)timestamp {
+-(instancetype)initWithSpaceId:(NSUInteger)spaceId transactionId:(NSUInteger)transactionId timestamp:(NSUInteger)timestamp{
     if (timestamp == 0) {
         return nil;
     }
@@ -28,13 +28,13 @@ const NSTimeInterval WALCredentialsThreshold = 2 * 60;
         _spaceId = spaceId;
         _transactionId = transactionId;
         _timestamp = timestamp;
-        _credentials = [NSString stringWithFormat:@"%lu-%lu-%lu", _spaceId, _transactionId, _timestamp];
     }
     return self;
 }
 
 -(instancetype)init {
-    return [self initWithSpaceId:0 transactionId:0 timestamp:0];
+    NSAssert(false,@"unavailable, use credentialsWithCredentials: instead");
+    return nil;
 }
 
 
@@ -47,12 +47,13 @@ const NSTimeInterval WALCredentialsThreshold = 2 * 60;
     NSUInteger spaceId = [components[0] integerValue];
     NSUInteger transactionId = [components[1] integerValue];
     NSUInteger timestamp = [components[2] integerValue];
-    
-    Credentials *newCredentials = [[self alloc] initWithSpaceId:spaceId transactionId:transactionId timestamp:timestamp];
+
+    WALCredentials *newCredentials = [[self alloc] initWithSpaceId:spaceId transactionId:transactionId timestamp:timestamp];
+    newCredentials.credentials = credentials;
     return newCredentials;
 }
 
--(BOOL)checkCredentials:(Credentials *)other error:(NSError * _Nullable __autoreleasing *)error {
+-(BOOL)checkCredentials:(WALCredentials *)other error:(NSError * _Nullable __autoreleasing *)error {
     BOOL success = YES;
     if (self.transactionId != other.transactionId) {
         success = NO;
