@@ -17,7 +17,8 @@ typedef NS_ENUM(NSUInteger, WALError){
 };
 
 @interface WALErrorHelper : NSObject
-+(NSError*)invalidCredentialsWithMessage:(NSString *)message;
++(void)populate:(NSError **)error withInvalidCredentialsWithMessage:(NSString *)message;
++(void)populate:(NSError **)error withIllegalStateWithMessage:(NSString *)message;
 @end
 
 NS_ASSUME_NONNULL_END

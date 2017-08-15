@@ -13,73 +13,92 @@ const NSTimeInterval WALCredentialsThreshold = 2 * 60;
 
 @interface Credentials ()
 @property (nonatomic, copy) NSString *credentials;
-@property (nonatomic, assign) NSInteger transactionId;
-@property (nonatomic, assign) NSInteger spaceId;
-@property (nonatomic, assign) NSInteger timestamp;
+@property (nonatomic, assign) NSUInteger transactionId;
+@property (nonatomic, assign) NSUInteger spaceId;
+@property (nonatomic, assign) NSUInteger timestamp;
 @end
 
 @implementation Credentials
 
--(instancetype)initWithCredentials:(NSString *)credentials {
-    
+-(instancetype)initWithSpaceId:(NSUInteger)spaceId transactionId:(NSUInteger)transactionId timestamp:(NSUInteger)timestamp {
+    if (timestamp == 0) {
+        return nil;
+    }
     if (self = [super init]) {
-        
+        _spaceId = spaceId;
+        _transactionId = transactionId;
+        _timestamp = timestamp;
+        _credentials = [NSString stringWithFormat:@"%lu-%lu-%lu", _spaceId, _transactionId, _timestamp];
     }
     return self;
 }
 
 -(instancetype)init {
-    return [self initWithCredentials:@""];
+    return [self initWithSpaceId:0 transactionId:0 timestamp:0];
 }
 
-+(instancetype)credentialsWithCredentials:(NSString*)credentials error:(NSError **)error {
-    if (credentials.length == 0) {
-        *error = [WALErrorHelper invalidCredentialsWithMessage:@"The credentials are required to create a new credentials object."];
+
++(instancetype)credentialsWithCredentials:(NSString *)credentials error:(NSError * _Nullable __autoreleasing *)error {
+    
+    NSArray<NSString*> *components = [self parseCredentialString:credentials error:error];
+    if (!components) {
         return nil;
     }
-    NSArray<NSString*> *components = [[credentials stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] componentsSeparatedByString:@"-"];
+    NSUInteger spaceId = [components[0] integerValue];
+    NSUInteger transactionId = [components[1] integerValue];
+    NSUInteger timestamp = [components[2] integerValue];
     
-    if (components.count < 3 || components[0].length == 0 || components[1].length == 0 || components[2].length == 0) {
-        *error = [WALErrorHelper invalidCredentialsWithMessage:@"Wrong credentials format."];
-        return nil;
-    }
-    
-    Credentials *newCredentials = [[self alloc] init];
-    if (newCredentials) {
-        newCredentials.spaceId = [components[0] integerValue];
-        newCredentials.transactionId = [components[1] integerValue];
-        if (newCredentials.spaceId < 0 || newCredentials.transactionId < 0) {
-            *error = [WALErrorHelper invalidCredentialsWithMessage:@"IDs can not be negative."];
-            return nil;
-        }
-        newCredentials.timestamp = [components[2] integerValue];
-        if (newCredentials.timestamp < 0) {
-            *error = [WALErrorHelper invalidCredentialsWithMessage:@"Timestamps can not be negative."];
-            return nil;
-        }
-        newCredentials.credentials = [credentials stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    }
+    Credentials *newCredentials = [[self alloc] initWithSpaceId:spaceId transactionId:transactionId timestamp:timestamp];
     return newCredentials;
 }
 
--(BOOL)isValid {
-//    NSTimeInterval elapsed =
-    return true;
+-(BOOL)checkCredentials:(Credentials *)other error:(NSError * _Nullable __autoreleasing *)error {
+    BOOL success = YES;
+    if (self.transactionId != other.transactionId) {
+        success = NO;
+        [WALErrorHelper populate:error withIllegalStateWithMessage:@"The provided credentials do not have the same transaction transactionId."];
+    } else if(self.spaceId != other.spaceId) {
+        success = NO;
+        [WALErrorHelper populate:error withIllegalStateWithMessage:@"The provided credentials do not have the same space transactionId."];
+    }
+    return success;
 }
 
--(NSArray *)parseCredentialString:(NSString *)credentials error:(NSError **)error {
+-(BOOL)isValid {
+    NSTimeInterval current = [[NSDate date] timeIntervalSince1970] + WALCredentialsThreshold;
+    return self.timestamp > current;
+}
+
++(NSArray<NSString *> *)parseCredentialString:(NSString *)credentials error:(NSError * _Nullable __autoreleasing *)error {
     if (credentials.length == 0) {
-        *error = [WALErrorHelper invalidCredentialsWithMessage:@"The credentials are required to create a new credentials object."];
+        [WALErrorHelper populate:error withInvalidCredentialsWithMessage:@"The credentials are required to create a new credentials object."];
         return nil;
     }
     NSArray<NSString*> *components = [[credentials stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] componentsSeparatedByString:@"-"];
     
     if (components.count < 3 || components[0].length == 0 || components[1].length == 0 || components[2].length == 0) {
-        *error = [WALErrorHelper invalidCredentialsWithMessage:@"Wrong credentials format."];
+        [WALErrorHelper populate:error withInvalidCredentialsWithMessage:@"Wrong credentials format."];
         return nil;
     }
     
-    
+    NSCharacterSet *notDigits = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+    __block NSError *blockError = nil;
+    [components enumerateObjectsUsingBlock:^(NSString * _Nonnull component, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (idx < 3) { // validate only first 3 parameters
+            if ([component rangeOfCharacterFromSet:notDigits].location != NSNotFound) {
+                [WALErrorHelper populate:&blockError withInvalidCredentialsWithMessage:@"Credential parameters need to be in numeric format."];
+                *stop = YES;
+            }
+            if ([component integerValue] < 0) {
+                [WALErrorHelper populate:&blockError withInvalidCredentialsWithMessage:@"Credential parameters can not be negative."];
+                *stop = YES;
+            }
+        }
+    }];
+    if (blockError) {
+        *error = blockError;
+        return nil;
+    }
     
     return components;
 }
