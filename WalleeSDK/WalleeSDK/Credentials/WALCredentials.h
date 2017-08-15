@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
  The threshold which is used to check if the credentials are still valid. The threshold
  defines the minimum time in seconds which the credentials need to be valid.
  */
-extern const NSTimeInterval WALCredentialsThreshold;
+FOUNDATION_EXPORT const NSTimeInterval WALCredentialsThreshold;
 
 @interface WALCredentials : NSObject
 

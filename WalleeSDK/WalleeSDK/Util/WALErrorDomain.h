@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
-extern NSString *const WALErrorDomain;
+FOUNDATION_EXPORT NSString *const WALErrorDomain;
 
 typedef NS_ENUM(NSUInteger, WALError){
     WALErrorInvalidCredentials  = 100,
