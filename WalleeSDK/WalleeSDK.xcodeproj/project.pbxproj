@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A6C7B5A41F4341AE003CCB97 /* WALSessionApiClient.h in Headers */ = {isa = PBXBuildFile; fileRef = A6C7B5A21F4341AE003CCB97 /* WALSessionApiClient.h */; };
+		A6C7B5A51F4341AE003CCB97 /* WALSessionApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A6C7B5A31F4341AE003CCB97 /* WALSessionApiClient.m */; };
+		A6C7B5A71F435CC9003CCB97 /* WalleeApiTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A6C7B5A61F435CC9003CCB97 /* WalleeApiTest.m */; };
+		A6C7B5AA1F435DC7003CCB97 /* WALApiConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = A6C7B5A81F435DC7003CCB97 /* WALApiConfig.h */; };
+		A6C7B5AB1F435DC7003CCB97 /* WALApiConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = A6C7B5A91F435DC7003CCB97 /* WALApiConfig.m */; };
 		A6DE8E841F41A77E006E082B /* WalleeSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6DE8E7A1F41A77D006E082B /* WalleeSDK.framework */; };
 		A6DE8E891F41A77E006E082B /* WalleeSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DE8E881F41A77E006E082B /* WalleeSDKTests.m */; };
 		A6DE8E8B1F41A77E006E082B /* WalleeSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = A6DE8E7D1F41A77D006E082B /* WalleeSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -27,6 +32,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A6C7B5A21F4341AE003CCB97 /* WALSessionApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALSessionApiClient.h; sourceTree = "<group>"; };
+		A6C7B5A31F4341AE003CCB97 /* WALSessionApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALSessionApiClient.m; sourceTree = "<group>"; };
+		A6C7B5A61F435CC9003CCB97 /* WalleeApiTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WalleeApiTest.m; sourceTree = "<group>"; };
+		A6C7B5A81F435DC7003CCB97 /* WALApiConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALApiConfig.h; sourceTree = "<group>"; };
+		A6C7B5A91F435DC7003CCB97 /* WALApiConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALApiConfig.m; sourceTree = "<group>"; };
 		A6DE8E7A1F41A77D006E082B /* WalleeSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WalleeSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6DE8E7D1F41A77D006E082B /* WalleeSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WalleeSDK.h; sourceTree = "<group>"; };
 		A6DE8E7E1F41A77D006E082B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -58,6 +68,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A6C7B5A01F432B1E003CCB97 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				A6C7B5A11F43333A003CCB97 /* API */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		A6C7B5A11F43333A003CCB97 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				A6C7B5A21F4341AE003CCB97 /* WALSessionApiClient.h */,
+				A6C7B5A31F4341AE003CCB97 /* WALSessionApiClient.m */,
+				A6C7B5A81F435DC7003CCB97 /* WALApiConfig.h */,
+				A6C7B5A91F435DC7003CCB97 /* WALApiConfig.m */,
+			);
+			name = API;
+			sourceTree = "<group>";
+		};
 		A6DE8E701F41A77D006E082B = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +108,7 @@
 		A6DE8E7C1F41A77D006E082B /* WalleeSDK */ = {
 			isa = PBXGroup;
 			children = (
+				A6C7B5A01F432B1E003CCB97 /* Request */,
 				A6DE8ED31F41CF82006E082B /* Credentials */,
 				A6DE8ED81F41F9DB006E082B /* Util */,
 				A6DE8E7D1F41A77D006E082B /* WalleeSDK.h */,
@@ -90,6 +120,7 @@
 		A6DE8E871F41A77E006E082B /* WalleeSDKTests */ = {
 			isa = PBXGroup;
 			children = (
+				A6C7B5A61F435CC9003CCB97 /* WalleeApiTest.m */,
 				A6DE8E881F41A77E006E082B /* WalleeSDKTests.m */,
 				A6DE8E8A1F41A77E006E082B /* Info.plist */,
 			);
@@ -121,6 +152,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C7B5AA1F435DC7003CCB97 /* WALApiConfig.h in Headers */,
+				A6C7B5A41F4341AE003CCB97 /* WALSessionApiClient.h in Headers */,
 				A6DE8E8B1F41A77E006E082B /* WalleeSDK.h in Headers */,
 				A6DE8ED61F41CFA9006E082B /* WALCredentials.h in Headers */,
 				A6DE8EDB1F41F9F7006E082B /* WALErrorDomain.h in Headers */,
@@ -228,7 +261,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A6DE8ED71F41CFA9006E082B /* WALCredentials.m in Sources */,
+				A6C7B5AB1F435DC7003CCB97 /* WALApiConfig.m in Sources */,
 				A6DE8EDC1F41F9F7006E082B /* WALErrorDomain.m in Sources */,
+				A6C7B5A51F4341AE003CCB97 /* WALSessionApiClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +271,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C7B5A71F435CC9003CCB97 /* WalleeApiTest.m in Sources */,
 				A6DE8E891F41A77E006E082B /* WalleeSDKTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

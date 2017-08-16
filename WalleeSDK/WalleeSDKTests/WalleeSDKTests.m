@@ -54,7 +54,7 @@
 }
 
 - (void)testWip {
-    WALCredentials *credentials = [[WALCredentials alloc] init];
+//    WALCredentials *credentials = [[WALCredentials alloc] init];
     
 }
 
