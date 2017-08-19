@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "WALSessionApiClient.h"
 #import "WALCredentials.h"
+#import "WALMobileSdkUrl.h"
 #include <CommonCrypto/CommonHMAC.h>
 
 static NSString *const TestBaseUrl = @"https://app-wallee.com/api/";
@@ -37,7 +38,16 @@ static NSUInteger const SPACE_ID = 316l;
 
 - (void)setUp {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    XCTestExpectation *expectation = [self expectationWithDescription:[NSString stringWithFormat:@"setup %@", self.name]];
+    [self createCredentials:USER_ID space:SPACE_ID macKey:HMAC_KEY completion:^(WALCredentials * _Nullable credential) {
+        self.credentials = credential;
+        [expectation fulfill];
+    }];
+    [self waitForExpectationsWithTimeout:7.0 handler:^(NSError * _Nullable error) {
+        if (error) {
+            XCTFail("%@ timeout", expectation);
+        }
+    }];
 }
 
 - (void)tearDown {
@@ -48,12 +58,32 @@ static NSUInteger const SPACE_ID = 316l;
 - (void)testBuildMobileSdkUrl {
     XCTestExpectation *expectation = [self expectationWithDescription:@"MobileSdkUrl built"];
 
-    WALSessionApiClient *client = [WALSessionApiClient clientWithBaseUrl: TestBaseUrl];
-    [client buildMobileSdkUrl];
-    [expectation fulfill];
+    WALSessionApiClient *client = [WALSessionApiClient clientWithBaseUrl: TestBaseUrl credentialsProvider:self.credentials];
+    [client buildMobileSdkUrl:^(WALMobileSdkUrl *mobileSdkUrl) {
+        XCTAssertNotNil(mobileSdkUrl, @"MobileSdk is created");
+        NSString *mobileSdkUrlPrefix = [NSString stringWithFormat:@"https://app-wallee.com/s/%@/payment/transaction/mobile-sdk", @(SPACE_ID)];
+        BOOL hasCorrectPrefix = [mobileSdkUrl.url hasPrefix:mobileSdkUrlPrefix];
+        XCTAssertTrue(hasCorrectPrefix, @"MobileSdkUrl has correct prefix");
+        [expectation fulfill];
+    }];
+    
     [self waitForExpectationsWithTimeout:7.0 handler:^(NSError * _Nullable error) {
         if (error) {
             XCTFail("MobileSdkUrl timeout");
+        }
+    }];
+}
+
+
+- (void)testCredentials {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Credentials built"];
+    [self createCredentials:USER_ID space:SPACE_ID macKey:HMAC_KEY completion:^(WALCredentials *credential) {
+        XCTAssertNotNil(credential, "Credentials are not nil");
+        [expectation fulfill];
+    }];
+    [self waitForExpectationsWithTimeout:7.0 handler:^(NSError * _Nullable error) {
+        if (error) {
+            XCTFail("Credentials Timeout");
         }
     }];
 }
@@ -99,19 +129,6 @@ static NSUInteger const SPACE_ID = 316l;
     XCTAssertEqualObjects(base64MacCreated, base64Mac, @"Base64 encoded HMAC is correct");
 }
 
-- (void)testCredentials {
-    XCTestExpectation *expectation = [self expectationWithDescription:@"Credentials built"];
-    [self createCredentials:USER_ID space:SPACE_ID macKey:HMAC_KEY completion:^(WALCredentials *credential) {
-        XCTAssertNotNil(credential, "Credentials are not nil");
-        [expectation fulfill];
-    }];
-    [self waitForExpectationsWithTimeout:7.0 handler:^(NSError * _Nullable error) {
-        if (error) {
-            XCTFail("Credentials Timeout");
-        }
-    }];
-}
-
 - (void)createCredentials:(NSUInteger)userId space:(NSUInteger)spaceId macKey:(NSString *)mac completion:(void (^)(WALCredentials * _Nullable credential))completion {
     __block void (^credentialTask)(NSUInteger) = ^(NSUInteger transactionId) {
         NSURL *credentialsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://app-wallee.com/api/transaction/createTransactionCredentials?spaceId=%@&id=%@", @(spaceId), @(transactionId)]];
@@ -135,7 +152,6 @@ static NSUInteger const SPACE_ID = 316l;
         NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data
                                                              options:kNilOptions
                                                                error:nil];
-        NSLog(@"RESPONSE--->%@",json);
         NSString *transactionId = json[@"id"];
         XCTAssertNotNil(transactionId, "returned transaction id is not empty");
         

@@ -103,4 +103,12 @@ const NSTimeInterval WALCredentialsThreshold = 2 * 60;
     
     return components;
 }
+
+// MARK: - Description
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@", @{@"credentials": self.credentials, @"transactionId": @(self.transactionId), @"spaceId": @(self.spaceId), @"timestamp": [NSDate dateWithTimeIntervalSince1970:self.timestamp]}];
+}
+- (NSString *)debugDescription{
+    return [NSString stringWithFormat:@"<%@: %p, \"%@\">", [self class], self, [self description]];
+}
 @end

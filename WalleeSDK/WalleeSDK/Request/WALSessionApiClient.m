@@ -7,6 +7,7 @@
 //
 
 #import "WALSessionApiClient.h"
+#import "WALMobileSdkUrl.h"
 #import "WALApiConfig.h"
 #import "WALCredentials.h"
 
@@ -31,24 +32,25 @@
     return [NSURLSessionConfiguration defaultSessionConfiguration];
 }
 
-+(instancetype)clientWithBaseUrl:(NSString *)baseUrl credentialProvider:(WALCredentials *)credentialsProvider {
+
++(instancetype)clientWithBaseUrl:(NSString *)baseUrl credentialsProvider:(WALCredentials *)credentialsProvider {
     // validation
     return [[self alloc] initWithBaseUrl:baseUrl credentialsProvider:credentialsProvider];
 }
 
-
 // mark: extract
 
--(void) buildMobileSdkUrl {
+-(void)buildMobileSdkUrl:(void (^)(WALMobileSdkUrl * _Nonnull))completion {
     //"transaction/buildMobileSdkUrlWithCredentials?credentials=" + parameter.getCredentials()
-    NSString *endpoint = [NSString stringWithFormat:@"%@?credentials=xxx-xxx-xxx", WalleeEndpointBuildMobilUrl];
+    NSString *endpoint = [NSString stringWithFormat:@"%@?credentials=%@", WalleeEndpointBuildMobilUrl, self.credentialsProvider.credentials];
     NSURL *url = [NSURL URLWithString:endpoint relativeToURL:self.baseURL];
     
-    NSURLSessionTask *task = [self.urlSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        NSLog(@" ---- ");
-        NSLog(@" DATA: %@", data);
-        NSLog(@" response: %@", response);
-        NSLog(@" error: %@", error);
+    NSURLSessionDataTask *task = [self.urlSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        //TODO: nonnull data
+        NSString *url = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        WALTimestamp expiryDate = [[NSDate date] timeIntervalSince1970] + WalleeMobileSdkUrlExpiryTime;
+        WALMobileSdkUrl *mobileUrl = [[WALMobileSdkUrl alloc] initWithUrl:url expiryDate:expiryDate];
+        completion(mobileUrl);
     }];
     
     [task resume];

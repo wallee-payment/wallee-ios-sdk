@@ -20,7 +20,7 @@ FOUNDATION_EXPORT const NSTimeInterval WALCredentialsThreshold;
 @property (nonatomic, readonly, assign) NSUInteger transactionId;
 @property (nonatomic, readonly, assign) NSUInteger spaceId;
 @property (nonatomic, readonly, assign) NSUInteger timestamp;
-@property (nonatomic, readonly, copy) NSString *appendum;
+@property (nonatomic, readonly, copy) NSString *credentials;
 
 /**
  -
@@ -36,8 +36,6 @@ FOUNDATION_EXPORT const NSTimeInterval WALCredentialsThreshold;
 /**
  An NSString object initialized by using format as a template into which the remaining argument values are substituted according to the system locale. The returned object may be different from the original receiver.
 
- 
- 
  @param spaceId the ID of the space to which the transaction belongs to.
  @param transactionId the transaction ID for which the credentials are build for. This is the transactionid to which the credentials give access to.
  @param timestamp the timestamp (seconds since 1970-01-01) when the credentials will expire on.
