@@ -8,18 +8,21 @@
 
 #import "WALSessionApiClient.h"
 #import "WALApiConfig.h"
+#import "WALCredentials.h"
 
 @interface WALSessionApiClient ()
+@property (nonatomic, strong, readwrite) WALCredentials *credentialsProvider;
 @property (nonatomic, strong, readwrite) NSURL *baseURL;
 @property (nonatomic, strong, readwrite) NSURLSession *urlSession;
 @end
 
 @implementation WALSessionApiClient
 
--(instancetype)initWithBaseUrl:(NSString*) baseUrl {
+-(instancetype)initWithBaseUrl:(NSString*) baseUrl credentialsProvider:(WALCredentials *)credentialsProvider {
     if (self = [super init]) {
         _baseURL = [NSURL URLWithString:baseUrl];
         _urlSession = [NSURLSession sessionWithConfiguration:[self configuration]];
+        _credentialsProvider = credentialsProvider;
     }
     return self;
 }
@@ -28,15 +31,16 @@
     return [NSURLSessionConfiguration defaultSessionConfiguration];
 }
 
-+(instancetype)clientWithBaseUrl:(NSString *)baseUrl {
++(instancetype)clientWithBaseUrl:(NSString *)baseUrl credentialProvider:(WALCredentials *)credentialsProvider {
     // validation
-    return [[self alloc] initWithBaseUrl:baseUrl];
+    return [[self alloc] initWithBaseUrl:baseUrl credentialsProvider:credentialsProvider];
 }
 
 
 // mark: extract
 
 -(void) buildMobileSdkUrl {
+    //"transaction/buildMobileSdkUrlWithCredentials?credentials=" + parameter.getCredentials()
     NSString *endpoint = [NSString stringWithFormat:@"%@?credentials=xxx-xxx-xxx", WalleeEndpointBuildMobilUrl];
     NSURL *url = [NSURL URLWithString:endpoint relativeToURL:self.baseURL];
     

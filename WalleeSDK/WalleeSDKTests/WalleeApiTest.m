@@ -8,6 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import "WALSessionApiClient.h"
+#import "WALCredentials.h"
 #include <CommonCrypto/CommonHMAC.h>
 
 static NSString *const TestBaseUrl = @"https://app-wallee.com/api/";
@@ -16,6 +17,7 @@ static NSString *const HMAC_KEY = @"644gZTvd8KR2V+Lf4I9zmSnZVuXxd5YTT2U/CTKXHhk=
 static NSUInteger const SPACE_ID = 316l;
 
 @interface WalleeApiTest : XCTestCase
+@property (nonatomic, strong) WALCredentials *credentials;
 
 @end
 
@@ -51,7 +53,7 @@ static NSUInteger const SPACE_ID = 316l;
     [expectation fulfill];
     [self waitForExpectationsWithTimeout:7.0 handler:^(NSError * _Nullable error) {
         if (error) {
-            XCTFail("timeout");
+            XCTFail("MobileSdkUrl timeout");
         }
     }];
 }
@@ -97,12 +99,51 @@ static NSUInteger const SPACE_ID = 316l;
     XCTAssertEqualObjects(base64MacCreated, base64Mac, @"Base64 encoded HMAC is correct");
 }
 
-- (void)testConnection {
-    NSTimeInterval timestamp = [[NSDate date] timeIntervalSince1970];
+- (void)testCredentials {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Credentials built"];
+    [self createCredentials:USER_ID space:SPACE_ID macKey:HMAC_KEY completion:^(WALCredentials *credential) {
+        XCTAssertNotNil(credential, "Credentials are not nil");
+        [expectation fulfill];
+    }];
+    [self waitForExpectationsWithTimeout:7.0 handler:^(NSError * _Nullable error) {
+        if (error) {
+            XCTFail("Credentials Timeout");
+        }
+    }];
 }
 
-// TODO: create credentials analog android
-//
+- (void)createCredentials:(NSUInteger)userId space:(NSUInteger)spaceId macKey:(NSString *)mac completion:(void (^)(WALCredentials * _Nullable credential))completion {
+    __block void (^credentialTask)(NSUInteger) = ^(NSUInteger transactionId) {
+        NSURL *credentialsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://app-wallee.com/api/transaction/createTransactionCredentials?spaceId=%@&id=%@", @(spaceId), @(transactionId)]];
+        NSURLRequest *request = [self requestWith:credentialsUrl method:@"POST" forUser:USER_ID contentType:@"application/json" macKey:HMAC_KEY];
+        NSURLSessionTask *credentialTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            NSString *credentialString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            XCTAssertNotNil(credentialString, @"Credential String is generated");
+            NSError *innerError = nil;
+            WALCredentials *credentials = [WALCredentials credentialsWithCredentials:credentialString error:&innerError];
+            XCTAssertNil(error, @"Credentials can be parsed");
+            completion(credentials);
+        }];
+        [credentialTask resume];
+    };
+    
+    NSURL *transactionUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://app-wallee.com/api/transaction/create?spaceId=%@", @(spaceId)]];
+    NSMutableURLRequest *request = [self requestWith:transactionUrl method:@"POST" forUser:USER_ID contentType:@"application/json" macKey:HMAC_KEY];
+    [request setHTTPBody: [self transactionCreationString]];
+    
+    NSURLSessionTask *transactionTask =[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data
+                                                             options:kNilOptions
+                                                               error:nil];
+        NSLog(@"RESPONSE--->%@",json);
+        NSString *transactionId = json[@"id"];
+        XCTAssertNotNil(transactionId, "returned transaction id is not empty");
+        
+        credentialTask(transactionId.integerValue);
+    }];
+    
+    [transactionTask resume];
+}
 
 - (NSString *)walleeSecureString:(NSInteger)macVersion userId:(NSUInteger)userId timestamp:(NSUInteger)timestamp method:(NSString *)method path:(NSString *)path {
     return [NSString stringWithFormat:@"%@|%@|%@|%@|%@", @(macVersion), @(userId), @(timestamp), method, path];
@@ -143,6 +184,8 @@ static NSUInteger const SPACE_ID = 316l;
     return hexString;
 }
 
+//- (NSData *)performRequest
+
 - (NSMutableURLRequest *)requestWith:(NSURL *)url method:(NSString *)method forUser:(NSUInteger)userId contentType:(NSString *)contentType macKey:(NSString *)macKey {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:10];
     [request setHTTPMethod:method];
@@ -163,20 +206,21 @@ static NSUInteger const SPACE_ID = 316l;
     NSDictionary *headerFields = @{@"x-mac-version": @"1",
                                    @"x-mac-userid": [NSString stringWithFormat:@"%@", @(userId)],
                                    @"x-mac-timestamp": [NSString stringWithFormat:@"%li", timestamp],
-                                   @"x-mac-value": hMac};
+                                   @"x-mac-value": hMac,
+                                   @"Content-Type": contentType};
     [request setAllHTTPHeaderFields:headerFields];
 
-    NSLog(@" -- headerfields: %@", headerFields);
-    NSLog(@" -- secureString: \n%@", secureString);
-    NSLog(@" -- secureData: \n%@", secureData);
-    NSLog(@" -- secret: \n%@", decodedSecret);
-    NSLog(@" -- Mac: \n%@", hMac);
-    
+//    NSLog(@" -- headerfields: %@", headerFields);
+//    NSLog(@" -- secureString: \n%@", secureString);
+//    NSLog(@" -- secureData: \n%@", secureData);
+//    NSLog(@" -- secret: \n%@", decodedSecret);
+//    NSLog(@" -- Mac: \n%@", hMac);
+
     return request;
 }
 
-- (NSString *)transactionCreationString {
-    return @"{\n"
+- (NSData *)transactionCreationString {
+    NSString *dataString = @"{\n"
     "  \"currency\" : \"EUR\",\n"
     "  \"customerId\": \"test-customer\", \n"
     "  \"lineItems\" : [ {\n"
@@ -190,6 +234,7 @@ static NSUInteger const SPACE_ID = 316l;
     "  } ],\n"
     "  \"merchantReference\" : \"DEV-2630\"\n"
     "}";
+    return [dataString dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 @end
