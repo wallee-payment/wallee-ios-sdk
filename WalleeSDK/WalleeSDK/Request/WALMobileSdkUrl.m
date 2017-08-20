@@ -26,12 +26,16 @@ static NSString * const WallePaymentMethodQueryParamName = @"paymentMethodConfig
 @implementation WALMobileSdkUrl
 
 -(instancetype)initWithUrl:(NSString *)url expiryDate:(WALTimestamp)expiryDate {
-    self = [self init];
+    self = [super init];
     if (self) {
         _url = url;
         _expiryDate = expiryDate;
     }
     return self;
+}
+
+- (instancetype)init {
+    return [self initWithUrl:@"" expiryDate:0];
 }
 
 -(BOOL)isExpired {

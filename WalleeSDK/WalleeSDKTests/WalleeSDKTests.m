@@ -8,7 +8,9 @@
 
 #import <XCTest/XCTest.h>
 #import "WALCredentials.h"
+#import "WALMobileSdkUrl.h"
 #import "WALErrorDomain.h"
+#import "WALTypes.h"
 
 @interface WalleeSDKTests : XCTestCase
 
@@ -29,7 +31,7 @@
 - (void)testCredentialsInvalid {
     NSError *error;
     WALCredentials *credentials = [WALCredentials credentialsWithCredentials:@"" error:&error];
-    NSLog(@"error: %@", error);
+//    NSLo g(@"error: %@", error);
     XCTAssertNil(credentials, "Credentials should not be initialized");
     XCTAssertNotNil(error, "NSError should be populated");
 }
@@ -37,7 +39,7 @@
 - (void)testCredentialsInvalid2 {
     NSError *error2 = nil;
     WALCredentials *credentials = [WALCredentials credentialsWithCredentials:@"abc-def-cg" error:&error2];
-    NSLog(@"error: %@", error2);
+//    NSLog(@"error: %@", error2);
     XCTAssertNil(credentials, "Credentials should not be initialized");
     XCTAssertNotNil(error2, "NSError should be populated");
     XCTAssertEqual(error2.code, WALErrorInvalidCredentials, @"error.code should be InvalidCredentials");
@@ -46,11 +48,31 @@
 
 - (void)testCredentialsValid {
     NSError *error;
-    NSTimeInterval validTimestamp = [[NSDate date] timeIntervalSince1970] - 60;
-    NSString *validCredentials = [NSString stringWithFormat:@"316-16005-%.0f-c4LUhOqIiFrwEcNU3YAJl4_28x3_b2iQAeqJI7V6yP8-grantedUser419", validTimestamp];
+    WALTimestamp validTimestamp = [[NSDate date] timeIntervalSince1970] - 60;
+    NSString *validCredentials = [NSString stringWithFormat:@"316-16005-%@-c4LUhOqIiFrwEcNU3YAJl4_28x3_b2iQAeqJI7V6yP8-grantedUser419", @(validTimestamp)];
     WALCredentials *credentials = [WALCredentials credentialsWithCredentials:validCredentials error:&error];
     XCTAssertNotNil(credentials, "Credentials should be initialized");
     
+}
+
+- (void)testMobileSdkUrlValid {
+    NSError *error;
+    WALTimestamp validTimestamp = [[NSDate date] timeIntervalSince1970] + 3*60;
+    WALMobileSdkUrl *mobileSdkUrl = [[WALMobileSdkUrl alloc] initWithUrl:@"" expiryDate:validTimestamp];
+    NSURL *paymentMethodUrl = [mobileSdkUrl buildPaymentMethodUrl:3 error:&error];
+    XCTAssertNotNil(paymentMethodUrl, @"paymentMethod is created");
+    XCTAssertNil(error, @"paymentMethod error is nil");
+}
+
+- (void)testMobileSdkUrlInvalid {
+    NSError *error;
+    WALTimestamp validTimestamp = [[NSDate date] timeIntervalSince1970] - 60;
+    WALMobileSdkUrl *mobileSdkUrl = [[WALMobileSdkUrl alloc] initWithUrl:@"" expiryDate:validTimestamp];
+    BOOL isExpired = mobileSdkUrl.isExpired;
+    XCTAssertTrue(isExpired, @"mobileSdkUrl is correctly marked as expired");
+    NSURL *paymentMethodUrl = [mobileSdkUrl buildPaymentMethodUrl:3 error:&error];
+    XCTAssertNil(paymentMethodUrl, @"paymentMethod is not created");
+    XCTAssertNotNil(error, @"paymentMethod error is not nil");
 }
 
 - (void)testWip {

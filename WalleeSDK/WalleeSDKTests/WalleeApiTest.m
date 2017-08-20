@@ -7,37 +7,34 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "WALSessionApiClient.h"
+#import "WALNSURLSessionApiClient.h"
 #import "WALCredentials.h"
 #import "WALMobileSdkUrl.h"
 #include <CommonCrypto/CommonHMAC.h>
 
 static NSString *const TestBaseUrl = @"https://app-wallee.com/api/";
+/// ExampleFragment
 static NSUInteger const USER_ID = 480l;
 static NSString *const HMAC_KEY = @"644gZTvd8KR2V+Lf4I9zmSnZVuXxd5YTT2U/CTKXHhk=";
 static NSUInteger const SPACE_ID = 316l;
 
+/// Unittests
+//static NSUInteger const USER_ID = 526l;
+//static NSString *const HMAC_KEY = @"R1x818iST62GkGMgkm1zYKQ3N0Y7YiRRFdrycbs7KII=";
+//static NSUInteger const SPACE_ID = 412l;
+
 @interface WalleeApiTest : XCTestCase
 @property (nonatomic, strong) WALCredentials *credentials;
-
 @end
-
-
 
 @implementation WalleeApiTest
 
-//// UnitTests
-//private final static long USER_ID = 526l;
-//private final static String HMAC_KEY = "R1x818iST62GkGMgkm1zYKQ3N0Y7YiRRFdrycbs7KII=";
-//private final static long SPACE_ID = 412;
-//
-//// ExampleFragment
-//public final static long USER_ID = 480l;
-//public final static String HMAC_KEY = "644gZTvd8KR2V+Lf4I9zmSnZVuXxd5YTT2U/CTKXHhk=";
-//public final static long SPACE_ID = 316;
-
 - (void)setUp {
     [super setUp];
+    if (self.credentials) {
+        return;
+    }
+    
     XCTestExpectation *expectation = [self expectationWithDescription:[NSString stringWithFormat:@"setup %@", self.name]];
     [self createCredentials:USER_ID space:SPACE_ID macKey:HMAC_KEY completion:^(WALCredentials * _Nullable credential) {
         self.credentials = credential;
@@ -51,15 +48,14 @@ static NSUInteger const SPACE_ID = 316l;
 }
 
 - (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
 }
 
 - (void)testBuildMobileSdkUrl {
     XCTestExpectation *expectation = [self expectationWithDescription:@"MobileSdkUrl built"];
 
-    WALSessionApiClient *client = [WALSessionApiClient clientWithBaseUrl: TestBaseUrl credentialsProvider:self.credentials];
-    [client buildMobileSdkUrl:^(WALMobileSdkUrl *mobileSdkUrl) {
+    WALNSURLSessionApiClient *client = [WALNSURLSessionApiClient clientWithBaseUrl: TestBaseUrl credentialsProvider:self.credentials];
+    [client buildMobileSdkUrl:^(WALMobileSdkUrl * _Nullable mobileSdkUrl, NSError * _Nullable error) {
         XCTAssertNotNil(mobileSdkUrl, @"MobileSdk is created");
         NSString *mobileSdkUrlPrefix = [NSString stringWithFormat:@"https://app-wallee.com/s/%@/payment/transaction/mobile-sdk", @(SPACE_ID)];
         BOOL hasCorrectPrefix = [mobileSdkUrl.url hasPrefix:mobileSdkUrlPrefix];
@@ -129,6 +125,8 @@ static NSUInteger const SPACE_ID = 316l;
     XCTAssertEqualObjects(base64MacCreated, base64Mac, @"Base64 encoded HMAC is correct");
 }
 
+// MARK: - Helpers
+
 - (void)createCredentials:(NSUInteger)userId space:(NSUInteger)spaceId macKey:(NSString *)mac completion:(void (^)(WALCredentials * _Nullable credential))completion {
     __block void (^credentialTask)(NSUInteger) = ^(NSUInteger transactionId) {
         NSURL *credentialsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://app-wallee.com/api/transaction/createTransactionCredentials?spaceId=%@&id=%@", @(spaceId), @(transactionId)]];
@@ -160,47 +158,6 @@ static NSUInteger const SPACE_ID = 316l;
     
     [transactionTask resume];
 }
-
-- (NSString *)walleeSecureString:(NSInteger)macVersion userId:(NSUInteger)userId timestamp:(NSUInteger)timestamp method:(NSString *)method path:(NSString *)path {
-    return [NSString stringWithFormat:@"%@|%@|%@|%@|%@", @(macVersion), @(userId), @(timestamp), method, path];
-}
-
-- (NSData *)walleeMacValueFromMessage:(NSData *)message withKey:(NSData *)key {
-    NSMutableData *hMacOut = [NSMutableData dataWithLength:CC_SHA512_DIGEST_LENGTH];
-    CCHmac(kCCHmacAlgSHA512, key.bytes, key.length, message.bytes, message.length, hMacOut.mutableBytes);
-    
-    return hMacOut;
-}
-
-- (NSString *)walleeHexRepresentationFromData:(NSData *)data {
-    NSString *hexString = @"";
-    if (data) {
-        uint8_t *dataPointer = (uint8_t *)(data.bytes);
-        for (int i = 0; i < data.length; i++) {
-            if (i != 0) {
-                hexString = [hexString stringByAppendingString:@", "];
-            }
-            hexString = [hexString stringByAppendingFormat:@"0x%02x", dataPointer[i]];
-        }
-    }
-    return hexString;
-}
-
-- (NSString *)hexFromData:(NSData *)data {
-    NSString *hexString = @"";
-    if (data) {
-        uint8_t *dataPointer = (uint8_t *)(data.bytes);
-        for (int i = 0; i < data.length; i++) {
-            if (i != 0) {
-                hexString = [hexString stringByAppendingString:@", "];
-            }
-            hexString = [hexString stringByAppendingFormat:@"0x%02x", dataPointer[i]];
-        }
-    }
-    return hexString;
-}
-
-//- (NSData *)performRequest
 
 - (NSMutableURLRequest *)requestWith:(NSURL *)url method:(NSString *)method forUser:(NSUInteger)userId contentType:(NSString *)contentType macKey:(NSString *)macKey {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:10];
@@ -251,6 +208,45 @@ static NSUInteger const SPACE_ID = 316l;
     "  \"merchantReference\" : \"DEV-2630\"\n"
     "}";
     return [dataString dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (NSString *)walleeSecureString:(NSInteger)macVersion userId:(NSUInteger)userId timestamp:(NSUInteger)timestamp method:(NSString *)method path:(NSString *)path {
+    return [NSString stringWithFormat:@"%@|%@|%@|%@|%@", @(macVersion), @(userId), @(timestamp), method, path];
+}
+
+- (NSData *)walleeMacValueFromMessage:(NSData *)message withKey:(NSData *)key {
+    NSMutableData *hMacOut = [NSMutableData dataWithLength:CC_SHA512_DIGEST_LENGTH];
+    CCHmac(kCCHmacAlgSHA512, key.bytes, key.length, message.bytes, message.length, hMacOut.mutableBytes);
+    
+    return hMacOut;
+}
+
+- (NSString *)walleeHexRepresentationFromData:(NSData *)data {
+    NSString *hexString = @"";
+    if (data) {
+        uint8_t *dataPointer = (uint8_t *)(data.bytes);
+        for (int i = 0; i < data.length; i++) {
+            if (i != 0) {
+                hexString = [hexString stringByAppendingString:@", "];
+            }
+            hexString = [hexString stringByAppendingFormat:@"0x%02x", dataPointer[i]];
+        }
+    }
+    return hexString;
+}
+
+- (NSString *)hexFromData:(NSData *)data {
+    NSString *hexString = @"";
+    if (data) {
+        uint8_t *dataPointer = (uint8_t *)(data.bytes);
+        for (int i = 0; i < data.length; i++) {
+            if (i != 0) {
+                hexString = [hexString stringByAppendingString:@", "];
+            }
+            hexString = [hexString stringByAppendingFormat:@"0x%02x", dataPointer[i]];
+        }
+    }
+    return hexString;
 }
 
 @end
