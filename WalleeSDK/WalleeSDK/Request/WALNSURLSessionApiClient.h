@@ -1,5 +1,5 @@
 //
-//  WALSessionApiClient.h
+//  WALNSURLSessionApiClient.h
 //  WalleeSDK
 //
 //  Created by Daniel Schmid on 15.08.17.
@@ -7,13 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WALApiClient.h"
+
 @class WALMobileSdkUrl, WALCredentials;
 
 NS_ASSUME_NONNULL_BEGIN
-@interface WALSessionApiClient : NSObject
-
-+(instancetype)clientWithBaseUrl:(NSString*)baseUrl credentialsProvider:(WALCredentials *)credentialsProvider;
--(void) buildMobileSdkUrl: (void (^)(WALMobileSdkUrl *mobileSdkUrl))completion;
+@interface WALNSURLSessionApiClient : NSObject <WALApiClient>
++ (instancetype)clientWithBaseUrl:(NSString*)baseUrl credentialsProvider:(WALCredentials *)credentialsProvider;
 @end
 
 NS_ASSUME_NONNULL_END

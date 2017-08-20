@@ -8,6 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol WALApiClient <NSObject>
+NS_ASSUME_NONNULL_BEGIN
 
+@class WALMobileSdkUrl, WALPaymentMethodConfiguration;
+
+typedef void (^WALMobileSdkUrlCompletion)(WALMobileSdkUrl * _Nullable mobileSdkUrl, NSError * _Nullable error);
+typedef void (^WALPaymentMethodConfigurationsCompletion)(NSArray<WALPaymentMethodConfiguration *> * _Nullable paymentMethodConfigurations, NSError * _Nullable error);
+
+@protocol WALApiClient <NSObject>
+- (void)buildMobileSdkUrl:(WALMobileSdkUrlCompletion)completion;
+- (void)fetchPaymentMethodConfigurations:(WALPaymentMethodConfigurationsCompletion)completion;
 @end
+NS_ASSUME_NONNULL_END

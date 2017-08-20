@@ -10,6 +10,7 @@
 
 NSString *const WalleeBaseURL = @"https://app-wallee.com/api/";
 NSString *const WalleeEndpointBuildMobilUrl = @"transaction/buildMobileSdkUrlWithCredentials";
+NSString *const WalleeEndpointFetchPossiblePaymentMethods = @"transaction/fetchPossiblePaymentMethodsWithCredentials";
 
 @implementation WALApiConfig
 

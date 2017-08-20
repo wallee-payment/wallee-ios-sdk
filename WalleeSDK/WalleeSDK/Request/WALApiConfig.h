@@ -10,6 +10,7 @@
 
 FOUNDATION_EXPORT NSString *const WalleeBaseUrl;
 FOUNDATION_EXPORT NSString *const WalleeEndpointBuildMobilUrl;
+FOUNDATION_EXPORT NSString *const WalleeEndpointFetchPossiblePaymentMethods;
 
 @interface WALApiConfig : NSObject
 
