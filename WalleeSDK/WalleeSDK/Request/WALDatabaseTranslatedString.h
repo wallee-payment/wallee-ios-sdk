@@ -19,7 +19,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) NSArray<WALDatabaseTranslatedStringItem *> *items;
 
 - (instancetype)initWithAvailableLanguages:(NSArray<NSString *> *)availableLanguages displayName:(NSString *)displayName items:(NSArray<WALDatabaseTranslatedStringItem *> *)items NS_DESIGNATED_INITIALIZER;
-+ (instancetype)decodedObjectFromJSON:(NSDictionary<NSString *,id> *)dictionary;
 - (instancetype)init NS_UNAVAILABLE;
 @end
 NS_ASSUME_NONNULL_END

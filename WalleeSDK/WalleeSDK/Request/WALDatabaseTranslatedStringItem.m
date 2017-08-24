@@ -23,8 +23,18 @@
     return self;
 }
 
-+ (instancetype)decodedObjectFromJSON:(NSDictionary<NSString *,id> *)dictionary {
++ (instancetype)decodedObjectFromJSON:(NSDictionary<NSString *,id> *)dictionary error:(NSError * _Nullable __autoreleasing * _Nullable)error {
     return [[WALDatabaseTranslatedStringItem alloc] initWithLanguage:dictionary[@"language"] languageCode:dictionary[@"languageCode"] translation:dictionary[@"translation"]];
 }
+
+// MARK: - Description
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@", @{@"language": _language, @"languageCode": _languageCode, @"translation": _translation}];
+}
+
+- (NSString *)debugDescription{
+    return [NSString stringWithFormat:@"<%@: %p, \"%@\">", [self class], self, [self description]];
+}
+
 
 @end

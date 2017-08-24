@@ -11,6 +11,7 @@
 #import "WALPaymentMethodConfiguration.h"
 #import "WALApiConfig.h"
 #import "WALCredentials.h"
+#import "WALErrorDomain.h"
 
 @interface WALNSURLSessionApiClient ()
 @property (nonatomic, strong, readwrite) WALCredentials *credentialsProvider;
@@ -65,10 +66,39 @@
     
     NSURLSessionDataTask *task = [self.urlSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (data) {
+            NSError *jsonError;
             NSArray* json = [NSJSONSerialization JSONObjectWithData:data
                                                                  options:kNilOptions
-                                                                   error:nil];
-            completion(@[[WALPaymentMethodConfiguration decodedObjectFromJSON:json[0]]], nil);
+                                                                   error:&jsonError];
+            if (!json) {
+                completion(nil, jsonError);
+                return;
+            }
+            if (![json isKindOfClass:[NSArray class]]) {
+                [WALErrorHelper populate:&jsonError withIllegalArgumentWithMessage:@"PaymentMethodConfiguration json response is not an array"];
+                completion(nil, jsonError);
+                return;
+            }
+            
+            __block NSError *paymentMethodError;
+            __block NSMutableArray *paymentConfigurations = [NSMutableArray arrayWithCapacity:json.count];
+            [json enumerateObjectsUsingBlock:^(NSDictionary*  _Nonnull dict, NSUInteger idx, BOOL * _Nonnull stop) {
+                
+                WALPaymentMethodConfiguration *config = [WALPaymentMethodConfiguration decodedObjectFromJSON:dict error:&paymentMethodError];
+                if (!config) {
+                    paymentConfigurations = nil;
+                    *stop = YES;
+                } else {
+                    [paymentConfigurations addObject:config];
+                }
+            }];
+            
+            if (!paymentConfigurations) {
+                completion(nil, paymentMethodError);
+            } else {
+                completion(paymentConfigurations, nil);
+            }
+            
         } else {
             completion(nil, error);
         }

@@ -12,18 +12,24 @@ NSString *const WALErrorDomain = @"com.wallee.ios";
 
 @implementation WALErrorHelper
 
-+(void)populate:(NSError **)error withInvalidCredentialsWithMessage:(NSString *)message {
++ (void)populate:(NSError **)error withInvalidCredentialsWithMessage:(NSString *)message {
     if (error) {
         NSDictionary *userInfo = @{NSLocalizedDescriptionKey: message};
         *error = [NSError errorWithDomain:WALErrorDomain code:WALErrorInvalidCredentials userInfo:userInfo];
     }
 }
 
-+(void)populate:(NSError **)error withIllegalStateWithMessage:(NSString *)message {
++ (void)populate:(NSError **)error withIllegalStateWithMessage:(NSString *)message {
     if (error) {
         NSDictionary *userInfo = @{NSLocalizedDescriptionKey: message};
         *error = [NSError errorWithDomain:WALErrorDomain code:WALErrorInvalidState userInfo:userInfo];
     }
 }
 
++ (void)populate:(NSError **)error withIllegalArgumentWithMessage:(NSString *)message {
+    if (error) {
+        NSDictionary *userInfo = @{NSLocalizedDescriptionKey: message};
+        *error = [NSError errorWithDomain:WALErrorDomain code:WALErrorInvalidArgument userInfo:userInfo];
+    }
+}
 @end

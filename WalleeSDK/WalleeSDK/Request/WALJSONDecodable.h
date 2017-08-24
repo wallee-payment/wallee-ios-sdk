@@ -12,6 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 //@property (nonatomic, copy, readonly) NSDictionary<NSString*, id> *allJSONFields;
 
-+ (instancetype)decodedObjectFromJSON:(NSDictionary<NSString*, id> *)dictionary;
++ (instancetype)decodedObjectFromJSON:(NSDictionary<NSString*, id> *)dictionary error:(NSError**)error;
 @end
 NS_ASSUME_NONNULL_END

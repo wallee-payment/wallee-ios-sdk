@@ -14,11 +14,13 @@ FOUNDATION_EXPORT NSString *const WALErrorDomain;
 typedef NS_ENUM(NSUInteger, WALError){
     WALErrorInvalidCredentials  = 100,
     WALErrorInvalidState        = 200,
+    WALErrorInvalidArgument     = 900,
 };
 
 @interface WALErrorHelper : NSObject
-+(void)populate:(NSError **)error withInvalidCredentialsWithMessage:(NSString *)message;
-+(void)populate:(NSError **)error withIllegalStateWithMessage:(NSString *)message;
++ (void)populate:(NSError **)error withInvalidCredentialsWithMessage:(NSString *)message;
++ (void)populate:(NSError **)error withIllegalStateWithMessage:(NSString *)message;
++ (void)populate:(NSError **)error withIllegalArgumentWithMessage:(NSString *)message;
 @end
 
 NS_ASSUME_NONNULL_END
