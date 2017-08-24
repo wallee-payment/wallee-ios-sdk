@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 FOUNDATION_EXPORT const NSTimeInterval WALCredentialsThreshold;
 
-@interface WALCredentials : NSObject
+@interface WALCredentials : NSObject<NSCopying>
 
 @property (nonatomic, readonly, assign) NSUInteger transactionId;
 @property (nonatomic, readonly, assign) NSUInteger spaceId;
@@ -31,7 +31,7 @@ FOUNDATION_EXPORT const NSTimeInterval WALCredentialsThreshold;
  */
 + (instancetype)credentialsWithCredentials:(NSString*)credentials error:(NSError **)error;
 
--(instancetype) init __attribute__((unavailable("use the static credentialsWithCredentials:")));  
+- (instancetype)init __attribute__((unavailable("use the static credentialsWithCredentials:")));  
 
 /**
  An NSString object initialized by using format as a template into which the remaining argument values are substituted according to the system locale. The returned object may be different from the original receiver.

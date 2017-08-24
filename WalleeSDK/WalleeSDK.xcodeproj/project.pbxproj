@@ -10,6 +10,10 @@
 		A6A194E91F49CFA600374E92 /* WALDatabaseTranslatedString.h in Headers */ = {isa = PBXBuildFile; fileRef = A6A194E71F49CFA600374E92 /* WALDatabaseTranslatedString.h */; };
 		A6A194EA1F49CFA600374E92 /* WALDatabaseTranslatedString.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A194E81F49CFA600374E92 /* WALDatabaseTranslatedString.m */; };
 		A6A194EC1F49D3F800374E92 /* WALJSONDecodable.h in Headers */ = {isa = PBXBuildFile; fileRef = A6A194EB1F49D3F800374E92 /* WALJSONDecodable.h */; };
+		A6A194EE1F4EF3DE00374E92 /* WALCredentialsFetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = A6A194ED1F4EF3DE00374E92 /* WALCredentialsFetcher.h */; };
+		A6A194F11F4EF47900374E92 /* WALCredentialsProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = A6A194EF1F4EF47900374E92 /* WALCredentialsProvider.h */; };
+		A6A194F21F4EF47900374E92 /* WALCredentialsProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A194F01F4EF47900374E92 /* WALCredentialsProvider.m */; };
+		A6A194F51F4F0D3800374E92 /* WALTestCredentialFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A194F41F4F0D3800374E92 /* WALTestCredentialFetcher.m */; };
 		A6C7B5A71F435CC9003CCB97 /* WalleeApiTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A6C7B5A61F435CC9003CCB97 /* WalleeApiTest.m */; };
 		A6C7B5AA1F435DC7003CCB97 /* WALApiConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = A6C7B5A81F435DC7003CCB97 /* WALApiConfig.h */; };
 		A6C7B5AB1F435DC7003CCB97 /* WALApiConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = A6C7B5A91F435DC7003CCB97 /* WALApiConfig.m */; };
@@ -46,6 +50,11 @@
 		A6A194E71F49CFA600374E92 /* WALDatabaseTranslatedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALDatabaseTranslatedString.h; sourceTree = "<group>"; };
 		A6A194E81F49CFA600374E92 /* WALDatabaseTranslatedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALDatabaseTranslatedString.m; sourceTree = "<group>"; };
 		A6A194EB1F49D3F800374E92 /* WALJSONDecodable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALJSONDecodable.h; sourceTree = "<group>"; };
+		A6A194ED1F4EF3DE00374E92 /* WALCredentialsFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALCredentialsFetcher.h; sourceTree = "<group>"; };
+		A6A194EF1F4EF47900374E92 /* WALCredentialsProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALCredentialsProvider.h; sourceTree = "<group>"; };
+		A6A194F01F4EF47900374E92 /* WALCredentialsProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALCredentialsProvider.m; sourceTree = "<group>"; };
+		A6A194F31F4F0D3800374E92 /* WALTestCredentialFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALTestCredentialFetcher.h; sourceTree = "<group>"; };
+		A6A194F41F4F0D3800374E92 /* WALTestCredentialFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALTestCredentialFetcher.m; sourceTree = "<group>"; };
 		A6C7B5A61F435CC9003CCB97 /* WalleeApiTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WalleeApiTest.m; sourceTree = "<group>"; };
 		A6C7B5A81F435DC7003CCB97 /* WALApiConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALApiConfig.h; sourceTree = "<group>"; };
 		A6C7B5A91F435DC7003CCB97 /* WALApiConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALApiConfig.m; sourceTree = "<group>"; };
@@ -187,6 +196,8 @@
 				A6C7B5A61F435CC9003CCB97 /* WalleeApiTest.m */,
 				A6DE8E881F41A77E006E082B /* WalleeSDKTests.m */,
 				A6DE8E8A1F41A77E006E082B /* Info.plist */,
+				A6A194F31F4F0D3800374E92 /* WALTestCredentialFetcher.h */,
+				A6A194F41F4F0D3800374E92 /* WALTestCredentialFetcher.m */,
 			);
 			path = WalleeSDKTests;
 			sourceTree = "<group>";
@@ -196,6 +207,9 @@
 			children = (
 				A6DE8ED41F41CFA9006E082B /* WALCredentials.h */,
 				A6DE8ED51F41CFA9006E082B /* WALCredentials.m */,
+				A6A194ED1F4EF3DE00374E92 /* WALCredentialsFetcher.h */,
+				A6A194EF1F4EF47900374E92 /* WALCredentialsProvider.h */,
+				A6A194F01F4EF47900374E92 /* WALCredentialsProvider.m */,
 			);
 			path = Credentials;
 			sourceTree = "<group>";
@@ -222,10 +236,12 @@
 				A6C7B5C41F49C151003CCB97 /* WALDatabaseTranslatedStringItem.h in Headers */,
 				A6C7B5C01F49B7DD003CCB97 /* WALPaymentMethodConfiguration.h in Headers */,
 				A6C7B5AA1F435DC7003CCB97 /* WALApiConfig.h in Headers */,
+				A6A194F11F4EF47900374E92 /* WALCredentialsProvider.h in Headers */,
 				A6A194EC1F49D3F800374E92 /* WALJSONDecodable.h in Headers */,
 				A6C7B5B91F49A87A003CCB97 /* WALNSURLSessionApiClient.h in Headers */,
 				A6DE8E8B1F41A77E006E082B /* WalleeSDK.h in Headers */,
 				A6C7B5B41F4898DC003CCB97 /* WALTypes.h in Headers */,
+				A6A194EE1F4EF3DE00374E92 /* WALCredentialsFetcher.h in Headers */,
 				A6DE8ED61F41CFA9006E082B /* WALCredentials.h in Headers */,
 				A6A194E91F49CFA600374E92 /* WALDatabaseTranslatedString.h in Headers */,
 				A6DE8EDB1F41F9F7006E082B /* WALErrorDomain.h in Headers */,
@@ -335,6 +351,7 @@
 				A6C7B5C11F49B7DD003CCB97 /* WALPaymentMethodConfiguration.m in Sources */,
 				A6C7B5B11F4892B0003CCB97 /* WALMobileSdkUrl.m in Sources */,
 				A6A194EA1F49CFA600374E92 /* WALDatabaseTranslatedString.m in Sources */,
+				A6A194F21F4EF47900374E92 /* WALCredentialsProvider.m in Sources */,
 				A6C7B5BA1F49A87A003CCB97 /* WALNSURLSessionApiClient.m in Sources */,
 				A6DE8ED71F41CFA9006E082B /* WALCredentials.m in Sources */,
 				A6C7B5C51F49C151003CCB97 /* WALDatabaseTranslatedStringItem.m in Sources */,
@@ -349,6 +366,7 @@
 			files = (
 				A6C7B5A71F435CC9003CCB97 /* WalleeApiTest.m in Sources */,
 				A6DE8E891F41A77E006E082B /* WalleeSDKTests.m in Sources */,
+				A6A194F51F4F0D3800374E92 /* WALTestCredentialFetcher.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

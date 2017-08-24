@@ -7,10 +7,13 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "WALCredentialsProvider.h"
+#import "WALCredentialsFetcher.h"
 #import "WALCredentials.h"
 #import "WALMobileSdkUrl.h"
 #import "WALErrorDomain.h"
 #import "WALTypes.h"
+#import "WALTestCredentialFetcher.h"
 
 @interface WalleeSDKTests : XCTestCase
 
@@ -75,9 +78,24 @@
     XCTAssertNotNil(error, @"paymentMethod error should be populated");
 }
 
-- (void)testWip {
-//    WALCredentials *credentials = [[WALCredentials alloc] init];
+
+@class WALTestCredentialFetcher;
+- (void)testCredentialsProviderValid {
+    WALTestCredentialFetcher *fetcher = [[WALTestCredentialFetcher alloc] init];
+    WALCredentials *protoCredentials = fetcher.credentials;
+    WALCredentialsProvider *provider = [[WALCredentialsProvider alloc] initWith:fetcher];
+    void(^callbackBlock)(WALCredentials *, NSError *) = ^(WALCredentials * _Nullable credentials, NSError * _Nullable error) {
+        XCTAssertEqualObjects(protoCredentials, credentials, @"Callback should always receive same credentials");
+    };
     
+    [provider getCredentials:callbackBlock];
+    XCTAssertEqual(1, fetcher.counter, @" WALCredentialsFetcher.fetch should only be called once");
+    [NSThread sleepForTimeInterval:1]; // T`is to make sure that the Provider has time to Cache the data (asyncronosity)
+    [provider getCredentials:callbackBlock];
+    XCTAssertEqual(1, fetcher.counter, @" WALCredentialsFetcher.fetch should only be called once");
 }
 
 @end
+
+
+

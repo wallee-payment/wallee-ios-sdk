@@ -20,7 +20,7 @@ const NSTimeInterval WALCredentialsThreshold = 2 * 60;
 
 @implementation WALCredentials
 
--(instancetype)initWithSpaceId:(NSUInteger)spaceId transactionId:(NSUInteger)transactionId timestamp:(NSUInteger)timestamp{
+- (instancetype)initWithSpaceId:(NSUInteger)spaceId transactionId:(NSUInteger)transactionId timestamp:(NSUInteger)timestamp{
     if (timestamp == 0) {
         return nil;
     }
@@ -32,13 +32,12 @@ const NSTimeInterval WALCredentialsThreshold = 2 * 60;
     return self;
 }
 
--(instancetype)init {
+- (instancetype)init {
     NSAssert(false,@"unavailable, use credentialsWithCredentials: instead");
     return nil;
 }
 
-
-+(instancetype)credentialsWithCredentials:(NSString *)credentials error:(NSError * _Nullable __autoreleasing *)error {
++ (instancetype)credentialsWithCredentials:(NSString *)credentials error:(NSError * _Nullable __autoreleasing *)error {
     
     NSArray<NSString*> *components = [self parseCredentialString:credentials error:error];
     if (!components) {
@@ -53,7 +52,7 @@ const NSTimeInterval WALCredentialsThreshold = 2 * 60;
     return newCredentials;
 }
 
--(BOOL)checkCredentials:(WALCredentials *)other error:(NSError * _Nullable __autoreleasing *)error {
+- (BOOL)checkCredentials:(WALCredentials *)other error:(NSError * _Nullable __autoreleasing *)error {
     BOOL success = YES;
     if (self.transactionId != other.transactionId) {
         success = NO;
@@ -65,12 +64,13 @@ const NSTimeInterval WALCredentialsThreshold = 2 * 60;
     return success;
 }
 
--(BOOL)isValid {
+- (BOOL)isValid {
     NSTimeInterval current = [[NSDate date] timeIntervalSince1970] + WALCredentialsThreshold;
     return self.timestamp > current;
 }
 
-+(NSArray<NSString *> *)parseCredentialString:(NSString *)credentials error:(NSError * _Nullable __autoreleasing *)error {
+// MARK: - Internal
++ (NSArray<NSString *> *)parseCredentialString:(NSString *)credentials error:(NSError * _Nullable __autoreleasing *)error {
     if (credentials.length == 0) {
         [WALErrorHelper populate:error withInvalidCredentialsWithMessage:@"The credentials are required to create a new credentials object."];
         return nil;
@@ -102,6 +102,18 @@ const NSTimeInterval WALCredentialsThreshold = 2 * 60;
     }
     
     return components;
+}
+
+// MARK: - Copying
+-(id)copyWithZone:(NSZone *)zone {
+    WALCredentials *newCredentials = [[[self class] alloc] initWithSpaceId:self.spaceId transactionId:self.transactionId timestamp:self.timestamp];
+    newCredentials.credentials = self.credentials;
+    return newCredentials;
+}
+
+// MARK: - Equality
+- (BOOL)isEqual:(id)object {
+    return [[object credentials] isEqualToString:self.credentials];
 }
 
 // MARK: - Description

@@ -90,7 +90,6 @@ static NSUInteger const SPACE_ID = 316l;
 
 }
 
-
 - (void)testCredentials {
     XCTestExpectation *expectation = [self expectationWithDescription:@"Credentials not built"];
     [self createCredentials:USER_ID space:SPACE_ID macKey:HMAC_KEY completion:^(WALCredentials *credential) {
