@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @protocol WALJSONAutoDecodable <NSObject>
-/// all known fields with remapped names
+/// all known fields with remapped names, but wihtout complex ones
 + (NSArray<NSString *> * _Nullable)jsonMapping;
 /// mapping for non Foundation Objects
 + (NSDictionary<NSString *, Class>  * _Nullable)jsonComplexMapping;
