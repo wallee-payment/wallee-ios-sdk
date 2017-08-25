@@ -8,6 +8,7 @@
 
 #import "WALPaymentMethodConfiguration.h"
 #import "WALDatabaseTranslatedString.h"
+#import "WALErrorDomain.h"
 
 @interface WALPaymentMethodConfiguration ()
 + (WALDataCollectionType)dataCollectionTypeFrom:(NSString*)name;
@@ -27,23 +28,79 @@
 }
 
 - (BOOL)populateWithJson:(NSDictionary *)dictionary error:(NSError *__autoreleasing *)error {
-    _dataCollectionType = [self.class dataCollectionTypeFrom:dictionary[@"dataCollectionType"]];
-    _descriptionText = [WALDatabaseTranslatedString decodedObjectFromJSON:dictionary[@"description"] error:error];
-    _id = [dictionary[@"id"] integerValue];
-//    [dictionary[@""] integerValue]; imageResourcePath
-    _linkedSpaceId = [dictionary[@"linkedSpaceId"] integerValue];
-    _name = dictionary[@"name"];
-//    [dictionary[@""] integerValue];oneClickPaymentMethode
-    _paymentMethod = [dictionary[@"paymentMethod"] integerValue];
-    _plannedPurgeDate = dictionary[@"plannedPurgeDate"];
-    _resolvedDescription = dictionary[@"resolvedDescription"];
-    _resolvedImageUrl = dictionary[@"resolvedImageUrl"];
-    _resolvedTitle = dictionary[@"resolvedTitle"];
-    _sortOrder = [dictionary[@"sortOrder"] integerValue];
-    _spaceId = [dictionary[@"spaceId"] integerValue];
-    _title = [WALDatabaseTranslatedString decodedObjectFromJSON:dictionary[@"title"] error:error];
-    _version = [dictionary[@"version"] integerValue];
-    return _title != nil && _descriptionText != nil;
+    // remap
+    NSMutableDictionary *remapped = [NSMutableDictionary dictionaryWithDictionary:dictionary];
+    [self.class.jsonReMapping enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull oldKey, BOOL * _Nonnull stop) {
+        remapped[key] = dictionary[oldKey];
+        [remapped removeObjectForKey:oldKey];
+    }];
+    
+    //simple map
+    NSArray *values = [remapped objectsForKeys:[[self class] jsonMapping] notFoundMarker:@"not-defined"];
+    [self setValuesForKeysWithDictionary:[NSDictionary dictionaryWithObjects:values forKeys:self.class.jsonMapping]];
+    
+    
+    //complexmap
+    __block BOOL success = YES;
+    __block NSError *blockError;
+    [self.class.jsonComplexMapping enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, Class  _Nonnull obj, BOOL * _Nonnull stop) {
+        if ([obj conformsToProtocol:@protocol(WALJSONDecodable)]) {
+            NSObject *value = remapped[key];
+            if (!value) {
+                [WALErrorHelper populate:&blockError withIllegalArgumentWithMessage:[NSString stringWithFormat:@"Unable to parse JSON. Could not find Property: %@.%@", self.class, key]];
+                success = NO;
+            } else {
+                success = [self.class decodeJSONValue:value withClass:obj forKey:key inObject:self error:&blockError];
+            }
+            if (!success) {
+                *stop = YES;
+            }
+        } else {
+            [WALErrorHelper populate:&blockError withIllegalArgumentWithMessage:[NSString stringWithFormat:@"%@ is no conforming to protocol %@ and cannot be parsed", self.class, @protocol(WALJSONDecodable)]];
+            success = NO;
+            *stop = YES;
+        }
+    }];
+    if (!success) {
+        *error = blockError;
+    }
+    return success && _id != 0 && _linkedSpaceId != 0 && _name != nil;
+}
+
++ (BOOL)decodeJSONValue:(NSObject *)value withClass:(Class)classObject forKey:(NSString *)key inObject:(NSObject *)object error:(NSError **)error {
+    __block BOOL success = YES;
+    if ([value isKindOfClass:NSDictionary.class]) {
+        id decodedObject = [classObject decodedObjectFromJSON:(NSDictionary *)value error:error];
+        if (decodedObject) {
+            [object setValue:decodedObject forKey:key];
+        } else {
+            success = NO;
+        }
+    } else if ([value isKindOfClass:NSArray.class]) {
+        [((NSArray *)value) enumerateObjectsUsingBlock:^(NSObject *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            success = [self.class decodeJSONValue:obj withClass:classObject forKey:key inObject:object error:error];
+        }];
+    } else {
+        if (success) {
+            [WALErrorHelper populate:error withIllegalArgumentWithMessage:[NSString stringWithFormat:@"Unable to parse JSON. Expected Array or Dictionary in %@.%@. found %@", self.class, key, value.class]];
+        }
+        success = NO;
+    }
+
+    return success;
+}
+
+/// all known fields with remapped names
++ (NSArray<NSString*> *)jsonMapping {
+    return @[ @"id", @"linkedSpaceId", @"name", @"paymentMethod", @"plannedPurgeDate", @"resolvedDescription", @"resolvedDescription", @"resolvedImageUrl",@"resolvedTitle",@"sortOrder", @"spaceId", @"version"];
+}
+/// mapping for non Foundation Objects
++ (NSDictionary<NSString *, Class> *)jsonComplexMapping {
+    return @{@"descriptionText": WALDatabaseTranslatedString.class, @"title": WALDatabaseTranslatedString.class};
+}
+/// names to remap
++ (NSDictionary<NSString*,NSString*> *)jsonReMapping {
+    return @{@"descriptionText": @"description"};
 }
 
 // MARK: - Enums
@@ -73,6 +130,7 @@
 // MARK: - Description
 - (NSString *)description {
     NSDictionary *desc = @{
+                           @"name": _name,
                            @"id": @(_id),
                            @"spaceId": @(_linkedSpaceId),
                            @"dataCollectionType": [self.class stringFrom:_dataCollectionType],

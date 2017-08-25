@@ -34,6 +34,8 @@
 		A6DE8ED71F41CFA9006E082B /* WALCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DE8ED51F41CFA9006E082B /* WALCredentials.m */; };
 		A6DE8EDB1F41F9F7006E082B /* WALErrorDomain.h in Headers */ = {isa = PBXBuildFile; fileRef = A6DE8ED91F41F9F7006E082B /* WALErrorDomain.h */; };
 		A6DE8EDC1F41F9F7006E082B /* WALErrorDomain.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DE8EDA1F41F9F7006E082B /* WALErrorDomain.m */; };
+		A6EECEE91F501D4D00954E02 /* WALJSONParser.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EECEE71F501D4D00954E02 /* WALJSONParser.h */; };
+		A6EECEEA1F501D4D00954E02 /* WALJSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EECEE81F501D4D00954E02 /* WALJSONParser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +80,8 @@
 		A6DE8ED51F41CFA9006E082B /* WALCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALCredentials.m; sourceTree = "<group>"; };
 		A6DE8ED91F41F9F7006E082B /* WALErrorDomain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALErrorDomain.h; sourceTree = "<group>"; };
 		A6DE8EDA1F41F9F7006E082B /* WALErrorDomain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALErrorDomain.m; sourceTree = "<group>"; };
+		A6EECEE71F501D4D00954E02 /* WALJSONParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALJSONParser.h; sourceTree = "<group>"; };
+		A6EECEE81F501D4D00954E02 /* WALJSONParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALJSONParser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +224,8 @@
 				A6DE8ED91F41F9F7006E082B /* WALErrorDomain.h */,
 				A6DE8EDA1F41F9F7006E082B /* WALErrorDomain.m */,
 				A6C7B5B21F4898DC003CCB97 /* WALTypes.h */,
+				A6EECEE71F501D4D00954E02 /* WALJSONParser.h */,
+				A6EECEE81F501D4D00954E02 /* WALJSONParser.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -232,6 +238,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A6C7B5B01F4892B0003CCB97 /* WALMobileSdkUrl.h in Headers */,
+				A6EECEE91F501D4D00954E02 /* WALJSONParser.h in Headers */,
 				A6C7B5BC1F49AAF2003CCB97 /* WALApiClient.h in Headers */,
 				A6C7B5C41F49C151003CCB97 /* WALDatabaseTranslatedStringItem.h in Headers */,
 				A6C7B5C01F49B7DD003CCB97 /* WALPaymentMethodConfiguration.h in Headers */,
@@ -349,6 +356,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A6C7B5C11F49B7DD003CCB97 /* WALPaymentMethodConfiguration.m in Sources */,
+				A6EECEEA1F501D4D00954E02 /* WALJSONParser.m in Sources */,
 				A6C7B5B11F4892B0003CCB97 /* WALMobileSdkUrl.m in Sources */,
 				A6A194EA1F49CFA600374E92 /* WALDatabaseTranslatedString.m in Sources */,
 				A6A194F21F4EF47900374E92 /* WALCredentialsProvider.m in Sources */,
