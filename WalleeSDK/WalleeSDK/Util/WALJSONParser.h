@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WALJSONAutoDecodable.h"
 
 @interface WALJSONParser : NSObject
-
++ (BOOL)populate:(NSObject<WALJSONAutoDecodable> *)object withDictionary:(NSDictionary *)dictionary error:(NSError **)error;
 @end

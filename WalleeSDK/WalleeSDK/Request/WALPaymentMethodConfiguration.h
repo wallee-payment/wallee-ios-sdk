@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "WALJSONDecodable.h"
+#import "WALJSONAutoDecodable.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,7 +20,7 @@ typedef NS_ENUM(NSInteger, WALDataCollectionType) {
     WALDataCollectionTypeUnknown
 };
 
-@interface WALPaymentMethodConfiguration : NSObject<WALJSONDecodable>
+@interface WALPaymentMethodConfiguration : NSObject<WALJSONDecodable, WALJSONAutoDecodable>
 @property (nonatomic, readonly) WALDataCollectionType dataCollectionType;
 @property (nonatomic, readonly, copy) WALDatabaseTranslatedString *descriptionText;
 @property (nonatomic, readonly) NSUInteger id;
