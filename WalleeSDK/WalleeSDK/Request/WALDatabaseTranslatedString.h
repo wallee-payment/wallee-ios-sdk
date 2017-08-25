@@ -8,12 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "WALJSONDecodable.h"
+#import "WALJSONAutoDecodable.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @class WALDatabaseTranslatedStringItem;
 
-@interface WALDatabaseTranslatedString : NSObject<WALJSONDecodable>
+@interface WALDatabaseTranslatedString : NSObject<WALJSONDecodable, WALJSONAutoDecodable>
 @property (nonatomic, copy, readonly) NSArray<NSString *> *availableLanguages;
 @property (nonatomic, copy, readonly) NSString *displayName;
 @property (nonatomic, copy, readonly) NSArray<WALDatabaseTranslatedStringItem *> *items;

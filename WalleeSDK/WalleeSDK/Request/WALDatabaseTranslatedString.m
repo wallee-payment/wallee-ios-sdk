@@ -48,6 +48,19 @@
     return databaseString;
 }
 
+// MARK: - JSONAutoDecoding
++ (NSArray<NSString*> *)jsonMapping {
+    return @[ @"id", @"linkedSpaceId", @"name", @"paymentMethod", @"plannedPurgeDate", @"resolvedDescription", @"resolvedDescription", @"resolvedImageUrl",@"resolvedTitle",@"sortOrder", @"spaceId", @"version"];
+}
+
++ (NSDictionary<NSString *, Class> *)jsonComplexMapping {
+    return @{@"descriptionText": WALDatabaseTranslatedString.class, @"title": WALDatabaseTranslatedString.class};
+}
+
++ (NSDictionary<NSString*,NSString*> *)jsonReMapping {
+    return @{@"descriptionText": @"description"};
+}
+
 // MARK: - Description
 - (NSString *)description {
     return [NSString stringWithFormat:@"%@", @{@"availableLanguages": _availableLanguages, @"displayName": _displayName, @"items": _items}];

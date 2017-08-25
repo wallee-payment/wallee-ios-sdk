@@ -8,15 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import "WALJSONDecodable.h"
+#import "WALJSONAutoDecodable.h"
 
 NS_ASSUME_NONNULL_BEGIN
-@interface WALDatabaseTranslatedStringItem : NSObject<WALJSONDecodable>
+@interface WALDatabaseTranslatedStringItem : NSObject<WALJSONDecodable, WALJSONAutoDecodable>
 @property (nonatomic, copy, readonly) NSString *language;
 @property (nonatomic, copy, readonly) NSString *languageCode;
 @property (nonatomic, copy, readonly) NSString *translation;
 
 - (instancetype)initWithLanguage:(NSString *)language languageCode:(NSString *)languageCode translation:(NSString *)translation NS_DESIGNATED_INITIALIZER;
-+ (instancetype)decodedObjectFromJSON:(NSDictionary<NSString *,id> *)dictionary;
 - (instancetype)init NS_UNAVAILABLE;
 @end
 NS_ASSUME_NONNULL_END

@@ -10,9 +10,9 @@
 
 @protocol WALJSONAutoDecodable <NSObject>
 /// all known fields with remapped names
-+ (NSArray<NSString *> *)jsonMapping;
++ (NSArray<NSString *> * _Nullable)jsonMapping;
 /// mapping for non Foundation Objects
-+ (NSDictionary<NSString *, Class> *)jsonComplexMapping;
++ (NSDictionary<NSString *, Class>  * _Nullable)jsonComplexMapping;
 /// names to remap
-+ (NSDictionary<NSString *,NSString *> *)jsonReMapping;
++ (NSDictionary<NSString *,NSString *> * _Nullable)jsonReMapping;
 @end
