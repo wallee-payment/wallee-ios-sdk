@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "WALJSONDecodable.h"
+#import "WALJSONAutoDecodable.h"
 
 typedef NS_ENUM(NSInteger, WALFailureCategory) {
     WALFailureCategoryTemporaryIssue,
@@ -18,7 +19,7 @@ typedef NS_ENUM(NSInteger, WALFailureCategory) {
 };
 
 // TODO: make this non initializable?
-@interface WALFailureReason : NSObject
+@interface WALFailureReason : NSObject<WALJSONDecodable, WALJSONAutoDecodable>
 NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) WALFailureCategory category;
 @property (nonatomic, readonly, copy) NSDictionary<NSString *, NSString *> *descriptionText;

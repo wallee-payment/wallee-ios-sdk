@@ -15,8 +15,11 @@ NSString *const WalleeEndpointFetchTokenVersion = @"transaction/fetchOneClickTok
 NSString *const WalleeEndpointReadTransaction = @"transaction/readWithCredentials";
 NSString *const WalleeEndpointPerformOneClickToken = @"transaction/processOneClickTokenWithCredentials";
 
+NSString *const WalleeAcceptHeader = @"acceptHeader";
 NSString *const WalleeAllowedPaymentMethodBrands = @"allowedPaymentMethodBrands";
 NSString *const WalleeAllowedPaymentMethodConfigurations = @"allowedPaymentMethodConfigurations";
+NSString *const WalleeAuthorizationAmount = @"authorizationAmount";
+NSString *const WalleeAuthorizedOn = @"authorizedOn";
 NSString *const WalleeBillingAddress = @"billingAddress";
 NSString *const WalleeChargeRetryEnabled = @"chargeRetryEnabled";
 NSString *const WalleeCompletedOn = @"completedOn";

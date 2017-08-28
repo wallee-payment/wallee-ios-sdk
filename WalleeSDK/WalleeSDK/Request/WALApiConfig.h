@@ -15,8 +15,11 @@ FOUNDATION_EXPORT NSString *const WalleeEndpointFetchTokenVersion;
 FOUNDATION_EXPORT NSString *const WalleeEndpointReadTransaction;
 FOUNDATION_EXPORT NSString *const WalleeEndpointPerformOneClickToken;
 
+FOUNDATION_EXPORT NSString *const WalleeAcceptHeader;
 FOUNDATION_EXPORT NSString *const WalleeAllowedPaymentMethodBrands;
 FOUNDATION_EXPORT NSString *const WalleeAllowedPaymentMethodConfigurations;
+FOUNDATION_EXPORT NSString *const WalleeAuthorizationAmount;
+FOUNDATION_EXPORT NSString *const WalleeAuthorizedOn;
 FOUNDATION_EXPORT NSString *const WalleeBillingAddress;
 FOUNDATION_EXPORT NSString *const WalleeChargeRetryEnabled;
 FOUNDATION_EXPORT NSString *const WalleeCompletedOn;
