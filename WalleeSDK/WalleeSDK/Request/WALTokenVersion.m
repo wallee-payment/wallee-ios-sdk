@@ -43,6 +43,7 @@ static NSString * const walState = @"state";
     return tokenVersion;
 }
 
+// MARK: - JSON
 +(NSArray<NSString *> *)jsonMapping {
     return @[walActivatedOn, walCreatedOn, walId, walLanguage, walLinkedSpaceId, walName, walObsoletedOn, walPlannedPurgeDate, walProcessorToken, walVersion];
 }
@@ -53,5 +54,27 @@ static NSString * const walState = @"state";
 
 + (NSDictionary<NSString *,NSString *> *)jsonReMapping {
     return nil;
+}
+
+// MARK: - Description
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@", @{
+                                               walLinkedSpaceId: @(_linkedSpaceId),
+                                               walId: @(_id),
+                                               walName: _name,
+                                               walCreatedOn: _createdOn,
+                                               walActivatedOn: _activatedOn,
+                                               walObsoletedOn: _obsoletedOn,
+                                               walLanguage: _language,
+                                               walPaymentConnectorConfiguration: _paymentConnectorConfiguration,
+                                               walPlannedPurgeDate: _plannedPurgeDate,
+                                               walProcessorToken: _processorToken,
+                                               walToken: _token,
+                                               walVersion: @(_version)
+                                               }];
+}
+
+- (NSString *)debugDescription{
+    return [NSString stringWithFormat:@"<%@: %p, \"%@\">", [self class], self, [self description]];
 }
 @end

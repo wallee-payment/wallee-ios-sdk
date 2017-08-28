@@ -10,6 +10,7 @@
 #include <CommonCrypto/CommonHMAC.h>
 #import "WALNSURLSessionApiClient.h"
 #import "WALApiClient.h"
+#import "WALTokenVersion.h"
 #import "WALCredentials.h"
 #import "WALMobileSdkUrl.h"
 #import "WALPaymentMethodConfiguration.h"
@@ -97,7 +98,7 @@ static NSUInteger const SPACE_ID = 412l;
     [client fetchTokenVersions:^(NSArray<WALTokenVersion *> * _Nullable tokenVersions, NSError * _Nullable error) {
         XCTAssertNotNil(tokenVersions, @"paymentMethodConfigurations not created");
         XCTAssertTrue(tokenVersions.count > 0, @"The payment methods list is empty");
-//        XCTAssertEqual([tokenVersions firstObject].linkedSpaceId, SPACE_ID, @"The returned SpaceID is not equal to the requested");
+        XCTAssertEqual([tokenVersions firstObject].linkedSpaceId, SPACE_ID, @"The returned SpaceID is not equal to the requested");
         [expectation fulfill];
     }];
     

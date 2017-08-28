@@ -15,6 +15,49 @@ NSString *const WalleeEndpointFetchTokenVersion = @"transaction/fetchOneClickTok
 NSString *const WalleeEndpointReadTransaction = @"transaction/readWithCredentials";
 NSString *const WalleeEndpointPerformOneClickToken = @"transaction/processOneClickTokenWithCredentials";
 
+NSString *const WalleeAllowedPaymentMethodBrands = @"allowedPaymentMethodBrands";
+NSString *const WalleeAllowedPaymentMethodConfigurations = @"allowedPaymentMethodConfigurations";
+NSString *const WalleeBillingAddress = @"billingAddress";
+NSString *const WalleeChargeRetryEnabled = @"chargeRetryEnabled";
+NSString *const WalleeCompletedOn = @"completedOn";
+NSString *const WalleeCompletionTimeoutOn = @"completionTimeoutOn";
+NSString *const WalleeConfirmedBy = @"confirmedBy";
+NSString *const WalleeConfirmedOn = @"confirmedOn";
+NSString *const WalleeCreatedBy = @"createdBy";
+NSString *const WalleeCreatedOn = @"createdOn";
+NSString *const WalleeCurrency = @"currency";
+NSString *const WalleeCustomerEmailAddress = @"customerEmailAddress";
+NSString *const WalleeCustomerId = @"customerId";
+NSString *const WalleeCustomersPresence = @"customersPresence";
+NSString *const WalleeEndOfLife = @"endOfLife";
+NSString *const WalleeFailedOn = @"failedOn";
+NSString *const WalleeFailedUrl = @"failedUrl";
+NSString *const WalleeFailureReason = @"failureReason";
+NSString *const WalleeGroup = @"group";
+NSString *const WalleeId = @"id";
+NSString *const WalleeInternetProtocolAddress = @"internetProtocolAddress";
+NSString *const WalleeInternetProtocolAddressCountry = @"internetProtocolAddressCountry";
+NSString *const WalleeInvoiceMerchantReference = @"invoiceMerchantReference";
+NSString *const WalleeLanguage = @"language";
+NSString *const WalleeLineItems = @"lineItems";
+NSString *const WalleeLinkedSpaceId = @"linkedSpaceId";
+NSString *const WalleeMerchantReference = @"merchantReference";
+NSString *const WalleeMetaData = @"metaData";
+NSString *const WalleePaymentConnectorConfiguration = @"paymentConnectorConfiguration";
+NSString *const WalleePlannedPurgeDate = @"plannedPurgeDate";
+NSString *const WalleeProcessingOn = @"processingOn";
+NSString *const WalleeRefundedAmount = @"refundedAmount";
+NSString *const WalleeShippingAddress = @"shippingAddress";
+NSString *const WalleeShippingMethod = @"shippingMethod";
+NSString *const WalleeSpaceViewId = @"spaceViewId";
+NSString *const WalleeState = @"state";
+NSString *const WalleeSuccessUrl = @"successUrl";
+NSString *const WalleeToken = @"token";
+NSString *const WalleeUserAgentHeader = @"userAgentHeader";
+NSString *const WalleeUserFailureMessage = @"userFailureMessage";
+NSString *const WalleeUserInterfaceType = @"userInterfaceType";
+NSString *const WalleeVersion = @"version";
+
 @implementation WALApiConfig
 
 @end

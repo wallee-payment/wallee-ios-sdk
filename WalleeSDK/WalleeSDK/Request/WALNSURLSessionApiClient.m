@@ -10,6 +10,7 @@
 #import "WALMobileSdkUrl.h"
 #import "WALPaymentMethodConfiguration.h"
 #import "WALTokenVersion.h"
+#import "WALTransaction.h"
 #import "WALApiConfig.h"
 #import "WALCredentials.h"
 #import "WALErrorDomain.h"
@@ -131,6 +132,18 @@
         }
     }];
     
+    [task resume];
+}
+
+- (void)readTransaction:(WALTransactionCompletion)completion {
+    // !!!: change credentials Provider
+    NSURL *url = [self urlForEndpoint:WalleeEndpointReadTransaction withCredentials:self.credentialsProvider.credentials];
+    NSURLSessionTask *task = [self.urlSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable responseError) {
+        NSError *error;
+        NSArray * json = [WALNSURLSessionApiClient jsonFromData:data response:response responseError:responseError error:&error];
+//        WALTransaction *transaction = [WALTransaction dec];
+        
+    }];
     [task resume];
 }
 

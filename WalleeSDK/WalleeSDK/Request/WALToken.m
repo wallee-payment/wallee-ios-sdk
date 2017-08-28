@@ -50,4 +50,23 @@ static NSString * const walVersion = @"version";
 + (NSDictionary<NSString *,NSString *> *)jsonReMapping {
     return nil;
 }
+
+// MARK: - Description
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@", @{walCustomerId: _customerId,
+                                               walCustomerEmailAddress: _customerEmailAddress,
+                                               walCreatedOn: _createdOn,
+                                               walLinkedSpaceId: @(_linkedSpaceId),
+                                               walId: @(_id), walExternalId: _externalId,
+                                               walEnabledForOneClickPayment: @(_enabledForOneClickPayment),
+                                               walPlannedPurgeDate: _plannedPurgeDate,
+                                               walState: _state,
+                                               walTokenReference: _tokenReference,
+                                               walVersion: @(_version)
+                                               }];
+}
+
+- (NSString *)debugDescription{
+    return [NSString stringWithFormat:@"<%@: %p, \"%@\">", [self class], self, [self description]];
+}
 @end

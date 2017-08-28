@@ -39,5 +39,5 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSUInteger spaceId;
 @property (nonatomic, readonly, copy) WALDatabaseTranslatedString *title;
 @property (nonatomic, readonly) NSInteger version;
-@end
 NS_ASSUME_NONNULL_END
+@end
