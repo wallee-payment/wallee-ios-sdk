@@ -32,4 +32,13 @@ NSString *const WALErrorDomain = @"com.wallee.ios";
         *error = [NSError errorWithDomain:WALErrorDomain code:WALErrorInvalidArgument userInfo:userInfo];
     }
 }
+
+//MARK - Checks
++ (BOOL)checkArrayType:(id)object withMessage:(NSString *)message error:(NSError * _Nullable __autoreleasing *)error {
+    if (![object isKindOfClass:[NSArray class]]) {
+        [WALErrorHelper populate:error withIllegalArgumentWithMessage:message];
+        return NO;
+    }
+    return YES;
+}
 @end

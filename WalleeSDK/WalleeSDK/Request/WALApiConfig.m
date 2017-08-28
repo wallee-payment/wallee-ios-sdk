@@ -11,6 +11,9 @@
 NSString *const WalleeBaseURL = @"https://app-wallee.com/api/";
 NSString *const WalleeEndpointBuildMobilUrl = @"transaction/buildMobileSdkUrlWithCredentials";
 NSString *const WalleeEndpointFetchPossiblePaymentMethods = @"transaction/fetchPossiblePaymentMethodsWithCredentials";
+NSString *const WalleeEndpointFetchTokenVersion = @"transaction/fetchOneClickTokensWithCredentials";
+NSString *const WalleeEndpointReadTransaction = @"transaction/readWithCredentials";
+NSString *const WalleeEndpointPerformOneClickToken = @"transaction/processOneClickTokenWithCredentials";
 
 @implementation WALApiConfig
 

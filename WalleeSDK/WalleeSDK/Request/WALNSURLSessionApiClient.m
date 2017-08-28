@@ -9,6 +9,7 @@
 #import "WALNSURLSessionApiClient.h"
 #import "WALMobileSdkUrl.h"
 #import "WALPaymentMethodConfiguration.h"
+#import "WALTokenVersion.h"
 #import "WALApiConfig.h"
 #import "WALCredentials.h"
 #import "WALErrorDomain.h"
@@ -40,7 +41,7 @@
     return [[self alloc] initWithBaseUrl:baseUrl credentialsProvider:credentialsProvider];
 }
 
-// MARK: extract
+// MARK: API implementation
 
 - (void)buildMobileSdkUrl:(WALMobileSdkUrlCompletion)completion {
     NSString *endpoint = [NSString stringWithFormat:@"%@?credentials=%@", WalleeEndpointBuildMobilUrl, self.credentialsProvider.credentials];
@@ -61,53 +62,101 @@
 }
 
 - (void)fetchPaymentMethodConfigurations:(WALPaymentMethodConfigurationsCompletion)completion {
-    NSString *endpoint = [NSString stringWithFormat:@"%@?credentials=%@", WalleeEndpointFetchPossiblePaymentMethods, self.credentialsProvider.credentials];
-    NSURL *url = [NSURL URLWithString:endpoint relativeToURL:self.baseURL];
+    NSURL *url = [self urlForEndpoint:WalleeEndpointFetchPossiblePaymentMethods withCredentials:self.credentialsProvider.credentials];
     
-    NSURLSessionDataTask *task = [self.urlSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (data) {
-            NSError *jsonError;
-            NSArray* json = [NSJSONSerialization JSONObjectWithData:data
-                                                                 options:kNilOptions
-                                                                   error:&jsonError];
-            if (!json) {
-                completion(nil, jsonError);
-                return;
-            }
-            if (![json isKindOfClass:[NSArray class]]) {
-                [WALErrorHelper populate:&jsonError withIllegalArgumentWithMessage:@"PaymentMethodConfiguration json response is not an array"];
-                completion(nil, jsonError);
-                return;
-            }
-            
-            __block NSError *paymentMethodError;
-            __block NSMutableArray *paymentConfigurations = [NSMutableArray arrayWithCapacity:json.count];
-            [json enumerateObjectsUsingBlock:^(NSDictionary*  _Nonnull dict, NSUInteger idx, BOOL * _Nonnull stop) {
-                
-                WALPaymentMethodConfiguration *config = [WALPaymentMethodConfiguration decodedObjectFromJSON:dict error:&paymentMethodError];
-                if (!config) {
-                    paymentConfigurations = nil;
-                    *stop = YES;
-                } else {
-                    [paymentConfigurations addObject:config];
-                }
-            }];
-            
-            if (!paymentConfigurations) {
-                completion(nil, paymentMethodError);
-            } else {
-                completion(paymentConfigurations, nil);
-            }
-            
-        } else {
+    NSURLSessionDataTask *task = [self.urlSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable responseError) {
+        
+        NSError *error;
+        NSArray * json = [WALNSURLSessionApiClient jsonFromData:data response:response responseError:responseError error:&error];
+        
+        if (!json || ![WALErrorHelper checkArrayType:json withMessage:@"PaymentMethodConfiguration json response is not an array" error:&error]) {
             completion(nil, error);
+            return;
+        }
+        
+        __block NSError *paymentMethodError;
+        __block NSMutableArray *paymentConfigurations = [NSMutableArray arrayWithCapacity:json.count];
+        [json enumerateObjectsUsingBlock:^(NSDictionary*  _Nonnull dict, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            WALPaymentMethodConfiguration *config = [WALPaymentMethodConfiguration decodedObjectFromJSON:dict error:&paymentMethodError];
+            if (config) {
+                [paymentConfigurations addObject:config];
+            } else {
+                paymentConfigurations = nil;
+                *stop = YES;
+            }
+        }];
+        
+        if (paymentConfigurations) {
+            completion(paymentConfigurations, nil);
+        } else {
+            completion(nil, paymentMethodError);
         }
     }];
     
     [task resume];
 }
 
+- (void)fetchTokenVersions:(WALTokenVersionsCompletion)completion {
+    // TODO: !!! change credentials Provider
+    NSURL *url = [self urlForEndpoint:WalleeEndpointFetchTokenVersion withCredentials:self.credentialsProvider.credentials];
+    
+    NSURLSessionDataTask *task = [self.urlSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable responseError) {
 
+        NSError *error;
+        NSArray * json = [WALNSURLSessionApiClient jsonFromData:data response:response responseError:responseError error:&error];
+        
+        if (!json || ![WALErrorHelper checkArrayType:json withMessage:@"FetchTokenVersions json response is not an array" error:&error]) {
+            completion(nil, error);
+            return;
+        }
+        
+        __block NSError *tokenVersionsError;
+        __block NSMutableArray *tokenVersions = [NSMutableArray arrayWithCapacity:json.count];
+        [json enumerateObjectsUsingBlock:^(NSDictionary*  _Nonnull dict, NSUInteger idx, BOOL * _Nonnull stop) {
+            WALTokenVersion *tokenVersion = [WALTokenVersion decodedObjectFromJSON:dict error:&tokenVersionsError];
+            if (tokenVersion) {
+                [tokenVersions addObject:tokenVersion];
+            } else {
+                tokenVersions = nil;
+                *stop = YES;
+            }
+            
+        }];
+        
+        if (tokenVersions) {
+            completion(tokenVersions, nil);
+        } else {
+            completion(nil, tokenVersionsError);
+        }
+    }];
+    
+    [task resume];
+}
 
+// MARK: -
+- (NSURL *)urlForEndpoint:(NSString *)endpoint withCredentials:(NSString *)credentials {
+    NSString *urlString = [NSString stringWithFormat:@"%@?credentials=%@", endpoint, credentials];
+    return [NSURL URLWithString:urlString relativeToURL:self.baseURL];
+}
+
++ (nullable id)jsonFromData:(NSData * _Nullable)data response:(NSURLResponse * _Nullable)response responseError:(NSError * _Nullable )responseError error:(NSError * _Nullable *)error {
+    
+    if (data) {
+        NSError *jsonError;
+        NSObject* json = [NSJSONSerialization JSONObjectWithData:data
+                                                        options:kNilOptions
+                                                          error:&jsonError];
+        if (!json && error) {
+            *error = jsonError;
+        }
+        return json;
+    } else {
+        if (error) {
+            *error = responseError;
+        }
+        return nil;
+    }
+}
 
 @end

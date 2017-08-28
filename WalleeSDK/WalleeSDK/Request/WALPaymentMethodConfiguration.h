@@ -9,18 +9,20 @@
 #import <Foundation/Foundation.h>
 #import "WALJSONDecodable.h"
 #import "WALJSONAutoDecodable.h"
-
-NS_ASSUME_NONNULL_BEGIN
-
 @class WALDatabaseTranslatedString;
 
+NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSInteger, WALDataCollectionType) {
     WALDataCollectionTypeOnsite,
     WALDataCollectionTypeOffsite,
     WALDataCollectionTypeUnknown
 };
+NS_ASSUME_NONNULL_END
 
 @interface WALPaymentMethodConfiguration : NSObject<WALJSONDecodable, WALJSONAutoDecodable>
+#include "WALDataMixin.h"
+NS_ASSUME_NONNULL_BEGIN
+
 @property (nonatomic, readonly) WALDataCollectionType dataCollectionType;
 @property (nonatomic, readonly, copy) WALDatabaseTranslatedString *descriptionText;
 @property (nonatomic, readonly) NSUInteger id;
@@ -37,9 +39,5 @@ typedef NS_ENUM(NSInteger, WALDataCollectionType) {
 @property (nonatomic, readonly) NSUInteger spaceId;
 @property (nonatomic, readonly, copy) WALDatabaseTranslatedString *title;
 @property (nonatomic, readonly) NSInteger version;
-
-- (instancetype)init NS_UNAVAILABLE;
-+ (instancetype)new NS_UNAVAILABLE;
 @end
-
 NS_ASSUME_NONNULL_END

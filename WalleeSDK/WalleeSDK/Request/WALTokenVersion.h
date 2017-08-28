@@ -7,15 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WALJSONDecodable.h"
+#import "WALJSONAutoDecodable.h"
 @class WALConnectorConfiguration;
 
-@interface WALToken : NSObject
+@interface WALTokenVersion : NSObject<WALJSONDecodable, WALJSONAutoDecodable>
+#include "WALDataMixin.h"
+
+NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, copy) NSString *activatedOn;
-private Address billingAddress;
+//private Address billingAddress;
 @property (nonatomic, readonly, copy) NSString *createdOn;
-private ChargeAttemptEnvironment environment;
+//private ChargeAttemptEnvironment environment;
 @property (nonatomic, readonly, assign) NSUInteger id;
-private List<Label> labels;
+//private List<Label> labels;
 @property (nonatomic, readonly, copy) NSString *language;
 @property (nonatomic, readonly, assign) NSUInteger linkedSpaceId;
 @property (nonatomic, readonly, copy) NSString *name;
@@ -23,8 +28,9 @@ private List<Label> labels;
 @property (nonatomic, readonly, copy) WALConnectorConfiguration *paymentConnectorConfiguration;
 @property (nonatomic, readonly, copy) NSString *plannedPurgeDate;
 @property (nonatomic, readonly, copy) NSString *processorToken;
-private Address shippingAddress;
-private TokenVersionState state;
+//private Address shippingAddress;
+//private TokenVersionState state;
 @property (nonatomic, readonly, assign) NSUInteger version;
-private Token token;
+//private Token token;
 @end
+NS_ASSUME_NONNULL_END

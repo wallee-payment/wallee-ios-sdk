@@ -21,6 +21,8 @@ typedef NS_ENUM(NSUInteger, WALError){
 + (void)populate:(NSError **)error withInvalidCredentialsWithMessage:(NSString *)message;
 + (void)populate:(NSError **)error withIllegalStateWithMessage:(NSString *)message;
 + (void)populate:(NSError **)error withIllegalArgumentWithMessage:(NSString *)message;
+
++ (BOOL)checkArrayType:(id)object withMessage:(NSString * _Nullable)message error:(NSError * _Nullable *)error;
 @end
 
 NS_ASSUME_NONNULL_END
