@@ -12,6 +12,7 @@
 #import "WALJSONParser.h"
 
 @interface WALPaymentMethodConfiguration ()
+- (instancetype) initInternal;
 + (WALDataCollectionType)dataCollectionTypeFrom:(NSString*)name;
 + (NSString *)stringFrom:(WALDataCollectionType)dataCollectionType;
 + (NSDictionary<NSString*, NSNumber*> *)getDataCollectionTypeToStringMapping;
@@ -19,8 +20,13 @@
 
 @implementation WALPaymentMethodConfiguration
 
+- (instancetype)initInternal {
+    self = [super init];
+    return self;
+}
+
 + (instancetype)decodedObjectFromJSON:(NSDictionary<NSString *,id> *)dictionary error:(NSError * _Nullable __autoreleasing *)error {
-    WALPaymentMethodConfiguration *configuration = [WALPaymentMethodConfiguration new];
+    WALPaymentMethodConfiguration *configuration = [[WALPaymentMethodConfiguration alloc] initInternal];
     if (![WALJSONParser populate:configuration withDictionary:dictionary error:error]) {
         return nil;
     }

@@ -39,6 +39,7 @@ typedef NS_ENUM(NSInteger, WALDataCollectionType) {
 @property (nonatomic, readonly) NSInteger version;
 
 - (instancetype)init NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
 @end
 
 NS_ASSUME_NONNULL_END

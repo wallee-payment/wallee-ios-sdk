@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 #include <CommonCrypto/CommonHMAC.h>
 #import "WALNSURLSessionApiClient.h"
+#import "WALApiClient.h"
 #import "WALCredentials.h"
 #import "WALMobileSdkUrl.h"
 #import "WALPaymentMethodConfiguration.h"
@@ -55,7 +56,7 @@ static NSUInteger const SPACE_ID = 316l;
 - (void)testBuildMobileSdkUrl {
     XCTestExpectation *expectation = [self expectationWithDescription:@"MobileSdkUrl not built"];
 
-    WALNSURLSessionApiClient *client = [WALNSURLSessionApiClient clientWithBaseUrl: TestBaseUrl credentialsProvider:self.credentials];
+    id<WALApiClient> client = [WALNSURLSessionApiClient clientWithBaseUrl:TestBaseUrl credentialsProvider:self.credentials];
     [client buildMobileSdkUrl:^(WALMobileSdkUrl * _Nullable mobileSdkUrl, NSError * _Nullable error) {
         XCTAssertNotNil(mobileSdkUrl, @"MobileSdk is not created");
         NSString *mobileSdkUrlPrefix = [NSString stringWithFormat:@"https://app-wallee.com/s/%@/payment/transaction/mobile-sdk", @(SPACE_ID)];
@@ -74,7 +75,7 @@ static NSUInteger const SPACE_ID = 316l;
 - (void)testFetchPaymentMethodConfigurations {
     XCTestExpectation *expectation = [self expectationWithDescription:@"PaymentMethodConfigurations not fetched"];
     
-    WALNSURLSessionApiClient *client = [WALNSURLSessionApiClient clientWithBaseUrl: TestBaseUrl credentialsProvider:self.credentials];
+    id<WALApiClient> client = [WALNSURLSessionApiClient clientWithBaseUrl:TestBaseUrl credentialsProvider:self.credentials];
     [client fetchPaymentMethodConfigurations:^(NSArray<WALPaymentMethodConfiguration *> * _Nullable paymentMethodConfigurations, NSError * _Nullable error) {
         XCTAssertNotNil(paymentMethodConfigurations, @"paymentMethodConfigurations not created");
         XCTAssertTrue(paymentMethodConfigurations.count > 0, @"The payment methods list is empty");
@@ -87,7 +88,24 @@ static NSUInteger const SPACE_ID = 316l;
             XCTFail("MobileSdkUrl timeout");
         }
     }];
+}
 
+- (void)testFetchTokenVersions {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"TokenVersions not fetched"];
+    
+    id<WALApiClient> client = [WALNSURLSessionApiClient clientWithBaseUrl:TestBaseUrl credentialsProvider:self.credentials];
+    [client fetchTokenVersions:^(NSArray<WALTokenVersion *> * _Nullable tokenVersions, NSError * _Nullable error) {
+        XCTAssertNotNil(tokenVersions, @"paymentMethodConfigurations not created");
+        XCTAssertTrue(tokenVersions.count > 0, @"The payment methods list is empty");
+        XCTAssertEqual([tokenVersions firstObject].linkedSpaceId, SPACE_ID, @"The returned SpaceID is not equal to the requested");
+        [expectation fulfill];
+    }];
+    
+    [self waitForExpectationsWithTimeout:7.0 handler:^(NSError * _Nullable error) {
+        if (error) {
+            XCTFail("MobileSdkUrl timeout");
+        }
+    }];
 }
 
 - (void)testCredentials {
