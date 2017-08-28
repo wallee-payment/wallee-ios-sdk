@@ -42,6 +42,8 @@
 		A6EECEF41F54007B00954E02 /* WALConnectorConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EECEF21F54007B00954E02 /* WALConnectorConfiguration.h */; };
 		A6EECEF51F54007B00954E02 /* WALConnectorConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EECEF31F54007B00954E02 /* WALConnectorConfiguration.m */; };
 		A6EECEF81F54022F00954E02 /* WALDataMixin.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EECEF61F54022F00954E02 /* WALDataMixin.h */; };
+		A6EECF001F541C6E00954E02 /* WALToken.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EECEFE1F541C6E00954E02 /* WALToken.h */; };
+		A6EECF011F541C6E00954E02 /* WALToken.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EECEFF1F541C6E00954E02 /* WALToken.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +96,8 @@
 		A6EECEF21F54007B00954E02 /* WALConnectorConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALConnectorConfiguration.h; sourceTree = "<group>"; };
 		A6EECEF31F54007B00954E02 /* WALConnectorConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALConnectorConfiguration.m; sourceTree = "<group>"; };
 		A6EECEF61F54022F00954E02 /* WALDataMixin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WALDataMixin.h; path = WalleeSDK/Util/WALDataMixin.h; sourceTree = SOURCE_ROOT; };
+		A6EECEFE1F541C6E00954E02 /* WALToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALToken.h; sourceTree = "<group>"; };
+		A6EECEFF1F541C6E00954E02 /* WALToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALToken.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,6 +254,8 @@
 		A6EECEED1F53FDCE00954E02 /* Token */ = {
 			isa = PBXGroup;
 			children = (
+				A6EECEFE1F541C6E00954E02 /* WALToken.h */,
+				A6EECEFF1F541C6E00954E02 /* WALToken.m */,
 				A6EECEEE1F53FDE400954E02 /* WALTokenVersion.h */,
 				A6EECEEF1F53FDE400954E02 /* WALTokenVersion.m */,
 			);
@@ -280,6 +286,7 @@
 				A6A194EE1F4EF3DE00374E92 /* WALCredentialsFetcher.h in Headers */,
 				A6DE8ED61F41CFA9006E082B /* WALCredentials.h in Headers */,
 				A6EECEF81F54022F00954E02 /* WALDataMixin.h in Headers */,
+				A6EECF001F541C6E00954E02 /* WALToken.h in Headers */,
 				A6A194E91F49CFA600374E92 /* WALDatabaseTranslatedString.h in Headers */,
 				A6DE8EDB1F41F9F7006E082B /* WALErrorDomain.h in Headers */,
 			);
@@ -388,6 +395,7 @@
 				A6C7B5C11F49B7DD003CCB97 /* WALPaymentMethodConfiguration.m in Sources */,
 				A6EECEF11F53FDE400954E02 /* WALTokenVersion.m in Sources */,
 				A6EECEEA1F501D4D00954E02 /* WALJSONParser.m in Sources */,
+				A6EECF011F541C6E00954E02 /* WALToken.m in Sources */,
 				A6C7B5B11F4892B0003CCB97 /* WALMobileSdkUrl.m in Sources */,
 				A6A194EA1F49CFA600374E92 /* WALDatabaseTranslatedString.m in Sources */,
 				A6A194F21F4EF47900374E92 /* WALCredentialsProvider.m in Sources */,

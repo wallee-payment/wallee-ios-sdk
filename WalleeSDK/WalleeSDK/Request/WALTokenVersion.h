@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "WALJSONDecodable.h"
 #import "WALJSONAutoDecodable.h"
-@class WALConnectorConfiguration;
+@class WALConnectorConfiguration, WALToken;
 
 @interface WALTokenVersion : NSObject<WALJSONDecodable, WALJSONAutoDecodable>
 #include "WALDataMixin.h"
@@ -31,6 +31,6 @@ NS_ASSUME_NONNULL_BEGIN
 //private Address shippingAddress;
 //private TokenVersionState state;
 @property (nonatomic, readonly, assign) NSUInteger version;
-//private Token token;
+@property (nonatomic, readonly, copy) WALToken *token;
 @end
 NS_ASSUME_NONNULL_END
