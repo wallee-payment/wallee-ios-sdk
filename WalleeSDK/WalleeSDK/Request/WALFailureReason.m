@@ -8,11 +8,12 @@
 
 #import "WALFailureReason.h"
 #import "WALJSONParser.h"
+#import "WALApiConfig.h"
 
 NSString *const WalleeCategory = @"category";
 NSString *const WalleeDescriptionText = @"descriptionText";
 NSString *const WalleeFeatures = @"features";
-NSString *const WalleeId = @"id";
+
 NSString *const WalleeName = @"name";
 
 @implementation WALFailureReason

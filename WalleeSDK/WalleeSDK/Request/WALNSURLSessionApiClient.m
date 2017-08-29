@@ -140,12 +140,21 @@
     NSURL *url = [self urlForEndpoint:WalleeEndpointReadTransaction withCredentials:self.credentialsProvider.credentials];
     NSURLSessionTask *task = [self.urlSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable responseError) {
         NSError *error;
-        NSArray * json = [WALNSURLSessionApiClient jsonFromData:data response:response responseError:responseError error:&error];
-//        WALTransaction *transaction = [WALTransaction dec];
-        
+        NSDictionary * json = [WALNSURLSessionApiClient jsonFromData:data response:response responseError:responseError error:&error];
+        if (!json) {
+            completion(nil, error);
+        }
+        WALTransaction *transaction = [WALTransaction decodedObjectFromJSON:json error:&error];
+        if (transaction) {
+            completion(transaction, nil);
+        } else {
+            completion(nil, error);
+        }
     }];
     [task resume];
 }
+
+
 
 // MARK: -
 - (NSURL *)urlForEndpoint:(NSString *)endpoint withCredentials:(NSString *)credentials {

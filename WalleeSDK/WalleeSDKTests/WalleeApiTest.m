@@ -13,6 +13,7 @@
 #import "WALTokenVersion.h"
 #import "WALCredentials.h"
 #import "WALMobileSdkUrl.h"
+#import "WALTransaction.h"
 #import "WALPaymentMethodConfiguration.h"
 
 static NSString *const TestBaseUrl = @"https://app-wallee.com/api/";
@@ -105,6 +106,22 @@ static NSUInteger const SPACE_ID = 412l;
     [self waitForExpectationsWithTimeout:7.0 handler:^(NSError * _Nullable error) {
         if (error) {
             XCTFail("MobileSdkUrl timeout");
+        }
+    }];
+}
+
+- (void)testReadTransaction {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Transaction not read"];
+    
+    id<WALApiClient> client = [WALNSURLSessionApiClient clientWithBaseUrl:TestBaseUrl credentialsProvider:self.credentials];
+    [client readTransaction:^(WALTransaction * _Nullable transaction, NSError * _Nullable error) {
+        XCTAssertNotNil(transaction, @"Transaction not Read");
+        [expectation fulfill];
+    }];
+    
+    [self waitForExpectationsWithTimeout:7.0 handler:^(NSError * _Nullable error) {
+        if (error) {
+            XCTFail("ReadTransaction timeout");
         }
     }];
 }

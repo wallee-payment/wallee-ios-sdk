@@ -23,6 +23,7 @@ typedef NS_ENUM(NSUInteger, WALError){
 + (void)populate:(NSError **)error withIllegalArgumentWithMessage:(NSString *)message;
 
 + (BOOL)checkArrayType:(id)object withMessage:(NSString * _Nullable)message error:(NSError * _Nullable *)error;
++ (BOOL)checkDictionaryType:(id)object withMessage:(NSString *)message error:(NSError * _Nullable __autoreleasing *)error;
 @end
 
 NS_ASSUME_NONNULL_END

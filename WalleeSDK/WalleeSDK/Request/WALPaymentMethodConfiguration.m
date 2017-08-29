@@ -63,7 +63,7 @@
 }
 
 + (NSString *)stringFrom:(WALDataCollectionType)dataCollectionType {
-    return [[self getDataCollectionTypeToStringMapping] allKeysForObject:@(dataCollectionType)].firstObject;
+    return [[self dataCollectionTypeToStringMapping] allKeysForObject:@(dataCollectionType)].firstObject;
 }
 
 + (NSDictionary<NSString *,NSNumber *> *)dataCollectionTypeToStringMapping {

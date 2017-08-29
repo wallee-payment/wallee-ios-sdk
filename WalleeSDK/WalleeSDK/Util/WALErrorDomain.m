@@ -41,4 +41,12 @@ NSString *const WALErrorDomain = @"com.wallee.ios";
     }
     return YES;
 }
+
++ (BOOL)checkDictionaryType:(id)object withMessage:(NSString *)message error:(NSError * _Nullable __autoreleasing *)error {
+    if (![object isKindOfClass:[NSDictionary class]]) {
+        [WALErrorHelper populate:error withIllegalArgumentWithMessage:message];
+        return NO;
+    }
+    return YES;
+}
 @end

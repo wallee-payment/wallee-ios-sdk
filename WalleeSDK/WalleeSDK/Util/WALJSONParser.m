@@ -10,8 +10,16 @@
 #import "WALErrorDomain.h"
 #import "WALJSONDecodable.h"
 
+static NSString * const UndefinedMapping = @"not-defined";
+
 @implementation WALJSONParser
 + (BOOL)populate:(NSObject<WALJSONAutoDecodable> *)object withDictionary:(NSDictionary *)dictionary error:(NSError *__autoreleasing *)error {
+    // guard
+    BOOL isDictionary = [WALErrorHelper checkDictionaryType:dictionary withMessage:[NSString stringWithFormat:@"%@ json response is not a NSDictionary", object.class] error:error];
+    if (!isDictionary) {
+        return NO;
+    }
+    
     // remap
     NSMutableDictionary *remapped = [NSMutableDictionary dictionaryWithDictionary:dictionary];
     [[object.class jsonReMapping] enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull oldKey, BOOL * _Nonnull stop) {
@@ -20,8 +28,18 @@
     }];
     
     //simple map
-    NSArray *values = [remapped objectsForKeys:[object.class jsonMapping] notFoundMarker:@"not-defined"];
-    [object setValuesForKeysWithDictionary:[NSDictionary dictionaryWithObjects:values forKeys:[object.class jsonMapping]]];
+    NSArray *keys = [object.class jsonMapping];
+    NSArray *values = [remapped objectsForKeys:keys notFoundMarker:UndefinedMapping];
+    NSMutableArray *sanitizedValues = [[NSMutableArray alloc] initWithCapacity:values.count];
+    NSMutableArray *sanitizedKeyes = [[NSMutableArray alloc] initWithCapacity:keys.count];
+    [values enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (obj != NSNull.null && ![obj isEqual:UndefinedMapping]) {
+            [sanitizedValues addObject:obj];
+            [sanitizedKeyes addObject:keys[idx]];
+        }
+    }];
+    
+    [object setValuesForKeysWithDictionary:[NSDictionary dictionaryWithObjects:sanitizedValues forKeys:sanitizedKeyes]];
     
     
     //complexmap
@@ -31,8 +49,9 @@
         if ([classObject conformsToProtocol:@protocol(WALJSONDecodable)]) {
             NSObject *value = remapped[key];
             if (!value) {
-                [WALErrorHelper populate:&blockError withIllegalArgumentWithMessage:[NSString stringWithFormat:@"Unable to parse JSON. Could not find Property: %@.%@", object.class, key]];
-                success = NO;
+                // fields are optional and as such we don't throw errors
+//                [WALErrorHelper populate:&blockError withIllegalArgumentWithMessage:[NSString stringWithFormat:@"Unable to parse JSON. Could not find Property: %@.%@", object.class, key]];
+//                success = NO;
             } else {
                 success = [self.class decodeJSONValue:value withClass:classObject forKey:key inObject:object error:&blockError];
             }
@@ -64,6 +83,8 @@
         [((NSArray *)value) enumerateObjectsUsingBlock:^(NSObject *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             success = [self.class decodeJSONValue:obj withClass:classObject forKey:key inObject:object error:error];
         }];
+    } else if (value == NSNull.null) {
+        // fields are optional as such we don't throw errors
     } else {
         if (success) {
             [WALErrorHelper populate:error withIllegalArgumentWithMessage:[NSString stringWithFormat:@"Unable to parse JSON. Expected Array or Dictionary in %@.%@. found %@", object.class, key, value.class]];
