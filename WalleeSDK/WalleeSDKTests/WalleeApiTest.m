@@ -8,13 +8,18 @@
 
 #import <XCTest/XCTest.h>
 #include <CommonCrypto/CommonHMAC.h>
+
 #import "WALNSURLSessionApiClient.h"
+
 #import "WALApiClient.h"
 #import "WALTokenVersion.h"
-#import "WALCredentials.h"
 #import "WALMobileSdkUrl.h"
 #import "WALTransaction.h"
 #import "WALPaymentMethodConfiguration.h"
+
+#import "WALTestCredentialFetcher.h"
+#import "WALCredentials.h"
+#import "WALCredentialsProvider.h"
 
 static NSString *const TestBaseUrl = @"https://app-wallee.com/api/";
 /// ExampleFragment
@@ -29,6 +34,8 @@ static NSUInteger const SPACE_ID = 412l;
 
 @interface WalleeApiTest : XCTestCase
 @property (nonatomic, strong) WALCredentials *credentials;
+@property (nonatomic, strong) WALCredentialsProvider *credentialsProvider;
+@property (nonatomic, strong) id<WALApiClient> client;
 @end
 
 @implementation WalleeApiTest
@@ -42,11 +49,24 @@ static NSUInteger const SPACE_ID = 412l;
     XCTestExpectation *expectation = [self expectationWithDescription:[NSString stringWithFormat:@"setup %@", self.name]];
     [self createCredentials:USER_ID space:SPACE_ID macKey:HMAC_KEY completion:^(WALCredentials * _Nullable credential) {
         self.credentials = credential;
-        [expectation fulfill];
+        WALTestCredentialFetcher *fetcher = [[WALTestCredentialFetcher alloc] initWithCredentials:credential];
+        self.credentialsProvider = [[WALCredentialsProvider alloc] initWith:fetcher];
+        [self.credentialsProvider getCredentials:^(WALCredentials * _Nullable credentials, NSError * _Nullable error) {
+            XCTAssertNotNil(credentials, @"CredentialsProvider does not return credentials");
+            [expectation fulfill];
+        }];
+        self.client = [WALNSURLSessionApiClient clientWithBaseUrl:TestBaseUrl credentialsProvider:self.credentialsProvider];
     }];
+    
+    [self await:@[expectation]];
+}
+
+- (void)await:(NSArray<XCTestExpectation *> *)expectations {
     [self waitForExpectationsWithTimeout:7.0 handler:^(NSError * _Nullable error) {
         if (error) {
-            XCTFail("%@ timeout", expectation);
+            [expectations enumerateObjectsUsingBlock:^(XCTestExpectation   * _Nonnull  expectation, NSUInteger idx, BOOL * _Nonnull stop) {
+                XCTFail("%@ timeout", expectation);
+            }];
         }
     }];
 }
@@ -56,9 +76,9 @@ static NSUInteger const SPACE_ID = 412l;
 }
 
 - (void)testBuildMobileSdkUrl {
-    XCTestExpectation *expectation = [self expectationWithDescription:@"MobileSdkUrl not built"];
+    XCTestExpectation *expectation = [self expectationWithDescription:@"MobileSdkUrl built"];
 
-    id<WALApiClient> client = [WALNSURLSessionApiClient clientWithBaseUrl:TestBaseUrl credentialsProvider:self.credentials];
+    id<WALApiClient> client = [WALNSURLSessionApiClient clientWithBaseUrl:TestBaseUrl credentialsProvider:self.credentialsProvider];
     [client buildMobileSdkUrl:^(WALMobileSdkUrl * _Nullable mobileSdkUrl, NSError * _Nullable error) {
         XCTAssertNotNil(mobileSdkUrl, @"MobileSdk is not created");
         NSString *mobileSdkUrlPrefix = [NSString stringWithFormat:@"https://app-wallee.com/s/%@/payment/transaction/mobile-sdk", @(SPACE_ID)];
@@ -67,38 +87,28 @@ static NSUInteger const SPACE_ID = 412l;
         [expectation fulfill];
     }];
     
-    [self waitForExpectationsWithTimeout:7.0 handler:^(NSError * _Nullable error) {
-        if (error) {
-            XCTFail("MobileSdkUrl timeout");
-        }
-    }];
+    [self await:@[expectation]];
 }
 
 - (void)testFetchPaymentMethodConfigurations {
-    XCTestExpectation *expectation = [self expectationWithDescription:@"PaymentMethodConfigurations not fetched"];
+    XCTestExpectation *expectation = [self expectationWithDescription:@"PaymentMethodConfigurations fetched"];
     
-    id<WALApiClient> client = [WALNSURLSessionApiClient clientWithBaseUrl:TestBaseUrl credentialsProvider:self.credentials];
-    [client fetchPaymentMethodConfigurations:^(NSArray<WALPaymentMethodConfiguration *> * _Nullable paymentMethodConfigurations, NSError * _Nullable error) {
+    [self.client fetchPaymentMethodConfigurations:^(NSArray<WALPaymentMethodConfiguration *> * _Nullable paymentMethodConfigurations, NSError * _Nullable error) {
         XCTAssertNotNil(paymentMethodConfigurations, @"paymentMethodConfigurations not created");
         XCTAssertTrue(paymentMethodConfigurations.count > 0, @"The payment methods list is empty");
         XCTAssertEqual([paymentMethodConfigurations firstObject].linkedSpaceId, SPACE_ID, @"The returned SpaceID is not equal to the requested");
         [expectation fulfill];
     }];
     
-    [self waitForExpectationsWithTimeout:7.0 handler:^(NSError * _Nullable error) {
-        if (error) {
-            XCTFail("MobileSdkUrl timeout");
-        }
-    }];
+    [self await:@[expectation]];
 }
 
 - (void)testFetchTokenVersions {
-    XCTestExpectation *expectation = [self expectationWithDescription:@"TokenVersions not fetched"];
+    XCTestExpectation *expectation = [self expectationWithDescription:@"TokenVersions fetched"];
     
-    id<WALApiClient> client = [WALNSURLSessionApiClient clientWithBaseUrl:TestBaseUrl credentialsProvider:self.credentials];
-    [client fetchTokenVersions:^(NSArray<WALTokenVersion *> * _Nullable tokenVersions, NSError * _Nullable error) {
-        XCTAssertNotNil(tokenVersions, @"paymentMethodConfigurations not created");
-        XCTAssertTrue(tokenVersions.count > 0, @"The payment methods list is empty");
+    [self.client fetchTokenVersions:^(NSArray<WALTokenVersion *> * _Nullable tokenVersions, NSError * _Nullable error) {
+        XCTAssertNotNil(tokenVersions, @"Could not fetch token versions.");
+        XCTAssertTrue(tokenVersions.count > 0, @"No tokens available for this transaction.");
         XCTAssertEqual([tokenVersions firstObject].linkedSpaceId, SPACE_ID, @"The returned SpaceID is not equal to the requested");
         [expectation fulfill];
     }];
@@ -111,23 +121,52 @@ static NSUInteger const SPACE_ID = 412l;
 }
 
 - (void)testReadTransaction {
-    XCTestExpectation *expectation = [self expectationWithDescription:@"Transaction not read"];
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Transaction read"];
     
-    id<WALApiClient> client = [WALNSURLSessionApiClient clientWithBaseUrl:TestBaseUrl credentialsProvider:self.credentials];
-    [client readTransaction:^(WALTransaction * _Nullable transaction, NSError * _Nullable error) {
+    [self.client readTransaction:^(WALTransaction * _Nullable transaction, NSError * _Nullable error) {
         XCTAssertNotNil(transaction, @"Transaction not Read");
         [expectation fulfill];
     }];
     
-    [self waitForExpectationsWithTimeout:7.0 handler:^(NSError * _Nullable error) {
-        if (error) {
-            XCTFail("ReadTransaction timeout");
-        }
+    [self await:@[expectation]];
+}
+
+- (void)testProcessOneClickToken{
+    __block WALTransaction *transactionBefore;
+    __block WALTransaction *transactionAfter;
+    __block NSArray<WALTokenVersion *> *tokens;
+    XCTestExpectation *expectation = [self expectationWithDescription:@"OnclickToken processed"];
+
+    [self.client readTransaction:^(WALTransaction * _Nullable transaction, NSError * _Nullable error) {
+        XCTAssertNotNil(transaction, @"The transaction could not be read.");
+        XCTAssert(transaction.state == WALTransactionStatePending, @"The present transaction is not pending and therefore the OneClickToken cannot be used.");
+        transactionBefore = transaction;
     }];
+    
+    [self.client fetchTokenVersions:^(NSArray<WALTokenVersion *> * _Nullable tokenVersions, NSError * _Nullable error) {
+        XCTAssertNotNil(tokenVersions, @"Could not fetch token versions.");
+        XCTAssertTrue(tokenVersions.count > 0, @"No tokens available for this transaction.");
+        tokens = tokenVersions;
+    }];
+    
+    [self.client processOneClickToken:tokens[0].token completion:^(WALTransaction * _Nullable transaction, NSError * _Nullable error) {
+        XCTAssertNotNil(transaction, @"The transaction could not be read.");
+        XCTAssertFalse(transaction.state == WALTransactionStatePending, @"The present transaction is not pending and therefore the OneClickToken cannot be used.");
+        transactionAfter = transaction;
+        
+        XCTAssertFalse(transactionAfter.state == WALTransactionStateFailed, @"Unexpected state of the transaction with ID: %lu", transactionAfter.id);
+        XCTAssertFalse(transactionAfter.state == WALTransactionStatePending, @"Unexpected state of the transaction with ID: %lu", transactionAfter.id);
+        XCTAssertFalse(transactionAfter.state == WALTransactionStateProcessing, @"Unexpected state of the transaction with ID: %lu", transactionAfter.id);
+        XCTAssertFalse(transactionAfter.state == WALTransactionStateConfirmed, @"Unexpected state of the transaction with ID: %lu", transactionAfter.id);
+        
+        [expectation fulfill];
+    }];
+    
+    [self await:@[expectation]];
 }
 
 - (void)testCredentials {
-    XCTestExpectation *expectation = [self expectationWithDescription:@"Credentials not built"];
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Credentials built"];
     [self createCredentials:USER_ID space:SPACE_ID macKey:HMAC_KEY completion:^(WALCredentials *credential) {
         XCTAssertNotNil(credential, "Credentials are nil");
         [expectation fulfill];

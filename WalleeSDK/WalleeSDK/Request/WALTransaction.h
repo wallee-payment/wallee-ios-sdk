@@ -11,6 +11,19 @@
 #import "WALJSONAutoDecodable.h"
 @class WALFailureReason, WALToken;
 
+typedef NS_ENUM(NSInteger, WALTransactionState){
+    WALTransactionStateCreate,
+    WALTransactionStatePending,
+    WALTransactionStateConfirmed,
+    WALTransactionStateProcessing,
+    WALTransactionStateFailed,
+    WALTransactionStateAuthorized,
+    WALTransactionStateCompleted,
+    WALTransactionStateFulfill,
+    WALTransactionStateDecline,
+    WALTransactionStateVoided,
+    WALTransactionStateUnknown
+};
 
 @interface WALTransaction : NSObject<WALJSONDecodable, WALJSONAutoDecodable>
 
@@ -53,7 +66,7 @@ NS_ASSUME_NONNULL_BEGIN
 //private Address shippingAddress;
 @property (nonatomic, readonly, copy) NSString *shippingMethod;
 @property (nonatomic, readonly) NSUInteger spaceViewId;
-//private TransactionState state;
+@property (nonatomic, readonly) WALTransactionState state;
 @property (nonatomic, readonly, copy) NSString *successUrl;
 @property (nonatomic, readonly, copy) WALToken *token;
 @property (nonatomic, readonly, copy) NSString *userAgentHeader;

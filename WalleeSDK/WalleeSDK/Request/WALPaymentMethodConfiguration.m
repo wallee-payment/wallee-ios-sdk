@@ -46,7 +46,7 @@
     return @{@"descriptionText": @"description"};
 }
 
-// MARK: - Enums
+// MARK: - Enum
 /*!
  * parses the given @c NSString into the corresponding @c WALDataCollectionType.  
  *

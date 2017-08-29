@@ -39,8 +39,14 @@ static NSString * const UndefinedMapping = @"not-defined";
         }
     }];
     
-    [object setValuesForKeysWithDictionary:[NSDictionary dictionaryWithObjects:sanitizedValues forKeys:sanitizedKeyes]];
-    
+    @try {
+        [object setValuesForKeysWithDictionary:[NSDictionary dictionaryWithObjects:sanitizedValues forKeys:sanitizedKeyes]];
+    } @catch (NSException *exception) {
+        [WALErrorHelper populate:error withIllegalArgumentWithMessage:@"JSON Contains invalid Data (eg. String Values in Number fields)"];
+        return NO;
+    } @finally {
+        
+    }
     
     //complexmap
     __block BOOL success = YES;

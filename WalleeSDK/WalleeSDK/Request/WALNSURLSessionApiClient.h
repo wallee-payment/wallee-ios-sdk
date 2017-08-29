@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "WALApiClient.h"
 
-@class WALMobileSdkUrl, WALCredentials;
+@class WALMobileSdkUrl, WALCredentialsProvider;
 
 NS_ASSUME_NONNULL_BEGIN
 @interface WALNSURLSessionApiClient : NSObject <WALApiClient>
-+ (instancetype)clientWithBaseUrl:(NSString*)baseUrl credentialsProvider:(WALCredentials *)credentialsProvider;
++ (instancetype)clientWithBaseUrl:(NSString*)baseUrl credentialsProvider:(WALCredentialsProvider *)credentialsProvider;
 @end
 
 NS_ASSUME_NONNULL_END

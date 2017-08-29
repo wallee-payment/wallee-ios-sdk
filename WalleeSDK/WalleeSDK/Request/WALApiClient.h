@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class WALMobileSdkUrl, WALPaymentMethodConfiguration, WALTokenVersion, WALTransaction;
+@class WALMobileSdkUrl, WALPaymentMethodConfiguration, WALTokenVersion, WALTransaction, WALToken;
 
 typedef void (^WALMobileSdkUrlCompletion)(WALMobileSdkUrl * _Nullable mobileSdkUrl, NSError * _Nullable error);
 typedef void (^WALPaymentMethodConfigurationsCompletion)(NSArray<WALPaymentMethodConfiguration *> * _Nullable paymentMethodConfigurations, NSError * _Nullable error);
@@ -22,6 +22,6 @@ typedef void (^WALTransactionCompletion)(WALTransaction * _Nullable transaction,
 - (void)fetchPaymentMethodConfigurations:(WALPaymentMethodConfigurationsCompletion)completion;
 - (void)fetchTokenVersions:(WALTokenVersionsCompletion)completion;
 - (void)readTransaction:(WALTransactionCompletion)completion;
-- (void)processOneClickToken:(WALTransactionCompletion)completion;
+- (void)processOneClickToken:(WALToken *)token completion:(WALTransactionCompletion)completion;
 @end
 NS_ASSUME_NONNULL_END

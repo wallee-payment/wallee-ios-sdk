@@ -78,8 +78,6 @@
     XCTAssertNotNil(error, @"paymentMethod error should be populated");
 }
 
-
-@class WALTestCredentialFetcher;
 - (void)testCredentialsProviderValid {
     WALTestCredentialFetcher *fetcher = [[WALTestCredentialFetcher alloc] init];
     WALCredentials *protoCredentials = fetcher.credentials;

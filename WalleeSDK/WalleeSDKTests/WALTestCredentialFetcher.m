@@ -12,11 +12,16 @@
 @implementation WALTestCredentialFetcher
 
 - (instancetype)init {
-    self = [super init];
+    NSUInteger timestamp = [[NSDate date] timeIntervalSince1970] + 5 * 60;
+    NSString *credentialString = [NSString stringWithFormat:@"316-16005-%@-c4LUhOqIiFrwEcNU3YAJl4_28x3_b2iQAeqJI7V6yP8-grantedUser419", @(timestamp)];
+    WALCredentials *credentials = [WALCredentials credentialsWithCredentials:credentialString error:nil];
+    return [self initWithCredentials:credentials];
+}
+
+- (instancetype)initWithCredentials:(WALCredentials *)credentials {
+    self =  [super init];
     if (self) {
-        NSUInteger timestamp = [[NSDate date] timeIntervalSince1970] + 5 * 60;
-        NSString *credentialString = [NSString stringWithFormat:@"316-16005-%@-c4LUhOqIiFrwEcNU3YAJl4_28x3_b2iQAeqJI7V6yP8-grantedUser419", @(timestamp)];
-        _credentials = [WALCredentials credentialsWithCredentials:credentialString error:nil];
+        _credentials = credentials;
     }
     return self;
 }

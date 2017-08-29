@@ -14,7 +14,8 @@ FOUNDATION_EXPORT NSString *const WALErrorDomain;
 typedef NS_ENUM(NSUInteger, WALError){
     WALErrorInvalidCredentials  = 100,
     WALErrorInvalidState        = 200,
-    WALErrorInvalidArgument     = 900,
+    WALErrorInvalidArgument     = 300,
+    WALErrorHTTPError     = 900,
 };
 
 @interface WALErrorHelper : NSObject

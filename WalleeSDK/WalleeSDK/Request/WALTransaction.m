@@ -24,6 +24,7 @@
     if (![WALJSONParser populate:transaction withDictionary:dictionary error:error]) {
         return nil;
     }
+    [transaction setValue:@([WALTransaction transactionStateFrom:dictionary[WalleeState]]) forKey:WalleeState];
     return transaction;
 }
 
@@ -47,6 +48,31 @@
     return nil;
 }
 
+// MARK: - Enum
++ (WALTransactionState)transactionStateFrom:(NSString *)name {
+    NSNumber *rawDataType = [self transactionStateToStringMapping][name.uppercaseString];
+    if (rawDataType) {
+        return (WALTransactionState)rawDataType.integerValue;
+    }
+    return WALTransactionStateUnknown;
+}
+
++ (NSString *)stringFrom:(WALTransactionState)transactionState {
+    return [[self transactionStateToStringMapping] allKeysForObject:@(transactionState)].firstObject;
+}
+
++ (NSDictionary<NSString *,NSNumber *> *)transactionStateToStringMapping {
+    return @{@"CREATE": @(WALTransactionStateCreate),
+             @"PENDING": @(WALTransactionStatePending),
+             @"CONFIRMED": @(WALTransactionStateConfirmed),
+             @"PROCESSING": @(WALTransactionStateProcessing),
+             @"FAILED": @(WALTransactionStateFailed),
+             @"AUTHORIZED": @(WALTransactionStateAuthorized),
+             @"COMPLETED": @(WALTransactionStateCompleted),
+             @"FULFILL": @(WALTransactionStateFulfill),
+             @"DECLINE": @(WALTransactionStateDecline),
+             @"VOIDED": @(WALTransactionStateVoided)};
+}
 
 // MARK: - Description
 - (NSString *)description {
