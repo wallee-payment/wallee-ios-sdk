@@ -271,7 +271,7 @@
     NSInteger statusCode = ((NSHTTPURLResponse *)response).statusCode;
     if (statusCode == 0 || statusCode > 399) {
         if (error) {
-            
+            //TODO: impl? Cilent vs Server Error Classes
             *error = [NSError errorWithDomain:WALErrorDomain code:WALErrorHTTPError userInfo:@{@"statusCode": @(statusCode), @"response": response, @"data": json}];
         }
         return NO;

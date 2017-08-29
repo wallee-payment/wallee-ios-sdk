@@ -61,14 +61,18 @@ static NSUInteger const SPACE_ID = 412l;
     [self await:@[expectation]];
 }
 
-- (void)await:(NSArray<XCTestExpectation *> *)expectations {
-    [self waitForExpectationsWithTimeout:7.0 handler:^(NSError * _Nullable error) {
+- (void)await:(NSArray<XCTestExpectation *> *)expectations timeout:(NSTimeInterval)timeout {
+    [self waitForExpectationsWithTimeout:timeout handler:^(NSError * _Nullable error) {
         if (error) {
             [expectations enumerateObjectsUsingBlock:^(XCTestExpectation   * _Nonnull  expectation, NSUInteger idx, BOOL * _Nonnull stop) {
                 XCTFail("%@ timeout", expectation);
             }];
         }
     }];
+}
+
+- (void)await:(NSArray<XCTestExpectation *> *)expectations {
+    [self await:expectations timeout:7.0];
 }
 
 - (void)tearDown {
@@ -137,19 +141,7 @@ static NSUInteger const SPACE_ID = 412l;
     __block NSArray<WALTokenVersion *> *tokens;
     XCTestExpectation *expectation = [self expectationWithDescription:@"OnclickToken processed"];
 
-    [self.client readTransaction:^(WALTransaction * _Nullable transaction, NSError * _Nullable error) {
-        XCTAssertNotNil(transaction, @"The transaction could not be read.");
-        XCTAssert(transaction.state == WALTransactionStatePending, @"The present transaction is not pending and therefore the OneClickToken cannot be used.");
-        transactionBefore = transaction;
-    }];
-    
-    [self.client fetchTokenVersions:^(NSArray<WALTokenVersion *> * _Nullable tokenVersions, NSError * _Nullable error) {
-        XCTAssertNotNil(tokenVersions, @"Could not fetch token versions.");
-        XCTAssertTrue(tokenVersions.count > 0, @"No tokens available for this transaction.");
-        tokens = tokenVersions;
-    }];
-    
-    [self.client processOneClickToken:tokens[0].token completion:^(WALTransaction * _Nullable transaction, NSError * _Nullable error) {
+    WALTransactionCompletion processCallback = ^(WALTransaction * _Nullable transaction, NSError * _Nullable error) {
         XCTAssertNotNil(transaction, @"The transaction could not be read.");
         XCTAssertFalse(transaction.state == WALTransactionStatePending, @"The present transaction is not pending and therefore the OneClickToken cannot be used.");
         transactionAfter = transaction;
@@ -160,9 +152,29 @@ static NSUInteger const SPACE_ID = 412l;
         XCTAssertFalse(transactionAfter.state == WALTransactionStateConfirmed, @"Unexpected state of the transaction with ID: %lu", transactionAfter.id);
         
         [expectation fulfill];
-    }];
+    };
     
-    [self await:@[expectation]];
+    WALTokenVersionsCompletion tokenCallback = ^(NSArray<WALTokenVersion *> * _Nullable tokenVersions, NSError * _Nullable error) {
+        XCTAssertNotNil(tokenVersions, @"Could not fetch token versions.");
+        XCTAssertTrue(tokenVersions.count > 0, @"No tokens available for this transaction.");
+        tokens = tokenVersions;
+        
+        [self.client processOneClickToken:tokens[0].token completion:processCallback];
+    };
+
+    
+    WALTransactionCompletion readCallback = ^(WALTransaction * _Nullable transaction, NSError * _Nullable error) {
+        XCTAssertNotNil(transaction, @"The transaction could not be read.");
+        XCTAssert(transaction.state == WALTransactionStatePending, @"The present transaction is not pending and therefore the OneClickToken cannot be used.");
+        transactionBefore = transaction;
+        
+        [self.client fetchTokenVersions:tokenCallback];
+        
+    };
+    
+    [self.client readTransaction:readCallback];
+   
+    [self await:@[expectation] timeout:15.0];
 }
 
 - (void)testCredentials {
