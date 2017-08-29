@@ -15,7 +15,7 @@
 - (instancetype) initInternal;
 + (WALDataCollectionType)dataCollectionTypeFrom:(NSString*)name;
 + (NSString *)stringFrom:(WALDataCollectionType)dataCollectionType;
-+ (NSDictionary<NSString*, NSNumber*> *)getDataCollectionTypeToStringMapping;
++ (NSDictionary<NSString*, NSNumber*> *)dataCollectionTypeToStringMapping;
 @end
 
 @implementation WALPaymentMethodConfiguration
@@ -55,7 +55,7 @@
  * @return corresponding @c WALDataCollectionType or @c WALDataCollectionTypeUnknown if no match is found
  */
 + (WALDataCollectionType)dataCollectionTypeFrom:(NSString *)name {
-    NSNumber *rawDataType = [self getDataCollectionTypeToStringMapping][name.uppercaseString];
+    NSNumber *rawDataType = [self dataCollectionTypeToStringMapping][name.uppercaseString];
     if (rawDataType) {
         return (WALDataCollectionType)rawDataType.integerValue;
     }
@@ -66,7 +66,7 @@
     return [[self getDataCollectionTypeToStringMapping] allKeysForObject:@(dataCollectionType)].firstObject;
 }
 
-+ (NSDictionary<NSString *,NSNumber *> *)getDataCollectionTypeToStringMapping {
++ (NSDictionary<NSString *,NSNumber *> *)dataCollectionTypeToStringMapping {
     return @{@"ONSITE": @(WALDataCollectionTypeOnsite), @"OFFSITE": @(WALDataCollectionTypeOffsite)};
 }
 

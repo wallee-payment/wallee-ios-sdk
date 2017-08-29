@@ -15,7 +15,8 @@ typedef NS_ENUM(NSInteger, WALFailureCategory) {
     WALFailureCategoryInternal,
     WALFailureCategoryEndUser,
     WALFailureCategoryConfiguration,
-    WALFailureCategoryDeveloper
+    WALFailureCategoryDeveloper,
+    WALFailureCategoryUnknown
 };
 
 // TODO: make this non initializable?
