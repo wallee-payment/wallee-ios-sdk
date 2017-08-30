@@ -1,0 +1,541 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A6DE8EA21F41A911006E082B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DE8EA11F41A911006E082B /* main.m */; };
+		A6DE8EA51F41A911006E082B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DE8EA41F41A911006E082B /* AppDelegate.m */; };
+		A6DE8EA81F41A911006E082B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DE8EA71F41A911006E082B /* ViewController.m */; };
+		A6DE8EAB1F41A911006E082B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A6DE8EA91F41A911006E082B /* Main.storyboard */; };
+		A6DE8EAD1F41A911006E082B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A6DE8EAC1F41A911006E082B /* Assets.xcassets */; };
+		A6DE8EB01F41A911006E082B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A6DE8EAE1F41A911006E082B /* LaunchScreen.storyboard */; };
+		A6DE8EBB1F41A911006E082B /* WalleeExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DE8EBA1F41A911006E082B /* WalleeExampleTests.m */; };
+		A6DE8EC61F41A911006E082B /* WalleeExampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DE8EC51F41A911006E082B /* WalleeExampleUITests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A6DE8EB71F41A911006E082B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A6DE8E951F41A911006E082B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A6DE8E9C1F41A911006E082B;
+			remoteInfo = WalleeExample;
+		};
+		A6DE8EC21F41A911006E082B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A6DE8E951F41A911006E082B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A6DE8E9C1F41A911006E082B;
+			remoteInfo = WalleeExample;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A6DE8E9D1F41A911006E082B /* WalleeExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WalleeExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6DE8EA11F41A911006E082B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A6DE8EA31F41A911006E082B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A6DE8EA41F41A911006E082B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		A6DE8EA61F41A911006E082B /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		A6DE8EA71F41A911006E082B /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		A6DE8EAA1F41A911006E082B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A6DE8EAC1F41A911006E082B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A6DE8EAF1F41A911006E082B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A6DE8EB11F41A911006E082B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A6DE8EB61F41A911006E082B /* WalleeExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WalleeExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6DE8EBA1F41A911006E082B /* WalleeExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WalleeExampleTests.m; sourceTree = "<group>"; };
+		A6DE8EBC1F41A911006E082B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A6DE8EC11F41A911006E082B /* WalleeExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WalleeExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6DE8EC51F41A911006E082B /* WalleeExampleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WalleeExampleUITests.m; sourceTree = "<group>"; };
+		A6DE8EC71F41A911006E082B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A6DE8E9A1F41A911006E082B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A6DE8EB31F41A911006E082B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A6DE8EBE1F41A911006E082B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A6DE8E941F41A911006E082B = {
+			isa = PBXGroup;
+			children = (
+				A6DE8E9F1F41A911006E082B /* WalleeExample */,
+				A6DE8EB91F41A911006E082B /* WalleeExampleTests */,
+				A6DE8EC41F41A911006E082B /* WalleeExampleUITests */,
+				A6DE8E9E1F41A911006E082B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A6DE8E9E1F41A911006E082B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A6DE8E9D1F41A911006E082B /* WalleeExample.app */,
+				A6DE8EB61F41A911006E082B /* WalleeExampleTests.xctest */,
+				A6DE8EC11F41A911006E082B /* WalleeExampleUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A6DE8E9F1F41A911006E082B /* WalleeExample */ = {
+			isa = PBXGroup;
+			children = (
+				A6DE8EA31F41A911006E082B /* AppDelegate.h */,
+				A6DE8EA41F41A911006E082B /* AppDelegate.m */,
+				A6DE8EA61F41A911006E082B /* ViewController.h */,
+				A6DE8EA71F41A911006E082B /* ViewController.m */,
+				A6DE8EA91F41A911006E082B /* Main.storyboard */,
+				A6DE8EAC1F41A911006E082B /* Assets.xcassets */,
+				A6DE8EAE1F41A911006E082B /* LaunchScreen.storyboard */,
+				A6DE8EB11F41A911006E082B /* Info.plist */,
+				A6DE8EA01F41A911006E082B /* Supporting Files */,
+			);
+			path = WalleeExample;
+			sourceTree = "<group>";
+		};
+		A6DE8EA01F41A911006E082B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A6DE8EA11F41A911006E082B /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A6DE8EB91F41A911006E082B /* WalleeExampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				A6DE8EBA1F41A911006E082B /* WalleeExampleTests.m */,
+				A6DE8EBC1F41A911006E082B /* Info.plist */,
+			);
+			path = WalleeExampleTests;
+			sourceTree = "<group>";
+		};
+		A6DE8EC41F41A911006E082B /* WalleeExampleUITests */ = {
+			isa = PBXGroup;
+			children = (
+				A6DE8EC51F41A911006E082B /* WalleeExampleUITests.m */,
+				A6DE8EC71F41A911006E082B /* Info.plist */,
+			);
+			path = WalleeExampleUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A6DE8E9C1F41A911006E082B /* WalleeExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A6DE8ECA1F41A911006E082B /* Build configuration list for PBXNativeTarget "WalleeExample" */;
+			buildPhases = (
+				A6DE8E991F41A911006E082B /* Sources */,
+				A6DE8E9A1F41A911006E082B /* Frameworks */,
+				A6DE8E9B1F41A911006E082B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WalleeExample;
+			productName = WalleeExample;
+			productReference = A6DE8E9D1F41A911006E082B /* WalleeExample.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A6DE8EB51F41A911006E082B /* WalleeExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A6DE8ECD1F41A911006E082B /* Build configuration list for PBXNativeTarget "WalleeExampleTests" */;
+			buildPhases = (
+				A6DE8EB21F41A911006E082B /* Sources */,
+				A6DE8EB31F41A911006E082B /* Frameworks */,
+				A6DE8EB41F41A911006E082B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A6DE8EB81F41A911006E082B /* PBXTargetDependency */,
+			);
+			name = WalleeExampleTests;
+			productName = WalleeExampleTests;
+			productReference = A6DE8EB61F41A911006E082B /* WalleeExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A6DE8EC01F41A911006E082B /* WalleeExampleUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A6DE8ED01F41A911006E082B /* Build configuration list for PBXNativeTarget "WalleeExampleUITests" */;
+			buildPhases = (
+				A6DE8EBD1F41A911006E082B /* Sources */,
+				A6DE8EBE1F41A911006E082B /* Frameworks */,
+				A6DE8EBF1F41A911006E082B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A6DE8EC31F41A911006E082B /* PBXTargetDependency */,
+			);
+			name = WalleeExampleUITests;
+			productName = WalleeExampleUITests;
+			productReference = A6DE8EC11F41A911006E082B /* WalleeExampleUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A6DE8E951F41A911006E082B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "smoca AG";
+				TargetAttributes = {
+					A6DE8E9C1F41A911006E082B = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 5NW5G4TUSD;
+						ProvisioningStyle = Automatic;
+					};
+					A6DE8EB51F41A911006E082B = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 5NW5G4TUSD;
+						ProvisioningStyle = Automatic;
+						TestTargetID = A6DE8E9C1F41A911006E082B;
+					};
+					A6DE8EC01F41A911006E082B = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 5NW5G4TUSD;
+						ProvisioningStyle = Automatic;
+						TestTargetID = A6DE8E9C1F41A911006E082B;
+					};
+				};
+			};
+			buildConfigurationList = A6DE8E981F41A911006E082B /* Build configuration list for PBXProject "WalleeExample" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A6DE8E941F41A911006E082B;
+			productRefGroup = A6DE8E9E1F41A911006E082B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A6DE8E9C1F41A911006E082B /* WalleeExample */,
+				A6DE8EB51F41A911006E082B /* WalleeExampleTests */,
+				A6DE8EC01F41A911006E082B /* WalleeExampleUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A6DE8E9B1F41A911006E082B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6DE8EB01F41A911006E082B /* LaunchScreen.storyboard in Resources */,
+				A6DE8EAD1F41A911006E082B /* Assets.xcassets in Resources */,
+				A6DE8EAB1F41A911006E082B /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A6DE8EB41F41A911006E082B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A6DE8EBF1F41A911006E082B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A6DE8E991F41A911006E082B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6DE8EA81F41A911006E082B /* ViewController.m in Sources */,
+				A6DE8EA51F41A911006E082B /* AppDelegate.m in Sources */,
+				A6DE8EA21F41A911006E082B /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A6DE8EB21F41A911006E082B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6DE8EBB1F41A911006E082B /* WalleeExampleTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A6DE8EBD1F41A911006E082B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6DE8EC61F41A911006E082B /* WalleeExampleUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A6DE8EB81F41A911006E082B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A6DE8E9C1F41A911006E082B /* WalleeExample */;
+			targetProxy = A6DE8EB71F41A911006E082B /* PBXContainerItemProxy */;
+		};
+		A6DE8EC31F41A911006E082B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A6DE8E9C1F41A911006E082B /* WalleeExample */;
+			targetProxy = A6DE8EC21F41A911006E082B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A6DE8EA91F41A911006E082B /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A6DE8EAA1F41A911006E082B /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A6DE8EAE1F41A911006E082B /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A6DE8EAF1F41A911006E082B /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A6DE8EC81F41A911006E082B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A6DE8EC91F41A911006E082B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A6DE8ECB1F41A911006E082B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 5NW5G4TUSD;
+				INFOPLIST_FILE = WalleeExample/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wallee.ios.WalleeExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A6DE8ECC1F41A911006E082B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 5NW5G4TUSD;
+				INFOPLIST_FILE = WalleeExample/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wallee.ios.WalleeExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		A6DE8ECE1F41A911006E082B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 5NW5G4TUSD;
+				INFOPLIST_FILE = WalleeExampleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wallee.ios.WalleeExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WalleeExample.app/WalleeExample";
+			};
+			name = Debug;
+		};
+		A6DE8ECF1F41A911006E082B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 5NW5G4TUSD;
+				INFOPLIST_FILE = WalleeExampleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wallee.ios.WalleeExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WalleeExample.app/WalleeExample";
+			};
+			name = Release;
+		};
+		A6DE8ED11F41A911006E082B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 5NW5G4TUSD;
+				INFOPLIST_FILE = WalleeExampleUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wallee.ios.WalleeExampleUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = WalleeExample;
+			};
+			name = Debug;
+		};
+		A6DE8ED21F41A911006E082B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 5NW5G4TUSD;
+				INFOPLIST_FILE = WalleeExampleUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wallee.ios.WalleeExampleUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = WalleeExample;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A6DE8E981F41A911006E082B /* Build configuration list for PBXProject "WalleeExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A6DE8EC81F41A911006E082B /* Debug */,
+				A6DE8EC91F41A911006E082B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A6DE8ECA1F41A911006E082B /* Build configuration list for PBXNativeTarget "WalleeExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A6DE8ECB1F41A911006E082B /* Debug */,
+				A6DE8ECC1F41A911006E082B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A6DE8ECD1F41A911006E082B /* Build configuration list for PBXNativeTarget "WalleeExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A6DE8ECE1F41A911006E082B /* Debug */,
+				A6DE8ECF1F41A911006E082B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A6DE8ED01F41A911006E082B /* Build configuration list for PBXNativeTarget "WalleeExampleUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A6DE8ED11F41A911006E082B /* Debug */,
+				A6DE8ED21F41A911006E082B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A6DE8E951F41A911006E082B /* Project object */;
+}
