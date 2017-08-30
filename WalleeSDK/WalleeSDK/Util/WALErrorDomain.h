@@ -12,12 +12,12 @@ NS_ASSUME_NONNULL_BEGIN
 FOUNDATION_EXPORT NSString *const WALErrorDomain;
 
 /**
+ @typedef WALError
 
-
- - WALErrorInvalidCredentials: WALErrorInvalidCredentials description
- - WALErrorInvalidState: WALErrorInvalidState description
- - WALErrorInvalidArgument: WALErrorInvalidArgument description
- - WALErrorHTTPError: WALErrorHTTPError description
+ @field WALErrorInvalidCredentials: WALErrorInvalidCredentials description
+ @field WALErrorInvalidState: WALErrorInvalidState description
+ @field WALErrorInvalidArgument: WALErrorInvalidArgument description
+ @field WALErrorHTTPError: WALErrorHTTPError description
  */
 typedef NS_ENUM(NSUInteger, WALError){
     WALErrorInvalidCredentials  = 100,

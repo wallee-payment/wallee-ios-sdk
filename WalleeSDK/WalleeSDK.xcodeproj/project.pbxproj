@@ -34,6 +34,8 @@
 		A6DE8ED71F41CFA9006E082B /* WALCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DE8ED51F41CFA9006E082B /* WALCredentials.m */; };
 		A6DE8EDB1F41F9F7006E082B /* WALErrorDomain.h in Headers */ = {isa = PBXBuildFile; fileRef = A6DE8ED91F41F9F7006E082B /* WALErrorDomain.h */; };
 		A6DE8EDC1F41F9F7006E082B /* WALErrorDomain.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DE8EDA1F41F9F7006E082B /* WALErrorDomain.m */; };
+		A6E66DD41F56E79D00BBACF8 /* WALFlowStateHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = A6E66DD31F56E79D00BBACF8 /* WALFlowStateHandler.h */; };
+		A6E66DD61F56ECE700BBACF8 /* WALFlowStateDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = A6E66DD51F56ECE700BBACF8 /* WALFlowStateDelegate.h */; };
 		A6EECEE91F501D4D00954E02 /* WALJSONParser.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EECEE71F501D4D00954E02 /* WALJSONParser.h */; };
 		A6EECEEA1F501D4D00954E02 /* WALJSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EECEE81F501D4D00954E02 /* WALJSONParser.m */; };
 		A6EECEEC1F50551B00954E02 /* WALJSONAutoDecodable.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EECEEB1F50551B00954E02 /* WALJSONAutoDecodable.h */; };
@@ -48,6 +50,8 @@
 		A6EECF051F54465400954E02 /* WALTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EECF031F54465400954E02 /* WALTransaction.m */; };
 		A6EECF081F5449BA00954E02 /* WALFailureReason.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EECF061F5449BA00954E02 /* WALFailureReason.h */; };
 		A6EECF091F5449BA00954E02 /* WALFailureReason.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EECF071F5449BA00954E02 /* WALFailureReason.m */; };
+		A6EECF171F569CB400954E02 /* WALFlowEnums.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EECF151F569CB400954E02 /* WALFlowEnums.h */; };
+		A6EECF181F569CB400954E02 /* WALFlowEnums.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EECF161F569CB400954E02 /* WALFlowEnums.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +96,8 @@
 		A6DE8ED51F41CFA9006E082B /* WALCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALCredentials.m; sourceTree = "<group>"; };
 		A6DE8ED91F41F9F7006E082B /* WALErrorDomain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALErrorDomain.h; sourceTree = "<group>"; };
 		A6DE8EDA1F41F9F7006E082B /* WALErrorDomain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALErrorDomain.m; sourceTree = "<group>"; };
+		A6E66DD31F56E79D00BBACF8 /* WALFlowStateHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = WALFlowStateHandler.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		A6E66DD51F56ECE700BBACF8 /* WALFlowStateDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = WALFlowStateDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		A6EECEE71F501D4D00954E02 /* WALJSONParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALJSONParser.h; sourceTree = "<group>"; };
 		A6EECEE81F501D4D00954E02 /* WALJSONParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALJSONParser.m; sourceTree = "<group>"; };
 		A6EECEEB1F50551B00954E02 /* WALJSONAutoDecodable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALJSONAutoDecodable.h; sourceTree = "<group>"; };
@@ -106,6 +112,8 @@
 		A6EECF031F54465400954E02 /* WALTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALTransaction.m; sourceTree = "<group>"; };
 		A6EECF061F5449BA00954E02 /* WALFailureReason.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALFailureReason.h; sourceTree = "<group>"; };
 		A6EECF071F5449BA00954E02 /* WALFailureReason.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALFailureReason.m; sourceTree = "<group>"; };
+		A6EECF151F569CB400954E02 /* WALFlowEnums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = WALFlowEnums.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		A6EECF161F569CB400954E02 /* WALFlowEnums.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALFlowEnums.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,6 +224,7 @@
 		A6DE8E7C1F41A77D006E082B /* WalleeSDK */ = {
 			isa = PBXGroup;
 			children = (
+				A6EECF141F569C4E00954E02 /* Flow */,
 				A6C7B5A01F432B1E003CCB97 /* Request */,
 				A6DE8ED31F41CF82006E082B /* Credentials */,
 				A6DE8ED81F41F9DB006E082B /* Util */,
@@ -274,6 +283,17 @@
 			name = Token;
 			sourceTree = "<group>";
 		};
+		A6EECF141F569C4E00954E02 /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				A6EECF151F569CB400954E02 /* WALFlowEnums.h */,
+				A6EECF161F569CB400954E02 /* WALFlowEnums.m */,
+				A6E66DD31F56E79D00BBACF8 /* WALFlowStateHandler.h */,
+				A6E66DD51F56ECE700BBACF8 /* WALFlowStateDelegate.h */,
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -288,16 +308,19 @@
 				A6C7B5C41F49C151003CCB97 /* WALDatabaseTranslatedStringItem.h in Headers */,
 				A6EECF041F54465400954E02 /* WALTransaction.h in Headers */,
 				A6EECEF01F53FDE400954E02 /* WALTokenVersion.h in Headers */,
+				A6EECF171F569CB400954E02 /* WALFlowEnums.h in Headers */,
 				A6C7B5C01F49B7DD003CCB97 /* WALPaymentMethodConfiguration.h in Headers */,
 				A6EECEF41F54007B00954E02 /* WALConnectorConfiguration.h in Headers */,
 				A6C7B5AA1F435DC7003CCB97 /* WALApiConfig.h in Headers */,
 				A6EECEEC1F50551B00954E02 /* WALJSONAutoDecodable.h in Headers */,
 				A6A194F11F4EF47900374E92 /* WALCredentialsProvider.h in Headers */,
 				A6A194EC1F49D3F800374E92 /* WALJSONDecodable.h in Headers */,
+				A6E66DD41F56E79D00BBACF8 /* WALFlowStateHandler.h in Headers */,
 				A6C7B5B91F49A87A003CCB97 /* WALNSURLSessionApiClient.h in Headers */,
 				A6DE8E8B1F41A77E006E082B /* WalleeSDK.h in Headers */,
 				A6C7B5B41F4898DC003CCB97 /* WALTypes.h in Headers */,
 				A6A194EE1F4EF3DE00374E92 /* WALCredentialsFetcher.h in Headers */,
+				A6E66DD61F56ECE700BBACF8 /* WALFlowStateDelegate.h in Headers */,
 				A6DE8ED61F41CFA9006E082B /* WALCredentials.h in Headers */,
 				A6EECEF81F54022F00954E02 /* WALDataMixin.h in Headers */,
 				A6EECF001F541C6E00954E02 /* WALToken.h in Headers */,
@@ -419,6 +442,7 @@
 				A6C7B5C51F49C151003CCB97 /* WALDatabaseTranslatedStringItem.m in Sources */,
 				A6EECEF51F54007B00954E02 /* WALConnectorConfiguration.m in Sources */,
 				A6C7B5AB1F435DC7003CCB97 /* WALApiConfig.m in Sources */,
+				A6EECF181F569CB400954E02 /* WALFlowEnums.m in Sources */,
 				A6EECF091F5449BA00954E02 /* WALFailureReason.m in Sources */,
 				A6DE8EDC1F41F9F7006E082B /* WALErrorDomain.m in Sources */,
 			);
