@@ -48,6 +48,21 @@
     return nil;
 }
 
+// MARK: - Computed Properties
+- (BOOL)isAwaitingFinalState {
+    return self.state == WALTransactionStatePending || self.state == WALTransactionStateProcessing
+    || self.state == WALTransactionStateConfirmed;
+}
+
+- (BOOL)isFailed {
+    return self.state == WALTransactionStateFailed || self.state == WALTransactionStateDecline;
+}
+
+- (BOOL)isSuccessful {
+    return self.state == WALTransactionStateAuthorized || self.state == WALTransactionStateCompleted
+    || self.state == WALTransactionStateFulfill;
+}
+
 // MARK: - Enum
 + (WALTransactionState)transactionStateFrom:(NSString *)name {
     NSNumber *rawDataType = [self transactionStateToStringMapping][name.uppercaseString];

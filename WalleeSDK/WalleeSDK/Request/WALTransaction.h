@@ -74,5 +74,9 @@ NS_ASSUME_NONNULL_BEGIN
 //private TransactionUserInterfaceType userInterfaceType;
 @property (nonatomic, readonly) NSUInteger version;
 
+// computed properties
+@property (nonatomic, readonly) BOOL isWaitingFinalState;
+@property (nonatomic, readonly) BOOL isFailed;
+@property (nonatomic) BOOL isSuccessful;
 NS_ASSUME_NONNULL_END
 @end
