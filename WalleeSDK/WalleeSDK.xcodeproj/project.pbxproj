@@ -228,6 +228,7 @@
 				A6C7B5A01F432B1E003CCB97 /* Request */,
 				A6DE8ED31F41CF82006E082B /* Credentials */,
 				A6DE8ED81F41F9DB006E082B /* Util */,
+				A6E66DD71F57F8BD00BBACF8 /* View */,
 				A6DE8E7D1F41A77D006E082B /* WalleeSDK.h */,
 				A6DE8E7E1F41A77D006E082B /* Info.plist */,
 			);
@@ -270,6 +271,53 @@
 				A6EECEE81F501D4D00954E02 /* WALJSONParser.m */,
 			);
 			path = Util;
+			sourceTree = "<group>";
+		};
+		A6E66DD71F57F8BD00BBACF8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A6E66DDC1F57F8FD00BBACF8 /* Awaiting */,
+				A6E66DDB1F57F8F700BBACF8 /* Failure */,
+				A6E66DDA1F57F8ED00BBACF8 /* Form */,
+				A6E66DD91F57F8DB00BBACF8 /* Method */,
+				A6E66DD81F57F8CF00BBACF8 /* Token */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A6E66DD81F57F8CF00BBACF8 /* Token */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Token;
+			sourceTree = "<group>";
+		};
+		A6E66DD91F57F8DB00BBACF8 /* Method */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Method;
+			sourceTree = "<group>";
+		};
+		A6E66DDA1F57F8ED00BBACF8 /* Form */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Form;
+			sourceTree = "<group>";
+		};
+		A6E66DDB1F57F8F700BBACF8 /* Failure */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Failure;
+			sourceTree = "<group>";
+		};
+		A6E66DDC1F57F8FD00BBACF8 /* Awaiting */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Awaiting;
 			sourceTree = "<group>";
 		};
 		A6EECEED1F53FDCE00954E02 /* Token */ = {
