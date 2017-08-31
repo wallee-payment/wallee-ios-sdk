@@ -38,6 +38,9 @@
     return [NSURLSessionConfiguration defaultSessionConfiguration];
 }
 
++ (instancetype)clientWithCredentialsProvider:(WALCredentialsProvider *)credentialsProvider {
+    return [self clientWithBaseUrl:WalleeBaseUrl credentialsProvider:credentialsProvider];
+}
 
 + (instancetype)clientWithBaseUrl:(NSString *)baseUrl credentialsProvider:(WALCredentialsProvider *)credentialsProvider {
     // validation
