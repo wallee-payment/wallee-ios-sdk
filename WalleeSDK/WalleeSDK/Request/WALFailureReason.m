@@ -18,12 +18,11 @@ NSString *const WalleeName = @"name";
 
 @implementation WALFailureReason
 - (instancetype)initInternal {
-    self = [super init];
-    return self;
+    return [super init];
 }
 
 + (instancetype)decodedObjectFromJSON:(NSDictionary<NSString *,id> *)dictionary error:(NSError * _Nullable __autoreleasing *)error {
-    WALFailureReason *reason = [[WALFailureReason alloc] initInternal];
+    WALFailureReason *reason = [[self.class alloc] initInternal];
     if (![WALJSONParser populate:reason withDictionary:dictionary error:error]) {
         return nil;
     }

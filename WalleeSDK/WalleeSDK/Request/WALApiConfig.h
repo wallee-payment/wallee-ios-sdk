@@ -61,6 +61,14 @@ FOUNDATION_EXPORT NSString *const WalleeUserFailureMessage;
 FOUNDATION_EXPORT NSString *const WalleeUserInterfaceType;
 FOUNDATION_EXPORT NSString *const WalleeVersion;
 
+FOUNDATION_EXPORT NSString *const WalleeDate;
+FOUNDATION_EXPORT NSString *const WalleeDefaultMessage;
+FOUNDATION_EXPORT NSString *const WalleeMessage;
+FOUNDATION_EXPORT NSString *const WalleeType;
+
+FOUNDATION_EXPORT NSUInteger const WalleClientErrorReturnCode;
+FOUNDATION_EXPORT NSUInteger const WalleServerErrorReturnCode;
+
 @interface WALApiConfig : NSObject
 
 @end

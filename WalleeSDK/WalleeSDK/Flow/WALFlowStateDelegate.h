@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WALFlowEnums.h"
 
 /*!
  The coordinator callback allows to trigger certain operations on the coordinator.
@@ -26,7 +27,7 @@
      @param targetState the state to which the coordinator should switch to.
      @param argument    the argument which is passed to the new FlowStateHandler.
      */
-- (void)changeStateTo(WALFlowState) targetState;
+- (void)changeStateTo:(WALFlowState) targetState;
     
     /**
      To indicate that the view provided to the FlowCoordinator can be shown.

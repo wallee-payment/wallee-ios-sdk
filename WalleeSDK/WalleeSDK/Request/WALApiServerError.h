@@ -10,7 +10,7 @@
 #import "WALJSONDecodable.h"
 #import "WALJSONAutoDecodable.h"
 
-@interface WALApiServerError : NSObject<WALJSONDecodable, WALJSONAutoDecodable>
+@interface WALApiServerError : NSError<WALJSONDecodable, WALJSONAutoDecodable>
 #include "WALAPIDataType.h"
 NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) NSString *date;

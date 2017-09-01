@@ -7,13 +7,33 @@
 //
 
 #import <Foundation/Foundation.h>
-@protocol WALTokenListViewFactory, WALPaymentFormViewFactory, WALPaymentMethodListViewFactory;
+#import "WALFlowConfiguration.h"
+@class WALCredentialsProvider;
+@protocol WALPaymentFlowContainerFactory, WALTokenListViewFactory, WALPaymentFormViewFactory, WALPaymentMethodListViewFactory;
 @protocol WALSuccessViewFactory, WALFailureViewFactory, WALAwaitingFinalStateViewFactory;
 @protocol WALIconCache, WALFLowListener, WALIconRequestManager, WALApiClient;
 
+/**
+ * The builder allows to construct a flow configuration.
+ *
+ * @note The default @c -init method provides the simplest possible configuration which works out of the
+ * box. No further customization is required.
+ *
+ */
 @interface WALFlowConfigurationBuilder : NSObject
 NS_ASSUME_NONNULL_BEGIN
+/**
+ @warning `paymentFormViewFactory` must not be `nil`.
+ */
+@property (nonatomic, copy) id<WALPaymentFlowContainerFactory> paymentFlowContainerFactory;
+
+/**
+ @warning `paymentFormViewFactory` must not be `nil`.
+ */
 @property (nonatomic, copy) id<WALPaymentFormViewFactory> paymentFormViewFactory;
+/**
+ @warning `tokenListViewFactory` must not be `nil`.
+ */
 @property (nonatomic, copy) id<WALTokenListViewFactory> tokenListViewFactory;
 @property (nonatomic, copy) id<WALPaymentMethodListViewFactory> paymentMethodListViewFactory;
 @property (nonatomic, copy) id<WALSuccessViewFactory> successViewFactory;
@@ -24,12 +44,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) id<WALIconRequestManager> iconRequestManager;
 @property (nonatomic, copy) id<WALApiClient> webServiceApiClient;
 
+- (instancetype)initWithCredentialsProvider:(WALCredentialsProvider *)credentialsProvider;
+- (instancetype)init NS_DESIGNATED_INITIALIZER;
 
 /**
- Checks if a WALFLowConfiguration Object can be created from this Builder
+ Checks if a `WALFLowConfiguration` Object can be created from this Builder
 
- @param error contains the reason why this Builder is invalid
- @return @c YES if WALFLowConfiguration can be initialized @c Otherwise
+ @see WALFLowConfiguration class
+ 
+ @param error contains the reason why this Builder is invalidx
+ @return @c YES if WALFLowConfiguration can be initialized @c NO otherwise
  */
 - (BOOL)valid:(NSError * _Nullable *)error;
 NS_ASSUME_NONNULL_END

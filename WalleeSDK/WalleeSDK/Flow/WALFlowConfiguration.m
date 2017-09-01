@@ -10,6 +10,15 @@
 #import "WALFlowConfigurationBuilder.h"
 
 @interface WALFlowConfiguration ()
+
+/**
+ @warning
+ do not use this initializer directly as it does not validate its correct state. 
+ use the provided static intitializers
+
+ @param builder builder to use
+ @return initialized WALFlowConfiguration
+ */
 - (instancetype)initWithBuilder:(WALFlowConfigurationBuilder *)builder;
 @end
 
@@ -17,6 +26,7 @@
 
 - (instancetype)initWithBuilder:(WALFlowConfigurationBuilder *)builder {
     if (self = [super init]) {
+        _paymentFlowContainerFactory = builder.paymentFlowContainerFactory;
         _paymentFormViewFactory = builder.paymentFormViewFactory;
         _tokenListViewFactory = builder.tokenListViewFactory;
         _paymentMethodListViewFactory = builder.paymentMethodListViewFactory;
@@ -29,10 +39,15 @@
     return self;
 }
 
-+ (instancetype)makeWithBuilder:(void (^)(WALFlowConfigurationBuilder * _Nonnull))buildBlock error:(NSError *__autoreleasing  _Nullable * _Nullable)error {
++ (instancetype)makeWithBlock:(void (^ _Nullable)(WALFlowConfigurationBuilder * _Nonnull))buildBlock error:(NSError *__autoreleasing  _Nullable * _Nullable)error {
     WALFlowConfigurationBuilder *builder = [[WALFlowConfigurationBuilder alloc] init];
-    buildBlock(builder);
+    if (buildBlock) {
+        buildBlock(builder);
+    }
+    return [self.class makeWithBuilder:builder error:error];
+}
 
++ (instancetype)makeWithBuilder:(WALFlowConfigurationBuilder *)builder error:(NSError **)error {
     if (![builder valid:error]) {
         return nil;
     }

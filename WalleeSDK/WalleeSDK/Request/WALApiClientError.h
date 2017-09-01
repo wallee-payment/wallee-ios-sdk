@@ -17,7 +17,7 @@ typedef NS_ENUM(NSUInteger, WALClientErrorType) {
     WALClientErrorTypeUnknown
 };
 
-@interface WALApiClientError : NSObject<WALJSONDecodable, WALJSONAutoDecodable>
+@interface WALApiClientError : NSError<WALJSONDecodable, WALJSONAutoDecodable>
 #include "WALAPIDataType.h"
 NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) NSString *date;
