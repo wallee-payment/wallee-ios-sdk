@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WALFLowEnums.h"
+#import "WALFlowEnums.h"
+@class WALFlowCoordinator;
 
 /**
  The state handler represents a handler for FlowState. Each state has at least one
@@ -23,7 +24,7 @@
  <p>This method indicates to the flow state handler when the coordinator is onTokenSelectionViewReady to accept
  state changes and view changes.</p>
  */
-- (void)prepare;
+- (void)performWithCoordinator:(WALFlowCoordinator *)coordinator;
 
 - (UIViewController *)viewController;
 
@@ -34,7 +35,7 @@
  <p>The handler should return @c NO when it does not support the action. Otherwise it
  should return @c YES.</p>
  
- @param action the action which should be checked.
+ @param flowAction the action which should be checked.
  @return @c YES when the handler supports the action in the current situation. Otherwise
  the method should return @c NO.
  */
@@ -50,5 +51,5 @@
  @param flowAction the action which should be executed.
  @return @c YES when the action was executed. Otherwise @c NO.
  */
-- (BOOL)triggerAction:(WALFlowAction)flowAction;
+- (BOOL)triggerAction:(WALFlowAction)flowAction WithCoordinator:(WALFlowCoordinator *)coordinator;
 @end

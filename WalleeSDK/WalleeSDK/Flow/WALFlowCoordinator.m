@@ -8,20 +8,10 @@
 
 #import "WALFlowEnums.h"
 
-#import "WALFlowCoordinator.h"
+#import "WALFlowCoordinator+Private.h"
 #import "WALFlowConfiguration.h"
-#import "WALFlowStateDelegate.h"
 
 #import "WALPaymentFlowContainerFactory.h"
-
-@interface WALFlowCoordinator ()
-@property (nonatomic, copy) WALFlowConfiguration *configuration;
-@property (nonatomic, assign) WALFlowState state;
-
-@property (nonatomic, strong, readwrite) id<WALPaymentFlowContainer> paymentContainer;
-
-- (instancetype)initWithConfiguration:(WALFlowConfiguration *)configuration;
-@end
 
 @implementation WALFlowCoordinator
 

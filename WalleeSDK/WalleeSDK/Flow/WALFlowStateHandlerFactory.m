@@ -14,7 +14,7 @@
 + (id<WALFlowStateHandler>)handlerFromState:(WALFlowState)state {
     id<WALFlowStateHandler> handler;
     if (state == WALFlowStateTokenLoading) {
-//        handler = [WALTokenLoadingStateHandler]
+        handler = [[WALTokenLoadingStateHandler alloc] init];
     }
     return handler;
 }

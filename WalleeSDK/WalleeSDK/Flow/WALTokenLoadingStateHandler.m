@@ -8,9 +8,10 @@
 
 #import "WALTokenLoadingStateHandler.h"
 #import "WALFlowConfiguration.h"
-#import "WALFlowCoordinator.h"
+#import "WALFlowCoordinator+StateDelegate.h"
 #import "WALPaymentFlowDelegate.h"
 #import "WALFlowStateDelegate.h"
+#import "WALPaymentErrorHelper.h"
 #import "WALApiClient.h"
 
 @interface WALTokenLoadingStateHandler ()
@@ -24,7 +25,7 @@
     return NO;
 }
 
-- (BOOL)triggerAction:(WALFlowAction)flowAction {
+- (BOOL)triggerAction:(WALFlowAction)flowAction WithCoordinator:(WALFlowCoordinator *)coordinator {
     return NO;
 }
 
@@ -34,11 +35,22 @@
         [coordinator.configuration.delegate flowCoordinatorWillLoadToken:coordinator];
     }
     [coordinator.configuration.webServiceApiClient fetchTokenVersions:^(NSArray<WALTokenVersion *> * _Nullable tokenVersions, NSError * _Nullable error) {
-        if (!tokenVersions) {
-            
+        if (!tokenVersions && error) {
+            [WALPaymentErrorHelper distribute:error forCoordinator:coordinator];
+            return;
         }
+        
+        if (tokenVersions.count <= 0) {
+            [coordinator changeStateTo:WALFlowStatePaymentMethodLoading];
+        } else {
+            // Load icons for payment configurations
+            [coordinator changeStateTo:WALFlowStateTokenSelection];
+        }
+        
     }];
 }
 
-
+- (UIViewController *)viewController {
+    return nil;
+}
 @end
