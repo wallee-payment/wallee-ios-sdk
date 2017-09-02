@@ -25,9 +25,9 @@
      to the new state.
      *
      @param targetState the state to which the coordinator should switch to.
-     @param argument    the argument which is passed to the new FlowStateHandler.
+     @param parameters    the parameters which to pass to the new @c WALFlowStateHandler.
      */
-- (void)changeStateTo:(WALFlowState) targetState;
+- (void)changeStateTo:(WALFlowState)targetState parameters:(NSDictionary *)parameters;
     
     /**
      To indicate that the view provided to the FlowCoordinator can be shown.

@@ -16,6 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) WALFlowConfiguration *configuration;
 @property (nonatomic, strong, readonly) id<WALPaymentFlowContainer> paymentContainer;
 
-+ (id<WALPaymentFlowContainer>)startPaymentWithConfiguration:(WALFlowConfiguration *)configuration;
++ (id<WALPaymentFlowContainer>)paymentFlowWithConfiguration:(WALFlowConfiguration *)configuration;
 NS_ASSUME_NONNULL_END
 @end

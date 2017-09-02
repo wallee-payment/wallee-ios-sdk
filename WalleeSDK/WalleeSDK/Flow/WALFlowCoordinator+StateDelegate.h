@@ -10,6 +10,6 @@
 #import "WALFlowStateDelegate.h"
 
 @interface WALFlowCoordinator (StateDelegate) <WALFlowStateDelegate>
-
+@property (nonatomic, readonly) WALFlowState state;
 @end
 

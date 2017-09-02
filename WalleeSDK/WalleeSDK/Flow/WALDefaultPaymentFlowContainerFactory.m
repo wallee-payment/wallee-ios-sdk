@@ -10,7 +10,7 @@
 #import "WALDefaultPaymentFlowContainer.h"
 
 @implementation WALDefaultPaymentFlowContainerFactory
-+ (id<WALPaymentFlowContainer>)build {
+- (id<WALPaymentFlowContainer>)build {
     WALDefaultPaymentFlowContainer *container = [[WALDefaultPaymentFlowContainer alloc] init];
     return container;
 }

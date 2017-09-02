@@ -7,20 +7,37 @@
 //
 
 #import "WALFlowCoordinator+StateDelegate.h"
+#import "WALFlowStateHandler.h"
+#import "WALPaymentFlowContainer.h"
+#import "WALFlowStateHandlerFactory.h"
+
+#import "WALPaymentErrorHelper.h"
+
 
 @implementation WALFlowCoordinator (StateDelegate)
 
-- (void)changeStateTo:(WALFlowState)targetState {
-    
+- (void)changeStateTo:(WALFlowState)targetState parameters:(NSDictionary *)parameters {
+    id<WALFlowStateHandler> nextStateHandler = [WALFlowStateHandlerFactory handlerFromState:targetState stateParameters:parameters];
+    //TODO: currentState invalidate?
+    self.state = targetState;
+    self.stateHandler = nextStateHandler;
+    [self.stateHandler performWithCoordinator:self];
 }
 
 - (void)waiting {
     NSLog(@"WAITING...");
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.paymentContainer displayLoading];
+    });
 }
 
 - (void)ready {
-    NSLog(@"READY!");
-    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIViewController * controller = [self.stateHandler viewControllerForCoordinator:self];
+        NSAssert(controller != nil, @"Implementation Error: State does not return a ViewController: %@", self.stateHandler);
+        
+        [self.paymentContainer displayViewController:controller];
+    });
 }
 
 @end

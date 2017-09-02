@@ -45,7 +45,7 @@
 
 - (BOOL)triggerAction:(WALFlowAction)flowAction WithCoordinator:(WALFlowCoordinator *)coordinator {
     if(flowAction == WALFlowActionSwitchToPaymentMethodSelection) {
-        [coordinator changeStateTo:WALFlowStatePaymentMethodLoading];
+        [coordinator changeStateTo:WALFlowStatePaymentMethodLoading parameters:nil];
         return YES;
     }
     return NO;
@@ -64,12 +64,13 @@
     __weak WALFlowCoordinator *weakCoordinator = coordinator;
     WALTransactionCompletion transactionCompletion = ^(WALTransaction * _Nullable transaction, NSError * _Nullable error) {
         if (transaction) {
+            NSDictionary *params = @{WALFlowTransactionParameter: transaction};
             if (transaction.isSuccessful) {
-                [weakCoordinator changeStateTo:WALFlowStateSuccess];
+                [weakCoordinator changeStateTo:WALFlowStateSuccess parameters:params];
             } else if(transaction.isFailed) {
-                [weakCoordinator changeStateTo:WALFlowStateFailure];
+                [weakCoordinator changeStateTo:WALFlowStateFailure parameters:params];
             } else {
-                [weakCoordinator changeStateTo:WALFlowStateAwaitingFinalState];
+                [weakCoordinator changeStateTo:WALFlowStateAwaitingFinalState parameters:params];
             }
         } else {
             [WALPaymentErrorHelper distributeNetworkError:error forCoordinator:weakCoordinator];
@@ -77,7 +78,7 @@
     };
     WALTokenVersionSelected tokenSelected = ^(WALTokenVersion * _Nonnull selectedToken) {
         
-        //TODO: Howto handle errors
+        //TODO: Howto handle errors (should we propagate them at all?)
         NSError *error;
         if (![WALErrorHelper checkNotEmpty:selectedToken withMessage:@"TokenVersion is required. Cannot be nil" error:&error] ||
             [WALErrorHelper checkNotEmpty:selectedToken.token withMessage:@"Token is required. Cannot be nil" error:&error]) {
@@ -97,6 +98,15 @@
     
     UIViewController *controller = [coordinator.configuration.viewControllerFactory buildTokenListViewWith:self.tokens onSelection:tokenSelected];
     return controller;
+}
+
+// MARK: - Description
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@", @{@"State": @"TokenSelection", @"Tokens": self.tokens}];
+}
+
+- (NSString *)debugDescription{
+    return [NSString stringWithFormat:@"<%@: %p, \"%@\">", [self class], self, [self description]];
 }
 
 @end

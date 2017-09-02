@@ -41,10 +41,10 @@
         }
         
         if (tokenVersions.count <= 0) {
-            [weakCoordinator changeStateTo:WALFlowStatePaymentMethodLoading];
+            [weakCoordinator changeStateTo:WALFlowStatePaymentMethodLoading parameters:nil];
         } else {
             // Load icons for payment configurations
-            [weakCoordinator changeStateTo:WALFlowStateTokenSelection];
+            [weakCoordinator changeStateTo:WALFlowStateTokenSelection parameters:nil];
         }
         
     }];
@@ -53,4 +53,14 @@
 - (UIViewController *)viewControllerForCoordinator:(WALFlowCoordinator *)coordinator {
     return nil;
 }
+
+// MARK: - Description
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@", @{@"State": @"TokenLoading"}];
+}
+
+- (NSString *)debugDescription{
+    return [NSString stringWithFormat:@"<%@: %p, \"%@\">", [self class], self, [self description]];
+}
+
 @end

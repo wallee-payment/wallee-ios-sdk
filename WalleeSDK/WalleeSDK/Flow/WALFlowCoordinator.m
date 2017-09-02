@@ -12,6 +12,14 @@
 #import "WALFlowConfiguration.h"
 
 #import "WALPaymentFlowContainerFactory.h"
+#import "WALFlowStateHandlerFactory.h"
+#import "WALFlowStateHandler.h"
+
+
+@interface WALFlowCoordinator ()
+@property (nonatomic) int isStarted;
+@property (nonatomic, strong) NSLock *lock;
+@end
 
 @implementation WALFlowCoordinator
 
@@ -19,17 +27,27 @@
     if (self = [super init]) {
         _configuration = configuration;
         _state = WALFlowStateTokenLoading;
+        _stateHandler = [WALFlowStateHandlerFactory handlerFromState:_state stateParameters:nil];
         // --> state.view to containerFactory
     }
     return self;
 }
 
-+ (instancetype)startPaymentWithConfiguration:(WALFlowConfiguration *)configuration {
++ (instancetype)paymentFlowWithConfiguration:(WALFlowConfiguration *)configuration {
     if (!configuration) {
         return nil;
     }
     WALFlowCoordinator *coordinator = [[self alloc] initWithConfiguration:configuration];
     return coordinator;
+}
+
+- (void)start {
+    @synchronized (self) {
+        if (!self.isStarted && self.state == WALFlowStateTokenLoading) {
+            self.isStarted = YES;
+            [self.stateHandler performWithCoordinator:self];
+        }
+    }
 }
 
 - (id<WALPaymentFlowContainer>)paymentContainer {

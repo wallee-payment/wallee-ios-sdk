@@ -9,5 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @protocol WALPaymentFlowContainer <NSObject>
-
+- (void)displayViewController:(UIViewController * _Nonnull)viewController;
+- (void)displayLoading;
 @end

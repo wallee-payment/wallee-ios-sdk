@@ -9,19 +9,37 @@
 #import "WALDefaultPaymentFlowContainer.h"
 
 @interface WALDefaultPaymentFlowContainer ()
-
+@property (nonatomic, strong) UIView *activityIndicatorBackgroundView;
+@property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @end
 
 @implementation WALDefaultPaymentFlowContainer
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [self.activityIndicator startAnimating];
+    
+    self.activityIndicatorBackgroundView = [[UIView alloc] initWithFrame:self.activityIndicator.bounds];
+    self.activityIndicatorBackgroundView.backgroundColor = [UIColor greenColor];
+    [self.activityIndicatorBackgroundView addSubview:self.activityIndicator];
+    
+    [self.view addSubview:self.activityIndicatorBackgroundView];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)displayViewController:(UIViewController *)viewController {
+    self.activityIndicatorBackgroundView.hidden = YES;
+    [self pushViewController:viewController animated:YES];
+
+}
+
+- (void)displayLoading {
+    self.activityIndicatorBackgroundView.hidden = NO;
 }
 
 @end

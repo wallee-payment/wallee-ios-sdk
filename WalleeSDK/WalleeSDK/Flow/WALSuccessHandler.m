@@ -55,4 +55,14 @@
     [coordinator.configuration.viewControllerFactory buildSuccessViewWith:self.transaction];
     return nil;
 }
+
+// MARK: - Description
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@", @{@"State": @"Success", @"Transaction": self.transaction}];
+}
+
+- (NSString *)debugDescription{
+    return [NSString stringWithFormat:@"<%@: %p, \"%@\">", [self class], self, [self description]];
+}
+
 @end
