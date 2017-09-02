@@ -9,8 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "WALFlowConfiguration.h"
 @class WALCredentialsProvider;
-@protocol WALPaymentFlowContainerFactory, WALTokenListViewControllerFactory, WALPaymentFormViewControllerFactory, WALPaymentMethodListViewControllerFactory;
-@protocol WALSuccessViewControllerFactory, WALFailureViewControllerFactory, WALAwaitingFinalStateViewControllerFactory;
+@protocol WALPaymentFlowContainerFactory, WALViewControllerFactory;
 @protocol WALIconCache, WALFLowListener, WALIconRequestManager, WALApiClient;
 
 /**
@@ -26,19 +25,12 @@ NS_ASSUME_NONNULL_BEGIN
  @warning `paymentFormViewControllerFactory` must not be `nil`.
  */
 @property (nonatomic, copy) id<WALPaymentFlowContainerFactory> paymentFlowContainerFactory;
-
 /**
  @warning `paymentFormViewControllerFactory` must not be `nil`.
  */
-@property (nonatomic, copy) id<WALPaymentFormViewControllerFactory> paymentFormViewControllerFactory;
-/**
- @warning `tokenListViewControllerFactory` must not be `nil`.
- */
-@property (nonatomic, copy) id<WALTokenListViewControllerFactory> tokenListViewControllerFactory;
-@property (nonatomic, copy) id<WALPaymentMethodListViewControllerFactory> paymentMethodListViewControllerFactory;
-@property (nonatomic, copy) id<WALSuccessViewControllerFactory> successViewControllerFactory;
-@property (nonatomic, copy) id<WALFailureViewControllerFactory> failureViewControllerFactory;
-@property (nonatomic, copy) id<WALAwaitingFinalStateViewControllerFactory> awaitingFinalStateViewControllerFactory;
+@property (nonatomic, copy) id<WALViewControllerFactory> viewControllerFactory;
+
+
 @property (nonatomic, copy) id<WALIconCache> iconCache;
 @property (nonatomic, copy) NSArray<id<WALFLowListener>> *listeners;
 @property (nonatomic, copy) id<WALIconRequestManager> iconRequestManager;

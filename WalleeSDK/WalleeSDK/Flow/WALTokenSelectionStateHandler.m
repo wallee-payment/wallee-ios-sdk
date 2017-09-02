@@ -11,12 +11,12 @@
 #import "WALFlowCoordinator+StateDelegate.h"
 #import "WALFlowStateDelegate.h"
 #import "WALPaymentFlowDelegate.h"
+#import "WALViewControllerFactory.h"
 
 #import "WALPaymentErrorHelper.h"
 #import "WALErrorDomain.h"
 
 #import "WALApiClient.h"
-#import "WALTokenListViewControllerFactory.h"
 #import "WALTokenVersion.h"
 #import "WALTransaction.h"
 
@@ -95,7 +95,7 @@
         
     };
     
-    UIViewController *controller = [coordinator.configuration.tokenListViewControllerFactory buildWith:self.tokens onSelection:tokenSelected];
+    UIViewController *controller = [coordinator.configuration.viewControllerFactory buildTokenListViewWith:self.tokens onSelection:tokenSelected];
     return controller;
 }
 

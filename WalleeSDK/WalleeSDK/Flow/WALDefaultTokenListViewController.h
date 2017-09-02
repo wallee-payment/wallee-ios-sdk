@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WALTokenListViewController.h"
+#import "WALViewControllerFactory.h"
 
-@interface WALDefaultTokenListViewController : UIViewController<WALTokenListViewController, UITableViewDelegate, UITableViewDataSource>
+@class WALTokenVersion;
+
+@interface WALDefaultTokenListViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSArray<WALTokenVersion *> *tokens;
 @property (nonatomic) WALTokenVersionSelected onTokenSelected;
