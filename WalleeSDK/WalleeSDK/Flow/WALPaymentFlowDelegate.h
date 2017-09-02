@@ -19,6 +19,7 @@
 - (void)flowCoordinator:(WALFlowCoordinator *)coordinator didSelectToken:(WALTokenVersion *)token;
 
 - (void)flowCoordinator:(WALFlowCoordinator *)coordinator transactionDidSucceed:(WALTransaction *)transaction;
+- (void)flowCoordinator:(WALFlowCoordinator *)coordinator transactionDidFail:(WALTransaction *)transaction;
 
 - (void)flowCoordinator:(WALFlowCoordinator *)coordinator encouteredInternalError:(NSError*)error;
 - (void)flowCoordinator:(WALFlowCoordinator *)coordinator encouteredApiClientError:(WALApiClientError*)error;

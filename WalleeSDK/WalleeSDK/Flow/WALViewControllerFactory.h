@@ -13,6 +13,7 @@ typedef void(^WALTokenVersionSelected)(WALTokenVersion *_Nonnull);
 
 @protocol WALViewControllerFactory <NSObject>
 - (UIViewController *_Nonnull)buildSuccessViewWith:(WALTransaction * _Nonnull)transaction;
+- (UIViewController *_Nonnull)buildFailureViewWith:(WALTransaction * _Nonnull)transaction;
 - (UIViewController *_Nonnull)buildTokenListViewWith:(NSArray<WALTokenVersion *> *_Nonnull)tokens onSelection:(WALTokenVersionSelected _Nullable )callback;
 
 @end

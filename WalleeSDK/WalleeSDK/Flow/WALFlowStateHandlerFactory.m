@@ -22,6 +22,8 @@
         handler = [WALTokenSelectionStateHandler statetWithTokens:parameters[WALFlowTokensParameter]];
     } else if (state == WALFlowStateSuccess) {
         handler = [WALSuccessHandler stateWithTransaction:parameters[WALFlowTransactionParameter]];
+    } else if (state == WALFlowStateFailure) {
+        handler = [WALSuccessHandler stateWithTransaction:parameters[WALFlowTransactionParameter]];
     }
     return handler;
 }

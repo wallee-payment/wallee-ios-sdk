@@ -1,12 +1,12 @@
 //
-//  WALSuccessHandler.m
+//  WALFailureHandler.m
 //  WalleeSDK
 //
 //  Created by Daniel Schmid on 02.09.17.
 //  Copyright © 2017 smoca AG. All rights reserved.
 //
 
-#import "WALSuccessHandler.h"
+#import "WALFailureHandler.h"
 
 #import "WALFlowConfiguration.h"
 #import "WALFlowCoordinator+StateDelegate.h"
@@ -14,12 +14,11 @@
 #import "WALPaymentFlowDelegate.h"
 #import "WALViewControllerFactory.h"
 
-@interface WALSuccessHandler ()
+@interface WALFailureHandler ()
 @property (nonatomic, copy) WALTransaction *transaction;
 @end
 
-@implementation WALSuccessHandler
-
+@implementation WALFailureHandler
 + (instancetype)stateWithTransaction:(WALTransaction *)transaction {
     if (!transaction) {
         return nil;
@@ -44,15 +43,15 @@
 
 - (void)performWithCoordinator:(WALFlowCoordinator *)coordinator {
     [super performWithCoordinator:coordinator];
-    if ([coordinator.configuration.delegate respondsToSelector:@selector(flowCoordinator:transactionDidSucceed:)]) {
-        [coordinator.configuration.delegate flowCoordinator:coordinator transactionDidSucceed:self.transaction];
+    if ([coordinator.configuration.delegate respondsToSelector:@selector(flowCoordinator:transactionDidFail:)]) {
+        [coordinator.configuration.delegate flowCoordinator:coordinator transactionDidFail:self.transaction];
     }
     
     [coordinator ready];
 }
 
 - (UIViewController *)viewControllerForCoordinator:(WALFlowCoordinator *)coordinator {
-    [coordinator.configuration.viewControllerFactory buildSuccessViewWith:self.transaction];
+    [coordinator.configuration.viewControllerFactory buildFailureViewWith:self.transaction];
     return nil;
 }
 @end

@@ -7,8 +7,10 @@
 //
 
 #import "WALDefaultViewControllerFactory.h"
+
 #import "WALDefaultTokenListViewController.h"
 #import "WALDefaultSuccessViewController.h"
+#import "WALDefaultFailureViewController.h"
 
 
 @implementation WALDefaultViewControllerFactory
@@ -21,6 +23,12 @@
 
 - (UIViewController *)buildSuccessViewWith:(WALTransaction *)transaction {
     WALDefaultSuccessViewController *controller = [[WALDefaultSuccessViewController alloc] init];
+    controller.transaction = transaction;
+    return controller;
+}
+
+- (UIViewController *)buildFailureViewWith:(WALTransaction *)transaction {
+    WALDefaultFailureViewController *controller = [[WALDefaultFailureViewController alloc] init];
     controller.transaction = transaction;
     return controller;
 }
