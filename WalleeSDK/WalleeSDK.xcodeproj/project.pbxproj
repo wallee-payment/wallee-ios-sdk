@@ -495,8 +495,8 @@
 		A6EECF141F569C4E00954E02 /* Flow */ = {
 			isa = PBXGroup;
 			children = (
-				A63B64731F59BE38007B9B15 /* Model */,
 				A63B64481F59630A007B9B15 /* State */,
+				A63B64731F59BE38007B9B15 /* Model */,
 				A63B642D1F593CF1007B9B15 /* ViewController */,
 				A682B6081F581311007C66AA /* Listener */,
 				A682B6031F5801CB007C66AA /* Configuration */,

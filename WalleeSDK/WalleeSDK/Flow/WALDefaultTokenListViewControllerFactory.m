@@ -12,7 +12,7 @@
 @implementation WALDefaultTokenListViewControllerFactory
 - (UIViewController<WALTokenListViewController> *)buildWith:(NSArray<WALTokenVersion *> *)tokens onSelection:(WALTokenVersionSelected)callback {
     WALDefaultTokenListViewController *defaultViewController = [[WALDefaultTokenListViewController alloc] init];
-    defaultViewController.onTokenSelectionBlock = callback;
+    defaultViewController.onTokenSelected = callback;
     return defaultViewController;
 }
 @end

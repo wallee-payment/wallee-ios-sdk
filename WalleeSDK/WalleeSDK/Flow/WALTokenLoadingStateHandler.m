@@ -36,7 +36,7 @@
     }
     [coordinator.configuration.webServiceApiClient fetchTokenVersions:^(NSArray<WALTokenVersion *> * _Nullable tokenVersions, NSError * _Nullable error) {
         if (!tokenVersions && error) {
-            [WALPaymentErrorHelper distribute:error forCoordinator:coordinator];
+            [WALPaymentErrorHelper distributeNetworkError:error forCoordinator:coordinator];
             return;
         }
         

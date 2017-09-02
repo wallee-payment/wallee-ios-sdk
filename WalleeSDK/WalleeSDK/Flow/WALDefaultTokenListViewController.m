@@ -33,8 +33,8 @@ static NSString * const cellIdentifier = @"defaultCell";
 // MARK: - TableViewDelegate and Datasource
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     WALTokenVersion *token = self.tokens[indexPath.row];
-    if (self.onTokenSelectionBlock) {
-        self.onTokenSelectionBlock(token);
+    if (self.onTokenSelected) {
+        self.onTokenSelected(token);
     }
 }
 

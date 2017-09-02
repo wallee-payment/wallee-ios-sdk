@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 @class WALFlowConfigurationBuilder;
 @protocol WALPaymentFlowContainerFactory;
-@protocol WALTokenListViewFactory, WALPaymentFormViewFactory, WALPaymentMethodListViewFactory;
+@protocol WALTokenListViewControllerFactory, WALPaymentFormViewFactory, WALPaymentMethodListViewFactory;
 @protocol WALSuccessViewFactory, WALFailureViewFactory, WALAwaitingFinalStateViewFactory;
 @protocol WALIconCache, WALPaymentFlowDelegate, WALIconRequestManager, WALApiClient;
 
@@ -45,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @return the factory which is responsible to create teh token selection view.
  */
-@property (nonatomic, copy, readonly) id<WALTokenListViewFactory> tokenListViewFactory;
+@property (nonatomic, copy, readonly) id<WALTokenListViewControllerFactory> tokenListViewFactory;
 
 /**
  * The payment method selection view allows the user to select from a list of payment methods

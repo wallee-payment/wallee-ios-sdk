@@ -10,5 +10,8 @@
 @class WALFlowCoordinator;
 
 @interface WALPaymentErrorHelper : NSObject
++ (void)distributeNetworkError:(NSError *_Nonnull)error forCoordinator:(WALFlowCoordinator * _Nonnull)coordinator;
+
 + (void)distribute:(NSError *_Nonnull)error forCoordinator:(WALFlowCoordinator * _Nonnull)coordinator;
+
 @end

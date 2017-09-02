@@ -34,7 +34,7 @@ NSString *const WALErrorDomain = @"com.wallee.ios";
 }
 
 //MARK - Checks
-+ (BOOL)checkEmpty:(id _Nullable)object withMessage:(NSString *)message error:(NSError * _Nullable __autoreleasing *)error {
++ (BOOL)checkNotEmpty:(id _Nullable)object withMessage:(NSString *)message error:(NSError * _Nullable __autoreleasing *)error {
     if(!object ||
        ([object respondsToSelector:@selector(length)] && [object length] <= 0)){
         [WALErrorHelper populate:error withIllegalArgumentWithMessage:message];

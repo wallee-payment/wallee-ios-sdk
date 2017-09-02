@@ -14,7 +14,7 @@
 #import "WALPaymentFlowDelegate.h"
 
 @implementation WALPaymentErrorHelper
-+ (void)distribute:(NSError *)error forCoordinator:(WALFlowCoordinator *)coordinator {
++ (void)distributeNetworkError:(NSError *)error forCoordinator:(WALFlowCoordinator *)coordinator {
     if ([error isKindOfClass:WALApiServerError.class]) {
         [coordinator.configuration.delegate flowCoordinator:coordinator encouteredApiServerError:(WALApiServerError *)error];
     } else if ([error isKindOfClass:WALApiClientError.class]) {
@@ -22,5 +22,9 @@
     } else {
         [coordinator.configuration.delegate flowCoordinator:coordinator encouteredApiNetworktError:error];
     }
+}
+
++ (void)distribute:(NSError *)error forCoordinator:(WALFlowCoordinator *)coordinator {
+    [coordinator.configuration.delegate flowCoordinator:coordinator encouteredInternalError:error];
 }
 @end

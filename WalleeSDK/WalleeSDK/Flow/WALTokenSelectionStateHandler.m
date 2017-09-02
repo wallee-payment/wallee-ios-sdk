@@ -9,16 +9,29 @@
 #import "WALTokenSelectionStateHandler.h"
 #import "WALFlowConfiguration.h"
 #import "WALFlowCoordinator+StateDelegate.h"
-#import "WALPaymentFlowDelegate.h"
 #import "WALFlowStateDelegate.h"
+#import "WALPaymentFlowDelegate.h"
+
 #import "WALPaymentErrorHelper.h"
+#import "WALErrorDomain.h"
+
 #import "WALApiClient.h"
+#import "WALTokenListViewControllerFactory.h"
+#import "WALTokenVersion.h"
+#import "WALTransaction.h"
 
 @interface WALTokenSelectionStateHandler ()
 @property (nonatomic, copy) NSArray<WALTokenVersion *> *tokens;
 @end
 
 @implementation WALTokenSelectionStateHandler
+
+- (instancetype)initWithTokens:(NSArray<WALTokenVersion *> *)tokens {
+    if (self = [super init]) {
+        _tokens = tokens;
+    }
+    return self;
+}
 
 - (BOOL)dryTriggerAction:(WALFlowAction)flowAction {
     return flowAction == WALFlowActionSwitchToPaymentMethodSelection;
@@ -33,16 +46,50 @@
 }
 
 - (void)performWithCoordinator:(WALFlowCoordinator *)coordinator {
-    if ([coordinator.configuration.delegate respondsToSelector:@selector(flowCoordinatorDidDisplayTokenSelection:)]) {
-        [coordinator.configuration.delegate flowCoordinatorDidDisplayTokenSelection:coordinator];
+    if ([coordinator.configuration.delegate respondsToSelector:@selector(flowCoordinatorWillDisplayTokenSelection:)]) {
+        [coordinator.configuration.delegate flowCoordinatorWillDisplayTokenSelection:coordinator];
     }
     [coordinator ready];
 }
 
-- (instancetype)initWithTokens:(NSArray<WALTokenVersion *> *)tokens {
-    if (self = [super init]) {
-        _tokens = tokens;
-    }
-    return self;
+- (UIViewController *)viewControllerForCoordinator:(WALFlowCoordinator *)coordinator {
+    
+    __weak WALFlowCoordinator *weakCoordinator = coordinator;
+    WALTransactionCompletion transactionCompletion = ^(WALTransaction * _Nullable transaction, NSError * _Nullable error) {
+        if (transaction) {
+            if (transaction.isSuccessful) {
+                [weakCoordinator changeStateTo:WALFlowStateSuccess];
+            } else if(transaction.isFailed) {
+                [weakCoordinator changeStateTo:WALFlowStateFailure];
+            } else {
+                [weakCoordinator changeStateTo:WALFlowStateAwaitingFinalState];
+            }
+        } else {
+            [WALPaymentErrorHelper distributeNetworkError:error forCoordinator:weakCoordinator];
+        }
+    };
+    WALTokenVersionSelected tokenSelected = ^(WALTokenVersion * _Nonnull selectedToken) {
+        
+        //TODO: Howto handle errors
+        NSError *error;
+        if (![WALErrorHelper checkNotEmpty:selectedToken withMessage:@"TokenVersion is required. Cannot be nil" error:&error] ||
+            [WALErrorHelper checkNotEmpty:selectedToken.token withMessage:@"Token is required. Cannot be nil" error:&error]) {
+            [WALPaymentErrorHelper distribute:error forCoordinator:weakCoordinator];
+            return;
+        }
+        
+        [weakCoordinator waiting];
+        
+        if ([weakCoordinator.configuration.delegate respondsToSelector:@selector(flowCoordinator:didSelectToken:)]) {
+            [weakCoordinator.configuration.delegate flowCoordinator:weakCoordinator didSelectToken:selectedToken];
+        }
+        
+        [weakCoordinator.configuration.webServiceApiClient processOneClickToken:selectedToken.token completion:transactionCompletion];
+        
+    };
+    
+    UIViewController *controller = [coordinator.configuration.tokenListViewFactory buildWith:self.tokens onSelection:tokenSelected];
+    return controller;
 }
+
 @end

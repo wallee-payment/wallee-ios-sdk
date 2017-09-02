@@ -26,7 +26,7 @@
  */
 - (void)performWithCoordinator:(WALFlowCoordinator *)coordinator;
 
-- (UIViewController *)viewController;
+- (UIViewController *)viewControllerForCoordinator:(WALFlowCoordinator *)coordinator;
 
 /**
  This method is called to test if a particular @c action can be executed with this

@@ -31,7 +31,7 @@ typedef NS_ENUM(NSUInteger, WALError){
 + (void)populate:(NSError **)error withIllegalStateWithMessage:(NSString *)message;
 + (void)populate:(NSError **)error withIllegalArgumentWithMessage:(NSString *)message;
 
-+ (BOOL)checkEmpty:(id _Nullable)object withMessage:(NSString *)message error:(NSError * _Nullable __autoreleasing *)error;
++ (BOOL)checkNotEmpty:(id _Nullable)object withMessage:(NSString *)message error:(NSError * _Nullable __autoreleasing *)error;
 + (BOOL)checkArrayType:(id)object withMessage:(NSString * _Nullable)message error:(NSError * _Nullable __autoreleasing *)error;
 + (BOOL)checkDictionaryType:(id)object withMessage:(NSString *)message error:(NSError * _Nullable __autoreleasing *)error;
 @end

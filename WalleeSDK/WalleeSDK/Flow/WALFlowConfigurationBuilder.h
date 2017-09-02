@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "WALFlowConfiguration.h"
 @class WALCredentialsProvider;
-@protocol WALPaymentFlowContainerFactory, WALTokenListViewFactory, WALPaymentFormViewFactory, WALPaymentMethodListViewFactory;
+@protocol WALPaymentFlowContainerFactory, WALTokenListViewControllerFactory, WALPaymentFormViewFactory, WALPaymentMethodListViewFactory;
 @protocol WALSuccessViewFactory, WALFailureViewFactory, WALAwaitingFinalStateViewFactory;
 @protocol WALIconCache, WALFLowListener, WALIconRequestManager, WALApiClient;
 
@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  @warning `tokenListViewFactory` must not be `nil`.
  */
-@property (nonatomic, copy) id<WALTokenListViewFactory> tokenListViewFactory;
+@property (nonatomic, copy) id<WALTokenListViewControllerFactory> tokenListViewFactory;
 @property (nonatomic, copy) id<WALPaymentMethodListViewFactory> paymentMethodListViewFactory;
 @property (nonatomic, copy) id<WALSuccessViewFactory> successViewFactory;
 @property (nonatomic, copy) id<WALFailureViewFactory> failureViewFactory;
