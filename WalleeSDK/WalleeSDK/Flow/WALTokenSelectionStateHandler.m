@@ -25,6 +25,12 @@
 @end
 
 @implementation WALTokenSelectionStateHandler
++ (instancetype)statetWithTokens:(NSArray<WALTokenVersion *> *)tokens {
+    if (!tokens || tokens.count <= 0) {
+        return nil;
+    }
+    return [[self alloc] initWithTokens:tokens];
+}
 
 - (instancetype)initWithTokens:(NSArray<WALTokenVersion *> *)tokens {
     if (self = [super init]) {
@@ -46,6 +52,7 @@
 }
 
 - (void)performWithCoordinator:(WALFlowCoordinator *)coordinator {
+    [super performWithCoordinator:coordinator];
     if ([coordinator.configuration.delegate respondsToSelector:@selector(flowCoordinatorWillDisplayTokenSelection:)]) {
         [coordinator.configuration.delegate flowCoordinatorWillDisplayTokenSelection:coordinator];
     }
@@ -88,7 +95,7 @@
         
     };
     
-    UIViewController *controller = [coordinator.configuration.tokenListViewFactory buildWith:self.tokens onSelection:tokenSelected];
+    UIViewController *controller = [coordinator.configuration.tokenListViewControllerFactory buildWith:self.tokens onSelection:tokenSelected];
     return controller;
 }
 

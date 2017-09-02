@@ -7,7 +7,7 @@
 //
 
 #import "WALFlowCoordinator.h"
-#import "WALFlowEnums.h"
+#import "WALFlowTypes.h"
 
 @interface WALFlowCoordinator ()
 NS_ASSUME_NONNULL_BEGIN

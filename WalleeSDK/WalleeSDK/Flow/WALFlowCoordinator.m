@@ -6,7 +6,7 @@
 //  Copyright © 2017 smoca AG. All rights reserved.
 //
 
-#import "WALFlowEnums.h"
+#import "WALFlowTypes.h"
 
 #import "WALFlowCoordinator+Private.h"
 #import "WALFlowConfiguration.h"

@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "WALFlowEnums.h"
+#import "WALFlowTypes.h"
 @protocol WALFlowStateHandler;
 
 @interface WALFlowStateHandlerFactory : NSObject
 NS_ASSUME_NONNULL_BEGIN
-+ (id<WALFlowStateHandler>)handlerFromState:(WALFlowState)state;
++ (id<WALFlowStateHandler>)handlerFromState:(WALFlowState)state stateParameters:(NSDictionary * _Nullable)parameters;
 NS_ASSUME_NONNULL_END
 @end

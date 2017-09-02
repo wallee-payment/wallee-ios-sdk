@@ -27,11 +27,11 @@
 - (instancetype)initWithBuilder:(WALFlowConfigurationBuilder *)builder {
     if (self = [super init]) {
         _paymentFlowContainerFactory = builder.paymentFlowContainerFactory;
-        _paymentFormViewFactory = builder.paymentFormViewFactory;
-        _tokenListViewFactory = builder.tokenListViewFactory;
-        _paymentMethodListViewFactory = builder.paymentMethodListViewFactory;
-        _successViewFactory = builder.successViewFactory;
-        _awaitingFinalStateViewFactory = builder.awaitingFinalStateViewFactory;
+        _paymentFormViewControllerFactory = builder.paymentFormViewControllerFactory;
+        _tokenListViewControllerFactory = builder.tokenListViewControllerFactory;
+        _paymentMethodListViewControllerFactory = builder.paymentMethodListViewControllerFactory;
+        _successViewControllerFactory = builder.successViewControllerFactory;
+        _awaitingFinalStateViewControllerFactory = builder.awaitingFinalStateViewControllerFactory;
         _iconCache = builder.iconCache;
         _iconRequestManager = builder.iconRequestManager;
         _webServiceApiClient = builder.webServiceApiClient;

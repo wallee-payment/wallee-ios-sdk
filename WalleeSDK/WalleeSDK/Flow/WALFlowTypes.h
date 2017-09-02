@@ -1,5 +1,5 @@
 //
-//  WALFlowEnums.h
+//  WALFlowTypes.h
 //  WalleeSDK
 //
 //  Created by Daniel Schmid on 30.08.17.
@@ -67,7 +67,10 @@ typedef NS_ENUM(NSUInteger, WALFlowState){
     WALFlowStateAwaitingFinalState
 };
 
-@interface WALFlowEnums : NSObject
+FOUNDATION_EXPORT NSString * const WALFlowTokensParameter;
+FOUNDATION_EXPORT NSString * const WALFlowTransactionParameter;
+
+@interface WALFlowTypes : NSObject
 
 @end
 

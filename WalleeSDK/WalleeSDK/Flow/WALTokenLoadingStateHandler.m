@@ -20,7 +20,6 @@
 
 @implementation WALTokenLoadingStateHandler
 
-
 - (BOOL)dryTriggerAction:(WALFlowAction)flowAction {
     return NO;
 }
@@ -34,23 +33,24 @@
     if ([coordinator.configuration.delegate respondsToSelector:@selector(flowCoordinatorWillLoadToken:)]) {
         [coordinator.configuration.delegate flowCoordinatorWillLoadToken:coordinator];
     }
+    __weak WALFlowCoordinator *weakCoordinator = coordinator;
     [coordinator.configuration.webServiceApiClient fetchTokenVersions:^(NSArray<WALTokenVersion *> * _Nullable tokenVersions, NSError * _Nullable error) {
         if (!tokenVersions && error) {
-            [WALPaymentErrorHelper distributeNetworkError:error forCoordinator:coordinator];
+            [WALPaymentErrorHelper distributeNetworkError:error forCoordinator:weakCoordinator];
             return;
         }
         
         if (tokenVersions.count <= 0) {
-            [coordinator changeStateTo:WALFlowStatePaymentMethodLoading];
+            [weakCoordinator changeStateTo:WALFlowStatePaymentMethodLoading];
         } else {
             // Load icons for payment configurations
-            [coordinator changeStateTo:WALFlowStateTokenSelection];
+            [weakCoordinator changeStateTo:WALFlowStateTokenSelection];
         }
         
     }];
 }
 
-- (UIViewController *)viewController {
+- (UIViewController *)viewControllerForCoordinator:(WALFlowCoordinator *)coordinator {
     return nil;
 }
 @end

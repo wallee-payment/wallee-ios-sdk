@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 @class WALFlowConfigurationBuilder;
 @protocol WALPaymentFlowContainerFactory;
-@protocol WALTokenListViewControllerFactory, WALPaymentFormViewFactory, WALPaymentMethodListViewFactory;
-@protocol WALSuccessViewFactory, WALFailureViewFactory, WALAwaitingFinalStateViewFactory;
+@protocol WALTokenListViewControllerFactory, WALPaymentFormViewControllerFactory, WALPaymentMethodListViewControllerFactory;
+@protocol WALSuccessViewControllerFactory, WALFailureViewControllerFactory, WALAwaitingFinalStateViewControllerFactory;
 @protocol WALIconCache, WALPaymentFlowDelegate, WALIconRequestManager, WALApiClient;
 
 /**
@@ -37,7 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @return the factory which is used to create the payment form view.
  */
-@property (nonatomic, copy, readonly) id<WALPaymentFormViewFactory> paymentFormViewFactory;
+@property (nonatomic, copy, readonly) id<WALPaymentFormViewControllerFactory> paymentFormViewControllerFactory;
 
 /**
  * The token selection view lets the user select a token from a list of tokens. The selected
@@ -45,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @return the factory which is responsible to create teh token selection view.
  */
-@property (nonatomic, copy, readonly) id<WALTokenListViewControllerFactory> tokenListViewFactory;
+@property (nonatomic, copy, readonly) id<WALTokenListViewControllerFactory> tokenListViewControllerFactory;
 
 /**
  * The payment method selection view allows the user to select from a list of payment methods
@@ -53,14 +53,14 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @return the factory which is responsible for creating the payment method selection view.
  */
-@property (nonatomic, copy, readonly) id<WALPaymentMethodListViewFactory> paymentMethodListViewFactory;
+@property (nonatomic, copy, readonly) id<WALPaymentMethodListViewControllerFactory> paymentMethodListViewControllerFactory;
 
 /**
  * The success view is displayed once the transaction has been processed successfully.
  *
  * @return the factory which is used to create the success view.
  */
-@property (nonatomic, copy, readonly) id<WALSuccessViewFactory> successViewFactory;
+@property (nonatomic, copy, readonly) id<WALSuccessViewControllerFactory> successViewControllerFactory;
 
 /**
  * When the transaction fails the {@link com.wallee.android.sdk.flow.FlowCoordinator} will show
@@ -69,7 +69,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @return the factory which is responsible for creating the view for failed transactions.
  */
-@property (nonatomic, copy, readonly) id<WALFailureViewFactory> failureViewFactory;
+@property (nonatomic, copy, readonly) id<WALFailureViewControllerFactory> failureViewControllerFactory;
 
 /**
  * The transaction may not reach a final state immediately. In this case the awaiting final
@@ -77,7 +77,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @return the factory which creates the view for the awaiting final state view.
  */
-@property (nonatomic, copy, readonly) id<WALAwaitingFinalStateViewFactory> awaitingFinalStateViewFactory;
+@property (nonatomic, copy, readonly) id<WALAwaitingFinalStateViewControllerFactory> awaitingFinalStateViewControllerFactory;
 
 /**
  * The icon cache is required to cache the downloaded icons locally on the device to avoid

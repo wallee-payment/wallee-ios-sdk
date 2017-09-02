@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WALFlowEnums.h"
+#import "WALFlowTypes.h"
 @class WALFlowCoordinator;
 
 /**

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class WALFlowCoordinator, WALApiClientError, WALApiServerError;
+@class WALFlowCoordinator, WALApiClientError, WALApiServerError, WALTokenVersion, WALTransaction;
 
 /**
  *
@@ -18,6 +18,7 @@
 - (void)flowCoordinatorWillDisplayTokenSelection:(WALFlowCoordinator *)coordinator;
 - (void)flowCoordinator:(WALFlowCoordinator *)coordinator didSelectToken:(WALTokenVersion *)token;
 
+- (void)flowCoordinator:(WALFlowCoordinator *)coordinator transactionDidSucceed:(WALTransaction *)transaction;
 
 - (void)flowCoordinator:(WALFlowCoordinator *)coordinator encouteredInternalError:(NSError*)error;
 - (void)flowCoordinator:(WALFlowCoordinator *)coordinator encouteredApiClientError:(WALApiClientError*)error;

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "WALFlowEnums.h"
+#import "WALFlowTypes.h"
 
 /*!
  The coordinator callback allows to trigger certain operations on the coordinator.
