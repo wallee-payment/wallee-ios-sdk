@@ -55,7 +55,7 @@
 		A6A194E91F49CFA600374E92 /* WALDatabaseTranslatedString.h in Headers */ = {isa = PBXBuildFile; fileRef = A6A194E71F49CFA600374E92 /* WALDatabaseTranslatedString.h */; };
 		A6A194EA1F49CFA600374E92 /* WALDatabaseTranslatedString.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A194E81F49CFA600374E92 /* WALDatabaseTranslatedString.m */; };
 		A6A194EC1F49D3F800374E92 /* WALJSONDecodable.h in Headers */ = {isa = PBXBuildFile; fileRef = A6A194EB1F49D3F800374E92 /* WALJSONDecodable.h */; };
-		A6A194EE1F4EF3DE00374E92 /* WALCredentialsFetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = A6A194ED1F4EF3DE00374E92 /* WALCredentialsFetcher.h */; };
+		A6A194EE1F4EF3DE00374E92 /* WALCredentialsFetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = A6A194ED1F4EF3DE00374E92 /* WALCredentialsFetcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A6A194F11F4EF47900374E92 /* WALCredentialsProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = A6A194EF1F4EF47900374E92 /* WALCredentialsProvider.h */; };
 		A6A194F21F4EF47900374E92 /* WALCredentialsProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A194F01F4EF47900374E92 /* WALCredentialsProvider.m */; };
 		A6A194F51F4F0D3800374E92 /* WALTestCredentialFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A194F41F4F0D3800374E92 /* WALTestCredentialFetcher.m */; };
@@ -75,7 +75,7 @@
 		A6DE8E841F41A77E006E082B /* WalleeSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6DE8E7A1F41A77D006E082B /* WalleeSDK.framework */; };
 		A6DE8E891F41A77E006E082B /* WalleeSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DE8E881F41A77E006E082B /* WalleeSDKTests.m */; };
 		A6DE8E8B1F41A77E006E082B /* WalleeSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = A6DE8E7D1F41A77D006E082B /* WalleeSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A6DE8ED61F41CFA9006E082B /* WALCredentials.h in Headers */ = {isa = PBXBuildFile; fileRef = A6DE8ED41F41CFA9006E082B /* WALCredentials.h */; };
+		A6DE8ED61F41CFA9006E082B /* WALCredentials.h in Headers */ = {isa = PBXBuildFile; fileRef = A6DE8ED41F41CFA9006E082B /* WALCredentials.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A6DE8ED71F41CFA9006E082B /* WALCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DE8ED51F41CFA9006E082B /* WALCredentials.m */; };
 		A6DE8EDB1F41F9F7006E082B /* WALErrorDomain.h in Headers */ = {isa = PBXBuildFile; fileRef = A6DE8ED91F41F9F7006E082B /* WALErrorDomain.h */; };
 		A6DE8EDC1F41F9F7006E082B /* WALErrorDomain.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DE8EDA1F41F9F7006E082B /* WALErrorDomain.m */; };

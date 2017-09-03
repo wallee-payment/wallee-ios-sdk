@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A63B64CD1F5BF3AE007B9B15 /* WalleeSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A63B64CA1F5BF2EF007B9B15 /* WalleeSDK.framework */; };
+		A63B64D21F5C0EDA007B9B15 /* TestCredentialsFetccher.m in Sources */ = {isa = PBXBuildFile; fileRef = A63B64D11F5C0EDA007B9B15 /* TestCredentialsFetccher.m */; };
 		A6DE8EA21F41A911006E082B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DE8EA11F41A911006E082B /* main.m */; };
 		A6DE8EA51F41A911006E082B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DE8EA41F41A911006E082B /* AppDelegate.m */; };
 		A6DE8EA81F41A911006E082B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DE8EA71F41A911006E082B /* ViewController.m */; };
@@ -58,6 +59,8 @@
 
 /* Begin PBXFileReference section */
 		A63B64C41F5BF2EF007B9B15 /* WalleeSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WalleeSDK.xcodeproj; path = ../WalleeSDK/WalleeSDK.xcodeproj; sourceTree = "<group>"; };
+		A63B64D01F5C0EDA007B9B15 /* TestCredentialsFetccher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestCredentialsFetccher.h; sourceTree = "<group>"; };
+		A63B64D11F5C0EDA007B9B15 /* TestCredentialsFetccher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestCredentialsFetccher.m; sourceTree = "<group>"; };
 		A6DE8E9D1F41A911006E082B /* WalleeExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WalleeExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6DE8EA11F41A911006E082B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A6DE8EA31F41A911006E082B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -139,6 +142,8 @@
 				A6DE8EA41F41A911006E082B /* AppDelegate.m */,
 				A6DE8EA61F41A911006E082B /* ViewController.h */,
 				A6DE8EA71F41A911006E082B /* ViewController.m */,
+				A63B64D01F5C0EDA007B9B15 /* TestCredentialsFetccher.h */,
+				A63B64D11F5C0EDA007B9B15 /* TestCredentialsFetccher.m */,
 				A6DE8EA91F41A911006E082B /* Main.storyboard */,
 				A6DE8EAC1F41A911006E082B /* Assets.xcassets */,
 				A6DE8EAE1F41A911006E082B /* LaunchScreen.storyboard */,
@@ -336,6 +341,7 @@
 			files = (
 				A6DE8EA81F41A911006E082B /* ViewController.m in Sources */,
 				A6DE8EA51F41A911006E082B /* AppDelegate.m in Sources */,
+				A63B64D21F5C0EDA007B9B15 /* TestCredentialsFetccher.m in Sources */,
 				A6DE8EA21F41A911006E082B /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
