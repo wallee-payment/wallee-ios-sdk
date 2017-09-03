@@ -17,6 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = UIColor.whiteColor;
     UILabel *label = [[UILabel alloc] initWithFrame:self.view.bounds];
     label.text = [NSString stringWithFormat:@"Transaction Failed: %@", _transaction.userFailureMessage];
     [self.view addSubview:label];

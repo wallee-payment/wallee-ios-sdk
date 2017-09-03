@@ -23,9 +23,6 @@
     self.activityIndicatorBackgroundView = [[UIView alloc] initWithFrame:self.activityIndicator.bounds];
     self.activityIndicatorBackgroundView.backgroundColor = [UIColor greenColor];
     [self.activityIndicatorBackgroundView addSubview:self.activityIndicator];
-    self.activityIndicatorBackgroundView.hidden = YES;
-    
-//    s[self.view addSubview:self.activityIndicatorBackgroundView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -34,13 +31,16 @@
 }
 
 - (void)displayViewController:(UIViewController *)viewController {
-    self.activityIndicatorBackgroundView.hidden = YES;
+    [self.activityIndicatorBackgroundView removeFromSuperview];
     [self pushViewController:viewController animated:YES];
 
 }
 
 - (void)displayLoading {
-    self.activityIndicatorBackgroundView.hidden = NO;
+    if (!self.activityIndicatorBackgroundView.superview) {
+        self.activityIndicatorBackgroundView.center = self.view.center;
+        [self.view addSubview:self.activityIndicatorBackgroundView];
+    }
 }
 
 - (UIViewController *)viewController {
@@ -49,25 +49,3 @@
 
 @end
 
-
-//- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-//    NSAssert(false,@"-initWithNibName:bundle: unavailable use -initWithNibName:bundle:configuration: instead");
-//    return nil;
-//}
-//
-//- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil configuration:(WALFlowConfiguration*)configuration {
-//    return nil;
-//}
-//
-//- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-//    NSAssert(false,@"InitWithCoder: unavailable use -initWithCoder:configuration: instead");
-//    return nil;
-//}
-//
-//- (instancetype)initWithCoder:(NSCoder *)aDecoder configuration:(WALFlowConfiguration*)configuration {
-//    return [super initWithCoder:aDecoder];
-//}
-//
-//+ (instancetype)viewControllerWithConfig:(WALFlowConfiguration *)configuration {
-//    return nil;
-//}

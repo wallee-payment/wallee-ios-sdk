@@ -12,7 +12,9 @@
 
 @implementation WALDefaultPaymentFlowContainerFactory
 - (id<WALPaymentFlowContainer>)build {
-    WALDefaultPaymentFlowContainer *container = [[WALDefaultPaymentFlowContainer alloc] initWithRootViewController:[[UIViewController alloc] initWithNibName:nil bundle:nil]];
+    UIViewController *emptyRoot = [[UIViewController alloc] initWithNibName:nil bundle:nil];
+    emptyRoot.view.backgroundColor = UIColor.whiteColor;
+    WALDefaultPaymentFlowContainer *container = [[WALDefaultPaymentFlowContainer alloc] initWithRootViewController:emptyRoot];
     return container;
 }
 @end

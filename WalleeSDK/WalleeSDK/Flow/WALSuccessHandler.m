@@ -52,8 +52,8 @@
 }
 
 - (UIViewController *)viewControllerForCoordinator:(WALFlowCoordinator *)coordinator {
-    [coordinator.configuration.viewControllerFactory buildSuccessViewWith:self.transaction];
-    return nil;
+    UIViewController *controller = [coordinator.configuration.viewControllerFactory buildSuccessViewWith:self.transaction];
+    return controller;
 }
 
 // MARK: - Description

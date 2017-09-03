@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "TestCredentialsFetccher.h"
+#import "TestCredentialsFetcher.h"
 
 //#import <WalleSDK/WALFlowCoordinator.h>
 @import WalleeSDK;
@@ -36,7 +36,7 @@
 
 - (void)startPaymentWithBuilderSyntax {
     NSError *error;
-    TestCredentialsFetccher *fetcher = [[TestCredentialsFetccher alloc] init];
+    TestCredentialsFetcher *fetcher = [[TestCredentialsFetcher alloc] init];
     WALFlowConfigurationBuilder *builder = [[WALFlowConfigurationBuilder alloc] initWithCredentialsFetcher:fetcher];
     //additional setup
     //builder.viewControllerFactory =

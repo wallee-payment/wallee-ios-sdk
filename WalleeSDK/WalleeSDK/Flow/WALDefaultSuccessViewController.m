@@ -17,6 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = UIColor.whiteColor;
     self.label = [[UILabel alloc] initWithFrame:self.view.bounds];
     self.label.text = @"Transaction Successfull";
     [self.view addSubview:self.label];
