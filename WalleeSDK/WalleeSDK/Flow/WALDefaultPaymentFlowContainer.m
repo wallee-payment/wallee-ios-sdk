@@ -25,7 +25,7 @@
     [self.activityIndicatorBackgroundView addSubview:self.activityIndicator];
     self.activityIndicatorBackgroundView.hidden = YES;
     
-    [self.view addSubview:self.activityIndicatorBackgroundView];
+//    s[self.view addSubview:self.activityIndicatorBackgroundView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,6 +41,10 @@
 
 - (void)displayLoading {
     self.activityIndicatorBackgroundView.hidden = NO;
+}
+
+- (UIViewController *)viewController {
+    return self;
 }
 
 @end

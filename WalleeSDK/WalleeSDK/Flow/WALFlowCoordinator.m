@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) WALFlowConfiguration *configuration;
 @property (nonatomic, assign) WALFlowState state;
-@property (nonatomic, copy) id<WALFlowStateHandler> stateHandler;
+@property (nonatomic, strong) id<WALFlowStateHandler> stateHandler;
 
 @property (nonatomic, strong, readwrite) id<WALPaymentFlowContainer> paymentContainer;
 //

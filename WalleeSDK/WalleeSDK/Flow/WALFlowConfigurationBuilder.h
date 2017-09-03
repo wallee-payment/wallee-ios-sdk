@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "WALFlowConfiguration.h"
-@class WALCredentialsProvider;
+@protocol WALCredentialsFetcher;
 @protocol WALPaymentFlowContainerFactory, WALViewControllerFactory;
 @protocol WALIconCache, WALFLowListener, WALIconRequestManager, WALApiClient;
 
@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) id<WALIconRequestManager> iconRequestManager;
 @property (nonatomic, copy) id<WALApiClient> webServiceApiClient;
 
-- (instancetype)initWithCredentialsProvider:(WALCredentialsProvider *)credentialsProvider;
+- (instancetype)initWithCredentialsFetcher:(id<WALCredentialsFetcher>)credentialsFetcher;
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 
 /**

@@ -78,4 +78,14 @@ NSString *const WalleeName = @"name";
              @"END_USER": @(WALFailureCategoryEndUser),
              @"DEVELOPER": @(WALFailureCategoryDeveloper)};
 }
+
+- (id)copyWithZone:(NSZone *)zone {
+    WALFailureReason *reason = [self.class allocWithZone:zone];
+    reason->_category = _category;
+    reason->_descriptionText = [_descriptionText copyWithZone:zone];
+    reason->_features = [_features copyWithZone:zone];
+    reason->_id = _id;
+    reason->_name = [_name copyWithZone:zone];
+    return reason;
+}
 @end

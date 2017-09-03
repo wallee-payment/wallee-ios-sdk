@@ -7,11 +7,13 @@
 //
 
 #import "ViewController.h"
+#import "TestCredentialsFetccher.h"
+
 //#import <WalleSDK/WALFlowCoordinator.h>
 @import WalleeSDK;
 
 @interface ViewController ()
-
+@property (nonatomic, strong) WALFlowCoordinator *coordinator;
 @end
 
 @implementation ViewController
@@ -29,16 +31,41 @@
 
 
 - (IBAction)didTapPayment:(id)sender {
+    [self startPaymentWithBuilderSyntax];
+}
+
+- (void)startPaymentWithBuilderSyntax {
     NSError *error;
-    WALFlowConfiguration *configuration = [WALFlowConfiguration makeWithBlock:^(WALFlowConfigurationBuilder * _Nonnull builder) {
-        builder.webServiceApiClient = nil;
-    } error:&error];
+    TestCredentialsFetccher *fetcher = [[TestCredentialsFetccher alloc] init];
+    WALFlowConfigurationBuilder *builder = [[WALFlowConfigurationBuilder alloc] initWithCredentialsFetcher:fetcher];
+    //additional setup
+    //builder.viewControllerFactory =
     
-    WALFlowCoordinator *coordinator = [WALFlowCoordinator paymentFlowWithConfiguration:configuration];
-    [coordinator start];
+    WALFlowConfiguration *configuration = [WALFlowConfiguration makeWithBuilder:builder error:&error];
+    if (!configuration) {
+        [self displayError:error];
+        return;
+    }
     
-    [self presentViewController:coordinator.paymentContainer animated:YES completion:^{
-        NSLog(@"completed");
+    self.coordinator = [WALFlowCoordinator paymentFlowWithConfiguration:configuration];
+    [self.coordinator start];
+    
+    UINavigationController *con = [[UINavigationController alloc] initWithRootViewController:[[UIViewController alloc] initWithNibName:nil bundle:nil]];
+//    self.coordinator.paymentContainer.viewController
+    [self presentViewController:self.coordinator.paymentContainer.viewController animated:YES completion:^{
+        NSLog(@"display completed");
     }];
 }
+
+- (void)startPaymentWithBlockSyntax {
+//    WALFlowConfiguration *configuration = [WALFlowConfiguration makeWithBlock:^(WALFlowConfigurationBuilder * _Nonnull builder) {
+//        builder.webServiceApiClient = nil;
+//    } error:&error];
+}
+
+// MARK: - Alert
+- (void)displayError:(NSError *)error {
+//    UIAlertController *alert = [];
+}
+
 @end

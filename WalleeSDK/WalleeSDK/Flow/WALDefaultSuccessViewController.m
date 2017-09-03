@@ -10,7 +10,7 @@
 #import "WALTransaction.h"
 
 @interface WALDefaultSuccessViewController ()
-@property (nonatomic, retain) UILabel *label;
+@property (nonatomic, strong) UILabel *label;
 @end
 
 @implementation WALDefaultSuccessViewController

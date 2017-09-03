@@ -25,7 +25,7 @@ typedef NS_ENUM(NSInteger, WALTransactionState){
     WALTransactionStateUnknown
 };
 
-@interface WALTransaction : NSObject<WALJSONDecodable, WALJSONAutoDecodable>
+@interface WALTransaction : NSObject<NSCopying, WALJSONDecodable, WALJSONAutoDecodable>
 
 NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, copy) NSString *acceptHeader;

@@ -11,6 +11,7 @@
 #import "WALNSURLSessionApiClient.h"
 #import "WALDefaultPaymentFlowContainerFactory.h"
 #import "WALDefaultViewControllerFactory.h"
+#import "WALCredentialsProvider.h"
 
 @implementation WALFlowConfigurationBuilder
 
@@ -24,12 +25,13 @@
     return self;
 }
 
-- (instancetype)initWithCredentialsProvider:(WALCredentialsProvider *)credentialsProvider {
+- (instancetype)initWithCredentialsFetcher:(id<WALCredentialsFetcher>)credentialsFetcher {
     if (self = [self init]) {
         
 //        _iconCache = [[WALInMemoryCach alloc] init];
 //        _iconRequestManager = [[WALNSURLIconRequestManager alloc] init];
-        _webServiceApiClient = [WALNSURLSessionApiClient clientWithCredentialsProvider:credentialsProvider];
+        WALCredentialsProvider *provider = [[WALCredentialsProvider alloc] initWith:credentialsFetcher];
+        _webServiceApiClient = [WALNSURLSessionApiClient clientWithCredentialsProvider:provider];
     }
     
     return self;

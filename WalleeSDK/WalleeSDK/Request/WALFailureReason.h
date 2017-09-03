@@ -20,7 +20,7 @@ typedef NS_ENUM(NSInteger, WALFailureCategory) {
 };
 
 // TODO: make this non initializable?
-@interface WALFailureReason : NSObject<WALJSONDecodable, WALJSONAutoDecodable>
+@interface WALFailureReason : NSObject<NSCopying, WALJSONDecodable, WALJSONAutoDecodable>
 //#include "WALAPIDataType.h"
 
 NS_ASSUME_NONNULL_BEGIN

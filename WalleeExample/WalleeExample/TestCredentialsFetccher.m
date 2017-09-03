@@ -22,20 +22,27 @@ static NSUInteger const SPACE_ID = 412l;
 
 @implementation TestCredentialsFetccher
 
-
+- (void)fetchCredentials:(WALCredentialsCallback)receiver {
+    [self createCredentials:USER_ID space:SPACE_ID macKey:HMAC_KEY completion:^(WALCredentials * _Nullable credential, NSError * _Nullable error) {
+        receiver(credential, error);
+    }];
+}
 
 // MARK: - Connection
-- (void)createCredentials:(NSUInteger)userId space:(NSUInteger)spaceId macKey:(NSString *)mac completion:(void (^)(WALCredentials * _Nullable credential))completion {
+- (void)createCredentials:(NSUInteger)userId space:(NSUInteger)spaceId macKey:(NSString *)mac completion:(void (^)(WALCredentials * _Nullable credential, NSError * _Nullable error))completion {
     __block void (^credentialTask)(NSUInteger) = ^(NSUInteger transactionId) {
         NSURL *credentialsUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://app-wallee.com/api/transaction/createTransactionCredentials?spaceId=%@&id=%@", @(spaceId), @(transactionId)]];
         NSURLRequest *request = [self requestWith:credentialsUrl method:@"POST" forUser:USER_ID contentType:@"application/json" macKey:HMAC_KEY];
         NSURLSessionTask *credentialTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            if (!data) {
+                completion(nil, error);
+            }
             NSString *credentialString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             
             NSError *innerError = nil;
             WALCredentials *credentials = [WALCredentials credentialsWithCredentials:credentialString error:&innerError];
             
-            completion(credentials);
+            completion(credentials, innerError);
         }];
         [credentialTask resume];
     };
@@ -45,6 +52,10 @@ static NSUInteger const SPACE_ID = 412l;
     [request setHTTPBody: [self transactionCreationString]];
     
     NSURLSessionTask *transactionTask =[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (!data) {
+            completion(nil, error);
+            return;
+        }
         NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data
                                                              options:kNilOptions
                                                                error:nil];

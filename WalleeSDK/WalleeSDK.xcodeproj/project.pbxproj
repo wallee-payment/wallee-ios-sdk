@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		A63B64321F593D76007B9B15 /* WALDefaultPaymentFlowContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = A63B64301F593D76007B9B15 /* WALDefaultPaymentFlowContainer.h */; };
 		A63B64331F593D76007B9B15 /* WALDefaultPaymentFlowContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = A63B64311F593D76007B9B15 /* WALDefaultPaymentFlowContainer.m */; };
-		A63B64371F594B07007B9B15 /* WALPaymentFlowContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = A63B64361F594B07007B9B15 /* WALPaymentFlowContainer.h */; };
+		A63B64371F594B07007B9B15 /* WALPaymentFlowContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = A63B64361F594B07007B9B15 /* WALPaymentFlowContainer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A63B643E1F595455007B9B15 /* WALFlowCoordinator.h in Headers */ = {isa = PBXBuildFile; fileRef = A63B643C1F595455007B9B15 /* WALFlowCoordinator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A63B643F1F595455007B9B15 /* WALFlowCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = A63B643D1F595455007B9B15 /* WALFlowCoordinator.m */; };
 		A63B64421F595C32007B9B15 /* WALDefaultPaymentFlowContainerFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = A63B64401F595C32007B9B15 /* WALDefaultPaymentFlowContainerFactory.h */; };
@@ -56,7 +56,7 @@
 		A6A194EA1F49CFA600374E92 /* WALDatabaseTranslatedString.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A194E81F49CFA600374E92 /* WALDatabaseTranslatedString.m */; };
 		A6A194EC1F49D3F800374E92 /* WALJSONDecodable.h in Headers */ = {isa = PBXBuildFile; fileRef = A6A194EB1F49D3F800374E92 /* WALJSONDecodable.h */; };
 		A6A194EE1F4EF3DE00374E92 /* WALCredentialsFetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = A6A194ED1F4EF3DE00374E92 /* WALCredentialsFetcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A6A194F11F4EF47900374E92 /* WALCredentialsProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = A6A194EF1F4EF47900374E92 /* WALCredentialsProvider.h */; };
+		A6A194F11F4EF47900374E92 /* WALCredentialsProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = A6A194EF1F4EF47900374E92 /* WALCredentialsProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A6A194F21F4EF47900374E92 /* WALCredentialsProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A194F01F4EF47900374E92 /* WALCredentialsProvider.m */; };
 		A6A194F51F4F0D3800374E92 /* WALTestCredentialFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A194F41F4F0D3800374E92 /* WALTestCredentialFetcher.m */; };
 		A6C7B5A71F435CC9003CCB97 /* WalleeApiTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A6C7B5A61F435CC9003CCB97 /* WalleeApiTest.m */; };

@@ -22,6 +22,8 @@ static NSString * const cellIdentifier = @"defaultCell";
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    [self.view addSubview:self.tableView];
+    self.title = @"Select Token";
 }
 
 - (void)didReceiveMemoryWarning {

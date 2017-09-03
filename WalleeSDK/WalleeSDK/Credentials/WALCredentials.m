@@ -113,7 +113,17 @@ const NSTimeInterval WALCredentialsThreshold = 2 * 60;
 
 // MARK: - Equality
 - (BOOL)isEqual:(id)object {
+    if (self == object) {
+        return YES;
+    }
+    if (![object isKindOfClass:self.class]) {
+        return NO;
+    }
     return [[object credentials] isEqualToString:self.credentials];
+}
+
+- (NSUInteger)hash {
+    return self.credentials.hash;
 }
 
 // MARK: - Description

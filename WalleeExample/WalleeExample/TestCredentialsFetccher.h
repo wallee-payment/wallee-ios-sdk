@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-//#import <WalleSDK/WalleSDK.h>
 @import WalleeSDK;
 
 @interface TestCredentialsFetccher : NSObject<WALCredentialsFetcher>

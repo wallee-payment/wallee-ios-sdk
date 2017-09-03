@@ -45,7 +45,7 @@
             [weakCoordinator changeStateTo:WALFlowStatePaymentMethodLoading parameters:nil];
         } else {
             // Load icons for payment configurations
-            [weakCoordinator changeStateTo:WALFlowStateTokenSelection parameters:nil];
+            [weakCoordinator changeStateTo:WALFlowStateTokenSelection parameters:@{WALFlowTokensParameter: tokenVersions}];
         }
         
     }];

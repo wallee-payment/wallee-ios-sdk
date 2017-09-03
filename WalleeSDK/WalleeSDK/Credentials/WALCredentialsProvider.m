@@ -12,9 +12,9 @@
 #import "WALErrorDomain.h"
 
 @interface WALCredentialsProvider ()
-@property (nonatomic, retain) id<WALCredentialsFetcher> credentialsFetcher;
+@property (nonatomic, strong) id<WALCredentialsFetcher> credentialsFetcher;
 @property (nonatomic, copy) WALCredentials *currentCredentials;
-@property (nonatomic, retain) dispatch_queue_t credentialQueue;
+@property (nonatomic, strong) dispatch_queue_t credentialQueue;
 @end
 
 @implementation WALCredentialsProvider
