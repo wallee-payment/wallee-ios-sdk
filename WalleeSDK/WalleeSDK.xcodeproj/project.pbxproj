@@ -47,9 +47,9 @@
 		A63B64B01F5AD42B007B9B15 /* WALFailureHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = A63B64AE1F5AD42B007B9B15 /* WALFailureHandler.h */; };
 		A63B64B11F5AD42B007B9B15 /* WALFailureHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A63B64AF1F5AD42B007B9B15 /* WALFailureHandler.m */; };
 		A682B6021F57FBDA007C66AA /* WALTokenListViewFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = A682B6011F57FBDA007C66AA /* WALTokenListViewFactory.h */; };
-		A682B6061F5801E8007C66AA /* WALFlowConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = A682B6041F5801E8007C66AA /* WALFlowConfiguration.h */; };
+		A682B6061F5801E8007C66AA /* WALFlowConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = A682B6041F5801E8007C66AA /* WALFlowConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A682B6071F5801E8007C66AA /* WALFlowConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = A682B6051F5801E8007C66AA /* WALFlowConfiguration.m */; };
-		A682B60D1F5813FC007C66AA /* WALFlowConfigurationBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = A682B60B1F5813FC007C66AA /* WALFlowConfigurationBuilder.h */; };
+		A682B60D1F5813FC007C66AA /* WALFlowConfigurationBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = A682B60B1F5813FC007C66AA /* WALFlowConfigurationBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A682B60E1F5813FC007C66AA /* WALFlowConfigurationBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A682B60C1F5813FC007C66AA /* WALFlowConfigurationBuilder.m */; };
 		A682B6121F582E8D007C66AA /* WALStaticInit.h in Headers */ = {isa = PBXBuildFile; fileRef = A682B6101F582E8D007C66AA /* WALStaticInit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A6A194E91F49CFA600374E92 /* WALDatabaseTranslatedString.h in Headers */ = {isa = PBXBuildFile; fileRef = A6A194E71F49CFA600374E92 /* WALDatabaseTranslatedString.h */; };

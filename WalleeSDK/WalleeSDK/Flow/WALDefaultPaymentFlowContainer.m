@@ -23,6 +23,7 @@
     self.activityIndicatorBackgroundView = [[UIView alloc] initWithFrame:self.activityIndicator.bounds];
     self.activityIndicatorBackgroundView.backgroundColor = [UIColor greenColor];
     [self.activityIndicatorBackgroundView addSubview:self.activityIndicator];
+    self.activityIndicatorBackgroundView.hidden = YES;
     
     [self.view addSubview:self.activityIndicatorBackgroundView];
 }

@@ -11,6 +11,9 @@
 @protocol WALPaymentFlowContainerFactory, WALViewControllerFactory;
 @protocol WALIconCache, WALPaymentFlowDelegate, WALIconRequestManager, WALApiClient;
 
+
+typedef void(^WALFlowConfigurationBuilderBlock)(WALFlowConfigurationBuilder * _Nonnull);
+
 /**
  * The flow configuration holds all the configuration which influence the way how the {@link
  * FlowConfiguration} is working.
@@ -86,7 +89,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param error will holde information on why a @c WALFlowConfiguration could not be initialized
  @return fully initialized @c WALFlowConfiguration
  */
-+ (instancetype)makeWithBlock:(void (^ _Nullable )(WALFlowConfigurationBuilder *))buildBlock error:(NSError * _Nullable *)error;
++ (instancetype)makeWithBlock:(WALFlowConfigurationBuilderBlock)buildBlock error:(NSError * _Nullable *)error;
 
 + (instancetype)makeWithBuilder:(WALFlowConfigurationBuilder *)buildBlock error:(NSError * _Nullable *)error;
 

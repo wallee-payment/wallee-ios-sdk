@@ -30,6 +30,7 @@
 
 - (void)performWithCoordinator:(WALFlowCoordinator *)coordinator {
     [super performWithCoordinator:coordinator];
+    [coordinator waiting];
     if ([coordinator.configuration.delegate respondsToSelector:@selector(flowCoordinatorWillLoadToken:)]) {
         [coordinator.configuration.delegate flowCoordinatorWillLoadToken:coordinator];
     }

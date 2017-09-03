@@ -35,7 +35,8 @@
     return self;
 }
 
-+ (instancetype)makeWithBlock:(void (^ _Nullable)(WALFlowConfigurationBuilder * _Nonnull))buildBlock error:(NSError *__autoreleasing  _Nullable * _Nullable)error {
+//+ (instancetype)makeWithBlock:(void (^ _Nullable)(WALFlowConfigurationBuilder * _Nonnull))buildBlock error:(NSError *__autoreleasing  _Nullable * _Nullable)error {
++ (instancetype)makeWithBlock:(WALFlowConfigurationBuilderBlock)buildBlock error:(NSError *__autoreleasing  _Nullable *)error {
     WALFlowConfigurationBuilder *builder = [[WALFlowConfigurationBuilder alloc] init];
     if (buildBlock) {
         buildBlock(builder);

@@ -38,11 +38,12 @@
 - (BOOL)valid:(NSError *__autoreleasing  _Nullable *)error {
     BOOL valid = (                  
                   [WALErrorHelper checkNotEmpty:self.paymentFlowContainerFactory withMessage:@"The paymentFlowContainerFactory is required." error:error] &&
-                  [WALErrorHelper checkNotEmpty:self.viewControllerFactory withMessage:@"The viewControllerFactory is required." error:error] &&
-                  [WALErrorHelper checkNotEmpty:self.iconCache withMessage:@"The successViewControllerFactory is required." error:error] &&
-                  [WALErrorHelper checkNotEmpty:self.listeners withMessage:@"The listeners list is required." error:error] &&
-                  [WALErrorHelper checkNotEmpty:self.iconRequestManager withMessage:@"The iconRequestManager is required." error:error] &&
-                  [WALErrorHelper checkNotEmpty:self.webServiceApiClient withMessage:@"The webServiceApiClient is required." error:error]);
+                  [WALErrorHelper checkNotEmpty:self.viewControllerFactory withMessage:@"The viewControllerFactory is required." error:error]// &&
+//                  [WALErrorHelper checkNotEmpty:self.iconCache withMessage:@"The iconCache is required." error:error] &&
+//                  [WALErrorHelper checkNotEmpty:self.listeners withMessage:@"The listeners list is required." error:error] &&
+//                  [WALErrorHelper checkNotEmpty:self.iconRequestManager withMessage:@"The iconRequestManager is required." error:error] &&
+//                  [WALErrorHelper checkNotEmpty:self.webServiceApiClient withMessage:@"The webServiceApiClient is required." error:error]
+                  );
     return valid;
 }
 

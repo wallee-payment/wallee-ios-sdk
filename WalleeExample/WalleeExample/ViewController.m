@@ -29,6 +29,16 @@
 
 
 - (IBAction)didTapPayment:(id)sender {
-    WALFlowCoordinator *coord;
+    NSError *error;
+    WALFlowConfiguration *configuration = [WALFlowConfiguration makeWithBlock:^(WALFlowConfigurationBuilder * _Nonnull builder) {
+        builder.webServiceApiClient = nil;
+    } error:&error];
+    
+    WALFlowCoordinator *coordinator = [WALFlowCoordinator paymentFlowWithConfiguration:configuration];
+    [coordinator start];
+    
+    [self presentViewController:coordinator.paymentContainer animated:YES completion:^{
+        NSLog(@"completed");
+    }];
 }
 @end
