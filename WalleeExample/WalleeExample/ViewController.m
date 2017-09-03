@@ -7,6 +7,8 @@
 //
 
 #import "ViewController.h"
+//#import <WalleSDK/WALFlowCoordinator.h>
+@import WalleeSDK;
 
 @interface ViewController ()
 
@@ -26,4 +28,7 @@
 }
 
 
+- (IBAction)didTapPayment:(id)sender {
+    WALFlowCoordinator *coord;
+}
 @end

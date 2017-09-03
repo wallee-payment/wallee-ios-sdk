@@ -11,7 +11,7 @@
 @protocol WALPaymentFlowContainer;
 
 @interface WALFlowCoordinator : NSObject
-#include "WALStaticInit.h"
+//#include "WALStaticInit.h"
 NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) WALFlowConfiguration *configuration;
 @property (nonatomic, strong, readonly) id<WALPaymentFlowContainer> paymentContainer;

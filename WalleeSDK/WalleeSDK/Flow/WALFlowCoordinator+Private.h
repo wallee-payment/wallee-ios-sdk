@@ -6,11 +6,13 @@
 //  Copyright © 2017 smoca AG. All rights reserved.
 //
 
+// TODO: Remove this file?
+
 #import "WALFlowCoordinator.h"
 #import "WALFlowTypes.h"
 @protocol WALFlowStateHandler;
 
-@interface WALFlowCoordinator ()
+@interface WALFlowCoordinator (Private)
 NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) WALFlowConfiguration *configuration;
 @property (nonatomic, assign) WALFlowState state;

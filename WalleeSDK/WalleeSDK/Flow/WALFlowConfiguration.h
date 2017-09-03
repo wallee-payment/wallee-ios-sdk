@@ -20,7 +20,7 @@
  * relies on the a @c WALFlowConfigurationBuilder to be properly initialized
  */
 @interface WALFlowConfiguration : NSObject
-#include "WALStaticInit.h"
+//#include "WALStaticInit.h"
 NS_ASSUME_NONNULL_BEGIN
 
 /**

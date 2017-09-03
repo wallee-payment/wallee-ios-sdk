@@ -12,7 +12,7 @@
 @class WALTransaction;
 
 @interface WALFailureHandler : WALSimpleFlowStateHandler<WALFlowStateHandler>
-#include "WALStaticInit.h"
+//#include "WALStaticInit.h"
 NS_ASSUME_NONNULL_BEGIN
 + (instancetype)stateWithTransaction:(WALTransaction  *)transaction;
 NS_ASSUME_NONNULL_END

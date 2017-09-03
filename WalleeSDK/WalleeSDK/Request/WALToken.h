@@ -11,7 +11,7 @@
 #import "WALJSONAutoDecodable.h"
 
 @interface WALToken : NSObject<WALJSONDecodable, WALJSONAutoDecodable>
-#include "WALAPIDataType.h"
+//#include "WALAPIDataType.h"
 NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, copy) NSString *createdOn;
 @property (nonatomic, readonly, copy) NSString *customerEmailAddress;

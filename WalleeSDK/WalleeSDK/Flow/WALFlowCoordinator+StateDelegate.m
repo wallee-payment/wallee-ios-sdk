@@ -7,6 +7,8 @@
 //
 
 #import "WALFlowCoordinator+StateDelegate.h"
+#import "WALFlowCoordinator+Private.h"
+#import "WALFlowCoordinator.h"
 #import "WALFlowStateHandler.h"
 #import "WALPaymentFlowContainer.h"
 #import "WALFlowStateHandlerFactory.h"

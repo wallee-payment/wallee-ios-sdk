@@ -8,7 +8,7 @@
 
 #import "WALFlowTypes.h"
 
-#import "WALFlowCoordinator+Private.h"
+#import "WALFlowCoordinator.h"
 #import "WALFlowConfiguration.h"
 
 #import "WALPaymentFlowContainerFactory.h"
@@ -17,17 +17,27 @@
 
 
 @interface WALFlowCoordinator ()
+NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) int isStarted;
-@property (nonatomic, strong) NSLock *lock;
+
+@property (nonatomic, copy) WALFlowConfiguration *configuration;
+@property (nonatomic, assign) WALFlowState state;
+@property (nonatomic, copy) id<WALFlowStateHandler> stateHandler;
+
+@property (nonatomic, strong, readwrite) id<WALPaymentFlowContainer> paymentContainer;
+//
+//- (instancetype)initWithConfiguration:(WALFlowConfiguration *)configuration;
+NS_ASSUME_NONNULL_END
 @end
 
 @implementation WALFlowCoordinator
-
+//@synthesize state;
+//@synthesize stateHandler;
 - (instancetype)initWithConfiguration:(WALFlowConfiguration *)configuration {
     if (self = [super init]) {
         _configuration = configuration;
         _state = WALFlowStateTokenLoading;
-        _stateHandler = [WALFlowStateHandlerFactory handlerFromState:_state stateParameters:nil];
+        _stateHandler = [WALFlowStateHandlerFactory handlerFromState:self.state stateParameters:nil];
         // --> state.view to containerFactory
     }
     return self;

@@ -13,7 +13,7 @@
 @class WALTokenVersion;
 
 @interface WALTokenSelectionStateHandler : WALSimpleFlowStateHandler<WALFlowStateHandler>
-#include "WALStaticInit.h"
+//#include "WALStaticInit.h"
 NS_ASSUME_NONNULL_BEGIN
 + (instancetype)statetWithTokens:(NSArray<WALTokenVersion *> *)tokens;
 NS_ASSUME_NONNULL_END

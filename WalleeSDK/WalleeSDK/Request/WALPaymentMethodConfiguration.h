@@ -20,7 +20,7 @@ typedef NS_ENUM(NSInteger, WALDataCollectionType) {
 NS_ASSUME_NONNULL_END
 
 @interface WALPaymentMethodConfiguration : NSObject<WALJSONDecodable, WALJSONAutoDecodable>
-#include "WALAPIDataType.h"
+//#include "WALAPIDataType.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly) WALDataCollectionType dataCollectionType;

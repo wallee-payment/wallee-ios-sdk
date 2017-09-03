@@ -6,10 +6,17 @@
 //  Copyright © 2017 smoca AG. All rights reserved.
 //
 
-#import "WALFlowCoordinator+Private.h"
+#import "WALFlowCoordinator.h"
 #import "WALFlowStateDelegate.h"
+@protocol WALFlowStateHandler;
 
 @interface WALFlowCoordinator (StateDelegate) <WALFlowStateDelegate>
-@property (nonatomic, readonly) WALFlowState state;
+NS_ASSUME_NONNULL_BEGIN
+@property (nonatomic, copy) WALFlowConfiguration *configuration;
+@property (nonatomic, assign) WALFlowState state;
+@property (nonatomic, copy) id<WALFlowStateHandler> stateHandler;
+
+@property (nonatomic, strong, readwrite) id<WALPaymentFlowContainer> paymentContainer;
+NS_ASSUME_NONNULL_END
 @end
 

@@ -12,7 +12,7 @@
 @class WALConnectorConfiguration, WALToken;
 
 @interface WALTokenVersion : NSObject<WALJSONDecodable, WALJSONAutoDecodable>
-#include "WALAPIDataType.h"
+//#include "WALAPIDataType.h"
 
 NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, copy) NSString *activatedOn;

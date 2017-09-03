@@ -12,7 +12,7 @@
 @class WALMobileSdkUrl, WALCredentialsProvider;
 
 @interface WALNSURLSessionApiClient : NSObject <WALApiClient>
-#include "WALStaticInit.h"
+//#include "WALStaticInit.h"
 NS_ASSUME_NONNULL_BEGIN
 /**
  Returns a fully initialized @c WALApiClient using the default WalleeBaseURL
