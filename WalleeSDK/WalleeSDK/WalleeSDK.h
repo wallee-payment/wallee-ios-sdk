@@ -19,6 +19,7 @@ FOUNDATION_EXPORT const unsigned char WalleeSDKVersionString[];
 #import "WalleeSDK/WALFlowCoordinator.h"
 #import "WalleeSDK/WALFlowConfiguration.h"
 #import "WalleeSDK/WALFlowConfigurationBuilder.h"
+#import "WalleeSDK/WALPaymentFlowDelegate.h"
 
 #import "WalleeSDK/WALPaymentFlowContainer.h"
 

@@ -19,7 +19,6 @@
     if (self = [super init]) {
         _paymentFlowContainerFactory = [[WALDefaultPaymentFlowContainerFactory alloc] init];
         _viewControllerFactory = [[WALDefaultViewControllerFactory alloc] init];
-        _listeners = @[];
     }
     
     return self;

@@ -24,17 +24,16 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  @warning `paymentFormViewControllerFactory` must not be `nil`.
  */
-@property (nonatomic, copy) id<WALPaymentFlowContainerFactory> paymentFlowContainerFactory;
+@property (nonatomic, strong) id<WALPaymentFlowContainerFactory> paymentFlowContainerFactory;
 /**
  @warning `paymentFormViewControllerFactory` must not be `nil`.
  */
-@property (nonatomic, copy) id<WALViewControllerFactory> viewControllerFactory;
+@property (nonatomic, strong) id<WALViewControllerFactory> viewControllerFactory;
 
-
-@property (nonatomic, copy) id<WALIconCache> iconCache;
-@property (nonatomic, copy) NSArray<id<WALFLowListener>> *listeners;
-@property (nonatomic, copy) id<WALIconRequestManager> iconRequestManager;
-@property (nonatomic, copy) id<WALApiClient> webServiceApiClient;
+@property (nonatomic, strong) id<WALIconCache> iconCache;
+@property (nonatomic, weak) id<WALPaymentFlowDelegate> delegate;
+@property (nonatomic, strong) id<WALIconRequestManager> iconRequestManager;
+@property (nonatomic, strong) id<WALApiClient> webServiceApiClient;
 
 - (instancetype)initWithCredentialsFetcher:(id<WALCredentialsFetcher>)credentialsFetcher;
 - (instancetype)init NS_DESIGNATED_INITIALIZER;

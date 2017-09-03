@@ -27,7 +27,6 @@
 }
 
 - (void)waiting {
-    NSLog(@"WAITING...");
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.paymentContainer displayLoading];
     });

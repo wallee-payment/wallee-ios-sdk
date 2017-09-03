@@ -20,7 +20,7 @@
 		A63B644E1F597FF8007B9B15 /* WALTokenLoadingStateHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A63B644C1F597FF8007B9B15 /* WALTokenLoadingStateHandler.m */; };
 		A63B64511F59803D007B9B15 /* WALFlowStateHandlerFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = A63B644F1F59803D007B9B15 /* WALFlowStateHandlerFactory.h */; };
 		A63B64521F59803D007B9B15 /* WALFlowStateHandlerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A63B64501F59803D007B9B15 /* WALFlowStateHandlerFactory.m */; };
-		A63B64541F598242007B9B15 /* WALPaymentFlowDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = A63B64531F598242007B9B15 /* WALPaymentFlowDelegate.h */; };
+		A63B64541F598242007B9B15 /* WALPaymentFlowDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = A63B64531F598242007B9B15 /* WALPaymentFlowDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A63B64571F5982F0007B9B15 /* WALSimpleFlowStateHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = A63B64551F5982F0007B9B15 /* WALSimpleFlowStateHandler.h */; };
 		A63B64581F5982F0007B9B15 /* WALSimpleFlowStateHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A63B64561F5982F0007B9B15 /* WALSimpleFlowStateHandler.m */; };
 		A63B645B1F59A086007B9B15 /* WALApiClientError.h in Headers */ = {isa = PBXBuildFile; fileRef = A63B64591F59A086007B9B15 /* WALApiClientError.h */; };

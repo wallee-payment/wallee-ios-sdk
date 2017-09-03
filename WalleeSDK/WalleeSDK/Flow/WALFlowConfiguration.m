@@ -28,6 +28,7 @@
     if (self = [super init]) {
         _paymentFlowContainerFactory = builder.paymentFlowContainerFactory;
         _viewControllerFactory = builder.viewControllerFactory;
+        _delegate = builder.delegate;
         _iconCache = builder.iconCache;
         _iconRequestManager = builder.iconRequestManager;
         _webServiceApiClient = builder.webServiceApiClient;

@@ -78,7 +78,7 @@ const NSTimeInterval WALCredentialsThreshold = 2 * 60;
     NSArray<NSString*> *components = [[credentials stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] componentsSeparatedByString:@"-"];
     
     if (components.count < 3 || components[0].length == 0 || components[1].length == 0 || components[2].length == 0) {
-        [WALErrorHelper populate:error withInvalidCredentialsWithMessage:@"Wrong credentials format."];
+        [WALErrorHelper populate:error withInvalidCredentialsWithMessage:@"Supplied Credentials are invalid: Wrong credentials format."];
         return nil;
     }
     
@@ -87,11 +87,11 @@ const NSTimeInterval WALCredentialsThreshold = 2 * 60;
     [components enumerateObjectsUsingBlock:^(NSString * _Nonnull component, NSUInteger idx, BOOL * _Nonnull stop) {
         if (idx < 3) { // validate only first 3 parameters
             if ([component rangeOfCharacterFromSet:notDigits].location != NSNotFound) {
-                [WALErrorHelper populate:&blockError withInvalidCredentialsWithMessage:@"Credential parameters need to be in numeric format."];
+                [WALErrorHelper populate:&blockError withInvalidCredentialsWithMessage:@"Supplied Credentials are invalid: Credential parameters need to be in numeric format."];
                 *stop = YES;
             }
             if ([component integerValue] < 0) {
-                [WALErrorHelper populate:&blockError withInvalidCredentialsWithMessage:@"Credential parameters can not be negative."];
+                [WALErrorHelper populate:&blockError withInvalidCredentialsWithMessage:@"Supplied Credentials are invalid: Credential parameters can not be negative."];
                 *stop = YES;
             }
         }
