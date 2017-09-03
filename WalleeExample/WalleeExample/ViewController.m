@@ -82,21 +82,23 @@
 
 - (void)flowCoordinator:(WALFlowCoordinator *)coordinator transactionDidSucceed:(WALTransaction *)transaction {
     dispatch_async(dispatch_get_main_queue(), ^{
-    self.messageView.hidden = NO;
-    self.messageView.backgroundColor = self.successColor;
-    self.messageLabel.text = @"The Payment was successful.";
-    [self dismissViewControllerAnimated:YES completion:nil];
+        self.messageView.hidden = NO;
+        self.messageView.backgroundColor = self.successColor;
+        self.messageLabel.text = @"The Payment was successful.";
+        [self dismissViewControllerAnimated:YES completion:nil];
     });
 }
 
 // MARK: - Helpers
 - (void)handleError:(NSError *)error {
-    self.messageView.hidden = NO;
-    self.messageView.backgroundColor = self.failureColor;
-    self.messageLabel.text = @"The Payment was not completed.";
-    [self dismissViewControllerAnimated:YES completion:^{
-        [self displayError:error];
-    }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.messageView.hidden = NO;
+        self.messageView.backgroundColor = self.failureColor;
+        self.messageLabel.text = @"The Payment was not completed.";
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self displayError:error];
+        }];
+    });
 }
 
 - (void)displayError:(NSError *)error {
