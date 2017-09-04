@@ -16,6 +16,8 @@ FOUNDATION_EXPORT const unsigned char WalleeSDKVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <WalleeSDK/PublicHeader.h>
 
+//#import <WalleeSDK/WALStaticInit.h>
+
 #import "WalleeSDK/WALFlowCoordinator.h"
 #import "WalleeSDK/WALFlowConfiguration.h"
 #import "WalleeSDK/WALFlowConfigurationBuilder.h"

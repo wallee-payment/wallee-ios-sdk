@@ -14,12 +14,13 @@
 #import "WALFlowStateHandlerFactory.h"
 
 #import "WALPaymentErrorHelper.h"
-
+#import "WALErrorDomain.h"
 
 @implementation WALFlowCoordinator (StateDelegate)
 
 - (void)changeStateTo:(WALFlowState)targetState parameters:(NSDictionary *)parameters {
     id<WALFlowStateHandler> nextStateHandler = [WALFlowStateHandlerFactory handlerFromState:targetState stateParameters:parameters];
+    NSAssert(nextStateHandler != nil, @"There is no Handler implemented for targetState: %d", targetState);
     //TODO: currentState invalidate?
     self.state = targetState;
     self.stateHandler = nextStateHandler;

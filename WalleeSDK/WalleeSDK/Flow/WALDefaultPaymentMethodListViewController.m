@@ -1,21 +1,21 @@
 //
-//  WALDefaultTokenListViewController.m
+//  WALDefaultPaymentMethodListViewController.m
 //  WalleeSDK
 //
-//  Created by Daniel Schmid on 01.09.17.
+//  Created by Daniel Schmid on 04.09.17.
 //  Copyright © 2017 smoca AG. All rights reserved.
 //
 
-#import "WALDefaultTokenListViewController.h"
-#import "WALTokenVersion.h"
+#import "WALDefaultPaymentMethodListViewController.h"
+#import "WALPaymentMethodConfiguration.h"
 
 static NSString * const cellIdentifier = @"defaultCell";
 
-@interface WALDefaultTokenListViewController ()
+@interface WALDefaultPaymentMethodListViewController ()
 @property (nonatomic, strong) UITableView *tableView;
 @end
 
-@implementation WALDefaultTokenListViewController
+@implementation WALDefaultPaymentMethodListViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -23,19 +23,19 @@ static NSString * const cellIdentifier = @"defaultCell";
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     [self.view addSubview:self.tableView];
-    self.title = @"Select Token";
+    self.title = @"Select PaymentMethod";
 }
 
 // MARK: - TableViewDelegate and Datasource
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    WALTokenVersion *token = self.tokens[indexPath.row];
-    if (self.onTokenSelected) {
-        self.onTokenSelected(token);
+    WALPaymentMethodConfiguration *method = self.paymentMethods[indexPath.row];
+    if (self.onPaymentMethodSelected) {
+        self.onPaymentMethodSelected(method);
     }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.tokens.count;
+    return self.paymentMethods.count;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -48,11 +48,11 @@ static NSString * const cellIdentifier = @"defaultCell";
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    WALTokenVersion *token = self.tokens[indexPath.row];
-    cell.textLabel.text = token.name;
+    WALPaymentMethodConfiguration *method = self.paymentMethods[indexPath.row];
+    cell.textLabel.text = method.name;
     
     return cell;
-//    cell.imageView
+    //    cell.imageView
 }
 
 @end

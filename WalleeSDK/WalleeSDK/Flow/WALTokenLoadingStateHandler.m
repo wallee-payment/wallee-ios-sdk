@@ -36,15 +36,17 @@
     }
     __weak WALFlowCoordinator *weakCoordinator = coordinator;
     [coordinator.configuration.webServiceApiClient fetchTokenVersions:^(NSArray<WALTokenVersion *> * _Nullable tokenVersions, NSError * _Nullable error) {
-        if (!tokenVersions && error) {
+        if (!tokenVersions) {
             [WALPaymentErrorHelper distributeNetworkError:error forCoordinator:weakCoordinator];
             return;
         }
         
-        if (tokenVersions.count <= 0) {
+        // !!!: testing
+//        if (tokenVersions.count <= 0) {
+        if (tokenVersions.count > 0) {
             [weakCoordinator changeStateTo:WALFlowStatePaymentMethodLoading parameters:nil];
         } else {
-            // Load icons for payment configurations
+            // TODO: Load icons for payment configurations
             [weakCoordinator changeStateTo:WALFlowStateTokenSelection parameters:@{WALFlowTokensParameter: tokenVersions}];
         }
         

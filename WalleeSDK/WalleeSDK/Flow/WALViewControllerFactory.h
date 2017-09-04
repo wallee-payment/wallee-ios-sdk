@@ -7,14 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
-@class WALTransaction, WALTokenVersion;
+@class WALTransaction, WALTokenVersion, WALPaymentMethodConfiguration;
 
 typedef void(^WALTokenVersionSelected)(WALTokenVersion *_Nonnull);
+typedef void(^WALPaymentMethodSelected)(WALPaymentMethodConfiguration *_Nonnull);
 
 @protocol WALViewControllerFactory <NSObject>
+
+- (UIViewController *_Nonnull)buildAwaitingFinalStateViewWith:(WALTransaction * _Nonnull)transaction;
 - (UIViewController *_Nonnull)buildSuccessViewWith:(WALTransaction * _Nonnull)transaction;
 - (UIViewController *_Nonnull)buildFailureViewWith:(WALTransaction * _Nonnull)transaction;
+
 - (UIViewController *_Nonnull)buildTokenListViewWith:(NSArray<WALTokenVersion *> *_Nonnull)tokens onSelection:(WALTokenVersionSelected _Nullable )callback;
+
+- (UIViewController *_Nonnull)buildPaymentMethodListViewWith:(NSArray<WALPaymentMethodConfiguration *> *_Nonnull)paymentMethods onSelection:(WALPaymentMethodSelected _Nullable )callback;
+
+- (UIViewController *_Nonnull)buildPaymentMethodFormViewWith:(WALPaymentMethodConfiguration * _Nonnull)paymentMethod;
 
 @end
 

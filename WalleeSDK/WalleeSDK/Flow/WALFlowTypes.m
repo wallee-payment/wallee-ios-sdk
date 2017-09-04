@@ -9,6 +9,7 @@
 #import "WALFlowTypes.h"
 
 NSString * const WALFlowTokensParameter = @"WALFlowTokens";
+NSString * const WALFlowPaymentMethodsParameter = @"WALFlowPaymentMethods";
 NSString * const WALFlowTransactionParameter = @"WALFlowTransaction";
 
 @implementation WALFlowTypes

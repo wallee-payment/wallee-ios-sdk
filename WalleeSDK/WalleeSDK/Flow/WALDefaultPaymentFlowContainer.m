@@ -25,11 +25,6 @@
     [self.activityIndicatorBackgroundView addSubview:self.activityIndicator];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)displayViewController:(UIViewController *)viewController {
     [self.activityIndicatorBackgroundView removeFromSuperview];
     [self pushViewController:viewController animated:YES];

@@ -76,6 +76,7 @@
             [WALPaymentErrorHelper distributeNetworkError:error forCoordinator:weakCoordinator];
         }
     };
+    
     WALTokenVersionSelected tokenSelected = ^(WALTokenVersion * _Nonnull selectedToken) {
         
         //TODO: Howto handle errors (should we propagate them at all?)

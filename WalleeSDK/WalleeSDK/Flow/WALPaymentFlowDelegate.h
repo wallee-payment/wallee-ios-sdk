@@ -18,6 +18,10 @@
 - (void)flowCoordinatorWillDisplayTokenSelection:(WALFlowCoordinator *)coordinator;
 - (void)flowCoordinator:(WALFlowCoordinator *)coordinator didSelectToken:(WALTokenVersion *)token;
 
+- (void)flowCoordinatorWillLoadPaymentMethod:(WALFlowCoordinator *)coordinator;
+- (void)flowCoordinatorWillDisplayPaymentMethodSelection:(WALFlowCoordinator *)coordinator;
+- (void)flowCoordinator:(WALFlowCoordinator *)coordinator didSelectPaymentMethod:(WALPaymentMethodConfiguration *)paymentMethod;
+
 - (void)flowCoordinator:(WALFlowCoordinator *)coordinator transactionDidSucceed:(WALTransaction *)transaction;
 - (void)flowCoordinator:(WALFlowCoordinator *)coordinator transactionDidFail:(WALTransaction *)transaction;
 
