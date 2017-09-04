@@ -25,44 +25,32 @@
     
     switch (state) {
         case WALFlowStateTokenLoading:
-            return [[WALTokenLoadingStateHandler alloc] init];
+            return [WALTokenLoadingStateHandler stateWithParameters:parameters];
             break;
         case WALFlowStateTokenSelection:
-            return [WALTokenSelectionStateHandler statetWithTokens:parameters[WALFlowTokensParameter]];
+            return [WALTokenSelectionStateHandler stateWithParameters:parameters];
             break;
         case WALFlowStatePaymentMethodLoading:
-            return [[WALPaymentMethodLoadingStateHandler alloc] init];
+            return [WALPaymentMethodLoadingStateHandler stateWithParameters:parameters];
             break;
         case WALFlowStatePaymentMethodSelection:
-            return [WALPaymentMethodSelectionStateHandler stateWithPaymentMethods:parameters[WALFlowPaymentMethodsParameter]];
+            return [WALPaymentMethodSelectionStateHandler stateWithParameters:parameters];
             break;
         case WALFlowStatePaymentForm:
-            return [WALPaymentMethodFormStateHandler stateWithPaymentMethod:parameters[WALFlowPaymentMethodsParameter]];
+            return [WALPaymentMethodFormStateHandler stateWithParameters:parameters];
             break;
         case WALFlowStateAwaitingFinalState:
-            return [[WALAwaitingFinalStateHandler alloc] init];
+            return [WALAwaitingFinalStateHandler stateWithParameters:parameters];
             break;
         case WALFlowStateSuccess:
-            return [WALSuccessHandler stateWithTransaction:parameters[WALFlowTransactionParameter]];
+            return [WALSuccessHandler stateWithParameters:parameters];
             break;
         case WALFlowStateFailure:
-            return [WALSuccessHandler stateWithTransaction:parameters[WALFlowTransactionParameter]];
+            return [WALFailureHandler stateWithParameters:parameters];
             break;
         default:
             return nil;
             break;
     }
-    
-//    id<WALFlowStateHandler> handler;
-//    if (state == WALFlowStateTokenLoading) {
-//        handler = [[WALTokenLoadingStateHandler alloc] init];
-//    } else if (state == WALFlowStateTokenSelection) {
-//        handler = [WALTokenSelectionStateHandler statetWithTokens:parameters[WALFlowTokensParameter]];
-//    } else if (state == WALFlowStateSuccess) {
-//        handler = [WALSuccessHandler stateWithTransaction:parameters[WALFlowTransactionParameter]];
-//    } else if (state == WALFlowStateFailure) {
-//        handler = [WALSuccessHandler stateWithTransaction:parameters[WALFlowTransactionParameter]];
-//    }
-//    return handler;
 }
 @end

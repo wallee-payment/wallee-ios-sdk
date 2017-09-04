@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class WALFlowCoordinator, WALApiClientError, WALApiServerError, WALTokenVersion, WALTransaction;
+@class WALFlowCoordinator, WALApiClientError, WALApiServerError, WALTokenVersion, WALTransaction, WALPaymentMethodConfiguration;
 
 /**
  *

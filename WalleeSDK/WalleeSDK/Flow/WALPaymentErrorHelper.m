@@ -15,7 +15,7 @@
 
 @implementation WALPaymentErrorHelper
 + (void)distributeNetworkError:(NSError *)error forCoordinator:(WALFlowCoordinator *)coordinator {
-    if (!error) {
+    if (!error || !coordinator) {
         return;
     }
     if ([error isKindOfClass:WALApiServerError.class]) {

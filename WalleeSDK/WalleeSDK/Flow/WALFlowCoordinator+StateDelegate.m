@@ -20,7 +20,7 @@
 
 - (void)changeStateTo:(WALFlowState)targetState parameters:(NSDictionary *)parameters {
     id<WALFlowStateHandler> nextStateHandler = [WALFlowStateHandlerFactory handlerFromState:targetState stateParameters:parameters];
-    NSAssert(nextStateHandler != nil, @"There is no Handler implemented for targetState: %d", targetState);
+    NSAssert(nextStateHandler != nil, @"There is no Handler implemented for targetState: %lud",(unsigned long) targetState);
     //TODO: currentState invalidate?
     self.state = targetState;
     self.stateHandler = nextStateHandler;

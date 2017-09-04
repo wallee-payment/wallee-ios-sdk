@@ -9,7 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "WALFlowStateHandler.h"
 #import "WALSimpleFlowStateHandler.h"
+@class WALTransaction;
 
 @interface WALAwaitingFinalStateHandler : WALSimpleFlowStateHandler<WALFlowStateHandler>
-
+NS_ASSUME_NONNULL_BEGIN
++ (instancetype)stateWithTransaction:(WALTransaction *)transaction;
+NS_ASSUME_NONNULL_END
 @end

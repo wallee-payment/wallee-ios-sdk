@@ -19,6 +19,11 @@
 @end
 
 @implementation WALFailureHandler
+
++ (instancetype)stateWithParameters:(NSDictionary *)parameters {
+    return [self stateWithTransaction:parameters[WALFlowTransactionParameter]];
+}
+
 + (instancetype)stateWithTransaction:(WALTransaction *)transaction {
     if (!transaction) {
         return nil;
@@ -32,6 +37,7 @@
     }
     return self;
 }
+
 
 - (BOOL)dryTriggerAction:(WALFlowAction)flowAction {
     return NO;

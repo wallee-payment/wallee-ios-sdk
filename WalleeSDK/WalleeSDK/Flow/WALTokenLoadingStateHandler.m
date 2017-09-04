@@ -20,6 +20,10 @@
 
 @implementation WALTokenLoadingStateHandler
 
++ (instancetype)stateWithParameters:(NSDictionary *)parameters {
+    return [[self alloc] init];
+}
+
 - (BOOL)dryTriggerAction:(WALFlowAction)flowAction {
     return NO;
 }

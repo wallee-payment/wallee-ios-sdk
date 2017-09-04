@@ -9,6 +9,7 @@
 #import "WALTokenVersion.h"
 #import "WALJSONParser.h"
 #import "WALToken.h"
+#import "WALConnectorConfiguration.h"
 
 static NSString * const walActivatedOn = @"activatedOn";
 static NSString * const walCreatedOn = @"createdOn";
@@ -66,7 +67,7 @@ static NSString * const walState = @"state";
                                                walActivatedOn: _activatedOn ?:@"nil",
                                                walObsoletedOn: _obsoletedOn ?:@"nil",
                                                walLanguage: _language ?:@"nil",
-                                               walPaymentConnectorConfiguration: _paymentConnectorConfiguration ?:@"nil",
+                                               walPaymentConnectorConfiguration: _paymentConnectorConfiguration ?: NSNull.null,
                                                walPlannedPurgeDate: _plannedPurgeDate ?:@"nil",
                                                walProcessorToken: _processorToken ?:@"nil",
                                                walToken: _token ?:@"nil",

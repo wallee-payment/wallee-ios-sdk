@@ -32,6 +32,10 @@
     return [[self alloc] initWithTokens:tokens];
 }
 
++ (instancetype)stateWithParameters:(NSDictionary *)parameters {
+    return [self statetWithTokens:parameters[WALFlowTokensParameter]];
+}
+
 - (instancetype)initWithTokens:(NSArray<WALTokenVersion *> *)tokens {
     if (self = [super init]) {
         _tokens = tokens;

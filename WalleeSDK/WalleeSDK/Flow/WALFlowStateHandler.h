@@ -16,7 +16,7 @@
  underlying views.
  */
 @protocol WALFlowStateHandler <NSObject>
-
+NS_ASSUME_NONNULL_BEGIN
 /**
  This method is invoked when the state handler can initialize the state and as such eventually
  trigger a state change.
@@ -52,4 +52,15 @@
  @return @c YES when the action was executed. Otherwise @c NO.
  */
 - (BOOL)triggerAction:(WALFlowAction)flowAction WithCoordinator:(WALFlowCoordinator *)coordinator;
+
+
+/**
+ Every State must be initializable with a parameter dictionary
+
+ @param parameters input parameters for the state
+ @return a @c WALFlowStateHandler or nil if the input was invalid
+ */
++ (instancetype _Nullable)stateWithParameters:(NSDictionary *_Nullable)parameters;
+
+NS_ASSUME_NONNULL_END
 @end

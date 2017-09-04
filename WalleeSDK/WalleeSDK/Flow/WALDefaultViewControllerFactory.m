@@ -9,16 +9,39 @@
 #import "WALDefaultViewControllerFactory.h"
 
 #import "WALDefaultTokenListViewController.h"
+
+#import "WALDefaultPaymentMethodListViewController.h"
+#import "WALDefaultPaymentMethodFormViewController.h"
+
+#import "WALDefaultAwaitingFinalStateViewController.h"
 #import "WALDefaultSuccessViewController.h"
 #import "WALDefaultFailureViewController.h"
 
 
 @implementation WALDefaultViewControllerFactory
 - (UIViewController *)buildTokenListViewWith:(NSArray<WALTokenVersion *> *)tokens onSelection:(WALTokenVersionSelected)callback {
-    WALDefaultTokenListViewController *defaultViewController = [[WALDefaultTokenListViewController alloc] init];
-    defaultViewController.tokens = tokens;
-    defaultViewController.onTokenSelected = callback;
-    return defaultViewController;
+    WALDefaultTokenListViewController *controller = [[WALDefaultTokenListViewController alloc] init];
+    controller.tokens = tokens;
+    controller.onTokenSelected = callback;
+    return controller;
+}
+
+- (UIViewController *)buildPaymentMethodListViewWith:(NSArray<WALPaymentMethodConfiguration *> *)paymentMethods onSelection:(WALPaymentMethodSelected)callback {
+    WALDefaultPaymentMethodListViewController *controller = [[WALDefaultPaymentMethodListViewController alloc] init];
+    controller.paymentMethods = paymentMethods;
+    controller.onPaymentMethodSelected = callback;
+    return controller;
+}
+
+- (UIViewController *)buildPaymentMethodFormViewWithURL:(NSURL *)mobileSdkUrl {
+    WALDefaultPaymentMethodFormViewController *controller = [[WALDefaultPaymentMethodFormViewController alloc] init];
+    controller.mobileSdkUrl = mobileSdkUrl;
+    return controller;
+}
+
+- (UIViewController *)buildAwaitingFinalStateViewWith:(WALTransaction *)transaction {
+    WALDefaultAwaitingFinalStateViewController *controller = [[WALDefaultAwaitingFinalStateViewController alloc] init];
+    return controller;
 }
 
 - (UIViewController *)buildSuccessViewWith:(WALTransaction *)transaction {

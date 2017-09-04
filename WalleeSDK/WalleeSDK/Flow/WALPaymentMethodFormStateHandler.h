@@ -13,5 +13,5 @@
 
 @interface WALPaymentMethodFormStateHandler : WALSimpleFlowStateHandler<WALFlowStateHandler>
 //#include "WALStaticInit.h"
-+ (instancetype)stateWithPaymentMethod:(WALPaymentMethodConfiguration *)configuration;
++ (instancetype)stateWithPaymentMethodId:(NSUInteger)paymentMethodId;
 @end

@@ -20,6 +20,10 @@
 
 @implementation WALSuccessHandler
 
++ (instancetype)stateWithParameters:(NSDictionary *)parameters {
+    return [self stateWithTransaction:parameters[WALFlowTransactionParameter]];
+}
+
 + (instancetype)stateWithTransaction:(WALTransaction *)transaction {
     if (!transaction) {
         return nil;

@@ -25,6 +25,11 @@
 @end
 
 @implementation WALPaymentMethodSelectionStateHandler
+
++ (instancetype)stateWithParameters:(NSDictionary *)parameters {
+    return [self stateWithPaymentMethods:parameters[WALFlowPaymentMethodsParameter]];
+}
+
 + (instancetype)stateWithPaymentMethods:(NSArray<WALPaymentMethodConfiguration *> *)paymentMethods {
     if (!paymentMethods || paymentMethods.count <= 0) {
         return nil;
@@ -66,7 +71,7 @@
     UIViewController *controller = [coordinator.configuration.viewControllerFactory
                                     buildPaymentMethodListViewWith:self.paymentMethods
                                     onSelection:^(WALPaymentMethodConfiguration * _Nonnull paymentMethod) {
-                                        NSDictionary *parameter = @{WALFlowPaymentMethodsParameter: @(paymentMethod.id)};
+                                        NSDictionary *parameter = @{WALFlowPaymentMethodsParameter: @(paymentMethod.objectId)};
                                         [weakCoordinator changeStateTo:WALFlowStatePaymentForm parameters:parameter];
     }];
     return controller;
