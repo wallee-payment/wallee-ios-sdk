@@ -56,6 +56,16 @@ static NSUInteger const SPACE_ID = 316l;
             completion(nil, error);
             return;
         }
+        NSUInteger statusCode = ((NSHTTPURLResponse*)response).statusCode;
+        if (statusCode != 200) {
+            NSError *responseError = [NSError errorWithDomain:@"com.wallee.example"
+                                                         code:statusCode
+                                                     userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Transaction not created. API Status code: %ld", (long)statusCode],
+                                                                NSLocalizedFailureReasonErrorKey: [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]}];
+            completion(nil, responseError);
+            return;
+            
+        }
         NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data
                                                              options:kNilOptions
                                                                error:nil];
