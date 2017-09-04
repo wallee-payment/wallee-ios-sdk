@@ -22,7 +22,7 @@ typedef NS_ENUM(NSUInteger, WALClientErrorType) {
 NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) NSString *date;
 @property (nonatomic, copy, readonly) NSString *defaultMessage;
-@property (nonatomic, copy, readonly) NSString *id;
+@property (nonatomic, copy, readonly) NSString *objectId;
 @property (nonatomic, copy, readonly) NSString *message;
 @property (nonatomic, readonly) WALClientErrorType type;
 NS_ASSUME_NONNULL_END

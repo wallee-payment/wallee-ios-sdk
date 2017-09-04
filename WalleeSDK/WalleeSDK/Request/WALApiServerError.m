@@ -35,12 +35,12 @@
 }
 
 + (NSDictionary<NSString *,NSString *> *)jsonReMapping {
-    return nil;
+    return @{WalleeObjectId: WalleeId};
 }
 
 // MARK: - Description
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@", @{WalleeDate: _date, WalleeId: _id, WalleeMessage: _message}];
+    return [NSString stringWithFormat:@"%@", @{WalleeDate: _date, WalleeObjectId: _objectId, WalleeMessage: _message}];
 }
 
 - (NSString *)debugDescription{

@@ -14,7 +14,7 @@
 //#include "WALAPIDataType.h"
 NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) NSString *date;
-@property (nonatomic, copy, readonly) NSString *id;
+@property (nonatomic, copy, readonly) NSString *objectId;
 @property (nonatomic, copy, readonly) NSString *message;
 NS_ASSUME_NONNULL_END
 @end

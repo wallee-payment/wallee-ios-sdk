@@ -40,12 +40,12 @@ NSString *const WalleeName = @"name";
 }
 
 + (NSDictionary<NSString *,NSString *> *)jsonReMapping {
-    return @{@"description": WalleeDescriptionText};
+    return @{WalleeObjectId: WalleeId, WalleeDescriptionText: @"description"};
 }
 
 // MARK: - Description
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@", @{WalleeName: _name, WalleeId: @(_id), WalleeFeatures: _features, WalleeDescriptionText: _descriptionText, WalleeCategory: [WALFailureReason stringFrom:_category]}];
+    return [NSString stringWithFormat:@"%@", @{WalleeName: _name, WalleeId: @(_objectId), WalleeFeatures: _features, WalleeDescriptionText: _descriptionText, WalleeCategory: [WALFailureReason stringFrom:_category]}];
 }
 
 - (NSString *)debugDescription{

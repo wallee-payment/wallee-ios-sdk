@@ -13,7 +13,7 @@
 @interface WALApiClientError ()
 @property (nonatomic, copy) NSString *date;
 @property (nonatomic, copy) NSString *defaultMessage;
-@property (nonatomic, copy) NSString *id;
+@property (nonatomic, copy) NSString *objectId;
 @property (nonatomic, copy) NSString *message;
 @property (nonatomic) WALClientErrorType type;
 @end
@@ -43,12 +43,12 @@
 }
 
 + (NSDictionary<NSString *,NSString *> *)jsonReMapping {
-    return nil;
+    return @{WalleeObjectId: WalleeId};
 }
 
 // MARK: - Description
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@", @{WalleeDate: _date, WalleeId: _id, WalleeMessage: _message}];
+    return [NSString stringWithFormat:@"%@", @{WalleeDate: _date, WalleeObjectId: _objectId, WalleeMessage: _message}];
 }
 
 - (NSString *)debugDescription{
