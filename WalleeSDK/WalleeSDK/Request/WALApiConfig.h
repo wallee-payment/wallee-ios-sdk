@@ -38,6 +38,7 @@ FOUNDATION_EXPORT NSString *const WalleeFailedUrl;
 FOUNDATION_EXPORT NSString *const WalleeFailureReason;
 FOUNDATION_EXPORT NSString *const WalleeGroup;
 FOUNDATION_EXPORT NSString *const WalleeId;
+FOUNDATION_EXPORT NSString *const WalleeObjectId;
 FOUNDATION_EXPORT NSString *const WalleeInternetProtocolAddress;
 FOUNDATION_EXPORT NSString *const WalleeInternetProtocolAddressCountry;
 FOUNDATION_EXPORT NSString *const WalleeInvoiceMerchantReference;

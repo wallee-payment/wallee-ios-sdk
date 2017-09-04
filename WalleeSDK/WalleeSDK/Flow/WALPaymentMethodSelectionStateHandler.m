@@ -21,7 +21,7 @@
 #import "WALApiClient.h"
 
 @interface WALPaymentMethodSelectionStateHandler ()
-@property (nonatomic, copy) NSArray<WALPaymentMethodConfiguration *> *methods;
+@property (nonatomic, copy) NSArray<WALPaymentMethodConfiguration *> *paymentMethods;
 @end
 
 @implementation WALPaymentMethodSelectionStateHandler
@@ -34,7 +34,7 @@
 
 - (instancetype)initWithPaymentMethods:(NSArray<WALPaymentMethodConfiguration *> *)paymentMethods {
     if (self = [super init]) {
-        _methods = paymentMethods;
+        _paymentMethods = paymentMethods;
     }
     return self;
 }
@@ -61,7 +61,15 @@
 }
 
 - (UIViewController *)viewControllerForCoordinator:(WALFlowCoordinator *)coordinator {
-    coordinator.configuration.viewControllerFactory build
+    __weak WALFlowCoordinator *weakCoordinator = coordinator;
+
+    UIViewController *controller = [coordinator.configuration.viewControllerFactory
+                                    buildPaymentMethodListViewWith:self.paymentMethods
+                                    onSelection:^(WALPaymentMethodConfiguration * _Nonnull paymentMethod) {
+                                        NSDictionary *parameter = @{WALFlowPaymentMethodsParameter: @(paymentMethod.id)};
+                                        [weakCoordinator changeStateTo:WALFlowStatePaymentForm parameters:parameter];
+    }];
+    return controller;
 }
 
 @end

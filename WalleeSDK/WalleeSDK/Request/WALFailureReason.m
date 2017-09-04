@@ -84,7 +84,7 @@ NSString *const WalleeName = @"name";
     reason->_category = _category;
     reason->_descriptionText = [_descriptionText copyWithZone:zone];
     reason->_features = [_features copyWithZone:zone];
-    reason->_id = _id;
+    reason->_objectId = _objectId;
     reason->_name = [_name copyWithZone:zone];
     return reason;
 }

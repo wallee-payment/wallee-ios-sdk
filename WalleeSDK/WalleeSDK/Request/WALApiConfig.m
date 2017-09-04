@@ -38,6 +38,7 @@ NSString *const WalleeFailedUrl = @"failedUrl";
 NSString *const WalleeFailureReason = @"failureReason";
 NSString *const WalleeGroup = @"group";
 NSString *const WalleeId = @"id";
+NSString *const WalleeObjectId = @"objectId";
 NSString *const WalleeInternetProtocolAddress = @"internetProtocolAddress";
 NSString *const WalleeInternetProtocolAddressCountry = @"internetProtocolAddressCountry";
 NSString *const WalleeInvoiceMerchantReference = @"invoiceMerchantReference";

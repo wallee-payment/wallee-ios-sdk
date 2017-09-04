@@ -34,7 +34,7 @@
              WalleeChargeRetryEnabled, WalleeCompletedOn, WalleeCompletionTimeoutOn,
              WalleeConfirmedBy, WalleeConfirmedOn, WalleeCreatedOn, WalleeCreatedBy,
              WalleeCurrency, WalleeCustomerEmailAddress, WalleeCustomerId,
-             WalleeEndOfLife, WalleeFailedOn, WalleeFailedUrl, WalleeId,
+             WalleeEndOfLife, WalleeFailedOn, WalleeFailedUrl, WalleeObjectId,
              WalleeInternetProtocolAddress, WalleeInternetProtocolAddressCountry,
              WalleeInvoiceMerchantReference, WalleeLanguage, WalleeSpaceViewId,
              WalleeMetaData, WalleePlannedPurgeDate, WalleeProcessingOn,
@@ -45,7 +45,7 @@
     return @{WalleeFailureReason: WALFailureReason.class, WalleeToken: WALToken.class};
 }
 + (NSDictionary<NSString *,NSString *> *)jsonReMapping {
-    return nil;
+    return @{WalleeObjectId: WalleeId};
 }
 
 // MARK: - Computed Properties
@@ -95,7 +95,7 @@
                                                , WalleeAuthorizedOn: _authorizedOn?: NSNull.null, WalleeChargeRetryEnabled: @(_chargeRetryEnabled), WalleeCompletedOn: _completedOn?: NSNull.null, WalleeCompletionTimeoutOn: _completionTimeoutOn?: NSNull.null,
                                                WalleeConfirmedBy: @(_confirmedBy), WalleeConfirmedOn: _confirmedOn?: NSNull.null, WalleeCreatedBy: @(_createdBy), WalleeCreatedOn: _createdOn?: NSNull.null,
                                                WalleeCurrency: _currency?: NSNull.null, WalleeCustomerEmailAddress: _customerEmailAddress?: NSNull.null, WalleeCustomerId: _customerId?: NSNull.null,
-                                               WalleeEndOfLife: _endOfLife ?: NSNull.null, WalleeFailedOn: _failedOn ?: NSNull.null, WalleeFailedUrl: _failedUrl ?: NSNull.null, WalleeId: @(_id),
+                                               WalleeEndOfLife: _endOfLife ?: NSNull.null, WalleeFailedOn: _failedOn ?: NSNull.null, WalleeFailedUrl: _failedUrl ?: NSNull.null, WalleeId: @(_objectId),
                                                WalleeInternetProtocolAddress: _internetProtocolAddress ?: NSNull.null, WalleeInternetProtocolAddressCountry: _internetProtocolAddressCountry ?: NSNull.null,
                                                WalleeInvoiceMerchantReference: _merchantReference ?: NSNull.null, WalleeLanguage: _language ?: NSNull.null, WalleeSpaceViewId: @(_spaceViewId), WalleeMetaData: _metaData ?: NSNull.null, WalleePlannedPurgeDate: _plannedPurgeDate ?: NSNull.null, WalleeProcessingOn: _processingOn ?: NSNull.null,
                                                WalleeRefundedAmount: @(_refundedAmount), WalleeShippingMethod: _shippingMethod ?: NSNull.null,
@@ -134,7 +134,7 @@
     transaction->_failedUrl = [_failedUrl copyWithZone:zone];
     transaction->_failureReason = [_failureReason copyWithZone:zone];
 //    transaction->_group = [_group copyWithZone:zone];
-    transaction->_id = _id;
+    transaction->_objectId = _objectId;
     transaction->_internetProtocolAddress = [_internetProtocolAddress copyWithZone:zone];
     transaction->_internetProtocolAddressCountry = [_internetProtocolAddressCountry copyWithZone:zone];
     transaction->_invoiceMerchantReference = [_invoiceMerchantReference copyWithZone:zone];

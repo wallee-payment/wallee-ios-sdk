@@ -10,6 +10,7 @@
 #import "WALDatabaseTranslatedString.h"
 #import "WALErrorDomain.h"
 #import "WALJSONParser.h"
+#import "WALApiConfig.h"
 
 @interface WALPaymentMethodConfiguration ()
 - (instancetype) initInternal;
@@ -35,7 +36,7 @@
 
 // MARK: - JSONAutoDecoding
 + (NSArray<NSString*> *)jsonMapping {
-    return @[ @"id", @"linkedSpaceId", @"name", @"paymentMethod", @"plannedPurgeDate", @"resolvedDescription", @"resolvedDescription", @"resolvedImageUrl",@"resolvedTitle",@"sortOrder", @"spaceId", @"version"];
+    return @[ WalleeObjectId, @"linkedSpaceId", @"name", @"paymentMethod", @"plannedPurgeDate", @"resolvedDescription", @"resolvedDescription", @"resolvedImageUrl",@"resolvedTitle",@"sortOrder", @"spaceId", @"version"];
 }
 
 + (NSDictionary<NSString *, Class> *)jsonComplexMapping {
@@ -43,7 +44,7 @@
 }
 
 + (NSDictionary<NSString*,NSString*> *)jsonReMapping {
-    return @{@"descriptionText": @"description"};
+    return @{WalleeObjectId: WalleeId, @"descriptionText": @"description"};
 }
 
 // MARK: - Enum
@@ -73,14 +74,14 @@
 // MARK: - Description
 - (NSString *)description {
     NSDictionary *desc = @{
-                           @"name": _name,
-                           @"id": @(_id),
+                           @"name": _name ?: NSNull.null,
+                           @"objectId": @(_objectId),
                            @"spaceId": @(_linkedSpaceId),
                            @"dataCollectionType": [self.class stringFrom:_dataCollectionType],
                            @"paymentMethod": @(_paymentMethod),
-                           @"title": _resolvedTitle,
-                           @"description": _resolvedDescription,
-                           @"imageUrl": _resolvedImageUrl,
+                           @"title": _resolvedTitle ?: NSNull.null,
+                           @"description": _resolvedDescription ?: NSNull.null,
+                           @"imageUrl": _resolvedImageUrl ?: NSNull.null,
                            @"version": @(_version)
                            };
     return [NSString stringWithFormat:@"%@", desc];

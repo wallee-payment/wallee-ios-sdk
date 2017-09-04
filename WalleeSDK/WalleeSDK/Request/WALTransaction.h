@@ -50,7 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, copy) NSString *failedUrl;
 @property (nonatomic, readonly, copy) WALFailureReason *failureReason;
 //private TransactionGroup group;
-@property (nonatomic, readonly) NSUInteger id;
+@property (nonatomic, readonly) NSUInteger objectId;
 @property (nonatomic, readonly, copy) NSString *internetProtocolAddress;
 @property (nonatomic, readonly, copy) NSString *internetProtocolAddressCountry;
 @property (nonatomic, readonly, copy) NSString *invoiceMerchantReference;

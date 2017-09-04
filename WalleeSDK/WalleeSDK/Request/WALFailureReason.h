@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) WALFailureCategory category;
 @property (nonatomic, readonly, copy) NSDictionary<NSString *, NSString *> *descriptionText;
 @property (nonatomic, readonly, copy) NSArray<NSNumber *> *features;
-@property (nonatomic, readonly) NSUInteger id;
+@property (nonatomic, readonly) NSUInteger objectId;
 @property (nonatomic, readonly, copy) NSDictionary<NSString *, NSString *> *name;
 NS_ASSUME_NONNULL_END
 @end
