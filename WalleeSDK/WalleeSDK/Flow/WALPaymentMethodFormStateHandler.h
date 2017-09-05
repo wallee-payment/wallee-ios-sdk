@@ -9,9 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "WALFlowStateHandler.h"
 #import "WALSimpleFlowStateHandler.h"
+#import "WALPaymentFormDelegate.h"
 @class WALPaymentMethodConfiguration;
 
-@interface WALPaymentMethodFormStateHandler : WALSimpleFlowStateHandler<WALFlowStateHandler>
+@interface WALPaymentMethodFormStateHandler : WALSimpleFlowStateHandler<WALFlowStateHandler, WALPaymentFormDelegate>
 //#include "WALStaticInit.h"
 + (instancetype)stateWithPaymentMethodId:(NSUInteger)paymentMethodId;
 @end

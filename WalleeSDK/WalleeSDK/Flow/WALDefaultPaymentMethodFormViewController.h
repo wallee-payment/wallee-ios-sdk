@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
+#import "WALPaymentFormView.h"
 
-@interface WALDefaultPaymentMethodFormViewController : UIViewController
+@interface WALDefaultPaymentMethodFormViewController : UIViewController<WALPaymentFormView>
 NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSURL *mobileSdkUrl;
 NS_ASSUME_NONNULL_END

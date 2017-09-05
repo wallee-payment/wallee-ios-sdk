@@ -84,6 +84,7 @@
 
 // MARK: - Helpers
 - (void)handleError:(NSError *)error {
+    NSLog(@"Transaction ended in Error: %@", error);
     dispatch_async(dispatch_get_main_queue(), ^{
         self.messageView.hidden = NO;
         self.messageView.backgroundColor = self.failureColor;

@@ -7,6 +7,7 @@
 //
 
 #import "WALPaymentMethodFormStateHandler.h"
+#import "WALPaymentFormView.h"
 
 #import "WALFlowConfiguration.h"
 #import "WALFlowCoordinator+StateDelegate.h"
@@ -14,6 +15,7 @@
 
 #import "WALApiClient.h"
 #import "WALPaymentErrorHelper.h"
+#import "WALErrorDomain.h"
 
 #import "WALPaymentMethodConfiguration.h"
 #import "WALMobileSdkUrl.h"
@@ -21,6 +23,7 @@
 @interface WALPaymentMethodFormStateHandler ()
 @property (nonatomic) NSUInteger paymentMethodId;
 @property (nonatomic, copy) NSURL *sdkUrl;
+@property (nonatomic, strong) UIViewController<WALPaymentFormView> *paymentForm;
 @end
 
 @implementation WALPaymentMethodFormStateHandler
@@ -52,27 +55,28 @@
     return flowAction == WALFlowActionSubmitPaymentForm || flowAction == WALFLowActionValidatePaymentForm || (flowAction == WALFlowActionGoBack && !currentViewIsSubmited);
 }
 
-
-//public boolean triggerAction(FlowAction action, View currentView) {
-//    if (dryTriggerAction(action, currentView)) {
-//        if (action == FlowAction.SUBMIT_PAYMENT_FORM) {
-//            ((PaymentFormView) currentView).submit();
-//        } else if (action == FlowAction.VALIDATE_PAYMENT_FORM) {
-//            ((PaymentFormView) currentView).validate();
-//        } else if (action == FlowAction.GO_BACK) {
-//            if (((PaymentFormView) currentView).isSubmitted()) {
-//                throw new IllegalStateException("This should not happen. We check that before in the dry method.");
-//            }
-//            this.stateChanger.changeStateTo(FlowState.PAYMENT_METHOD_LOADING, null);
-//        } else {
-//            throw new IllegalStateException("When the dry is correctly implemented we should never reach this code.");
-//        }
-//        return true;
-//    } else {
-//        return false;
-
 - (BOOL)triggerAction:(WALFlowAction)flowAction WithCoordinator:(WALFlowCoordinator *)coordinator {
-    return false;
+    if (![self dryTriggerAction:flowAction]) {
+        return NO;
+    }
+    
+    if (flowAction == WALFlowActionSubmitPaymentForm) {
+        [self.paymentForm submit];
+    } else if (flowAction == WALFLowActionValidatePaymentForm) {
+        [self.paymentForm validate];
+    } else if (flowAction == WALFlowActionGoBack) {
+        if (self.paymentForm.isSubmitted) {
+            NSError *error;
+            [WALErrorHelper populate:&error withIllegalStateWithMessage:@"GoBack action received while the PaymentForm was already submitted. Should never occure since it is checked in dryAction before"];
+            [WALPaymentErrorHelper distribute:error forCoordinator:coordinator];
+        } else {
+            [coordinator changeStateTo:WALFlowStatePaymentMethodLoading parameters:nil];
+        }
+    } else {
+        NSAssert(true, @"When dryAction is correctly implemented we will never get here...");
+    }
+    
+    return YES;
 }
 
 - (void)performWithCoordinator:(WALFlowCoordinator *)coordinator {
@@ -100,11 +104,18 @@
 }
 
 - (UIViewController *)viewControllerForCoordinator:(WALFlowCoordinator *)coordinator {
-    if (self.sdkUrl) {
-        return [coordinator.configuration.viewControllerFactory buildPaymentMethodFormViewWithURL:self.sdkUrl];
+    if (!self.sdkUrl) {
+        return nil;
     }
-    return nil;
-    
+    if (!self.paymentForm) {
+        self.paymentForm = [coordinator.configuration.viewControllerFactory buildPaymentMethodFormViewWithURL:self.sdkUrl];
+    }
+        // TODO: Callback for submit?
+    return self.paymentForm;
 }
 
+// MARK: - PaymentFormDelegation
+- (void)paymentViewDidValidateSuccessful:(UIViewController *)viewController {
+    
+}
 @end

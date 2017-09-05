@@ -83,7 +83,6 @@
     
     WALTokenVersionSelected tokenSelected = ^(WALTokenVersion * _Nonnull selectedToken) {
         
-        //TODO: Howto handle errors (should we propagate them at all?)
         NSError *error;
         if (![WALErrorHelper checkNotEmpty:selectedToken withMessage:@"TokenVersion is required. Cannot be nil" error:&error] ||
             ![WALErrorHelper checkNotEmpty:selectedToken.token withMessage:@"Token is required. Cannot be nil" error:&error]) {

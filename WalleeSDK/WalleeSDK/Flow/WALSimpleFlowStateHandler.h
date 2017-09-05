@@ -13,6 +13,7 @@
 
 @interface WALSimpleFlowStateHandler : NSObject
 NS_ASSUME_NONNULL_BEGIN
+@property (nonatomic) BOOL isValid;
 - (void)performWithCoordinator:(WALFlowCoordinator *)coordinator;
 NS_ASSUME_NONNULL_END
 @end

@@ -53,6 +53,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (BOOL)triggerAction:(WALFlowAction)flowAction WithCoordinator:(WALFlowCoordinator *)coordinator;
 
+/**
+ once the state has finished and the @c WALTransactionCoordinator has move to another state
+ this @c WALStateHandler is invalid
+ */
+- (BOOL)isValid;
 
 /**
  Every State must be initializable with a parameter dictionary
