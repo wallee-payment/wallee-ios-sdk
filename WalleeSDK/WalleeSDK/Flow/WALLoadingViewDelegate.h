@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @protocol WALLoadingViewDelegate <NSObject>
-- (void)viewControllerDidStartLoading:(UIViewController *)viewController;
-- (void)viewControllerDidFinishLoading:(UIViewController *)viewController;
+- (void)viewDidStartLoading:(UIView *)viewController;
+- (void)viewDidFinishLoading:(UIView *)viewController;
 @end

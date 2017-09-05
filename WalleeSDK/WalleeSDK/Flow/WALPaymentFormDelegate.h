@@ -16,4 +16,5 @@
 - (void)paymentViewDidSucceed:(UIViewController *)viewController;
 - (void)paymentViewDidFail:(UIViewController *)viewController;
 - (void)paymentViewAwaitsFinalState:(UIViewController *)viewController;
+- (void)paymentView:(UIViewController *)viewController didEncounterError:(NSError *)error;
 @end

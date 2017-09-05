@@ -8,6 +8,8 @@
 
 #import "WALDefaultPaymentFormView.h"
 #import <WebKit/WebKit.h>
+#import "WALPaymentFormDelegate.h"
+#import "WALPaymentFormAJAXParser.h"
 
 @interface WALDefaultPaymentFormView ()
 @property (nonatomic, strong) WKWebView *webView;
@@ -15,6 +17,7 @@
 @property (nonatomic, readwrite) CGSize contentSize;
 
 @property (nonatomic, readwrite) BOOL isSubmitted;
+
 @end
 
 @implementation WALDefaultPaymentFormView
@@ -24,6 +27,8 @@
         WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
         WKUserContentController *controller = [[WKUserContentController alloc] init];
         [controller addScriptMessageHandler:self name:@"MobileSdkHandler"];
+        
+        [self addAJAXController:controller];
         configuration.userContentController = controller;
         self.webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:configuration];
         self.webView.navigationDelegate = self;
@@ -36,14 +41,23 @@
     return self;
 }
 
+- (void)addAJAXController:(WKUserContentController *)controller {
+    NSString *jsHandler = [NSString stringWithContentsOfURL:[[NSBundle mainBundle]URLForResource:@"ajax" withExtension:@"js"] encoding:NSUTF8StringEncoding error:NULL];
+    WKUserScript *ajaxHandler = [[WKUserScript alloc]initWithSource:jsHandler injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:NO];
+    [controller addScriptMessageHandler:self name:@"callbackHandler"];
+    [controller addUserScript:ajaxHandler];
+}
+
 - (void)loadPaymentView:(NSURL *)mobileSdkUrl {
     self.isLoading = YES;
+    [self.delegate viewDidStartLoading:self];
     [self.webView loadRequest:[NSURLRequest requestWithURL:mobileSdkUrl]];
 }
 
 -(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
-    NSLog(@"webView: %@ didFinishNavigation: %@", webView, navigation);
+    NSLog(@"webView: didFinishNavigation: %@", navigation);
     self.isLoading = NO;
+    [self.delegate viewDidFinishLoading:self];
 }
 
 - (void)layoutSubviews {
@@ -54,47 +68,41 @@
 // MARK: - JS
 
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
-    NSLog(@"Did REceive Message: %@", message);
-}
-
-// MARK: - WKWebView Delegation
-- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
-    NSLog(@"webView: %@ decidePolicyFor Action: %@ decisionHandler: %@", webView, navigationAction, decisionHandler);
-    decisionHandler(WKNavigationActionPolicyAllow);
-}
-
--(void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
-    NSLog(@"webView: %@ decidePolicyFor RESPONSE: %@ decisionHandler: %@", webView, navigationResponse, decisionHandler);
-    decisionHandler(WKNavigationResponsePolicyAllow);
-}
-
-- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
-    NSLog(@"webView: %@ didStart: %@", webView, navigation);
-}
-
-- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
-    NSLog(@"webView: %@ FAIL PROVISIONAL: %@ ERROR: %@", webView, navigation, error);
-}
-
-- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
-    NSLog(@"webView: %@ FAIL: %@ ERROR: %@", webView, navigation, error);
-}
-
--(void)webViewWebContentProcessDidTerminate:(WKWebView *)webView {
-    NSLog(@"Webcontent process didterminate");
-}
-
-- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation {
-    NSLog(@"webView: %@ didCommit: %@", webView, navigation);
-}
-
-- (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler {
-    NSLog(@"Did receive auth challenge");
-    completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
-}
-
-- (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation *)navigation {
-    NSLog(@"webView: %@ REDIRECT: %@", webView, navigation);
+    NSLog(@"Did REceive Message: %@ %@", message, message.body);
+    NSString *url = message.body;
+    __weak WALDefaultPaymentFormView *weakSelf = self;
+    [WALPaymentFormAJAXParser parseUrlString:url resultBlock:^(WALPaymentFormAJAXOperationType resultType, id  _Nullable result) {
+        WALDefaultPaymentFormView *strongSelf = weakSelf;
+        
+        switch (resultType) {
+            case WALPaymentFormAJAXOperationTypeSuccess:
+                [strongSelf.delegate paymentViewDidSucceed:nil];
+                break;
+            case WALPaymentFormAJAXOperationTypeFailure:
+                [strongSelf.delegate paymentViewDidFail:nil];
+                break;
+            case WALPaymentFormAJAXOperationTypeAwaitingFinalStatus:
+                [strongSelf.delegate paymentViewAwaitsFinalState:nil];
+                break;
+            case WALPaymentFormAJAXOperationTypeValidationSuccess:
+                [strongSelf.delegate paymentViewDidValidateSuccessful:nil];
+                break;
+            case WALPaymentFormAJAXOperationTypeValidationFailure:
+                [strongSelf.delegate paymentView:nil didFailValidationWithErrors:result];
+                break;
+            case WALPaymentFormAJAXOperationTypeError:
+                [strongSelf.delegate paymentView:nil didEncounterError:result];
+                break;
+            case WALPaymentFormAJAXOperationTypeEnlargeView:
+            case WALPaymentFormAJAXOperationTypeHeightChange:
+            case WALPaymentFormAJAXOperationTypeInitialize:
+            case WALPaymentFormAJAXOperationTypeUnknown:
+                // fall thru
+            default:
+                break;
+        }
+        
+    }];
 }
 
 // MARK: - Commands
@@ -108,7 +116,7 @@
     [self.webView evaluateJavaScript:@"javascript:(function () { MobileSdkHandler.validate(); })()"
                    completionHandler:^(id _Nullable object, NSError * _Nullable error) {
                        NSLog(@"js evaluate object %@ error %@", object, error);
-    }];
+                   }];
 }
 
 - (void)submit {
@@ -155,7 +163,50 @@
         contentHeight = newContentHeight;
         //        self.webView.frame = CGRectMake(self.scrollView.bounds.origin.x, self.scrollView.bounds.origin.y, self.scrollView.bounds.size.width, newContentHeight);
         self.webView.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, newContentHeight);
-
+        
     }
 }
+
+
+
+// MARK: - WKWebView Delegation
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+    NSLog(@"webView:  decidePolicyFor Action: %@ decisionHandler: %@", navigationAction, decisionHandler);
+    decisionHandler(WKNavigationActionPolicyAllow);
+}
+
+-(void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
+    NSLog(@"webView:  decidePolicyFor RESPONSE: %@ decisionHandler: %@", navigationResponse, decisionHandler);
+    decisionHandler(WKNavigationResponsePolicyAllow);
+}
+
+- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
+    NSLog(@"webView: didStart: %@" , navigation);
+}
+
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    NSLog(@"webView: FAIL PROVISIONAL: %@ ERROR: %@", navigation, error);
+}
+
+- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    NSLog(@"webView: FAIL: %@ ERROR: %@", navigation, error);
+}
+
+-(void)webViewWebContentProcessDidTerminate:(WKWebView *)webView {
+    NSLog(@"Webcontent process didterminate");
+}
+
+- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation {
+    NSLog(@"webView: didCommit: %@", navigation);
+}
+
+- (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler {
+    NSLog(@"Did receive auth challenge");
+    completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
+}
+
+- (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation *)navigation {
+    NSLog(@"webView: %@ REDIRECT: %@", webView, navigation);
+}
+
 @end

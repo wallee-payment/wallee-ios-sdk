@@ -30,6 +30,7 @@
 
     self.paymentFormView = [[WALDefaultPaymentFormView alloc] initWithFrame:paymentRect];
     self.paymentFormView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+    self.paymentFormView.delegate = self;
     [self.view addSubview:self.paymentFormView];
     
     self.submitButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -48,9 +49,42 @@
 }
 
 
-
-
 // MARK: - WALPaymentForm Delegation
+
+- (void)viewDidStartLoading:(UIView *)viewController {
+    
+}
+
+- (void)viewDidFinishLoading:(UIView *)viewController {
+    
+}
+
+- (void)paymentViewDidValidateSuccessful:(UIViewController *)viewController {
+    NSLog(@"VALID");
+}
+
+- (void)paymentView:(UIViewController *)viewController didFailValidationWithErrors:(NSArray<NSError *> *)errors {
+    NSLog(@"INVALID");
+}
+- (void)paymentView:(UIViewController *)viewController didEncounterError:(NSError *)error {
+    
+}
+
+- (void)paymentViewAwaitsFinalState:(UIViewController *)viewController {
+    
+}
+
+- (void)paymentViewDidSucceed:(UIViewController *)viewController {
+    
+}
+
+- (void)paymentViewDidFail:(UIViewController *)viewController {
+    
+}
+
+- (void)viewControllerDidExpire:(UIViewController *)viewController {
+    
+}
 - (BOOL)isSubmitted {
     return self.paymentFormView.isSubmitted;
 }

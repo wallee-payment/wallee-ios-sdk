@@ -9,9 +9,16 @@
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
 #import "WALPaymentFormView.h"
+@protocol WALPaymentFormDelegate;
 
 @interface WALDefaultPaymentFormView : UIView<WALPaymentFormView, WKNavigationDelegate, WKScriptMessageHandler>
 NS_ASSUME_NONNULL_BEGIN
+
+/**
+ The Delegate gets informed about all corresponding events
+ */
+@property (nonatomic, weak) id<WALPaymentFormDelegate> delegate;
+
 @property (nonatomic, readonly) BOOL isLoading;
 @property (nonatomic, readonly) BOOL isSubmitted;
 /**
