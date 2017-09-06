@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "WALPaymentFlowContainer.h"
+#import "WALPaymentFlowContainerFactory.h"
 
 /**
  Default implementation of a @c WALPaymentFlowContainer.
  uses a @c UINavigationController internaly to display the flow
  */
-@interface WALDefaultPaymentFlowContainer : UINavigationController<WALPaymentFlowContainer>
-
+@interface WALDefaultPaymentFlowContainer : UINavigationController<UINavigationBarDelegate, WALPaymentFlowContainer>
+- (instancetype)initWithRootViewController:(UIViewController *)rootViewController backAction:(WALContainerBackAction)onBackAction;
 @end

@@ -19,12 +19,14 @@
 @implementation WALFlowCoordinator (StateDelegate)
 
 - (void)changeStateTo:(WALFlowState)targetState parameters:(NSDictionary *)parameters {
-    [self.stateHandler invalidate];
-    id<WALFlowStateHandler> nextStateHandler = [WALFlowStateHandlerFactory handlerFromState:targetState stateParameters:parameters];
-    NSAssert(nextStateHandler != nil, @"There is no Handler implemented for targetState: %lud",(unsigned long) targetState);
-    self.state = targetState;
-    self.stateHandler = nextStateHandler;
-    [self.stateHandler performWithCoordinator:self];
+    @synchronized (self) {
+        [self.stateHandler invalidate];
+        id<WALFlowStateHandler> nextStateHandler = [WALFlowStateHandlerFactory handlerFromState:targetState stateParameters:parameters];
+        NSAssert(nextStateHandler != nil, @"There is no Handler implemented for targetState: %lud",(unsigned long) targetState);
+        self.state = targetState;
+        self.stateHandler = nextStateHandler;
+        [self.stateHandler performWithCoordinator:self];
+    }
 }
 
 - (void)waiting {

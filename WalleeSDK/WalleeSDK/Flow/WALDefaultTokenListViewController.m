@@ -20,7 +20,9 @@ static NSString * const cellIdentifier = @"defaultCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.hidesBackButton = YES;
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    
     CGRect buttonRect = CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, 44.0);
     self.paymentMethodButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.paymentMethodButton.frame = buttonRect;

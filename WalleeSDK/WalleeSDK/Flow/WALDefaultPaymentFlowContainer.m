@@ -9,14 +9,25 @@
 #import "WALDefaultPaymentFlowContainer.h"
 
 @interface WALDefaultPaymentFlowContainer ()
+@property (nonatomic, copy) WALContainerBackAction onBackAction;
 @property (nonatomic, strong) UIView *activityIndicatorBackgroundView;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @end
 
 @implementation WALDefaultPaymentFlowContainer
 
+- (instancetype)initWithRootViewController:(UIViewController *)rootViewController backAction:(WALContainerBackAction)onBackAction {
+    if (self = [self initWithRootViewController:rootViewController]) {
+        self.onBackAction = onBackAction;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.interactivePopGestureRecognizer.enabled = NO;
+    
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [self.activityIndicator startAnimating];
     
@@ -26,7 +37,27 @@
 }
 
 - (void)displayViewController:(UIViewController *)viewController {
-    [self.activityIndicatorBackgroundView removeFromSuperview];
+     [self.activityIndicatorBackgroundView removeFromSuperview];
+    
+    
+    // if in stack ... replace
+    NSMutableArray *rebuiltStack = [[NSMutableArray alloc] initWithCapacity:self.viewControllers.count];
+    BOOL isInStack = NO;
+    for (UIViewController *controller in self.viewControllers) {
+        if ([controller isKindOfClass:viewController.class]) {
+            isInStack = YES;
+            break;
+        } else {
+            [rebuiltStack addObject:controller];
+        }
+    }
+    
+    if (isInStack) {
+        [rebuiltStack addObject:viewController];
+        [self setViewControllers:rebuiltStack animated:YES];
+        return;
+    }
+    
     if (viewController != self.currentlyDisplayedViewController) {
         [self pushViewController:viewController animated:YES];
     } else {
@@ -47,6 +78,11 @@
 
 - (UIViewController *)viewController {
     return self;
+}
+
+- (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item {
+    self.onBackAction();
+    return NO;
 }
 
 @end

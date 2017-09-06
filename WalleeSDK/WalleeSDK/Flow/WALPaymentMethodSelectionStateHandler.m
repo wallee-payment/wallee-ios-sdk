@@ -53,7 +53,7 @@
         return NO;
     }
     if ([self dryTriggerAction:flowAction]) {
-        [coordinator changeStateTo:WALFlowStatePaymentMethodLoading parameters:nil];
+        [coordinator changeStateTo:WALFlowStateTokenLoading parameters:nil];
         return YES;
     } else {
         return NO;
