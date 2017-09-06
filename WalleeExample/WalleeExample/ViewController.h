@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@import WalleeSDK;
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController<WALPaymentFlowDelegate>
+@property (strong, nonatomic) IBOutlet UIView *messageView;
+@property (strong, nonatomic) IBOutlet UILabel *messageLabel;
 
-
+- (IBAction)didTapPayment:(id)sender;
 @end
 

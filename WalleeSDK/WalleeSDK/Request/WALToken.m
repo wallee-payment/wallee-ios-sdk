@@ -69,4 +69,22 @@ static NSString * const walVersion = @"version";
 - (NSString *)debugDescription{
     return [NSString stringWithFormat:@"<%@: %p, \"%@\">", [self class], self, [self description]];
 }
+
+// MARK: - Copying
+- (id)copyWithZone:(NSZone *)zone {
+    WALToken *token = [[self.class allocWithZone:zone] initInternal];
+    token->_createdOn = [_createdOn copyWithZone:zone];
+    token->_customerEmailAddress = [_customerEmailAddress copyWithZone:zone];
+    token->_customerId = [_customerId copyWithZone:zone];
+    token->_enabledForOneClickPayment = _enabledForOneClickPayment;
+    token->_externalId = [_externalId copyWithZone:zone];
+    token->_id = _id;
+    token->_language = [_language copyWithZone:zone];
+    token->_linkedSpaceId = _linkedSpaceId;
+    token->_plannedPurgeDate = [_plannedPurgeDate copyWithZone:zone];
+    token->_state = [_state copyWithZone:zone];
+    token->_tokenReference = [_tokenReference copyWithZone:zone];
+    token->_version = _version;
+    return token;
+}
 @end

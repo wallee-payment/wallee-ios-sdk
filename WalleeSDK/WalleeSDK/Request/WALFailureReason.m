@@ -18,12 +18,11 @@ NSString *const WalleeName = @"name";
 
 @implementation WALFailureReason
 - (instancetype)initInternal {
-    self = [super init];
-    return self;
+    return [super init];
 }
 
 + (instancetype)decodedObjectFromJSON:(NSDictionary<NSString *,id> *)dictionary error:(NSError * _Nullable __autoreleasing *)error {
-    WALFailureReason *reason = [[WALFailureReason alloc] initInternal];
+    WALFailureReason *reason = [[self.class alloc] initInternal];
     if (![WALJSONParser populate:reason withDictionary:dictionary error:error]) {
         return nil;
     }
@@ -41,12 +40,12 @@ NSString *const WalleeName = @"name";
 }
 
 + (NSDictionary<NSString *,NSString *> *)jsonReMapping {
-    return @{@"description": WalleeDescriptionText};
+    return @{WalleeObjectId: WalleeId, WalleeDescriptionText: @"description"};
 }
 
 // MARK: - Description
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@", @{WalleeName: _name, WalleeId: @(_id), WalleeFeatures: _features, WalleeDescriptionText: _descriptionText, WalleeCategory: [WALFailureReason stringFrom:_category]}];
+    return [NSString stringWithFormat:@"%@", @{WalleeName: _name, WalleeId: @(_objectId), WalleeFeatures: _features, WalleeDescriptionText: _descriptionText, WalleeCategory: [WALFailureReason stringFrom:_category]}];
 }
 
 - (NSString *)debugDescription{
@@ -78,5 +77,15 @@ NSString *const WalleeName = @"name";
              @"INTERNAL": @(WALFailureCategoryInternal),
              @"END_USER": @(WALFailureCategoryEndUser),
              @"DEVELOPER": @(WALFailureCategoryDeveloper)};
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    WALFailureReason *reason = [self.class allocWithZone:zone];
+    reason->_category = _category;
+    reason->_descriptionText = [_descriptionText copyWithZone:zone];
+    reason->_features = [_features copyWithZone:zone];
+    reason->_objectId = _objectId;
+    reason->_name = [_name copyWithZone:zone];
+    return reason;
 }
 @end

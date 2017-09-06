@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A63B64CD1F5BF3AE007B9B15 /* WalleeSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A63B64CA1F5BF2EF007B9B15 /* WalleeSDK.framework */; };
+		A63B64D21F5C0EDA007B9B15 /* TestCredentialsFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = A63B64D11F5C0EDA007B9B15 /* TestCredentialsFetcher.m */; };
+		A6670D901F5EEA9900C3B229 /* ajax.js in Resources */ = {isa = PBXBuildFile; fileRef = A6670D8F1F5EEA9900C3B229 /* ajax.js */; };
 		A6DE8EA21F41A911006E082B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DE8EA11F41A911006E082B /* main.m */; };
 		A6DE8EA51F41A911006E082B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DE8EA41F41A911006E082B /* AppDelegate.m */; };
 		A6DE8EA81F41A911006E082B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DE8EA71F41A911006E082B /* ViewController.m */; };
@@ -18,6 +21,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		A63B64C91F5BF2EF007B9B15 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A63B64C41F5BF2EF007B9B15 /* WalleeSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A6DE8E7A1F41A77D006E082B;
+			remoteInfo = WalleeSDK;
+		};
+		A63B64CB1F5BF2EF007B9B15 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A63B64C41F5BF2EF007B9B15 /* WalleeSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A6DE8E831F41A77E006E082B;
+			remoteInfo = WalleeSDKTests;
+		};
+		A63B64CE1F5BF406007B9B15 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A63B64C41F5BF2EF007B9B15 /* WalleeSDK.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A6DE8E791F41A77D006E082B;
+			remoteInfo = WalleeSDK;
+		};
 		A6DE8EB71F41A911006E082B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A6DE8E951F41A911006E082B /* Project object */;
@@ -35,6 +59,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A63B64C41F5BF2EF007B9B15 /* WalleeSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WalleeSDK.xcodeproj; path = ../WalleeSDK/WalleeSDK.xcodeproj; sourceTree = "<group>"; };
+		A63B64D01F5C0EDA007B9B15 /* TestCredentialsFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestCredentialsFetcher.h; sourceTree = "<group>"; };
+		A63B64D11F5C0EDA007B9B15 /* TestCredentialsFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestCredentialsFetcher.m; sourceTree = "<group>"; };
+		A6670D8F1F5EEA9900C3B229 /* ajax.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ajax.js; sourceTree = "<group>"; };
 		A6DE8E9D1F41A911006E082B /* WalleeExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WalleeExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6DE8EA11F41A911006E082B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A6DE8EA31F41A911006E082B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -58,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A63B64CD1F5BF3AE007B9B15 /* WalleeSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,9 +107,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A63B64C51F5BF2EF007B9B15 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A63B64CA1F5BF2EF007B9B15 /* WalleeSDK.framework */,
+				A63B64CC1F5BF2EF007B9B15 /* WalleeSDKTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		A6DE8E941F41A911006E082B = {
 			isa = PBXGroup;
 			children = (
+				A63B64C41F5BF2EF007B9B15 /* WalleeSDK.xcodeproj */,
 				A6DE8E9F1F41A911006E082B /* WalleeExample */,
 				A6DE8EB91F41A911006E082B /* WalleeExampleTests */,
 				A6DE8EC41F41A911006E082B /* WalleeExampleUITests */,
@@ -105,10 +144,13 @@
 				A6DE8EA41F41A911006E082B /* AppDelegate.m */,
 				A6DE8EA61F41A911006E082B /* ViewController.h */,
 				A6DE8EA71F41A911006E082B /* ViewController.m */,
+				A63B64D01F5C0EDA007B9B15 /* TestCredentialsFetcher.h */,
+				A63B64D11F5C0EDA007B9B15 /* TestCredentialsFetcher.m */,
 				A6DE8EA91F41A911006E082B /* Main.storyboard */,
 				A6DE8EAC1F41A911006E082B /* Assets.xcassets */,
 				A6DE8EAE1F41A911006E082B /* LaunchScreen.storyboard */,
 				A6DE8EB11F41A911006E082B /* Info.plist */,
+				A6670D8F1F5EEA9900C3B229 /* ajax.js */,
 				A6DE8EA01F41A911006E082B /* Supporting Files */,
 			);
 			path = WalleeExample;
@@ -154,6 +196,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				A63B64CF1F5BF406007B9B15 /* PBXTargetDependency */,
 			);
 			name = WalleeExample;
 			productName = WalleeExample;
@@ -235,6 +278,12 @@
 			mainGroup = A6DE8E941F41A911006E082B;
 			productRefGroup = A6DE8E9E1F41A911006E082B /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = A63B64C51F5BF2EF007B9B15 /* Products */;
+					ProjectRef = A63B64C41F5BF2EF007B9B15 /* WalleeSDK.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				A6DE8E9C1F41A911006E082B /* WalleeExample */,
@@ -244,6 +293,23 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		A63B64CA1F5BF2EF007B9B15 /* WalleeSDK.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = WalleeSDK.framework;
+			remoteRef = A63B64C91F5BF2EF007B9B15 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A63B64CC1F5BF2EF007B9B15 /* WalleeSDKTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = WalleeSDKTests.xctest;
+			remoteRef = A63B64CB1F5BF2EF007B9B15 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		A6DE8E9B1F41A911006E082B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
@@ -251,6 +317,7 @@
 			files = (
 				A6DE8EB01F41A911006E082B /* LaunchScreen.storyboard in Resources */,
 				A6DE8EAD1F41A911006E082B /* Assets.xcassets in Resources */,
+				A6670D901F5EEA9900C3B229 /* ajax.js in Resources */,
 				A6DE8EAB1F41A911006E082B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -278,6 +345,7 @@
 			files = (
 				A6DE8EA81F41A911006E082B /* ViewController.m in Sources */,
 				A6DE8EA51F41A911006E082B /* AppDelegate.m in Sources */,
+				A63B64D21F5C0EDA007B9B15 /* TestCredentialsFetcher.m in Sources */,
 				A6DE8EA21F41A911006E082B /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -301,6 +369,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		A63B64CF1F5BF406007B9B15 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = WalleeSDK;
+			targetProxy = A63B64CE1F5BF406007B9B15 /* PBXContainerItemProxy */;
+		};
 		A6DE8EB81F41A911006E082B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A6DE8E9C1F41A911006E082B /* WalleeExample */;
@@ -518,6 +591,7 @@
 				A6DE8ECC1F41A911006E082B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A6DE8ECD1F41A911006E082B /* Build configuration list for PBXNativeTarget "WalleeExampleTests" */ = {
 			isa = XCConfigurationList;
@@ -526,6 +600,7 @@
 				A6DE8ECF1F41A911006E082B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A6DE8ED01F41A911006E082B /* Build configuration list for PBXNativeTarget "WalleeExampleUITests" */ = {
 			isa = XCConfigurationList;
@@ -534,6 +609,7 @@
 				A6DE8ED21F41A911006E082B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

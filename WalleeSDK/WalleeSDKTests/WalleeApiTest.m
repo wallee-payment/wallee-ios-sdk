@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#include <CommonCrypto/CommonHMAC.h>
+//#include <CommonCrypto/CommonHMAC.h>
 
 #import "WALNSURLSessionApiClient.h"
 

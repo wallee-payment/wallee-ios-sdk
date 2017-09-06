@@ -15,7 +15,10 @@
 #import "WALApiConfig.h"
 #import "WALCredentials.h"
 #import "WALCredentialsProvider.h"
+
 #import "WALErrorDomain.h"
+#import "WALApiClientError.h"
+#import "WALApiServerError.h"
 
 @interface WALNSURLSessionApiClient ()
 @property (nonatomic, strong, readwrite) WALCredentialsProvider *credentialsProvider;
@@ -38,6 +41,9 @@
     return [NSURLSessionConfiguration defaultSessionConfiguration];
 }
 
++ (instancetype)clientWithCredentialsProvider:(WALCredentialsProvider *)credentialsProvider {
+    return [self clientWithBaseUrl:WalleeBaseUrl credentialsProvider:credentialsProvider];
+}
 
 + (instancetype)clientWithBaseUrl:(NSString *)baseUrl credentialsProvider:(WALCredentialsProvider *)credentialsProvider {
     // validation
@@ -272,7 +278,19 @@
     if (statusCode == 0 || statusCode > 399) {
         if (error) {
             //TODO: impl? Cilent vs Server Error Classes
-            *error = [NSError errorWithDomain:WALErrorDomain code:WALErrorHTTPError userInfo:@{@"statusCode": @(statusCode), @"response": response, @"data": json}];
+            if (statusCode == WalleClientErrorReturnCode) {
+                WALApiClientError *clientError = [WALApiClientError decodedObjectFromJSON:json error:error];
+                if (clientError) {
+                    *error = clientError;
+                }
+            } else if(statusCode == WalleServerErrorReturnCode) {
+                WALApiServerError *serverError = [WALApiServerError decodedObjectFromJSON:json error:error];
+                if (serverError) {
+                    *error = serverError;
+                }
+            } else {
+                *error = [NSError errorWithDomain:WALErrorDomain code:WALErrorHTTPError userInfo:@{@"statusCode": @(statusCode), @"response": response, @"data": json}];
+            }
         }
         return NO;
     }

@@ -8,7 +8,7 @@
 
 #import "WALApiConfig.h"
 
-NSString *const WalleeBaseURL = @"https://app-wallee.com/api/";
+NSString *const WalleeBaseUrl = @"https://app-wallee.com/api/";
 NSString *const WalleeEndpointBuildMobilUrl = @"transaction/buildMobileSdkUrlWithCredentials";
 NSString *const WalleeEndpointFetchPossiblePaymentMethods = @"transaction/fetchPossiblePaymentMethodsWithCredentials";
 NSString *const WalleeEndpointFetchTokenVersion = @"transaction/fetchOneClickTokensWithCredentials";
@@ -38,6 +38,7 @@ NSString *const WalleeFailedUrl = @"failedUrl";
 NSString *const WalleeFailureReason = @"failureReason";
 NSString *const WalleeGroup = @"group";
 NSString *const WalleeId = @"id";
+NSString *const WalleeObjectId = @"objectId";
 NSString *const WalleeInternetProtocolAddress = @"internetProtocolAddress";
 NSString *const WalleeInternetProtocolAddressCountry = @"internetProtocolAddressCountry";
 NSString *const WalleeInvoiceMerchantReference = @"invoiceMerchantReference";
@@ -60,6 +61,14 @@ NSString *const WalleeUserAgentHeader = @"userAgentHeader";
 NSString *const WalleeUserFailureMessage = @"userFailureMessage";
 NSString *const WalleeUserInterfaceType = @"userInterfaceType";
 NSString *const WalleeVersion = @"version";
+
+NSString *const WalleeDate = @"date";
+NSString *const WalleeDefaultMessage = @"defaultMessage";
+NSString *const WalleeMessage = @"message";
+NSString *const WalleeType = @"type";
+
+NSUInteger const WalleClientErrorReturnCode = 442;
+NSUInteger const WalleServerErrorReturnCode = 542;
 
 @implementation WALApiConfig
 

@@ -20,12 +20,12 @@ typedef NS_ENUM(NSInteger, WALDataCollectionType) {
 NS_ASSUME_NONNULL_END
 
 @interface WALPaymentMethodConfiguration : NSObject<WALJSONDecodable, WALJSONAutoDecodable>
-#include "WALDataMixin.h"
+//#include "WALAPIDataType.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly) WALDataCollectionType dataCollectionType;
 @property (nonatomic, readonly, copy) WALDatabaseTranslatedString *descriptionText;
-@property (nonatomic, readonly) NSUInteger id;
+@property (nonatomic, readonly) NSUInteger objectId;
 //@property (nonatomic, readonly) ImageResourcePath imageResourcePath;
 @property (nonatomic, readonly) NSUInteger linkedSpaceId;
 @property (nonatomic, readonly, copy) NSString *name;

@@ -34,7 +34,7 @@
              WalleeChargeRetryEnabled, WalleeCompletedOn, WalleeCompletionTimeoutOn,
              WalleeConfirmedBy, WalleeConfirmedOn, WalleeCreatedOn, WalleeCreatedBy,
              WalleeCurrency, WalleeCustomerEmailAddress, WalleeCustomerId,
-             WalleeEndOfLife, WalleeFailedOn, WalleeFailedUrl, WalleeId,
+             WalleeEndOfLife, WalleeFailedOn, WalleeFailedUrl, WalleeObjectId,
              WalleeInternetProtocolAddress, WalleeInternetProtocolAddressCountry,
              WalleeInvoiceMerchantReference, WalleeLanguage, WalleeSpaceViewId,
              WalleeMetaData, WalleePlannedPurgeDate, WalleeProcessingOn,
@@ -45,7 +45,7 @@
     return @{WalleeFailureReason: WALFailureReason.class, WalleeToken: WALToken.class};
 }
 + (NSDictionary<NSString *,NSString *> *)jsonReMapping {
-    return nil;
+    return @{WalleeObjectId: WalleeId};
 }
 
 // MARK: - Computed Properties
@@ -91,20 +91,72 @@
 
 // MARK: - Description
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@", @{WalleeAcceptHeader: _acceptHeader, WalleeAuthorizationAmount: @(_authorizationAmount)
-                                               , WalleeAuthorizedOn: _authorizedOn, WalleeChargeRetryEnabled: @(_chargeRetryEnabled), WalleeCompletedOn: _completedOn, WalleeCompletionTimeoutOn: _completionTimeoutOn,
-                                               WalleeConfirmedBy: @(_confirmedBy), WalleeConfirmedOn: _confirmedOn, WalleeCreatedBy: @(_createdBy), WalleeCreatedOn: _createdOn,
-                                               WalleeCurrency: _currency, WalleeCustomerEmailAddress: _customerEmailAddress, WalleeCustomerId: _customerId,
-                                               WalleeEndOfLife: _endOfLife, WalleeFailedOn: _failedOn, WalleeFailedUrl: _failedUrl, WalleeId: @(_id),
-                                               WalleeInternetProtocolAddress: _internetProtocolAddress, WalleeInternetProtocolAddressCountry: _internetProtocolAddressCountry,
-                                               WalleeInvoiceMerchantReference: _merchantReference, WalleeLanguage: _language, WalleeSpaceViewId: @(_spaceViewId), WalleeMetaData: _metaData, WalleePlannedPurgeDate: _plannedPurgeDate, WalleeProcessingOn: _processingOn,
-                                               WalleeRefundedAmount: @(_refundedAmount), WalleeShippingMethod: _shippingMethod,
-                                               WalleeSuccessUrl: _successUrl, WalleeUserAgentHeader: _userAgentHeader, WalleeUserFailureMessage: _userFailureMessage,
+    return [NSString stringWithFormat:@"%@", @{WalleeAcceptHeader: _acceptHeader?: NSNull.null, WalleeAuthorizationAmount: @(_authorizationAmount)
+                                               , WalleeAuthorizedOn: _authorizedOn?: NSNull.null, WalleeChargeRetryEnabled: @(_chargeRetryEnabled), WalleeCompletedOn: _completedOn?: NSNull.null, WalleeCompletionTimeoutOn: _completionTimeoutOn?: NSNull.null,
+                                               WalleeConfirmedBy: @(_confirmedBy), WalleeConfirmedOn: _confirmedOn?: NSNull.null, WalleeCreatedBy: @(_createdBy), WalleeCreatedOn: _createdOn?: NSNull.null,
+                                               WalleeCurrency: _currency?: NSNull.null, WalleeCustomerEmailAddress: _customerEmailAddress?: NSNull.null, WalleeCustomerId: _customerId?: NSNull.null,
+                                               WalleeEndOfLife: _endOfLife ?: NSNull.null, WalleeFailedOn: _failedOn ?: NSNull.null, WalleeFailedUrl: _failedUrl ?: NSNull.null, WalleeId: @(_objectId),
+                                               WalleeInternetProtocolAddress: _internetProtocolAddress ?: NSNull.null, WalleeInternetProtocolAddressCountry: _internetProtocolAddressCountry ?: NSNull.null,
+                                               WalleeInvoiceMerchantReference: _merchantReference ?: NSNull.null, WalleeLanguage: _language ?: NSNull.null, WalleeSpaceViewId: @(_spaceViewId), WalleeMetaData: _metaData ?: NSNull.null, WalleePlannedPurgeDate: _plannedPurgeDate ?: NSNull.null, WalleeProcessingOn: _processingOn ?: NSNull.null,
+                                               WalleeRefundedAmount: @(_refundedAmount), WalleeShippingMethod: _shippingMethod ?: NSNull.null,
+                                               WalleeSuccessUrl: _successUrl ?: NSNull.null, WalleeUserAgentHeader: _userAgentHeader ?: NSNull.null, WalleeUserFailureMessage: _userFailureMessage ?: NSNull.null,
                                                WalleeVersion: @(_version)
                                                }];
 }
 
 - (NSString *)debugDescription{
     return [NSString stringWithFormat:@"<%@: %p, \"%@\">", [self class], self, [self description]];
+}
+
+// MARK: - Copying
+- (id)copyWithZone:(NSZone *)zone {
+    WALTransaction *transaction = [[self.class allocWithZone:zone] initInternal];
+    
+    transaction->_acceptHeader = [_acceptHeader copyWithZone:zone];
+//    transaction->_allowedPaymentMethodBrands = [_allowedPaymentMethodBrands copyWithZone:zone];
+//    transaction->_allowedPaymentMethodConfigurations = [_allowedPaymentMethodConfigurations copyWithZone:zone];
+    transaction->_authorizationAmount = _authorizationAmount;
+    transaction->_authorizedOn = [_authorizedOn copyWithZone:zone];
+//    transaction->_billingAddress = [_billingAddress copyWithZone:zone];
+    transaction->_chargeRetryEnabled = _chargeRetryEnabled;
+    transaction->_completedOn = [_completedOn copyWithZone:zone];
+    transaction->_completionTimeoutOn = [_completionTimeoutOn copyWithZone:zone];
+    transaction->_confirmedBy = _confirmedBy;
+    transaction->_confirmedOn = [_confirmedOn copyWithZone:zone];
+    transaction->_createdBy = _createdBy;
+    transaction->_createdOn = [_createdOn copyWithZone:zone];
+    transaction->_currency = [_currency copyWithZone:zone];
+    transaction->_customerEmailAddress = [_customerEmailAddress copyWithZone:zone];
+    transaction->_customerId = [_customerId copyWithZone:zone];
+//    transaction->_customersPresence = [_customersPresence copyWithZone:zone];
+    transaction->_endOfLife = [_endOfLife copyWithZone:zone];
+    transaction->_failedOn = [_failedOn copyWithZone:zone];
+    transaction->_failedUrl = [_failedUrl copyWithZone:zone];
+    transaction->_failureReason = [_failureReason copyWithZone:zone];
+//    transaction->_group = [_group copyWithZone:zone];
+    transaction->_objectId = _objectId;
+    transaction->_internetProtocolAddress = [_internetProtocolAddress copyWithZone:zone];
+    transaction->_internetProtocolAddressCountry = [_internetProtocolAddressCountry copyWithZone:zone];
+    transaction->_invoiceMerchantReference = [_invoiceMerchantReference copyWithZone:zone];
+    transaction->_language = [_language copyWithZone:zone];
+//    transaction->_lineItems = [_lineItems copyWithZone:zone];
+    transaction->_linkedSpaceId = _linkedSpaceId;
+    transaction->_merchantReference = [_merchantReference copyWithZone:zone];
+    transaction->_metaData = [_metaData copyWithZone:zone];
+//    transaction->_paymentConnectorConfiguration = [_paymentConnectorConfiguration copyWithZone:zone];
+    transaction->_plannedPurgeDate = [_plannedPurgeDate copyWithZone:zone];
+    transaction->_processingOn = [_processingOn copyWithZone:zone];
+    transaction->_refundedAmount = _refundedAmount;
+//    transaction->_shippingAddress = [_shippingAddress copyWithZone:zone];
+    transaction->_shippingMethod = [_shippingMethod copyWithZone:zone];
+    transaction->_spaceViewId = _spaceViewId;
+    transaction->_state = _state;
+    transaction->_successUrl = [_successUrl copyWithZone:zone];
+    transaction->_token = [_token copyWithZone:zone];
+    transaction->_userAgentHeader = [_userAgentHeader copyWithZone:zone];
+    transaction->_userFailureMessage = [_userFailureMessage copyWithZone:zone];
+//    transaction->_userInterfaceType = [_userInterfaceType copyWithZone:zone];
+    transaction->_version = _version;
+    return transaction;
 }
 @end

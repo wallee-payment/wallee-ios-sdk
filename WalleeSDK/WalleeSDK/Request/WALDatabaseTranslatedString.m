@@ -29,9 +29,9 @@ static NSString * const walItems = @"items";
     return self;
 }
 
-+ (instancetype) decodedObjectFromJSON:(NSDictionary<NSString *,id> *)dictionary error:(NSError * _Nullable __autoreleasing * _Nullable)error{
++ (instancetype)decodedObjectFromJSON:(NSDictionary<NSString *,id> *)dictionary error:(NSError * _Nullable __autoreleasing * _Nullable)error{
 
-    WALDatabaseTranslatedString *string = [WALDatabaseTranslatedString new];
+    WALDatabaseTranslatedString *string = [self.class new];
     if (![WALJSONParser populate:string withDictionary:dictionary error:error]) {
         return nil;
     }

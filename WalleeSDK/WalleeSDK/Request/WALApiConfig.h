@@ -38,6 +38,7 @@ FOUNDATION_EXPORT NSString *const WalleeFailedUrl;
 FOUNDATION_EXPORT NSString *const WalleeFailureReason;
 FOUNDATION_EXPORT NSString *const WalleeGroup;
 FOUNDATION_EXPORT NSString *const WalleeId;
+FOUNDATION_EXPORT NSString *const WalleeObjectId;
 FOUNDATION_EXPORT NSString *const WalleeInternetProtocolAddress;
 FOUNDATION_EXPORT NSString *const WalleeInternetProtocolAddressCountry;
 FOUNDATION_EXPORT NSString *const WalleeInvoiceMerchantReference;
@@ -60,6 +61,14 @@ FOUNDATION_EXPORT NSString *const WalleeUserAgentHeader;
 FOUNDATION_EXPORT NSString *const WalleeUserFailureMessage;
 FOUNDATION_EXPORT NSString *const WalleeUserInterfaceType;
 FOUNDATION_EXPORT NSString *const WalleeVersion;
+
+FOUNDATION_EXPORT NSString *const WalleeDate;
+FOUNDATION_EXPORT NSString *const WalleeDefaultMessage;
+FOUNDATION_EXPORT NSString *const WalleeMessage;
+FOUNDATION_EXPORT NSString *const WalleeType;
+
+FOUNDATION_EXPORT NSUInteger const WalleClientErrorReturnCode;
+FOUNDATION_EXPORT NSUInteger const WalleServerErrorReturnCode;
 
 @interface WALApiConfig : NSObject
 

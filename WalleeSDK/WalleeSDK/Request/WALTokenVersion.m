@@ -9,6 +9,7 @@
 #import "WALTokenVersion.h"
 #import "WALJSONParser.h"
 #import "WALToken.h"
+#import "WALConnectorConfiguration.h"
 
 static NSString * const walActivatedOn = @"activatedOn";
 static NSString * const walCreatedOn = @"createdOn";
@@ -61,15 +62,15 @@ static NSString * const walState = @"state";
     return [NSString stringWithFormat:@"%@", @{
                                                walLinkedSpaceId: @(_linkedSpaceId),
                                                walId: @(_id),
-                                               walName: _name,
-                                               walCreatedOn: _createdOn,
-                                               walActivatedOn: _activatedOn,
-                                               walObsoletedOn: _obsoletedOn,
-                                               walLanguage: _language,
-                                               walPaymentConnectorConfiguration: _paymentConnectorConfiguration,
-                                               walPlannedPurgeDate: _plannedPurgeDate,
-                                               walProcessorToken: _processorToken,
-                                               walToken: _token,
+                                               walName: _name ?:@"nil",
+                                               walCreatedOn: _createdOn ?:@"nil",
+                                               walActivatedOn: _activatedOn ?:@"nil",
+                                               walObsoletedOn: _obsoletedOn ?:@"nil",
+                                               walLanguage: _language ?:@"nil",
+                                               walPaymentConnectorConfiguration: _paymentConnectorConfiguration ?: NSNull.null,
+                                               walPlannedPurgeDate: _plannedPurgeDate ?:@"nil",
+                                               walProcessorToken: _processorToken ?:@"nil",
+                                               walToken: _token ?:@"nil",
                                                walVersion: @(_version)
                                                }];
 }
