@@ -27,8 +27,15 @@
 
 - (void)displayViewController:(UIViewController *)viewController {
     [self.activityIndicatorBackgroundView removeFromSuperview];
-    [self pushViewController:viewController animated:YES];
+    if (viewController != self.currentlyDisplayedViewController) {
+        [self pushViewController:viewController animated:YES];
+    } else {
+        NSLog(@"ViewController already on top of Stack");
+    }
+}
 
+- (UIViewController *)currentlyDisplayedViewController {
+    return self.viewControllers.lastObject;
 }
 
 - (void)displayLoading {

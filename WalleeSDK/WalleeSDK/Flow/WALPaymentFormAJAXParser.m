@@ -47,7 +47,7 @@ NSString * WalleeJSProtocol = @"https://localhost/mobile-sdk-callback/";
     } else if ([string isEqualToString:@"successCallback"]) {
         return WALPaymentFormAJAXOperationTypeSuccess;
     } else if ([string isEqualToString:@"failureCallback"]) {
-        return WALPaymentFormAJAXOperationTypeValidationFailure;
+        return WALPaymentFormAJAXOperationTypeFailure;
     }
     
     return WALPaymentFormAJAXOperationTypeUnknown;

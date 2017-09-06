@@ -65,46 +65,60 @@
     self.webView.frame = self.bounds;
 }
 
-// MARK: - JS
-
+// MARK: - AJAX Handling
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
     NSLog(@"Did REceive Message: %@ %@", message, message.body);
     NSString *url = message.body;
     __weak WALDefaultPaymentFormView *weakSelf = self;
     [WALPaymentFormAJAXParser parseUrlString:url resultBlock:^(WALPaymentFormAJAXOperationType resultType, id  _Nullable result) {
         WALDefaultPaymentFormView *strongSelf = weakSelf;
-        
-        switch (resultType) {
-            case WALPaymentFormAJAXOperationTypeSuccess:
-                [strongSelf.delegate paymentViewDidSucceed:nil];
-                break;
-            case WALPaymentFormAJAXOperationTypeFailure:
-                [strongSelf.delegate paymentViewDidFail:nil];
-                break;
-            case WALPaymentFormAJAXOperationTypeAwaitingFinalStatus:
-                [strongSelf.delegate paymentViewAwaitsFinalState:nil];
-                break;
-            case WALPaymentFormAJAXOperationTypeValidationSuccess:
-                [strongSelf.delegate paymentViewDidValidateSuccessful:nil];
-                break;
-            case WALPaymentFormAJAXOperationTypeValidationFailure:
-                [strongSelf.delegate paymentView:nil didFailValidationWithErrors:result];
-                break;
-            case WALPaymentFormAJAXOperationTypeError:
-                [strongSelf.delegate paymentView:nil didEncounterError:result];
-                break;
-            case WALPaymentFormAJAXOperationTypeEnlargeView:
-            case WALPaymentFormAJAXOperationTypeHeightChange:
-            case WALPaymentFormAJAXOperationTypeInitialize:
-            case WALPaymentFormAJAXOperationTypeUnknown:
-                // fall thru
-            default:
-                break;
-        }
-        
+        [strongSelf handleAJAXOperation:resultType withResult:result forDelegate:strongSelf.delegate];
     }];
 }
 
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    NSLog(@"webView: FAIL PROVISIONAL: %@ ERROR: %@", navigation, error);
+//    NSString *urlString = error.userInfo[NSURLErrorFailingURLStringErrorKey];
+//    __weak WALDefaultPaymentFormView *weakSelf = self;
+//    [WALPaymentFormAJAXParser parseUrlString:urlString resultBlock:^(WALPaymentFormAJAXOperationType resultType, id  _Nullable result) {
+//        WALDefaultPaymentFormView *strongSelf = weakSelf;
+//        [strongSelf handleAJAXOperation:resultType withResult:result forDelegate:strongSelf.delegate];
+//    }];
+}
+
+- (void)handleAJAXOperation:(WALPaymentFormAJAXOperationType)operation withResult:(id _Nullable)result forDelegate:(id<WALPaymentFormDelegate> _Nullable)delegate {
+    if (!delegate) {
+        return;
+    }
+    switch (operation) {
+        case WALPaymentFormAJAXOperationTypeSuccess:
+            [delegate paymentViewDidSucceed:nil];
+            break;
+        case WALPaymentFormAJAXOperationTypeFailure:
+            [delegate paymentViewDidFail:nil];
+            break;
+        case WALPaymentFormAJAXOperationTypeAwaitingFinalStatus:
+            [delegate paymentViewAwaitsFinalState:nil];
+            break;
+        case WALPaymentFormAJAXOperationTypeValidationSuccess:
+            [delegate paymentViewDidValidateSuccessful:nil];
+            break;
+        case WALPaymentFormAJAXOperationTypeValidationFailure:
+            [delegate paymentView:nil didFailValidationWithErrors:result];
+            break;
+        case WALPaymentFormAJAXOperationTypeError:
+            [delegate paymentView:nil didEncounterError:result];
+            break;
+        case WALPaymentFormAJAXOperationTypeEnlargeView:
+        case WALPaymentFormAJAXOperationTypeHeightChange:
+        case WALPaymentFormAJAXOperationTypeInitialize:
+        case WALPaymentFormAJAXOperationTypeUnknown:
+            // fall thru
+        default:
+            break;
+    }
+
+}
 // MARK: - Commands
 - (void)validate {
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -121,7 +135,7 @@
 
 - (void)submit {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self sendValidationCommand];
+        [self sendSubmitCommand];
     });
 }
 
@@ -170,22 +184,27 @@
 
 
 // MARK: - WKWebView Delegation
+///Connection to Localhost is handled in case of redirects etc.
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
-    NSLog(@"webView:  decidePolicyFor Action: %@ decisionHandler: %@", navigationAction, decisionHandler);
-    decisionHandler(WKNavigationActionPolicyAllow);
+    NSLog(@"webView:  decidePolicyFor Action: %@ ", navigationAction.request);
+    
+    __weak WALDefaultPaymentFormView *weakSelf = self;
+    BOOL isCallback = [WALPaymentFormAJAXParser parseUrlString:navigationAction.request.URL.absoluteString resultBlock:^(WALPaymentFormAJAXOperationType resultType, id  _Nullable result) {
+        WALDefaultPaymentFormView *strongSelf = weakSelf;
+        [strongSelf handleAJAXOperation:resultType withResult:result forDelegate:strongSelf.delegate];
+    }];
+    
+    decisionHandler(isCallback ? WKNavigationActionPolicyCancel : WKNavigationActionPolicyAllow);
 }
 
 -(void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
-    NSLog(@"webView:  decidePolicyFor RESPONSE: %@ decisionHandler: %@", navigationResponse, decisionHandler);
+    NSLog(@"webView:  decidePolicyFor RESPONSE: %@ ", navigationResponse);
+    
     decisionHandler(WKNavigationResponsePolicyAllow);
 }
 
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
     NSLog(@"webView: didStart: %@" , navigation);
-}
-
-- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
-    NSLog(@"webView: FAIL PROVISIONAL: %@ ERROR: %@", navigation, error);
 }
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
@@ -206,7 +225,7 @@
 }
 
 - (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation *)navigation {
-    NSLog(@"webView: %@ REDIRECT: %@", webView, navigation);
+    NSLog(@"webView: REDIRECT: %@", navigation);
 }
 
 @end

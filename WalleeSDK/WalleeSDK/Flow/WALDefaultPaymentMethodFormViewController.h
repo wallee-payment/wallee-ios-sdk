@@ -14,5 +14,6 @@
 @interface WALDefaultPaymentMethodFormViewController : UIViewController<WALPaymentFormView, WALPaymentFormDelegate>
 NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSURL *mobileSdkUrl;
+@property (nonatomic, weak) id<WALPaymentFormDelegate> delegate;
 NS_ASSUME_NONNULL_END
 @end

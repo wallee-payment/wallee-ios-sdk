@@ -38,7 +38,6 @@
         NSLog(@"Dispatched Ready on MAin");
         UIViewController * controller = [self.stateHandler viewControllerForCoordinator:self];
         NSAssert(controller != nil, @"Implementation Error: State does not return a ViewController: %@", self.stateHandler.debugDescription);
-        
         [self.paymentContainer displayViewController:controller];
     });
 }

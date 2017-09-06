@@ -52,39 +52,43 @@
 // MARK: - WALPaymentForm Delegation
 
 - (void)viewDidStartLoading:(UIView *)viewController {
-    
+    [self.delegate viewDidStartLoading:viewController];
 }
 
 - (void)viewDidFinishLoading:(UIView *)viewController {
-    
+    [self.delegate viewDidFinishLoading:viewController];
 }
 
 - (void)paymentViewDidValidateSuccessful:(UIViewController *)viewController {
     NSLog(@"VALID");
+    [self.delegate paymentViewDidValidateSuccessful:viewController];
 }
 
 - (void)paymentView:(UIViewController *)viewController didFailValidationWithErrors:(NSArray<NSError *> *)errors {
     NSLog(@"INVALID");
+    [self.delegate paymentView:viewController didFailValidationWithErrors:errors];
 }
 - (void)paymentView:(UIViewController *)viewController didEncounterError:(NSError *)error {
-    
+    [self.delegate paymentView:viewController didEncounterError:error];
 }
 
 - (void)paymentViewAwaitsFinalState:(UIViewController *)viewController {
-    
+    [self.delegate paymentViewAwaitsFinalState:viewController];
 }
 
 - (void)paymentViewDidSucceed:(UIViewController *)viewController {
-    
+    [self.delegate paymentViewDidSucceed:viewController];
 }
 
 - (void)paymentViewDidFail:(UIViewController *)viewController {
-    
+    [self.delegate paymentViewDidFail:viewController];
 }
 
 - (void)viewControllerDidExpire:(UIViewController *)viewController {
-    
+    [self.delegate viewControllerDidExpire:viewController];
 }
+
+// MARK: - PaymentForm Protocol
 - (BOOL)isSubmitted {
     return self.paymentFormView.isSubmitted;
 }

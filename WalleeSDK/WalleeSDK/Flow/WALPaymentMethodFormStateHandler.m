@@ -19,11 +19,15 @@
 
 #import "WALPaymentMethodConfiguration.h"
 #import "WALMobileSdkUrl.h"
+#import "WALTransaction.h"
 
 @interface WALPaymentMethodFormStateHandler ()
 @property (nonatomic) NSUInteger paymentMethodId;
 @property (nonatomic, copy) NSURL *sdkUrl;
 @property (nonatomic, strong) UIViewController<WALPaymentFormView> *paymentForm;
+/// this is the only state that has to hold a reference to the @c WALCoordinator
+/// because of its asynchronous delegate methods
+@property (nonatomic, weak) WALFlowCoordinator *coordinatorDelegate;
 @end
 
 @implementation WALPaymentMethodFormStateHandler
@@ -81,6 +85,7 @@
 
 - (void)performWithCoordinator:(WALFlowCoordinator *)coordinator {
     [coordinator waiting];
+    self.coordinatorDelegate = coordinator;
     // delegate
     
     //load payment url
@@ -109,13 +114,79 @@
     }
     if (!self.paymentForm) {
         self.paymentForm = [coordinator.configuration.viewControllerFactory buildPaymentMethodFormViewWithURL:self.sdkUrl];
+        self.paymentForm.delegate = self;
     }
         // TODO: Callback for submit?
     return self.paymentForm;
 }
 
 // MARK: - PaymentFormDelegation
+- (void)viewDidStartLoading:(UIView *)viewController {
+    [self.coordinatorDelegate waiting];
+}
+
+- (void)viewDidFinishLoading:(UIView *)viewController {
+    [self.coordinatorDelegate ready];
+}
+
 - (void)paymentViewDidValidateSuccessful:(UIViewController *)viewController {
-    
+    if (!self.paymentForm.isSubmitted) {
+        [self.paymentForm submit];
+    }
+}
+
+- (void)paymentView:(UIViewController *)viewController didFailValidationWithErrors:(NSArray<NSError *> *)errors {
+    // no action needed
+}
+
+-(void)viewControllerDidExpire:(UIViewController *)viewController {
+// TODO: Did Expire! --> Handle State internally?
+    [self.coordinatorDelegate changeStateTo:WALFlowStatePaymentForm parameters:@{WALFlowPaymentMethodsParameter: @(self.paymentMethodId)}];
+}
+
+- (void)paymentView:(UIViewController *)viewController didEncounterError:(NSError *)error {
+    [WALPaymentErrorHelper distribute:error forCoordinator:self.coordinatorDelegate];
+}
+
+- (void)paymentViewDidSucceed:(UIViewController *)viewController {
+    [self readAndEvaluateTransactionForState:WALFlowStateSuccess];
+}
+
+- (void)paymentViewDidFail:(UIViewController *)viewController {
+    [self readAndEvaluateTransactionForState:WALFlowStateFailure];
+}
+
+- (void)paymentViewAwaitsFinalState:(UIViewController *)viewController {
+    [self readAndEvaluateTransactionForState:WALFlowStateAwaitingFinalState];
+}
+
+- (void)readAndEvaluateTransactionForState:(WALFlowState)state {
+    [self.coordinatorDelegate waiting];
+    __weak WALPaymentMethodFormStateHandler *weakSelf = self;
+    [self.coordinatorDelegate.configuration.webServiceApiClient readTransaction:^(WALTransaction * _Nullable transaction, NSError * _Nullable error) {
+        WALPaymentMethodFormStateHandler *strongSelf = weakSelf;
+        [self evaluateTransactionResult:transaction error:error successorState:state forCoordinator:strongSelf.coordinatorDelegate];
+    }];
+}
+
+- (void)evaluateTransactionResult:(WALTransaction * _Nullable)transaction error:(NSError * _Nullable)error successorState:(WALFlowState)state forCoordinator:(WALFlowCoordinator * _Nullable)coordinator {
+    if (!coordinator) {
+        return;
+    }
+    if (!transaction) {
+        [WALPaymentErrorHelper distribute:error forCoordinator:coordinator];
+        return;
+    }
+    if (state == WALFlowStateAwaitingFinalState) {
+        if (transaction.isWaitingFinalState) {
+            [coordinator changeStateTo:WALFlowStateAwaitingFinalState parameters:@{WALFlowTransactionParameter: transaction}];
+        } else if (transaction.isSuccessful) {
+            [coordinator changeStateTo:WALFlowStateSuccess parameters:@{WALFlowTransactionParameter: transaction}];
+        } else {
+            [coordinator changeStateTo:WALFlowStateFailure parameters:@{WALFlowTransactionParameter: transaction}];
+        }
+    } else {
+        [coordinator changeStateTo:state parameters:@{WALFlowTransactionParameter: transaction}];
+    }
 }
 @end

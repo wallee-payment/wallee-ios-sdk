@@ -82,6 +82,13 @@
     });
 }
 
+- (void)flowCoordinator:(WALFlowCoordinator *)coordinator transactionDidFail:(WALTransaction *)transaction {
+// TODO: Fail With Message
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [self handleError:nil];
+    });
+}
+
 // MARK: - Helpers
 - (void)handleError:(NSError *)error {
     NSLog(@"Transaction ended in Error: %@", error);
@@ -89,13 +96,17 @@
         self.messageView.hidden = NO;
         self.messageView.backgroundColor = self.failureColor;
         self.messageLabel.text = @"The Payment was not completed.";
-        [self dismissViewControllerAnimated:YES completion:^{
-            [self displayError:error];
-        }];
+            [self dismissViewControllerAnimated:YES completion:^{
+                [self displayError:error];
+            }];
+        
     });
 }
 
-- (void)displayError:(NSError *)error {
+- (void)displayError:(NSError * _Nullable)error {
+    if (!error) {
+        return;
+    }
     UIAlertController *alert = [UIAlertController
                                 alertControllerWithTitle:[NSString stringWithFormat:@"Error Code: %ld", (long)error.code]
                                 message:error.localizedDescription
