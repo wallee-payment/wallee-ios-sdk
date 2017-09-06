@@ -49,6 +49,9 @@
 }
 
 - (BOOL)triggerAction:(WALFlowAction)flowAction WithCoordinator:(WALFlowCoordinator *)coordinator {
+    if (![WALSimpleFlowStateHandler isStateValid:self WithCoordinator:coordinator]) {
+        return NO;
+    }
     if ([self dryTriggerAction:flowAction]) {
         [coordinator changeStateTo:WALFlowStatePaymentMethodLoading parameters:nil];
         return YES;
@@ -66,14 +69,19 @@
 }
 
 - (UIViewController *)viewControllerForCoordinator:(WALFlowCoordinator *)coordinator {
+    __weak WALPaymentMethodSelectionStateHandler *weakSelf = self;
     __weak WALFlowCoordinator *weakCoordinator = coordinator;
-
+    WALPaymentMethodSelected onSelectionBlock = ^(WALPaymentMethodConfiguration * _Nonnull paymentMethod) {
+        if (![WALSimpleFlowStateHandler isStateValid:weakSelf WithCoordinator:weakCoordinator]) {
+            return;
+        }
+        NSDictionary *parameter = @{WALFlowPaymentMethodsParameter: @(paymentMethod.objectId)};
+        [weakCoordinator changeStateTo:WALFlowStatePaymentForm parameters:parameter];
+    };
+    
     UIViewController *controller = [coordinator.configuration.viewControllerFactory
                                     buildPaymentMethodListViewWith:self.paymentMethods
-                                    onSelection:^(WALPaymentMethodConfiguration * _Nonnull paymentMethod) {
-                                        NSDictionary *parameter = @{WALFlowPaymentMethodsParameter: @(paymentMethod.objectId)};
-                                        [weakCoordinator changeStateTo:WALFlowStatePaymentForm parameters:parameter];
-    }];
+                                    onSelection:onSelectionBlock];
     return controller;
 }
 

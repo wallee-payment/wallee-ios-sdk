@@ -13,13 +13,27 @@ static NSString * const cellIdentifier = @"defaultCell";
 
 @interface WALDefaultTokenListViewController ()
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UIButton *paymentMethodButton;
 @end
 
 @implementation WALDefaultTokenListViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    CGRect buttonRect = CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, 44.0);
+    self.paymentMethodButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.paymentMethodButton.frame = buttonRect;
+    self.paymentMethodButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    [self.paymentMethodButton setTitle:@"Other" forState:UIControlStateNormal];
+    self.paymentMethodButton.tintColor = [UIButton appearance].tintColor;
+    self.paymentMethodButton.backgroundColor = UIColor.lightGrayColor;
+    [self.paymentMethodButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.paymentMethodButton];
+    
+    
+    CGRect tableRect = CGRectMake(buttonRect.origin.x, buttonRect.size.height, buttonRect.size.width, self.view.bounds.size.height - buttonRect.size.height);
+    self.tableView = [[UITableView alloc] initWithFrame:tableRect style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     [self.view addSubview:self.tableView];
@@ -53,6 +67,12 @@ static NSString * const cellIdentifier = @"defaultCell";
     
     return cell;
 //    cell.imageView
+}
+
+- (void)buttonTapped:(id)sender {
+    if (sender == self.paymentMethodButton) {
+        self.onPaymentMethodChange();
+    }
 }
 
 @end

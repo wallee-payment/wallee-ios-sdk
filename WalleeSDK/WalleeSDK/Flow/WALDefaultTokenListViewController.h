@@ -15,5 +15,6 @@
 NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSArray<WALTokenVersion *> *tokens;
 @property (nonatomic) WALTokenVersionSelected onTokenSelected;
+@property (nonatomic) WALPaymentMethodChange onPaymentMethodChange;
 NS_ASSUME_NONNULL_END
 @end

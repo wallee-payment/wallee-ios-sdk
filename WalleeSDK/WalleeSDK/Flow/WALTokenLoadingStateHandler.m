@@ -46,8 +46,8 @@
         }
         
         // !!!: testing
-//        if (tokenVersions.count <= 0) {
-        if (tokenVersions.count > 0) {
+        if (tokenVersions.count <= 0) {
+//        if (tokenVersions.count > 0) {
             [weakCoordinator changeStateTo:WALFlowStatePaymentMethodLoading parameters:nil];
         } else {
             // TODO: Load icons for payment configurations

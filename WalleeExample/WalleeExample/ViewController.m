@@ -83,9 +83,10 @@
 }
 
 - (void)flowCoordinator:(WALFlowCoordinator *)coordinator transactionDidFail:(WALTransaction *)transaction {
-// TODO: Fail With Message
+    NSError *error;
+    [WALErrorHelper populate:&error withFailedTransaction:transaction];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        [self handleError:nil];
+        [self handleError:error];
     });
 }
 

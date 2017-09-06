@@ -9,13 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "WALFlowTypes.h"
 @class WALFlowCoordinator;
+@protocol WALLifeCycleObject;
 
 /**
  The state handler represents a handler for FlowState. Each state has at least one
  handler. The handler is responsible for triggering the state transitions and for managing the
  underlying views.
  */
-@protocol WALFlowStateHandler <NSObject>
+@protocol WALFlowStateHandler <NSObject, WALLifeCycleObject>
 NS_ASSUME_NONNULL_BEGIN
 /**
  This method is invoked when the state handler can initialize the state and as such eventually
@@ -54,12 +55,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)triggerAction:(WALFlowAction)flowAction WithCoordinator:(WALFlowCoordinator *)coordinator;
 
 /**
- once the state has finished and the @c WALTransactionCoordinator has move to another state
- this @c WALStateHandler is invalid
- */
-- (BOOL)isValid;
-
-/**
  Every State must be initializable with a parameter dictionary
 
  @param parameters input parameters for the state
@@ -68,4 +63,22 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype _Nullable)stateWithParameters:(NSDictionary *_Nullable)parameters;
 
 NS_ASSUME_NONNULL_END
+@end
+
+
+@protocol WALLifeCycleObject <NSObject>
+/**
+ once the state has finished and the @c WALTransactionCoordinator has move to another state
+ this @c WALStateHandler is invalid
+ */
+- (BOOL)isValid;
+
+
+/**
+ The implementing Object must invalidate itselfe upon receiving this message.
+ Meaning that i cannot be used for further communication
+ */
+- (void)invalidate;
+
+
 @end

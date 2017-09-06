@@ -7,6 +7,8 @@
 //
 
 #import "WALErrorDomain.h"
+#import "WALTransaction.h"
+#import "WALFlowStateHandler.h"
 
 NSString *const WALErrorDomain = @"com.wallee.ios";
 
@@ -33,7 +35,24 @@ NSString *const WALErrorDomain = @"com.wallee.ios";
     }
 }
 
++ (void)populate:(NSError **)error withFailedTransaction:(WALTransaction *)transaction {
+    if (error) {
+        NSString *failureReason = transaction.userFailureMessage;
+        NSDictionary *userInfo = @{NSLocalizedDescriptionKey: failureReason?:@"reason missing"};
+        *error = [NSError errorWithDomain:WALErrorDomain code:WALErrorTransactionFailure userInfo:userInfo];
+    }
+}
+
 //MARK - Checks
++ (BOOL)checkState:(id<WALLifeCycleObject> _Nullable)state error:(NSError * _Nullable __autoreleasing *)error {
+    if (!state || !state.isValid) {
+        NSString *msg = [NSString stringWithFormat:@"Trying to run Action on invalidated StateHandler: %@.", state];
+        [WALErrorHelper populate:error withIllegalStateWithMessage:msg];
+        return NO;
+    }
+    return YES;
+}
+
 + (BOOL)checkNotEmpty:(id _Nullable)object withMessage:(NSString *)message error:(NSError * _Nullable __autoreleasing *)error {
     if(!object ||
        ([object respondsToSelector:@selector(length)] && [object length] <= 0)){

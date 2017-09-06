@@ -64,6 +64,10 @@
         return NO;
     }
     
+    if (![WALSimpleFlowStateHandler isStateValid:self WithCoordinator:coordinator]) {
+        return NO;
+    }
+    
     if (flowAction == WALFlowActionSubmitPaymentForm) {
         [self.paymentForm submit];
     } else if (flowAction == WALFLowActionValidatePaymentForm) {

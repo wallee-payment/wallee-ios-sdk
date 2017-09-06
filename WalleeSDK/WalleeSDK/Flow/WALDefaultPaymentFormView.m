@@ -78,12 +78,6 @@
 
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
     NSLog(@"webView: FAIL PROVISIONAL: %@ ERROR: %@", navigation, error);
-//    NSString *urlString = error.userInfo[NSURLErrorFailingURLStringErrorKey];
-//    __weak WALDefaultPaymentFormView *weakSelf = self;
-//    [WALPaymentFormAJAXParser parseUrlString:urlString resultBlock:^(WALPaymentFormAJAXOperationType resultType, id  _Nullable result) {
-//        WALDefaultPaymentFormView *strongSelf = weakSelf;
-//        [strongSelf handleAJAXOperation:resultType withResult:result forDelegate:strongSelf.delegate];
-//    }];
 }
 
 - (void)handleAJAXOperation:(WALPaymentFormAJAXOperationType)operation withResult:(id _Nullable)result forDelegate:(id<WALPaymentFormDelegate> _Nullable)delegate {

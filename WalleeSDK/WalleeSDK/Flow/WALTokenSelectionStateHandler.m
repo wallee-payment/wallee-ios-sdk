@@ -48,6 +48,9 @@
 }
 
 - (BOOL)triggerAction:(WALFlowAction)flowAction WithCoordinator:(WALFlowCoordinator *)coordinator {
+    if (![WALSimpleFlowStateHandler isStateValid:self WithCoordinator:coordinator]) {
+        return NO;
+    }
     if(flowAction == WALFlowActionSwitchToPaymentMethodSelection) {
         [coordinator changeStateTo:WALFlowStatePaymentMethodLoading parameters:nil];
         return YES;
@@ -64,7 +67,7 @@
 }
 
 - (UIViewController *)viewControllerForCoordinator:(WALFlowCoordinator *)coordinator {
-    
+    __weak WALTokenSelectionStateHandler *weakSelf = self;
     __weak WALFlowCoordinator *weakCoordinator = coordinator;
     WALTransactionCompletion transactionCompletion = ^(WALTransaction * _Nullable transaction, NSError * _Nullable error) {
         if (transaction) {
@@ -82,8 +85,11 @@
     };
     
     WALTokenVersionSelected tokenSelected = ^(WALTokenVersion * _Nonnull selectedToken) {
-        
         NSError *error;
+        if (![WALErrorHelper checkNotEmpty:weakSelf withMessage:@"Trying to run Action on invalidated StateHandler" error:&error]) {
+            [WALPaymentErrorHelper distribute:error forCoordinator:weakCoordinator];
+            return;
+        }
         if (![WALErrorHelper checkNotEmpty:selectedToken withMessage:@"TokenVersion is required. Cannot be nil" error:&error] ||
             ![WALErrorHelper checkNotEmpty:selectedToken.token withMessage:@"Token is required. Cannot be nil" error:&error]) {
             [WALPaymentErrorHelper distribute:error forCoordinator:weakCoordinator];
@@ -100,7 +106,19 @@
         
     };
     
-    UIViewController *controller = [coordinator.configuration.viewControllerFactory buildTokenListViewWith:self.tokens onSelection:tokenSelected];
+    WALPaymentMethodChange paymentMethodChange = ^(void) {
+        NSError *error;
+        if (![WALErrorHelper checkNotEmpty:weakSelf withMessage:@"Trying to run Action on invalidated StateHandler" error:&error]) {
+            [WALPaymentErrorHelper distribute:error forCoordinator:weakCoordinator];
+            return;
+        }
+        WALFlowCoordinator *strongCoordinator = weakCoordinator;
+        if (strongCoordinator) {
+            [weakSelf triggerAction:WALFlowActionSwitchToPaymentMethodSelection WithCoordinator:strongCoordinator];
+        }
+    };
+    
+    UIViewController *controller = [coordinator.configuration.viewControllerFactory buildTokenListViewWith:self.tokens onSelection:tokenSelected onChangePaymentMethod:paymentMethodChange];
     return controller;
 }
 
