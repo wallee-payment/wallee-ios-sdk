@@ -54,12 +54,12 @@
     
     if (isInStack) {
         [rebuiltStack addObject:viewController];
-        [self setViewControllers:rebuiltStack animated:YES];
+        [self setViewControllers:rebuiltStack animated:NO];
         return;
     }
     
     if (viewController != self.currentlyDisplayedViewController) {
-        [self pushViewController:viewController animated:YES];
+        [self pushViewController:viewController animated:NO];
     } else {
         NSLog(@"ViewController already on top of Stack");
     }

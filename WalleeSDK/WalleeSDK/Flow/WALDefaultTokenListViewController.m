@@ -18,6 +18,11 @@ static NSString * const cellIdentifier = @"defaultCell";
 
 @implementation WALDefaultTokenListViewController
 
+- (BOOL)isEqual:(id)object {
+    // we can override this to use pop animation on navigationControllers setViewController
+    return [object isKindOfClass:self.class];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.hidesBackButton = YES;

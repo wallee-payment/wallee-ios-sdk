@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-//#import "WALFlowStateHandler.h"
+#import "WALFlowTypes.h"
 
 @class WALFlowConfiguration;
 @protocol WALPaymentFlowContainer;
@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
  @return @c YES when the handler supports the action in the current situation. Otherwise
  the method should return @c NO.
  */
-//- (BOOL)dryTriggerAction:(WALFlowAction)flowAction;
+- (BOOL)dryTriggerAction:(WALFlowAction)flowAction;
 
 /**
  This method is called to actually trigger the @c flowAction.
@@ -44,6 +44,6 @@ NS_ASSUME_NONNULL_BEGIN
  @param flowAction the action which should be executed.
  @return @c YES when the action was executed. Otherwise @c NO.
  */
-//- (BOOL)triggerAction:(WALFlowAction)flowAction;
+- (BOOL)triggerAction:(WALFlowAction)flowAction;
 NS_ASSUME_NONNULL_END
 @end

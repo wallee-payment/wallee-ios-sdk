@@ -43,7 +43,7 @@
 
 + (BOOL)isStateValid:(id<WALLifeCycleObject>)state WithCoordinator:(WALFlowCoordinator *)coordinator {
     NSError *error;
-    if (![WALErrorHelper checkState:state error:&error]) {
+    if (![WALErrorHelper checkState:state error:&error] || !coordinator) {
         [WALPaymentErrorHelper distribute:error forCoordinator:coordinator];
         return NO;
     }

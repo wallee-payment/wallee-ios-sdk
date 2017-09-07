@@ -103,19 +103,17 @@
         }
         
         [weakCoordinator.configuration.webServiceApiClient processOneClickToken:selectedToken.token completion:transactionCompletion];
-        
     };
     
     WALPaymentMethodChange paymentMethodChange = ^(void) {
-        NSError *error;
-        if (![WALErrorHelper checkNotEmpty:weakSelf withMessage:@"Trying to run Action on invalidated StateHandler" error:&error]) {
-            [WALPaymentErrorHelper distribute:error forCoordinator:weakCoordinator];
+        WALFlowCoordinator *strongCoordinator = weakCoordinator;
+        WALTokenSelectionStateHandler *strongSelf = weakSelf;
+        
+        if (![WALSimpleFlowStateHandler isStateValid:strongSelf WithCoordinator:strongCoordinator]) {
             return;
         }
-        WALFlowCoordinator *strongCoordinator = weakCoordinator;
-        if (strongCoordinator) {
-            [weakSelf triggerAction:WALFlowActionSwitchToPaymentMethodSelection WithCoordinator:strongCoordinator];
-        }
+        
+        [strongSelf triggerAction:WALFlowActionSwitchToPaymentMethodSelection WithCoordinator:strongCoordinator];
     };
     
     UIViewController *controller = [coordinator.configuration.viewControllerFactory buildTokenListViewWith:self.tokens onSelection:tokenSelected onChangePaymentMethod:paymentMethodChange];
