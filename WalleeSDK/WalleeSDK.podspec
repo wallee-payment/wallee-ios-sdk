@@ -23,9 +23,9 @@ TODO: Add long description of the pod here.
 
   s.homepage         = 'https://smoca.ch'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
-  s.license          = { :type => 'MIT', :file => 'LICENSE' }
+  s.license          = { :type => 'MIT', :file => 'LICENSE.txt' }
   s.author           = { 'Tobias Ballat' => 'baltob@smoca.ch' }
-  s.source           = { :git => 'https://gitlab.smoca.ch/smoca/wallee-ios.git' }
+  s.source           = { :git => 'https://gitlab.smoca.ch/smoca/wallee-ios.git', :tag => 'pod-test-tag' }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
