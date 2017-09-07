@@ -6,5 +6,5 @@
 //  Copyright © 2017 smoca AG. All rights reserved.
 //
 
-- (instancetype)init NS_UNAVAILABLE;
-+ (instancetype)new __attribute__((unavailable("You should never initialize this type directly. Use the Object returned by the API")));
+//- (instancetype)init NS_UNAVAILABLE;
+//+ (instancetype)new __attribute__((unavailable("You should never initialize this type directly. Use the Object returned by the API")));
