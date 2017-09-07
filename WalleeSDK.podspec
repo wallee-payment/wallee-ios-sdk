@@ -23,20 +23,20 @@ TODO: Add long description of the pod here.
 
   s.homepage         = 'https://smoca.ch'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
-  s.license          = { :type => 'MIT', :file => 'LICENSE' }
+  s.license          = { :type => 'MIT', :file => 'LICENSE.txt' }
   s.author           = { 'Tobias Ballat' => 'baltob@smoca.ch' }
   s.source           = { :git => 'https://gitlab.smoca.ch/smoca/wallee-ios.git' }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
 
-s.source_files = 'WalleeSDK/**/*.{h,m}'
+  s.source_files = 'WalleeSDK/WalleeSDK/**/*.{h,m}'
 
   # s.resource_bundles = {
   #   'WalleeSDK' => ['WalleeSDK/Assets/*.png']
   # }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
+  s.frameworks = 'XCTest', 'UIKit'
   # s.dependency 'AFNetworking', '~> 2.3'
 end
