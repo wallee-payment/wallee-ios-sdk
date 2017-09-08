@@ -14,8 +14,6 @@ NSString *const WalleeCategory = @"category";
 NSString *const WalleeDescriptionText = @"descriptionText";
 NSString *const WalleeFeatures = @"features";
 
-NSString *const WalleeName = @"name";
-
 @implementation WALFailureReason
 - (instancetype)initInternal {
     return [super init];

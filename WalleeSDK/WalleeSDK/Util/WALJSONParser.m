@@ -65,7 +65,7 @@ static NSString * const UndefinedMapping = @"not-defined";
                 *stop = YES;
             }
         } else {
-            [WALErrorHelper populate:&blockError withIllegalArgumentWithMessage:[NSString stringWithFormat:@"%@ is no conforming to protocol %@ and cannot be parsed", object.class, @protocol(WALJSONDecodable)]];
+            [WALErrorHelper populate:&blockError withIllegalArgumentWithMessage:[NSString stringWithFormat:@"%@ is not conforming to protocol %@ and cannot be parsed", object.class, @protocol(WALJSONDecodable)]];
             success = NO;
             *stop = YES;
         }

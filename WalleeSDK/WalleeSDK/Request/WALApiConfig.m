@@ -67,6 +67,16 @@ NSString *const WalleeDefaultMessage = @"defaultMessage";
 NSString *const WalleeMessage = @"message";
 NSString *const WalleeType = @"type";
 
+NSString *const WalleeName = @"name";
+NSString *const WalleeApplicableForTransactionProcessing = @"applicableForTransactionProcessing";
+NSString *const WalleeConditions = @"conditions";
+NSString *const WalleeConnector = @"connector";
+NSString *const WalleeEnabledSpaceViews = @"enabledSpaceViews";
+NSString *const WalleePaymentMethodConfiguration = @"paymentMethodConfiguration";
+NSString *const WalleePriority = @"priority";
+NSString *const WalleeProcessorConfiguration = @"processorConfiguration";
+
+
 NSUInteger const WalleClientErrorReturnCode = 442;
 NSUInteger const WalleServerErrorReturnCode = 542;
 

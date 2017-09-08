@@ -36,7 +36,7 @@
 
 // MARK: - JSONAutoDecoding
 + (NSArray<NSString*> *)jsonMapping {
-    return @[ WalleeObjectId, @"linkedSpaceId", @"name", @"paymentMethod", @"plannedPurgeDate", @"resolvedDescription", @"resolvedDescription", @"resolvedImageUrl",@"resolvedTitle",@"sortOrder", @"spaceId", @"version"];
+    return @[ WalleeObjectId, WalleeLinkedSpaceId, @"name", @"paymentMethod", @"plannedPurgeDate", @"resolvedDescription", @"resolvedDescription", @"resolvedImageUrl",@"resolvedTitle",@"sortOrder", @"spaceId", @"version"];
 }
 
 + (NSDictionary<NSString *, Class> *)jsonComplexMapping {
@@ -90,4 +90,48 @@
 - (NSString *)debugDescription{
     return [NSString stringWithFormat:@"<%@: %p, \"%@\">", [self class], self, [self description]];
 }
+
+// MARK: - Copying
+- (id)copyWithZone:(NSZone *)zone {
+    WALPaymentMethodConfiguration *configuration = [[self.class allocWithZone:zone] initInternal];
+    configuration->_dataCollectionType = _dataCollectionType;
+//    configuration->_descriptionText = [_descriptionText copyWithZone:zone];
+    configuration->_objectId = _objectId;
+    configuration->_linkedSpaceId = _linkedSpaceId;
+    configuration->_name = [_name copyWithZone:zone];
+    configuration->_paymentMethod = _paymentMethod;
+    configuration->_plannedPurgeDate = [_plannedPurgeDate copyWithZone:zone];
+    configuration->_resolvedDescription = [_resolvedDescription copyWithZone:zone];
+    configuration->_resolvedImageUrl = [_resolvedImageUrl copyWithZone:zone];
+    configuration->_resolvedTitle = [_resolvedTitle copyWithZone:zone];
+    configuration->_sortOrder = _sortOrder;
+    configuration->_spaceId = _spaceId;
+//    configuration->_title = [_title copyWithZone:zone];
+    configuration->_version = _version;
+    
+    return configuration;
+}
+
+// MARK: - Equals
+- (NSUInteger)hash {
+    return ((_objectId << 16) + (_linkedSpaceId << 8) + (_version));
+}
+
+- (BOOL)isEqual:(id)object {
+    if (self == object) {
+        return YES;
+    }
+    if (!object || ![object isKindOfClass:self.class]) {
+        return NO;
+    }
+    return [self isEqualToPaymentMethodConfiguration:object];
+}
+
+- (BOOL)isEqualToPaymentMethodConfiguration:(WALPaymentMethodConfiguration *)config {
+    if (self == config) {
+        return YES;
+    }
+    return _objectId == config.objectId && _linkedSpaceId == config.linkedSpaceId && _version == config.version;
+}
+
 @end

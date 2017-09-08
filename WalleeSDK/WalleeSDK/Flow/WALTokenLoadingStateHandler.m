@@ -11,8 +11,14 @@
 #import "WALFlowCoordinator+StateDelegate.h"
 #import "WALPaymentFlowDelegate.h"
 #import "WALFlowStateDelegate.h"
+
 #import "WALPaymentErrorHelper.h"
 #import "WALApiClient.h"
+
+#import "WALTokenVersion.h"
+#import "WALConnectorConfiguration.h"
+#import "WALPaymentMethodConfiguration.h"
+#import "WALNSURLIconLoader.h"
 
 @interface WALTokenLoadingStateHandler ()
 
@@ -51,6 +57,11 @@
             [weakCoordinator changeStateTo:WALFlowStatePaymentMethodLoading parameters:nil];
         } else {
             // TODO: Load icons for payment configurations
+            
+            [[WALNSURLIconLoader iconLoaderWithOperationQueue:nil] fetchIcon:((WALTokenVersion *)tokenVersions[0]).paymentConnectorConfiguration.paymentMethodConfiguration completion:^(WALPaymentMethodConfiguration * _Nullable paymentMethod, WALPaymentMethodIcon * _Nullable paymentIcon, NSError * _Nullable error) {
+                NSLog(@" icon : %@", paymentIcon);
+            }];
+            
             [weakCoordinator changeStateTo:WALFlowStateTokenSelection parameters:@{WALFlowTokensParameter: tokenVersions}];
         }
         

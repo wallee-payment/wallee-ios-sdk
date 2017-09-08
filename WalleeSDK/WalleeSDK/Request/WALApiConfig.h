@@ -67,6 +67,15 @@ FOUNDATION_EXPORT NSString *const WalleeDefaultMessage;
 FOUNDATION_EXPORT NSString *const WalleeMessage;
 FOUNDATION_EXPORT NSString *const WalleeType;
 
+FOUNDATION_EXPORT NSString *const WalleeName;
+FOUNDATION_EXPORT NSString *const WalleeApplicableForTransactionProcessing;
+FOUNDATION_EXPORT NSString *const WalleeConditions;
+FOUNDATION_EXPORT NSString *const WalleeConnector;
+FOUNDATION_EXPORT NSString *const WalleeEnabledSpaceViews;
+FOUNDATION_EXPORT NSString *const WalleePaymentMethodConfiguration;
+FOUNDATION_EXPORT NSString *const WalleePriority;
+FOUNDATION_EXPORT NSString *const WalleeProcessorConfiguration;
+
 FOUNDATION_EXPORT NSUInteger const WalleClientErrorReturnCode;
 FOUNDATION_EXPORT NSUInteger const WalleServerErrorReturnCode;
 
