@@ -89,6 +89,8 @@
 		A68202A31F62DF0900844B5F /* WALInMemoryIconStore.m in Sources */ = {isa = PBXBuildFile; fileRef = A68202A11F62DF0900844B5F /* WALInMemoryIconStore.m */; };
 		A68202A61F63E11E00844B5F /* WALLoadedTokens.h in Headers */ = {isa = PBXBuildFile; fileRef = A68202A41F63E11E00844B5F /* WALLoadedTokens.h */; };
 		A68202A71F63E11E00844B5F /* WALLoadedTokens.m in Sources */ = {isa = PBXBuildFile; fileRef = A68202A51F63E11E00844B5F /* WALLoadedTokens.m */; };
+		A68202AA1F63EB1100844B5F /* WALPaymentMethodTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = A68202A81F63EB1100844B5F /* WALPaymentMethodTableViewCell.h */; };
+		A68202AB1F63EB1100844B5F /* WALPaymentMethodTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A68202A91F63EB1100844B5F /* WALPaymentMethodTableViewCell.m */; };
 		A682B6021F57FBDA007C66AA /* WALTokenListViewFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = A682B6011F57FBDA007C66AA /* WALTokenListViewFactory.h */; };
 		A682B6061F5801E8007C66AA /* WALFlowConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = A682B6041F5801E8007C66AA /* WALFlowConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A682B6071F5801E8007C66AA /* WALFlowConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = A682B6051F5801E8007C66AA /* WALFlowConfiguration.m */; };
@@ -236,6 +238,8 @@
 		A68202A11F62DF0900844B5F /* WALInMemoryIconStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALInMemoryIconStore.m; sourceTree = "<group>"; };
 		A68202A41F63E11E00844B5F /* WALLoadedTokens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALLoadedTokens.h; sourceTree = "<group>"; };
 		A68202A51F63E11E00844B5F /* WALLoadedTokens.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALLoadedTokens.m; sourceTree = "<group>"; };
+		A68202A81F63EB1100844B5F /* WALPaymentMethodTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALPaymentMethodTableViewCell.h; sourceTree = "<group>"; };
+		A68202A91F63EB1100844B5F /* WALPaymentMethodTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALPaymentMethodTableViewCell.m; sourceTree = "<group>"; };
 		A682B6011F57FBDA007C66AA /* WALTokenListViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALTokenListViewFactory.h; sourceTree = "<group>"; };
 		A682B6041F5801E8007C66AA /* WALFlowConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALFlowConfiguration.h; sourceTree = "<group>"; };
 		A682B6051F5801E8007C66AA /* WALFlowConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALFlowConfiguration.m; sourceTree = "<group>"; };
@@ -640,6 +644,8 @@
 		A6E66DD91F57F8DB00BBACF8 /* Method */ = {
 			isa = PBXGroup;
 			children = (
+				A68202A81F63EB1100844B5F /* WALPaymentMethodTableViewCell.h */,
+				A68202A91F63EB1100844B5F /* WALPaymentMethodTableViewCell.m */,
 			);
 			name = Method;
 			sourceTree = "<group>";
@@ -705,6 +711,7 @@
 				A63B64A01F5ABCE6007B9B15 /* WALDefaultSuccessViewController.h in Headers */,
 				A63B645B1F59A086007B9B15 /* WALApiClientError.h in Headers */,
 				A63B64631F59AC1A007B9B15 /* WALPaymentErrorHelper.h in Headers */,
+				A68202AA1F63EB1100844B5F /* WALPaymentMethodTableViewCell.h in Headers */,
 				A682B60D1F5813FC007C66AA /* WALFlowConfigurationBuilder.h in Headers */,
 				A63B645F1F59A2F8007B9B15 /* WALApiServerError.h in Headers */,
 				A6EECF081F5449BA00954E02 /* WALFailureReason.h in Headers */,
@@ -908,6 +915,7 @@
 				A6670D7A1F5D770200C3B229 /* WALDefaultPaymentMethodFormViewController.m in Sources */,
 				A6C7B5B11F4892B0003CCB97 /* WALMobileSdkUrl.m in Sources */,
 				A68202931F617D2B00844B5F /* WALPaymentMethodIcon.m in Sources */,
+				A68202AB1F63EB1100844B5F /* WALPaymentMethodTableViewCell.m in Sources */,
 				A6EECF051F54465400954E02 /* WALTransaction.m in Sources */,
 				A682B60E1F5813FC007C66AA /* WALFlowConfigurationBuilder.m in Sources */,
 				A68202A71F63E11E00844B5F /* WALLoadedTokens.m in Sources */,

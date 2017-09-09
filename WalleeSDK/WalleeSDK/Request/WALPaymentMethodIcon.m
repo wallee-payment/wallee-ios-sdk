@@ -32,6 +32,10 @@
     return icon;
 }
 
+- (NSString *)dataAsString {
+    return [[NSString alloc] initWithData:self.data encoding:NSUTF8StringEncoding];
+}
+
 // MARK: - Description
 - (NSString *)description {
     NSDictionary *desc = @{

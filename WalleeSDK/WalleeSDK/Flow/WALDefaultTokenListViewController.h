@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "WALViewControllerFactory.h"
 
-@class WALTokenVersion;
+@class WALLoadedTokens;
 
 @interface WALDefaultTokenListViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 NS_ASSUME_NONNULL_BEGIN
-@property (nonatomic, copy) NSArray<WALTokenVersion *> *tokens;
+@property (nonatomic, copy) WALLoadedTokens *loadedTokens;
 @property (nonatomic) WALTokenVersionSelected onTokenSelected;
 @property (nonatomic) WALPaymentMethodChange onPaymentMethodChange;
 NS_ASSUME_NONNULL_END

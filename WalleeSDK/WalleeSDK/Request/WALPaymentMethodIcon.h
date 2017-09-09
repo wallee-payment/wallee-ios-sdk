@@ -25,5 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithUrl:(NSString *)url mimeType:(NSString *)mimeType base64Data:(NSData *)data;
+
+- (NSString *)dataAsString;
 NS_ASSUME_NONNULL_END
 @end

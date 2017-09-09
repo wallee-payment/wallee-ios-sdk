@@ -10,7 +10,7 @@
 @class WALPaymentMethodConfiguration, WALPaymentMethodIcon;
 
 
-typedef void(^WALPaymentIconsFetched)(NSDictionary<WALPaymentMethodConfiguration *, WALPaymentMethodIcon *> * _Nullable paymentMethodIcons, NSError * _Nullable error);
+typedef void(^WALPaymentIconsFetched)(NSDictionary<WALPaymentMethodConfiguration *, WALPaymentMethodIcon *> * _Nonnull paymentMethodIcons, NSError * _Nullable error);
 
 @protocol WALIconCache <NSObject>
 NS_ASSUME_NONNULL_BEGIN

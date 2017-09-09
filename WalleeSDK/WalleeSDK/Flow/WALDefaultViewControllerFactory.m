@@ -19,9 +19,9 @@
 
 
 @implementation WALDefaultViewControllerFactory
-- (UIViewController *)buildTokenListViewWith:(NSArray<WALTokenVersion *> *)tokens onSelection:(WALTokenVersionSelected)callback onChangePaymentMethod:(WALPaymentMethodChange)changePaymentMethod {
+- (UIViewController *)buildTokenListViewWith:(WALLoadedTokens *)loadedTokens onSelection:(WALTokenVersionSelected)callback onChangePaymentMethod:(WALPaymentMethodChange)changePaymentMethod {
     WALDefaultTokenListViewController *controller = [[WALDefaultTokenListViewController alloc] init];
-    controller.tokens = tokens;
+    controller.loadedTokens = loadedTokens;
     controller.onTokenSelected = callback;
     controller.onPaymentMethodChange = changePaymentMethod;
     return controller;

@@ -8,6 +8,10 @@
 
 #import "WALDefaultTokenListViewController.h"
 #import "WALTokenVersion.h"
+#import "WALLoadedTokens.h"
+#import "WALConnectorConfiguration.h"
+
+#import "WALPaymentMethodTableViewCell.h"
 
 static NSString * const cellIdentifier = @"defaultCell";
 
@@ -49,14 +53,14 @@ static NSString * const cellIdentifier = @"defaultCell";
 
 // MARK: - TableViewDelegate and Datasource
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    WALTokenVersion *token = self.tokens[indexPath.row];
+    WALTokenVersion *token = self.loadedTokens.tokenVersions[indexPath.row];
     if (self.onTokenSelected) {
         self.onTokenSelected(token);
     }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.tokens.count;
+    return self.loadedTokens.tokenVersions.count;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -64,13 +68,14 @@ static NSString * const cellIdentifier = @"defaultCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    WALPaymentMethodTableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[WALPaymentMethodTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    WALTokenVersion *token = self.tokens[indexPath.row];
-    cell.textLabel.text = token.name;
+    WALTokenVersion *token = self.loadedTokens.tokenVersions[indexPath.row];
+    WALPaymentMethodIcon *icon = self.loadedTokens.paymentMethodIcons[token.paymentConnectorConfiguration.paymentMethodConfiguration];
+    [cell configureWith:token.name paymentIcon:icon];
     
     return cell;
 //    cell.imageView

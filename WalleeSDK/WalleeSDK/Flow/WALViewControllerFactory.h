@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class WALTransaction, WALTokenVersion, WALPaymentMethodConfiguration, WALMobileSdkUrl;
+@class WALTransaction, WALTokenVersion, WALLoadedTokens, WALPaymentMethodConfiguration, WALMobileSdkUrl;
 @protocol WALPaymentFormView;
 
 typedef void(^WALTokenVersionSelected)(WALTokenVersion *_Nonnull);
@@ -21,7 +21,7 @@ typedef void(^WALPaymentMethodSubmited)(WALPaymentMethodConfiguration *_Nonnull)
 - (UIViewController *_Nonnull)buildSuccessViewWith:(WALTransaction * _Nonnull)transaction;
 - (UIViewController *_Nonnull)buildFailureViewWith:(WALTransaction * _Nonnull)transaction;
 
-- (UIViewController *_Nonnull)buildTokenListViewWith:(NSArray<WALTokenVersion *> *_Nonnull)tokens onSelection:(WALTokenVersionSelected _Nullable )callback onChangePaymentMethod:(WALPaymentMethodChange _Nullable)changePaymentMethod;
+- (UIViewController *_Nonnull)buildTokenListViewWith:(WALLoadedTokens *_Nonnull)loadedTokens onSelection:(WALTokenVersionSelected _Nullable )callback onChangePaymentMethod:(WALPaymentMethodChange _Nullable)changePaymentMethod;
 - (UIViewController *_Nonnull)buildPaymentMethodListViewWith:(NSArray<WALPaymentMethodConfiguration *> *_Nonnull)paymentMethods onSelection:(WALPaymentMethodSelected _Nullable )callback;
 - (UIViewController<WALPaymentFormView> *_Nonnull)buildPaymentMethodFormViewWithURL:(NSURL * _Nonnull)mobileSdkUrl;
 

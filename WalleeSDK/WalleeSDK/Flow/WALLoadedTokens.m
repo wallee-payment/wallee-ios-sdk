@@ -15,13 +15,18 @@
 @end
 
 @implementation WALLoadedTokens
-
-- (instancetype)initWithTokenVersions:(NSArray<WALTokenVersion *> *)tokenVersions paymentMethodIcons:(NSDictionary<WALPaymentMethodConfiguration *, WALPaymentMethodIcon *> *)paymentMethodIcons {
+- (instancetype)initWithTokenVersions:(NSArray<WALTokenVersion *> *)tokenVersions paymentMethodIcons:(NSDictionary<WALPaymentMethodConfiguration *,WALPaymentMethodIcon *> *)paymentMethodIcons {
     
     if (self = [super init]) {
-        
+        _tokenVersions = tokenVersions.copy;
+        _paymentMethodIcons = paymentMethodIcons.copy;
     }
     return self;
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    WALLoadedTokens *tokens = [[self.class allocWithZone:zone] initWithTokenVersions:self.tokenVersions paymentMethodIcons:self.paymentMethodIcons];
+    return tokens;
 }
 
 @end

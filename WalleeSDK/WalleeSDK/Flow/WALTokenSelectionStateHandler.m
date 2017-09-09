@@ -17,28 +17,29 @@
 #import "WALErrorDomain.h"
 
 #import "WALApiClient.h"
+#import "WALLoadedTokens.h"
 #import "WALTokenVersion.h"
 #import "WALTransaction.h"
 
 @interface WALTokenSelectionStateHandler ()
-@property (nonatomic, copy) NSArray<WALTokenVersion *> *tokens;
+@property (nonatomic, copy) WALLoadedTokens *loadedTokens;
 @end
 
 @implementation WALTokenSelectionStateHandler
-+ (instancetype)statetWithTokens:(NSArray<WALTokenVersion *> *)tokens {
-    if (!tokens || tokens.count <= 0) {
++ (instancetype)statetWithTokens:(WALLoadedTokens *)loadedTokens {
+    if (!loadedTokens.tokenVersions || loadedTokens.tokenVersions.count <= 0) {
         return nil;
     }
-    return [[self alloc] initWithTokens:tokens];
+    return [[self alloc] initWithTokens:loadedTokens];
 }
 
 + (instancetype)stateWithParameters:(NSDictionary *)parameters {
     return [self statetWithTokens:parameters[WALFlowTokensParameter]];
 }
 
-- (instancetype)initWithTokens:(NSArray<WALTokenVersion *> *)tokens {
+- (instancetype)initWithTokens:(WALLoadedTokens *)loadedTokens {
     if (self = [super init]) {
-        _tokens = tokens;
+        _loadedTokens = loadedTokens;
     }
     return self;
 }
@@ -116,13 +117,13 @@
         [strongSelf triggerAction:WALFlowActionSwitchToPaymentMethodSelection WithCoordinator:strongCoordinator];
     };
     
-    UIViewController *controller = [coordinator.configuration.viewControllerFactory buildTokenListViewWith:self.tokens onSelection:tokenSelected onChangePaymentMethod:paymentMethodChange];
+    UIViewController *controller = [coordinator.configuration.viewControllerFactory buildTokenListViewWith:self.loadedTokens onSelection:tokenSelected onChangePaymentMethod:paymentMethodChange];
     return controller;
 }
 
 // MARK: - Description
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@", @{@"State": @"TokenSelection", @"Tokens": self.tokens}];
+    return [NSString stringWithFormat:@"%@", @{@"State": @"TokenSelection", @"Tokens": self.loadedTokens}];
 }
 
 - (NSString *)debugDescription{
