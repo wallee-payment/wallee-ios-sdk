@@ -28,7 +28,7 @@ static NSString * const WallePaymentMethodQueryParamName = @"paymentMethodConfig
 -(instancetype)initWithUrl:(NSString *)url expiryDate:(WALTimestamp)expiryDate {
     self = [super init];
     if (self) {
-        _url = url;
+        _url = url.copy;
         _expiryDate = expiryDate;
     }
     return self;

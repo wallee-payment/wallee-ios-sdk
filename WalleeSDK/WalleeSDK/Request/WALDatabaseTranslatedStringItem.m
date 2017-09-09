@@ -21,9 +21,9 @@ static NSString * const walTranslation = @"translation";
 - (instancetype)initWithLanguage:(NSString *)language languageCode:(NSString *)languageCode translation:(NSString *)translation {
     self = [super init];
     if (self) {
-        _language = language;
-        _languageCode = languageCode;
-        _translation = translation;
+        _language = language.copy;
+        _languageCode = languageCode.copy;
+        _translation = translation.copy;
     }
     return self;
 }
