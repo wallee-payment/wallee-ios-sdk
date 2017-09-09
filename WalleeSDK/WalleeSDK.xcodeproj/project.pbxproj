@@ -74,19 +74,21 @@
 		A6670DA31F60235800C3B229 /* WALTranslation.m in Sources */ = {isa = PBXBuildFile; fileRef = A6670DA11F60235800C3B229 /* WALTranslation.m */; };
 		A68202871F61325800844B5F /* WALTheme.h in Headers */ = {isa = PBXBuildFile; fileRef = A68202851F61325800844B5F /* WALTheme.h */; };
 		A68202881F61325800844B5F /* WALTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = A68202861F61325800844B5F /* WALTheme.m */; };
-		A682028C1F6150D700844B5F /* WALNSURLIconLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = A682028A1F6150D700844B5F /* WALNSURLIconLoader.h */; };
+		A682028C1F6150D700844B5F /* WALNSURLIconLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = A682028A1F6150D700844B5F /* WALNSURLIconLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A682028D1F6150D700844B5F /* WALNSURLIconLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = A682028B1F6150D700844B5F /* WALNSURLIconLoader.m */; };
-		A682028F1F6150F200844B5F /* WALIconLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = A682028E1F6150F200844B5F /* WALIconLoader.h */; };
+		A682028F1F6150F200844B5F /* WALIconLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = A682028E1F6150F200844B5F /* WALIconLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A68202921F617D2B00844B5F /* WALPaymentMethodIcon.h in Headers */ = {isa = PBXBuildFile; fileRef = A68202901F617D2B00844B5F /* WALPaymentMethodIcon.h */; };
 		A68202931F617D2B00844B5F /* WALPaymentMethodIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = A68202911F617D2B00844B5F /* WALPaymentMethodIcon.m */; };
 		A68202961F61824200844B5F /* WALNSURLSessionHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = A68202941F61824200844B5F /* WALNSURLSessionHelper.h */; };
 		A68202971F61824200844B5F /* WALNSURLSessionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A68202951F61824200844B5F /* WALNSURLSessionHelper.m */; };
 		A68202991F62B87800844B5F /* WALIconCache.h in Headers */ = {isa = PBXBuildFile; fileRef = A68202981F62B87800844B5F /* WALIconCache.h */; };
-		A682029C1F62C14B00844B5F /* WALDefaultIconCache.h in Headers */ = {isa = PBXBuildFile; fileRef = A682029A1F62C14B00844B5F /* WALDefaultIconCache.h */; };
+		A682029C1F62C14B00844B5F /* WALDefaultIconCache.h in Headers */ = {isa = PBXBuildFile; fileRef = A682029A1F62C14B00844B5F /* WALDefaultIconCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A682029D1F62C14B00844B5F /* WALDefaultIconCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A682029B1F62C14B00844B5F /* WALDefaultIconCache.m */; };
-		A682029F1F62DEB800844B5F /* WALIconStore.h in Headers */ = {isa = PBXBuildFile; fileRef = A682029E1F62DEB800844B5F /* WALIconStore.h */; };
-		A68202A21F62DF0900844B5F /* WALInMemoryIconStore.h in Headers */ = {isa = PBXBuildFile; fileRef = A68202A01F62DF0900844B5F /* WALInMemoryIconStore.h */; };
+		A682029F1F62DEB800844B5F /* WALIconStore.h in Headers */ = {isa = PBXBuildFile; fileRef = A682029E1F62DEB800844B5F /* WALIconStore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A68202A21F62DF0900844B5F /* WALInMemoryIconStore.h in Headers */ = {isa = PBXBuildFile; fileRef = A68202A01F62DF0900844B5F /* WALInMemoryIconStore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A68202A31F62DF0900844B5F /* WALInMemoryIconStore.m in Sources */ = {isa = PBXBuildFile; fileRef = A68202A11F62DF0900844B5F /* WALInMemoryIconStore.m */; };
+		A68202A61F63E11E00844B5F /* WALLoadedTokens.h in Headers */ = {isa = PBXBuildFile; fileRef = A68202A41F63E11E00844B5F /* WALLoadedTokens.h */; };
+		A68202A71F63E11E00844B5F /* WALLoadedTokens.m in Sources */ = {isa = PBXBuildFile; fileRef = A68202A51F63E11E00844B5F /* WALLoadedTokens.m */; };
 		A682B6021F57FBDA007C66AA /* WALTokenListViewFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = A682B6011F57FBDA007C66AA /* WALTokenListViewFactory.h */; };
 		A682B6061F5801E8007C66AA /* WALFlowConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = A682B6041F5801E8007C66AA /* WALFlowConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A682B6071F5801E8007C66AA /* WALFlowConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = A682B6051F5801E8007C66AA /* WALFlowConfiguration.m */; };
@@ -101,14 +103,14 @@
 		A6A194F21F4EF47900374E92 /* WALCredentialsProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A194F01F4EF47900374E92 /* WALCredentialsProvider.m */; };
 		A6A194F51F4F0D3800374E92 /* WALTestCredentialFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A194F41F4F0D3800374E92 /* WALTestCredentialFetcher.m */; };
 		A6C7B5A71F435CC9003CCB97 /* WalleeApiTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A6C7B5A61F435CC9003CCB97 /* WalleeApiTest.m */; };
-		A6C7B5AA1F435DC7003CCB97 /* WALApiConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = A6C7B5A81F435DC7003CCB97 /* WALApiConfig.h */; };
+		A6C7B5AA1F435DC7003CCB97 /* WALApiConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = A6C7B5A81F435DC7003CCB97 /* WALApiConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A6C7B5AB1F435DC7003CCB97 /* WALApiConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = A6C7B5A91F435DC7003CCB97 /* WALApiConfig.m */; };
 		A6C7B5B01F4892B0003CCB97 /* WALMobileSdkUrl.h in Headers */ = {isa = PBXBuildFile; fileRef = A6C7B5AE1F4892B0003CCB97 /* WALMobileSdkUrl.h */; };
 		A6C7B5B11F4892B0003CCB97 /* WALMobileSdkUrl.m in Sources */ = {isa = PBXBuildFile; fileRef = A6C7B5AF1F4892B0003CCB97 /* WALMobileSdkUrl.m */; };
 		A6C7B5B41F4898DC003CCB97 /* WALTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = A6C7B5B21F4898DC003CCB97 /* WALTypes.h */; };
-		A6C7B5B91F49A87A003CCB97 /* WALNSURLSessionApiClient.h in Headers */ = {isa = PBXBuildFile; fileRef = A6C7B5B71F49A87A003CCB97 /* WALNSURLSessionApiClient.h */; };
+		A6C7B5B91F49A87A003CCB97 /* WALNSURLSessionApiClient.h in Headers */ = {isa = PBXBuildFile; fileRef = A6C7B5B71F49A87A003CCB97 /* WALNSURLSessionApiClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A6C7B5BA1F49A87A003CCB97 /* WALNSURLSessionApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A6C7B5B81F49A87A003CCB97 /* WALNSURLSessionApiClient.m */; };
-		A6C7B5BC1F49AAF2003CCB97 /* WALApiClient.h in Headers */ = {isa = PBXBuildFile; fileRef = A6C7B5BB1F49AAF2003CCB97 /* WALApiClient.h */; };
+		A6C7B5BC1F49AAF2003CCB97 /* WALApiClient.h in Headers */ = {isa = PBXBuildFile; fileRef = A6C7B5BB1F49AAF2003CCB97 /* WALApiClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A6C7B5C01F49B7DD003CCB97 /* WALPaymentMethodConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = A6C7B5BE1F49B7DD003CCB97 /* WALPaymentMethodConfiguration.h */; };
 		A6C7B5C11F49B7DD003CCB97 /* WALPaymentMethodConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = A6C7B5BF1F49B7DD003CCB97 /* WALPaymentMethodConfiguration.m */; };
 		A6C7B5C41F49C151003CCB97 /* WALDatabaseTranslatedStringItem.h in Headers */ = {isa = PBXBuildFile; fileRef = A6C7B5C21F49C151003CCB97 /* WALDatabaseTranslatedStringItem.h */; };
@@ -232,6 +234,8 @@
 		A682029E1F62DEB800844B5F /* WALIconStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALIconStore.h; sourceTree = "<group>"; };
 		A68202A01F62DF0900844B5F /* WALInMemoryIconStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALInMemoryIconStore.h; sourceTree = "<group>"; };
 		A68202A11F62DF0900844B5F /* WALInMemoryIconStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALInMemoryIconStore.m; sourceTree = "<group>"; };
+		A68202A41F63E11E00844B5F /* WALLoadedTokens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALLoadedTokens.h; sourceTree = "<group>"; };
+		A68202A51F63E11E00844B5F /* WALLoadedTokens.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALLoadedTokens.m; sourceTree = "<group>"; };
 		A682B6011F57FBDA007C66AA /* WALTokenListViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALTokenListViewFactory.h; sourceTree = "<group>"; };
 		A682B6041F5801E8007C66AA /* WALFlowConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALFlowConfiguration.h; sourceTree = "<group>"; };
 		A682B6051F5801E8007C66AA /* WALFlowConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALFlowConfiguration.m; sourceTree = "<group>"; };
@@ -367,6 +371,8 @@
 		A63B64731F59BE38007B9B15 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A68202A41F63E11E00844B5F /* WALLoadedTokens.h */,
+				A68202A51F63E11E00844B5F /* WALLoadedTokens.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -742,6 +748,7 @@
 				A6670D7E1F5D781E00C3B229 /* WALDefaultAwaitingFinalStateViewController.h in Headers */,
 				A63B64511F59803D007B9B15 /* WALFlowStateHandlerFactory.h in Headers */,
 				A6C7B5B41F4898DC003CCB97 /* WALTypes.h in Headers */,
+				A68202A61F63E11E00844B5F /* WALLoadedTokens.h in Headers */,
 				A6670D6C1F5D4EE500C3B229 /* WALPaymentMethodFormStateHandler.h in Headers */,
 				A6670D791F5D770200C3B229 /* WALDefaultPaymentMethodFormViewController.h in Headers */,
 				A6A194EE1F4EF3DE00374E92 /* WALCredentialsFetcher.h in Headers */,
@@ -903,6 +910,7 @@
 				A68202931F617D2B00844B5F /* WALPaymentMethodIcon.m in Sources */,
 				A6EECF051F54465400954E02 /* WALTransaction.m in Sources */,
 				A682B60E1F5813FC007C66AA /* WALFlowConfigurationBuilder.m in Sources */,
+				A68202A71F63E11E00844B5F /* WALLoadedTokens.m in Sources */,
 				A6A194EA1F49CFA600374E92 /* WALDatabaseTranslatedString.m in Sources */,
 				A63B64A71F5AC439007B9B15 /* WALDefaultViewControllerFactory.m in Sources */,
 				A68202971F61824200844B5F /* WALNSURLSessionHelper.m in Sources */,

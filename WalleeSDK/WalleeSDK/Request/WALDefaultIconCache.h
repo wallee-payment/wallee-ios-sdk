@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "WALIconCache.h"
+@protocol WALIconLoader, WALIconStore;
 
 @interface WALDefaultIconCache : NSObject<WALIconCache>
-
+- (instancetype)initWithIconLoader:(id<WALIconLoader>)iconLoader iconStore:(id<WALIconStore>)iconStore ;
 @end

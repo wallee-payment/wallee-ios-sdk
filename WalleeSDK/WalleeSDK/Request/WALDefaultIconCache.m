@@ -24,15 +24,36 @@ typedef void(^WALSingleIconLoadedCompletion)(WALPaymentMethodConfiguration * _Nu
 
 @implementation WALDefaultIconCache
 
-- (instancetype)initWithIconLoader:(id<WALIconLoader>)iconLoader {
+- (instancetype)initWithIconLoader:(id<WALIconLoader>)iconLoader iconStore:(id<WALIconStore>)iconStore {
     if (self = [super init]) {
         _iconLoader = iconLoader;
+        _iconStore = iconStore;
     }
     return self;
 }
 
-- (void)fetchIcons:(NSArray *)paymentMethodConfigurations completion:(WALPaymentIconsFetched)completion {
+- (void)fetchIcons:(NSArray <WALPaymentMethodConfiguration *> *)paymentMethodConfigurations completion:(WALPaymentIconsFetched)completion {
+    NSMutableDictionary *paymentIconMap = [NSMutableDictionary dictionaryWithCapacity:paymentMethodConfigurations.count];
+    __block NSError *error;
     
+    dispatch_group_t iconServiceGroup = dispatch_group_create();
+    
+    for (WALPaymentMethodConfiguration *paymentConfiguration in paymentMethodConfigurations) {
+        dispatch_group_enter(iconServiceGroup);
+        [self loadIcon:paymentConfiguration completion:^(WALPaymentMethodConfiguration * _Nullable paymentMethodConfiguration, WALPaymentMethodIcon * _Nullable paymentIcon, NSError * _Nullable iconError) {
+            if (!paymentIcon) {
+                error = iconError;
+            } else {
+                paymentIconMap[paymentMethodConfiguration] = paymentIcon;
+            }
+            dispatch_group_leave(iconServiceGroup);
+        }];
+    }
+    
+    dispatch_group_notify(iconServiceGroup, dispatch_get_main_queue(), ^{
+        // we dispatch the icon results even if there were errors (some images might still be useable)
+        completion(paymentIconMap, error);
+    });
 }
 
 - (void)loadIcon:(WALPaymentMethodConfiguration *)paymentMethodConfiguration completion:(WALSingleIconLoadedCompletion)completion {
@@ -49,8 +70,11 @@ typedef void(^WALSingleIconLoadedCompletion)(WALPaymentMethodConfiguration * _Nu
             return;
         }
         
-        completion(paymentMethodConfiguration, paymentMethodIcon, nil);        
+        completion(paymentMethodConfiguration, paymentMethodIcon, nil);
     }];
+    
 }
+
+- (void)iconLoaded {}
 
 @end

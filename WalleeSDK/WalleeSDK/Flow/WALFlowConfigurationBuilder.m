@@ -8,7 +8,12 @@
 
 #import "WALFlowConfigurationBuilder.h"
 #import "WALErrorDomain.h"
+
 #import "WALNSURLSessionApiClient.h"
+#import "WALNSURLIconLoader.h"
+#import "WALDefaultIconCache.h"
+#import "WALInMemoryIconStore.h"
+
 #import "WALDefaultPaymentFlowContainerFactory.h"
 #import "WALDefaultViewControllerFactory.h"
 #import "WALCredentialsProvider.h"
@@ -16,21 +21,20 @@
 @implementation WALFlowConfigurationBuilder
 
 - (instancetype)init {
-    if (self = [super init]) {
-        _paymentFlowContainerFactory = [[WALDefaultPaymentFlowContainerFactory alloc] init];
-        _viewControllerFactory = [[WALDefaultViewControllerFactory alloc] init];
-    }
-    
-    return self;
+    return [super init];
 }
 
-- (instancetype)initWithCredentialsFetcher:(id<WALCredentialsFetcher>)credentialsFetcher {
+- (instancetype)initWithCredentialsFetcher:(id<WALCredentialsFetcher>)credentialsFetcher operationQueue:(NSOperationQueue * _Nullable)operationQueue {
     if (self = [self init]) {
+        _paymentFlowContainerFactory = [[WALDefaultPaymentFlowContainerFactory alloc] init];
+        _viewControllerFactory = [[WALDefaultViewControllerFactory alloc] init];
         
-//        _iconCache = [[WALInMemoryCach alloc] init];
-//        _iconRequestManager = [[WALNSURLIconRequestManager alloc] init];
         WALCredentialsProvider *provider = [[WALCredentialsProvider alloc] initWith:credentialsFetcher];
-        _webServiceApiClient = [WALNSURLSessionApiClient clientWithCredentialsProvider:provider operationQueue:nil];
+        _webServiceApiClient = [WALNSURLSessionApiClient clientWithCredentialsProvider:provider operationQueue:operationQueue];
+        
+        id<WALIconLoader> iconLoader = [WALNSURLIconLoader iconLoaderWithOperationQueue:operationQueue];
+        id<WALIconStore> iconStore = [[WALInMemoryIconStore alloc] init];
+        _iconCache = [[WALDefaultIconCache alloc] initWithIconLoader:iconLoader iconStore:iconStore];
     }
     
     return self;
@@ -40,9 +44,9 @@
     BOOL valid = (                  
                   [WALErrorHelper checkNotEmpty:self.paymentFlowContainerFactory withMessage:@"The paymentFlowContainerFactory is required." error:error] &&
                   [WALErrorHelper checkNotEmpty:self.viewControllerFactory withMessage:@"The viewControllerFactory is required." error:error] &&
-//                  [WALErrorHelper checkNotEmpty:self.iconCache withMessage:@"The iconCache is required." error:error] &&
+                  [WALErrorHelper checkNotEmpty:self.iconCache withMessage:@"The iconCache is required." error:error] &&
 //                  [WALErrorHelper checkNotEmpty:self.listeners withMessage:@"The listeners list is required." error:error] &&
-//                  [WALErrorHelper checkNotEmpty:self.iconRequestManager withMessage:@"The iconRequestManager is required." error:error] &&
+
                   [WALErrorHelper checkNotEmpty:self.webServiceApiClient withMessage:@"The webServiceApiClient is required." error:error]
                   );
     return valid;
