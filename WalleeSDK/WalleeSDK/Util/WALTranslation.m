@@ -9,7 +9,7 @@
 #import "WALTranslation.h"
 
 @implementation WALTranslation
-+ (NSString *)WALLocalizedString:(NSString *)key {
++ (NSString *)localizedString:(NSString *)key {
     // check bundles
     return [[NSBundle mainBundle] localizedStringForKey:key value:nil table:nil];
 }

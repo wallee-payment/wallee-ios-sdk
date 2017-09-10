@@ -9,6 +9,9 @@
 #import "WALDefaultPaymentMethodFormViewController.h"
 #import "WALDefaultPaymentFormView.h"
 
+#import "WALDefaultTheme.h"
+#import "WALTranslation.h"
+
 @interface WALDefaultPaymentMethodFormViewController ()
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) WALDefaultPaymentFormView *paymentFormView;
@@ -20,36 +23,90 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.edgesForExtendedLayout = UIRectEdgeNone;
-    
-    self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-    self.view.backgroundColor = UIColor.whiteColor;
-//    [self.view addSubview:self.scrollView];
-    CGRect paymentRect = CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y + 44.0, self.view.bounds.size.width, self.view.bounds.size.height - 44.0f);
-
-    self.paymentFormView = [[WALDefaultPaymentFormView alloc] initWithFrame:paymentRect];
-    self.paymentFormView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-    self.paymentFormView.delegate = self;
+    self.view.backgroundColor = self.theme.primaryBackgroundColor;
+    self.automaticallyAdjustsScrollViewInsets = YES;
+    [self.view addSubview:self.submitButton];
     [self.view addSubview:self.paymentFormView];
     
-    self.submitButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.submitButton.frame = CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, 44.0f);
-    self.submitButton.autoresizingMask = (UIViewAutoresizingFlexibleWidth);
-    [self.submitButton setTitle:@"Submit" forState:UIControlStateNormal];
-    self.submitButton.backgroundColor = UIColor.lightGrayColor;
-    [self.submitButton addTarget:self action:@selector(submitTaped) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.submitButton];
+//    self.paymentFormView.webView.scrollView.contentOffset = CGPointMake(self.topLayoutGuide.length, self.bottomLayoutGuide.length);
+    
+//            self.webView.scrollView.contentInset = UIEdgeInsetsMake(0, 0, self.test.frame.size.height, 0);
+//            self.webView.scrollView.contentOffset = CGPointMake(0, self.test.frame.size.height);
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    CGFloat top = self.topLayoutGuide.length;
+    self.paymentFormView.webView.scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(top, 0, self.bottomLayoutGuide.length, 0);
+    self.paymentFormView.webView.scrollView.contentInset = UIEdgeInsetsMake(top, 0, self.bottomLayoutGuide.length, 0);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.paymentFormView loadPaymentView:self.mobileSdkUrl];
+}
+
+- (CGRect)defaultPaymentRect {
+    CGRect bounds = self.view.bounds;
+    CGRect paymentRect = CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height - self.submitButton.frame.size.height);
+    return paymentRect;
+}
+
+- (CGRect)defaultButtonRect {
+    CGRect bounds = self.view.bounds;
+    return CGRectMake(bounds.origin.x, bounds.size.height - 44.0f, bounds.size.width, 44.0f);
+}
+
+- (WALDefaultPaymentFormView *)paymentFormView {
+    if (!_paymentFormView) {
+        
+        _paymentFormView = [[WALDefaultPaymentFormView alloc] initWithFrame:[self defaultPaymentRect]];
+        _paymentFormView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+        _paymentFormView.delegate = self;
+    }
+    return _paymentFormView;
+}
+
+- (UIButton *)submitButton {
+    if (!_submitButton) {
+        _submitButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        _submitButton.frame = [self defaultButtonRect];
+        _submitButton.autoresizingMask = (UIViewAutoresizingFlexibleWidth);
+        [_submitButton setTitle:WALLocalizedString(@"Submit", @"title of the submit button on the payment method form") forState:UIControlStateNormal];
+        _submitButton.backgroundColor = self.theme.accentBackgroundColor;
+        [_submitButton setTitleColor:self.theme.accentColor forState:UIControlStateNormal];
+        [_submitButton addTarget:self action:@selector(submitTaped) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _submitButton;
+}
+
+// MARK: - WALPaymentForm Navigation Controls Delegate
+- (UIView *)navigationControlView {
+    return self.submitButton;
+}
+
+// MARK: - WALPaymentForm Delegation
+-(void)paymentViewRequestsExpand {
     
 }
 
+- (void)paymentViewDidChangeContentSize:(CGSize)size {
+    CGRect buttonDefaultRect = [self defaultButtonRect];
+    if (size.height < buttonDefaultRect.origin.y) {
+        self.paymentFormView.scrollingEnabled = NO;
+        self.paymentFormView.frame = CGRectMake(self.paymentFormView.frame.origin.x, self.paymentFormView.frame.origin.y, self.paymentFormView.frame.size.width, size.height);
+        self.submitButton.frame = CGRectMake(buttonDefaultRect.origin.x, size.height, buttonDefaultRect.size.width, buttonDefaultRect.size.height);
+    } else {
+        self.paymentFormView.scrollingEnabled = YES;
+        self.paymentFormView.frame = [self defaultPaymentRect];
+        self.submitButton.frame = [self defaultButtonRect];
+    }
+}
 
-// MARK: - WALPaymentForm Delegation
+- (void)paymentViewRequestsReset {
+    
+}
 
 - (void)viewDidStartLoading:(UIView *)viewController {
     [self.delegate viewDidStartLoading:viewController];

@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-@class WALPaymentMethodIcon;
+@class WALPaymentMethodIcon, WALDefaultTheme;
 
 @interface WALPaymentMethodTableViewCell : UITableViewCell
 NS_ASSUME_NONNULL_BEGIN
+@property (nonatomic, copy) WALDefaultTheme *theme;
+
 + (CGFloat)defaultCellHeight;
 - (void)configureWith:(NSString *)paymentMethod paymentIcon:(WALPaymentMethodIcon * _Nullable)paymentIcon;
 NS_ASSUME_NONNULL_END

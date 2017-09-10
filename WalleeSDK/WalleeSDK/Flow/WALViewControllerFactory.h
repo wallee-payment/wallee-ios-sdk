@@ -27,10 +27,10 @@ typedef void(^WALPaymentMethodSubmited)(WALPaymentMethodConfiguration *_Nonnull)
 
 - (UIViewController *_Nonnull)buildPaymentMethodListViewWith:(WALLoadedPaymentMethods *_Nonnull)loadedPaymentMethods
                                                  onSelection:(WALPaymentMethodSelected _Nullable )callback
-                                                      onBack:(WALOnBackBlock)onBack;
+                                                      onBack:(WALOnBackBlock _Nonnull  _Nonnull )onBack;
 
 - (UIViewController<WALPaymentFormView> *_Nonnull)buildPaymentMethodFormViewWithURL:(NSURL * _Nonnull)mobileSdkUrl
-                                                                             onBack:(WALOnBackBlock)onBack;
+                                                                             onBack:(WALOnBackBlock _Nonnull )onBack;
 
 @end
 

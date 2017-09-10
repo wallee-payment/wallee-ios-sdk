@@ -10,7 +10,7 @@
 #import "WALViewControllerFactory.h"
 #import "WALDefaultListViewController.h"
 
-@class WALLoadedTokens;
+@class WALLoadedTokens, WALDefaultTheme;
 
 @interface WALDefaultTokenListViewController : WALDefaultListViewController<UITableViewDelegate, UITableViewDataSource>
 NS_ASSUME_NONNULL_BEGIN

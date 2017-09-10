@@ -9,6 +9,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "WALDefaultPaymentFlowContainer.h"
 
+#import "WALDefaultTheme.h"
+
 @interface WALDefaultPaymentFlowContainer ()
 @property (nonatomic, copy) WALContainerBackAction onBackAction;
 @property (nonatomic, strong) UIView *loadingViewContainer;
@@ -16,6 +18,10 @@
 @end
 
 @implementation WALDefaultPaymentFlowContainer
+
+- (WALDefaultTheme *)theme {
+    return _theme ?: [WALDefaultTheme defaultTheme];
+}
 
 - (instancetype)initWithRootViewController:(UIViewController *)rootViewController backAction:(WALContainerBackAction)onBackAction {
     if (self = [self initWithRootViewController:rootViewController]) {
@@ -30,21 +36,21 @@
 }
 
 - (UIView *)loadingView {
-
+    
     if (!self.loadingViewContainer) {
         self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
         [self.activityIndicator startAnimating];
         
-//        UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
-//        UIVibrancyEffect *fibrancy = [UIVibrancyEffect effectForBlurEffect:blur];
-//        UIVisualEffectView *effectView =[[UIVisualEffectView alloc] initWithEffect:fibrancy];
+        //        UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
+        //        UIVibrancyEffect *fibrancy = [UIVibrancyEffect effectForBlurEffect:blur];
+        //        UIVisualEffectView *effectView =[[UIVisualEffectView alloc] initWithEffect:fibrancy];
         
         CGFloat width = self.activityIndicator.frame.size.width + 10.0;
         self.loadingViewContainer = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, width, width)];
         self.loadingViewContainer.layer.cornerRadius = width/2;
         self.loadingViewContainer.layer.masksToBounds = YES;
-        self.loadingViewContainer.backgroundColor = [UIColor lightGrayColor];
-
+        self.loadingViewContainer.backgroundColor = [self indicatorBackgroundColor];
+        
         [self.loadingViewContainer addSubview:self.activityIndicator];
         self.activityIndicator.center = self.loadingViewContainer.center;
     }
@@ -52,8 +58,8 @@
 }
 
 - (void)displayViewController:(UIViewController *)viewController {
-     [self.loadingView removeFromSuperview];
-    
+    self.view.userInteractionEnabled = YES;
+    [self.loadingView removeFromSuperview];
     
     // if in stack ... replace
     NSMutableArray *rebuiltStack = [[NSMutableArray alloc] initWithCapacity:self.viewControllers.count];
@@ -85,10 +91,10 @@
 }
 
 - (void)displayLoading {
-    if (!self.loadingView.superview) {
-        self.loadingView.center = self.view.center;
-        [self.view addSubview:self.loadingView];
-    }
+    self.view.userInteractionEnabled = NO;
+    [self.loadingView removeFromSuperview];
+    self.loadingView.center = self.view.center;
+    [self.view addSubview:self.loadingView];
 }
 
 - (UIViewController *)viewController {
@@ -105,5 +111,15 @@
     return NO;
 }
 
+
+// MARK: - Helper
+- (UIColor *)indicatorBackgroundColor {
+    CGFloat hue;
+    CGFloat saturation;
+    CGFloat brightness;
+    CGFloat alpha;
+    [self.theme.primaryBackgroundColor getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha];
+    return [UIColor colorWithHue:hue saturation:saturation brightness:(brightness - 0.1f) alpha:alpha];
+}
 @end
 

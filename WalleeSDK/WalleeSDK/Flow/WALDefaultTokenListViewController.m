@@ -11,7 +11,10 @@
 #import "WALLoadedTokens.h"
 #import "WALConnectorConfiguration.h"
 
+#import "WALDefaultTheme.h"
 #import "WALPaymentMethodTableViewCell.h"
+
+#import "WALTranslation.h"
 
 static NSString * const cellIdentifier = @"defaultCell";
 
@@ -21,6 +24,15 @@ static NSString * const cellIdentifier = @"defaultCell";
 @end
 
 @implementation WALDefaultTokenListViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.navigationItem.hidesBackButton = YES;
+//    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.view.backgroundColor = self.theme.primaryBackgroundColor;
+    
+    self.title = WALLocalizedString(@"Select Token", @"title for the token list view controller");
+}
 
 - (BOOL)isEqual:(id)object {
     // we can override this to use pop animation on navigationControllers setViewController
@@ -36,6 +48,7 @@ static NSString * const cellIdentifier = @"defaultCell";
     self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.tableView.scrollEnabled = false;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.backgroundColor = self.theme.secondaryBackgroundColor;
     [contentView addSubview:self.tableView];
 }
 
@@ -44,17 +57,7 @@ static NSString * const cellIdentifier = @"defaultCell";
 }
 
 - (NSString *)confirmationTitle {
-    return @"Other";
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    self.navigationItem.hidesBackButton = YES;
-    self.edgesForExtendedLayout = UIRectEdgeNone;
-    self.view.backgroundColor = UIColor.whiteColor;
-    
-    
-    self.title = @"Select Token";
+    return WALLocalizedString(@"Other", @"the title of the button to select another pament method");
 }
 
 // MARK: - TableViewDelegate and Datasource

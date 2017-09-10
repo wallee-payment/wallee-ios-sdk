@@ -12,6 +12,8 @@
 #import "WALPaymentMethodConfiguration.h"
 #import "WALPaymentMethodIcon.h"
 
+#import "WALDefaultTheme.h"
+
 @interface WALPaymentMethodTableViewCell ()
 @property (nonatomic, retain) UILabel *paymentNameLabel;
 @property (nonatomic, retain) WKWebView *paymentImageWebView;
@@ -42,6 +44,8 @@
 }
 
 - (void)initializeViews {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     CGRect origin = self.contentView.bounds;
     CGRect imageRect = CGRectMake(origin.origin.x, origin.origin.y, origin.size.height, origin.size.height);
     WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
@@ -75,17 +79,29 @@
     @"        %@"
     @"    </body></html>";
     
-    NSString *wrappedString = [NSString stringWithFormat:htmlWrapper, @"", imageTag];
+    NSString *wrappedString = [NSString stringWithFormat:htmlWrapper, viewportHTML, imageTag];
     return wrappedString;
 }
-
 
 
 - (void)awakeFromNib {
     [super awakeFromNib];
 }
 
+- (void)applyTheme {
+    if (!self.theme) {
+        self.theme = [WALDefaultTheme defaultTheme];
+    }
+    self.backgroundColor = self.theme.secondaryBackgroundColor;
+    self.contentView.backgroundColor = self.theme.secondaryBackgroundColor;
+    
+    self.paymentNameLabel.font = self.theme.font;
+    self.paymentNameLabel.textColor = self.theme.primaryColor;
+}
+
 - (void)configureWith:(NSString *)paymentName paymentIcon:(WALPaymentMethodIcon *)paymentIcon {
+    [self applyTheme];
+    
     self.paymentNameLabel.text = paymentName;
     if (paymentIcon) {
         NSString *htmlyfiedString = [self wrapInHTML:paymentIcon.dataAsBase64String contentType:paymentIcon.mimeType forSize:self.paymentImageWebView.frame.size];
@@ -100,7 +116,6 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     
 }
 
@@ -110,12 +125,7 @@
     CGRect imageRect = CGRectMake(origin.origin.x, origin.origin.y, origin.size.height, origin.size.height);
     self.paymentImageWebView.frame = imageRect;
     CGRect labelRect = CGRectMake(imageRect.size.width+30.0, origin.origin.y, origin.size.width - imageRect.size.width, origin.size.height);
-    self.paymentNameLabel.frame = labelRect;
-    
-    self.paymentImageWebView.backgroundColor = UIColor.greenColor;
-    self.paymentImageWebView.scrollView.backgroundColor = UIColor.blueColor;
-    self.paymentImageWebView.scrollView.subviews[0].backgroundColor = UIColor.redColor;
-    
+    self.paymentNameLabel.frame = labelRect;    
 }
 
 @end

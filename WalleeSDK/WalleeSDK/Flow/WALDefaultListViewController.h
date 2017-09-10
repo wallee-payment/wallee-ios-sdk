@@ -7,13 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WALDefaultBaseViewController.h"
+@class WALDefaultTheme;
 
 /**
  Supplies a Scrollview to which content can be added.
  Usefull to display @c UITableViews with added content like a @c UIButton below
  */
-@interface WALDefaultListViewController : UIViewController
+@interface WALDefaultListViewController : WALDefaultBaseViewController
 NS_ASSUME_NONNULL_BEGIN
+
 @property (nonatomic, strong, readonly) UIButton *submitButton;
 - (void)addSubviewsToContentView:(UIView *)contentView;
 - (CGSize)contentSize;

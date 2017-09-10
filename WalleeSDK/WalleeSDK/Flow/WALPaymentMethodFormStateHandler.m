@@ -169,6 +169,7 @@
     [self readAndEvaluateTransactionForState:WALFlowStateAwaitingFinalState];
 }
 
+// MARK: - Internal
 - (void)readAndEvaluateTransactionForState:(WALFlowState)state {
     [self.coordinatorDelegate waiting];
     __weak WALPaymentMethodFormStateHandler *weakSelf = self;

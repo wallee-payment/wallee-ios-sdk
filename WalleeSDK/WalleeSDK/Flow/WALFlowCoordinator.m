@@ -86,7 +86,7 @@ NS_ASSUME_NONNULL_END
                 return NO;
             }
         };
-        _paymentContainer = [self.configuration.paymentFlowContainerFactory buildWithBackAction:backAction]; // TODO: check rootview
+        _paymentContainer = [self.configuration.paymentFlowContainerFactory buildWithBackAction:backAction];
     }
     return _paymentContainer;
 }

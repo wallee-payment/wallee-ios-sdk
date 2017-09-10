@@ -7,6 +7,7 @@
 //
 
 #import "WALDefaultListViewController.h"
+#import "WALDefaultTheme.h"
 
 @interface WALDefaultListViewController ()
 @property (nonatomic, strong) UIScrollView *scrollView;
@@ -19,9 +20,12 @@ static const CGFloat confirmationButtonPadding = 10.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
     self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:self.scrollView];
+    
+//    _scrollView.contentInset = UIEdgeInsetsMake(self.topLayoutGuide.length, 0.0, self.bottomLayoutGuide.length, 0.0);
     
     [self addSubviewsToContentView:self.scrollView];
     [self addConfirmationButton];
@@ -49,8 +53,9 @@ static const CGFloat confirmationButtonPadding = 10.0f;
     self.confirmationButton.frame = buttonRect;
     self.confirmationButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [self.confirmationButton setTitle:[self confirmationTitle] forState:UIControlStateNormal];
-    self.confirmationButton.tintColor = [UIButton appearance].tintColor;
-    self.confirmationButton.backgroundColor = UIColor.lightGrayColor;
+//    self.confirmationButton.tintColor = [UIButton appearance].tintColor;
+    [self.confirmationButton setTitleColor:self.theme.accentColor forState:UIControlStateNormal];
+    self.confirmationButton.backgroundColor = self.theme.accentBackgroundColor;
     [self.confirmationButton addTarget:self action:@selector(confirmationTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.scrollView addSubview:self.confirmationButton];
 }

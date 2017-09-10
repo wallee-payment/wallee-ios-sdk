@@ -8,11 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
-#import "WALPaymentFormView.h"
-#import "WALViewControllerFactory.h"
-#import "WALPaymentFormDelegate.h"
 
-@interface WALDefaultPaymentMethodFormViewController : UIViewController<WALPaymentFormView, WALPaymentFormDelegate>
+#import "WALDefaultBaseViewController.h"
+#import "WALViewControllerFactory.h"
+
+#import "WALPaymentFormView.h"
+#import "WALPaymentFormDelegate.h"
+#import "WALDefaultPaymentFormView.h"
+
+@interface WALDefaultPaymentMethodFormViewController : WALDefaultBaseViewController<WALPaymentFormView, WALPaymentFormDelegate>
 NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSURL *mobileSdkUrl;
 @property (nonatomic, weak) id<WALPaymentFormDelegate> delegate;

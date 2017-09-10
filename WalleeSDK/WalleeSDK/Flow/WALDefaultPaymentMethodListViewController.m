@@ -13,6 +13,9 @@
 
 #import "WALPaymentMethodTableViewCell.h"
 
+#import "WALTranslation.h"
+#import "WALDefaultTheme.h"
+
 static NSString * const cellIdentifier = @"defaultCell";
 
 @interface WALDefaultPaymentMethodListViewController ()
@@ -23,8 +26,8 @@ static NSString * const cellIdentifier = @"defaultCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = UIColor.whiteColor;
-    self.title = @"Select PaymentMethod";
+    self.view.backgroundColor = self.theme.primaryBackgroundColor;
+    self.title = WALLocalizedString(@"Select PaymentMethod", @"title for the payment method list view controller");
 }
 
 - (void)addSubviewsToContentView:(UIView *)contentView {
@@ -36,6 +39,7 @@ static NSString * const cellIdentifier = @"defaultCell";
     self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.tableView.scrollEnabled = false;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.backgroundColor = self.theme.secondaryBackgroundColor;
     [contentView addSubview:self.tableView];
 }
 
@@ -71,6 +75,7 @@ static NSString * const cellIdentifier = @"defaultCell";
     WALPaymentMethodTableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
         cell = [[WALPaymentMethodTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell.theme = self.theme;
     }
     
     WALPaymentMethodConfiguration *method = self.loadedPaymentMethods.paymentMethodConfigurations[indexPath.row];
