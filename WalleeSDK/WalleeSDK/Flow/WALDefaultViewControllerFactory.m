@@ -19,7 +19,7 @@
 
 
 @implementation WALDefaultViewControllerFactory
-- (UIViewController *)buildTokenListViewWith:(WALLoadedTokens *)loadedTokens onSelection:(WALTokenVersionSelected)callback onChangePaymentMethod:(WALPaymentMethodChange)changePaymentMethod {
+- (UIViewController *)buildTokenListViewWith:(WALLoadedTokens *)loadedTokens onSelection:(WALTokenVersionSelected)callback onChangePaymentMethod:(WALOnBackBlock)changePaymentMethod {
     WALDefaultTokenListViewController *controller = [[WALDefaultTokenListViewController alloc] init];
     controller.loadedTokens = loadedTokens;
     controller.onTokenSelected = callback;
@@ -27,16 +27,18 @@
     return controller;
 }
 
-- (UIViewController *)buildPaymentMethodListViewWith:(NSArray<WALPaymentMethodConfiguration *> *)paymentMethods onSelection:(WALPaymentMethodSelected)callback {
+- (UIViewController *)buildPaymentMethodListViewWith:(WALLoadedPaymentMethods *)loadedPaymentMethods onSelection:(WALPaymentMethodSelected)callback onBack:(WALOnBackBlock)onBack {
     WALDefaultPaymentMethodListViewController *controller = [[WALDefaultPaymentMethodListViewController alloc] init];
-    controller.paymentMethods = paymentMethods;
+    controller.loadedPaymentMethods = loadedPaymentMethods;
     controller.onPaymentMethodSelected = callback;
+    controller.onBack = onBack;
     return controller;
 }
 
-- (UIViewController *)buildPaymentMethodFormViewWithURL:(NSURL *)mobileSdkUrl {
+- (UIViewController *)buildPaymentMethodFormViewWithURL:(NSURL *)mobileSdkUrl onBack:(WALOnBackBlock)onBack {
     WALDefaultPaymentMethodFormViewController *controller = [[WALDefaultPaymentMethodFormViewController alloc] init];
     controller.mobileSdkUrl = mobileSdkUrl;
+    controller.onBack = onBack;
     return controller;
 }
 

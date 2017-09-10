@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "WALViewControllerFactory.h"
+#import "WALDefaultListViewController.h"
 
 @class WALLoadedTokens;
 
-@interface WALDefaultTokenListViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@interface WALDefaultTokenListViewController : WALDefaultListViewController<UITableViewDelegate, UITableViewDataSource>
 NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) WALLoadedTokens *loadedTokens;
 @property (nonatomic) WALTokenVersionSelected onTokenSelected;
-@property (nonatomic) WALPaymentMethodChange onPaymentMethodChange;
+@property (nonatomic) WALOnBackBlock onPaymentMethodChange;
 NS_ASSUME_NONNULL_END
 @end

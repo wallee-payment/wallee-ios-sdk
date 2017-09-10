@@ -16,4 +16,6 @@
  */
 @interface WALDefaultPaymentFlowContainer : UINavigationController<UINavigationBarDelegate, WALPaymentFlowContainer>
 - (instancetype)initWithRootViewController:(UIViewController *)rootViewController backAction:(WALContainerBackAction)onBackAction;
+
+- (UIView *)loadingView;
 @end

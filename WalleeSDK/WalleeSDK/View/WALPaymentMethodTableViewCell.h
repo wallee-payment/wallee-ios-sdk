@@ -11,6 +11,7 @@
 
 @interface WALPaymentMethodTableViewCell : UITableViewCell
 NS_ASSUME_NONNULL_BEGIN
++ (CGFloat)defaultCellHeight;
 - (void)configureWith:(NSString *)paymentMethod paymentIcon:(WALPaymentMethodIcon * _Nullable)paymentIcon;
 NS_ASSUME_NONNULL_END
 @end

@@ -11,8 +11,12 @@
 #import "WALFlowCoordinator+StateDelegate.h"
 #import "WALPaymentFlowDelegate.h"
 #import "WALFlowStateDelegate.h"
+
 #import "WALPaymentErrorHelper.h"
 #import "WALApiClient.h"
+#import "WALIconCache.h"
+
+#import "WALLoadedPaymentMethods.h"
 
 @implementation WALPaymentMethodLoadingStateHandler
 
@@ -51,7 +55,12 @@
             
         } else {
             // TODO: Load icons for payment configurations
-            [weakCoordinator changeStateTo:WALFlowStatePaymentMethodSelection parameters:@{WALFlowPaymentMethodsParameter: paymentMethodConfigurations}];
+            [weakCoordinator.configuration.iconCache fetchIcons:paymentMethodConfigurations completion:^(NSDictionary<WALPaymentMethodConfiguration *,WALPaymentMethodIcon *> * _Nullable paymentMethodIcons, NSError * _Nullable error) {
+                
+                WALLoadedPaymentMethods *loaded = [[WALLoadedPaymentMethods alloc] initWithPaymentMethodConfigurations:paymentMethodConfigurations paymentMethodIcons:paymentMethodIcons];
+                
+            [weakCoordinator changeStateTo:WALFlowStatePaymentMethodSelection parameters:@{WALFlowPaymentMethodsParameter: loaded}];
+            }];
         }
     }];
 }

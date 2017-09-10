@@ -36,6 +36,10 @@
     return [[NSString alloc] initWithData:self.data encoding:NSUTF8StringEncoding];
 }
 
+- (NSString *)dataAsBase64String {
+    return [self.data base64EncodedStringWithOptions:kNilOptions];
+}
+
 // MARK: - Description
 - (NSString *)description {
     NSDictionary *desc = @{

@@ -106,7 +106,7 @@
         [weakCoordinator.configuration.webServiceApiClient processOneClickToken:selectedToken.token completion:transactionCompletion];
     };
     
-    WALPaymentMethodChange paymentMethodChange = ^(void) {
+    WALOnBackBlock paymentMethodChange = ^(void) {
         WALFlowCoordinator *strongCoordinator = weakCoordinator;
         WALTokenSelectionStateHandler *strongSelf = weakSelf;
         

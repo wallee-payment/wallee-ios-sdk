@@ -56,7 +56,7 @@
         if (tokenVersions.count <= 0) {
             [weakCoordinator changeStateTo:WALFlowStatePaymentMethodLoading parameters:nil];
         } else {
-            // TODO: Load icons for payment configurations
+            
             NSMutableArray *paymentMethodConfigurations = [NSMutableArray arrayWithCapacity:10];
             for (WALTokenVersion *tokenVersion in tokenVersions) {
                 [paymentMethodConfigurations addObject: tokenVersion.paymentConnectorConfiguration.paymentMethodConfiguration];

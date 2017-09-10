@@ -6,11 +6,12 @@
 //  Copyright © 2017 smoca AG. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "WALDefaultPaymentFlowContainer.h"
 
 @interface WALDefaultPaymentFlowContainer ()
 @property (nonatomic, copy) WALContainerBackAction onBackAction;
-@property (nonatomic, strong) UIView *activityIndicatorBackgroundView;
+@property (nonatomic, strong) UIView *loadingViewContainer;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @end
 
@@ -25,19 +26,33 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.interactivePopGestureRecognizer.enabled = NO;
-    
-    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    [self.activityIndicator startAnimating];
-    
-    self.activityIndicatorBackgroundView = [[UIView alloc] initWithFrame:self.activityIndicator.bounds];
-    self.activityIndicatorBackgroundView.backgroundColor = [UIColor greenColor];
-    [self.activityIndicatorBackgroundView addSubview:self.activityIndicator];
+}
+
+- (UIView *)loadingView {
+
+    if (!self.loadingViewContainer) {
+        self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        [self.activityIndicator startAnimating];
+        
+//        UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
+//        UIVibrancyEffect *fibrancy = [UIVibrancyEffect effectForBlurEffect:blur];
+//        UIVisualEffectView *effectView =[[UIVisualEffectView alloc] initWithEffect:fibrancy];
+        
+        CGFloat width = self.activityIndicator.frame.size.width + 10.0;
+        self.loadingViewContainer = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, width, width)];
+        self.loadingViewContainer.layer.cornerRadius = width/2;
+        self.loadingViewContainer.layer.masksToBounds = YES;
+        self.loadingViewContainer.backgroundColor = [UIColor lightGrayColor];
+
+        [self.loadingViewContainer addSubview:self.activityIndicator];
+        self.activityIndicator.center = self.loadingViewContainer.center;
+    }
+    return self.loadingViewContainer;
 }
 
 - (void)displayViewController:(UIViewController *)viewController {
-     [self.activityIndicatorBackgroundView removeFromSuperview];
+     [self.loadingView removeFromSuperview];
     
     
     // if in stack ... replace
@@ -70,14 +85,19 @@
 }
 
 - (void)displayLoading {
-    if (!self.activityIndicatorBackgroundView.superview) {
-        self.activityIndicatorBackgroundView.center = self.view.center;
-        [self.view addSubview:self.activityIndicatorBackgroundView];
+    if (!self.loadingView.superview) {
+        self.loadingView.center = self.view.center;
+        [self.view addSubview:self.loadingView];
     }
 }
 
 - (UIViewController *)viewController {
     return self;
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    self.loadingView.center = self.view.center;
 }
 
 - (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item {
