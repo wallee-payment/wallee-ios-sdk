@@ -15,6 +15,9 @@
 		4607F50C1F62DA56005B8774 /* WalleeExampleSwiftUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4607F50B1F62DA56005B8774 /* WalleeExampleSwiftUITests.swift */; };
 		4607F5231F62DB19005B8774 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4607F5221F62DB19005B8774 /* Main.storyboard */; };
 		46AD4E181F62E4F9006785F7 /* WalleeSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4607F5331F62E234005B8774 /* WalleeSDK.framework */; };
+		46E34A1F1F665AE1000B8664 /* TestCredentialsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E34A1E1F665AE1000B8664 /* TestCredentialsFetcher.swift */; };
+		46E34A2E1F6661AA000B8664 /* Crypto.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 46E34A251F665C41000B8664 /* Crypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		46E34A2F1F6661AA000B8664 /* CommonCrypto.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 46E34A231F665C37000B8664 /* CommonCrypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +51,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		46E34A2D1F665FD9000B8664 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				46E34A2E1F6661AA000B8664 /* Crypto.framework in CopyFiles */,
+				46E34A2F1F6661AA000B8664 /* CommonCrypto.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		4607F4E81F62DA56005B8774 /* WalleeExampleSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WalleeExampleSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4607F4EB1F62DA56005B8774 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +80,9 @@
 		4607F50D1F62DA56005B8774 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4607F5221F62DB19005B8774 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		4607F52D1F62E234005B8774 /* WalleeSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WalleeSDK.xcodeproj; path = ../WalleeSDK/WalleeSDK.xcodeproj; sourceTree = "<group>"; };
+		46E34A1E1F665AE1000B8664 /* TestCredentialsFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestCredentialsFetcher.swift; sourceTree = "<group>"; };
+		46E34A231F665C37000B8664 /* CommonCrypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CommonCrypto.framework; sourceTree = "<group>"; };
+		46E34A251F665C41000B8664 /* Crypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crypto.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +119,7 @@
 				4607F4FF1F62DA56005B8774 /* WalleeExampleSwiftTests */,
 				4607F50A1F62DA56005B8774 /* WalleeExampleSwiftUITests */,
 				4607F4E91F62DA56005B8774 /* Products */,
+				46E34A221F665C37000B8664 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -115,6 +136,7 @@
 		4607F4EA1F62DA56005B8774 /* WalleeExampleSwift */ = {
 			isa = PBXGroup;
 			children = (
+				46E34A1E1F665AE1000B8664 /* TestCredentialsFetcher.swift */,
 				4607F4EB1F62DA56005B8774 /* AppDelegate.swift */,
 				4607F4ED1F62DA56005B8774 /* ViewController.swift */,
 				4607F5221F62DB19005B8774 /* Main.storyboard */,
@@ -152,6 +174,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		46E34A221F665C37000B8664 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				46E34A251F665C41000B8664 /* Crypto.framework */,
+				46E34A231F665C37000B8664 /* CommonCrypto.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -162,6 +193,7 @@
 				4607F4E41F62DA56005B8774 /* Sources */,
 				4607F4E51F62DA56005B8774 /* Frameworks */,
 				4607F4E61F62DA56005B8774 /* Resources */,
+				46E34A2D1F665FD9000B8664 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -314,6 +346,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4607F4EE1F62DA56005B8774 /* ViewController.swift in Sources */,
+				46E34A1F1F665AE1000B8664 /* TestCredentialsFetcher.swift in Sources */,
 				4607F4EC1F62DA56005B8774 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -462,6 +495,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 5NW5G4TUSD;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = WalleeExampleSwift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -480,6 +517,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 5NW5G4TUSD;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = WalleeExampleSwift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

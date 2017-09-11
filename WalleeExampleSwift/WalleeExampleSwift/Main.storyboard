@@ -13,7 +13,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SwiftPodTest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="WalleeExampleSwift" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -29,7 +29,7 @@
                                 </constraints>
                                 <state key="normal" title="Start Payment"/>
                                 <connections>
-                                    <action selector="didTapButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="b51-7D-Al3"/>
+                                    <action selector="didTapPayment:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qzn-8F-L03"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sample_product_image" translatesAutoresizingMaskIntoConstraints="NO" id="Rnj-69-dFF">
@@ -94,8 +94,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="messageLabel" destination="TvH-Ay-IvH" id="PAN-g6-EOq"/>
-                        <outlet property="messageView" destination="U2e-a6-4bT" id="c0G-be-4cc"/>
+                        <outlet property="messageLabel" destination="TvH-Ay-IvH" id="RbD-29-Ns3"/>
+                        <outlet property="messageView" destination="U2e-a6-4bT" id="csq-ce-WUA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
