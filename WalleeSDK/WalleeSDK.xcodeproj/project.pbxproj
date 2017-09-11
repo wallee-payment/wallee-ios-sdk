@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		46634A621F6159C8003D0DC6 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 46634A611F6159C8003D0DC6 /* LICENSE.txt */; };
+		46634A641F6159D1003D0DC6 /* WalleeSDK.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 46634A631F6159D1003D0DC6 /* WalleeSDK.podspec */; };
 		A63B64321F593D76007B9B15 /* WALDefaultPaymentFlowContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = A63B64301F593D76007B9B15 /* WALDefaultPaymentFlowContainer.h */; };
 		A63B64331F593D76007B9B15 /* WALDefaultPaymentFlowContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = A63B64311F593D76007B9B15 /* WALDefaultPaymentFlowContainer.m */; };
 		A63B64371F594B07007B9B15 /* WALPaymentFlowContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = A63B64361F594B07007B9B15 /* WALPaymentFlowContainer.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -23,9 +25,9 @@
 		A63B64541F598242007B9B15 /* WALPaymentFlowDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = A63B64531F598242007B9B15 /* WALPaymentFlowDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A63B64571F5982F0007B9B15 /* WALSimpleFlowStateHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = A63B64551F5982F0007B9B15 /* WALSimpleFlowStateHandler.h */; };
 		A63B64581F5982F0007B9B15 /* WALSimpleFlowStateHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A63B64561F5982F0007B9B15 /* WALSimpleFlowStateHandler.m */; };
-		A63B645B1F59A086007B9B15 /* WALApiClientError.h in Headers */ = {isa = PBXBuildFile; fileRef = A63B64591F59A086007B9B15 /* WALApiClientError.h */; };
+		A63B645B1F59A086007B9B15 /* WALApiClientError.h in Headers */ = {isa = PBXBuildFile; fileRef = A63B64591F59A086007B9B15 /* WALApiClientError.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A63B645C1F59A086007B9B15 /* WALApiClientError.m in Sources */ = {isa = PBXBuildFile; fileRef = A63B645A1F59A086007B9B15 /* WALApiClientError.m */; };
-		A63B645F1F59A2F8007B9B15 /* WALApiServerError.h in Headers */ = {isa = PBXBuildFile; fileRef = A63B645D1F59A2F8007B9B15 /* WALApiServerError.h */; };
+		A63B645F1F59A2F8007B9B15 /* WALApiServerError.h in Headers */ = {isa = PBXBuildFile; fileRef = A63B645D1F59A2F8007B9B15 /* WALApiServerError.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A63B64601F59A2F8007B9B15 /* WALApiServerError.m in Sources */ = {isa = PBXBuildFile; fileRef = A63B645E1F59A2F8007B9B15 /* WALApiServerError.m */; };
 		A63B64631F59AC1A007B9B15 /* WALPaymentErrorHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = A63B64611F59AC1A007B9B15 /* WALPaymentErrorHelper.h */; };
 		A63B64641F59AC1A007B9B15 /* WALPaymentErrorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A63B64621F59AC1A007B9B15 /* WALPaymentErrorHelper.m */; };
@@ -105,7 +107,7 @@
 		A682B6121F582E8D007C66AA /* WALStaticInit.h in Headers */ = {isa = PBXBuildFile; fileRef = A682B6101F582E8D007C66AA /* WALStaticInit.h */; };
 		A6A194E91F49CFA600374E92 /* WALDatabaseTranslatedString.h in Headers */ = {isa = PBXBuildFile; fileRef = A6A194E71F49CFA600374E92 /* WALDatabaseTranslatedString.h */; };
 		A6A194EA1F49CFA600374E92 /* WALDatabaseTranslatedString.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A194E81F49CFA600374E92 /* WALDatabaseTranslatedString.m */; };
-		A6A194EC1F49D3F800374E92 /* WALJSONDecodable.h in Headers */ = {isa = PBXBuildFile; fileRef = A6A194EB1F49D3F800374E92 /* WALJSONDecodable.h */; };
+		A6A194EC1F49D3F800374E92 /* WALJSONDecodable.h in Headers */ = {isa = PBXBuildFile; fileRef = A6A194EB1F49D3F800374E92 /* WALJSONDecodable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A6A194EE1F4EF3DE00374E92 /* WALCredentialsFetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = A6A194ED1F4EF3DE00374E92 /* WALCredentialsFetcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A6A194F11F4EF47900374E92 /* WALCredentialsProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = A6A194EF1F4EF47900374E92 /* WALCredentialsProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A6A194F21F4EF47900374E92 /* WALCredentialsProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A194F01F4EF47900374E92 /* WALCredentialsProvider.m */; };
@@ -119,7 +121,7 @@
 		A6C7B5B91F49A87A003CCB97 /* WALNSURLSessionApiClient.h in Headers */ = {isa = PBXBuildFile; fileRef = A6C7B5B71F49A87A003CCB97 /* WALNSURLSessionApiClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A6C7B5BA1F49A87A003CCB97 /* WALNSURLSessionApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A6C7B5B81F49A87A003CCB97 /* WALNSURLSessionApiClient.m */; };
 		A6C7B5BC1F49AAF2003CCB97 /* WALApiClient.h in Headers */ = {isa = PBXBuildFile; fileRef = A6C7B5BB1F49AAF2003CCB97 /* WALApiClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A6C7B5C01F49B7DD003CCB97 /* WALPaymentMethodConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = A6C7B5BE1F49B7DD003CCB97 /* WALPaymentMethodConfiguration.h */; };
+		A6C7B5C01F49B7DD003CCB97 /* WALPaymentMethodConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = A6C7B5BE1F49B7DD003CCB97 /* WALPaymentMethodConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A6C7B5C11F49B7DD003CCB97 /* WALPaymentMethodConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = A6C7B5BF1F49B7DD003CCB97 /* WALPaymentMethodConfiguration.m */; };
 		A6C7B5C41F49C151003CCB97 /* WALDatabaseTranslatedStringItem.h in Headers */ = {isa = PBXBuildFile; fileRef = A6C7B5C21F49C151003CCB97 /* WALDatabaseTranslatedStringItem.h */; };
 		A6C7B5C51F49C151003CCB97 /* WALDatabaseTranslatedStringItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A6C7B5C31F49C151003CCB97 /* WALDatabaseTranslatedStringItem.m */; };
@@ -134,14 +136,14 @@
 		A6E66DD61F56ECE700BBACF8 /* WALFlowStateDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = A6E66DD51F56ECE700BBACF8 /* WALFlowStateDelegate.h */; };
 		A6EECEE91F501D4D00954E02 /* WALJSONParser.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EECEE71F501D4D00954E02 /* WALJSONParser.h */; };
 		A6EECEEA1F501D4D00954E02 /* WALJSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EECEE81F501D4D00954E02 /* WALJSONParser.m */; };
-		A6EECEEC1F50551B00954E02 /* WALJSONAutoDecodable.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EECEEB1F50551B00954E02 /* WALJSONAutoDecodable.h */; };
-		A6EECEF01F53FDE400954E02 /* WALTokenVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EECEEE1F53FDE400954E02 /* WALTokenVersion.h */; };
+		A6EECEEC1F50551B00954E02 /* WALJSONAutoDecodable.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EECEEB1F50551B00954E02 /* WALJSONAutoDecodable.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A6EECEF01F53FDE400954E02 /* WALTokenVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EECEEE1F53FDE400954E02 /* WALTokenVersion.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A6EECEF11F53FDE400954E02 /* WALTokenVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EECEEF1F53FDE400954E02 /* WALTokenVersion.m */; };
 		A6EECEF41F54007B00954E02 /* WALConnectorConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EECEF21F54007B00954E02 /* WALConnectorConfiguration.h */; };
 		A6EECEF51F54007B00954E02 /* WALConnectorConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EECEF31F54007B00954E02 /* WALConnectorConfiguration.m */; };
 		A6EECF001F541C6E00954E02 /* WALToken.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EECEFE1F541C6E00954E02 /* WALToken.h */; };
 		A6EECF011F541C6E00954E02 /* WALToken.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EECEFF1F541C6E00954E02 /* WALToken.m */; };
-		A6EECF041F54465400954E02 /* WALTransaction.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EECF021F54465400954E02 /* WALTransaction.h */; };
+		A6EECF041F54465400954E02 /* WALTransaction.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EECF021F54465400954E02 /* WALTransaction.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A6EECF051F54465400954E02 /* WALTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EECF031F54465400954E02 /* WALTransaction.m */; };
 		A6EECF081F5449BA00954E02 /* WALFailureReason.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EECF061F5449BA00954E02 /* WALFailureReason.h */; };
 		A6EECF091F5449BA00954E02 /* WALFailureReason.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EECF071F5449BA00954E02 /* WALFailureReason.m */; };
@@ -160,6 +162,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		46634A611F6159C8003D0DC6 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE.txt; path = ../../LICENSE.txt; sourceTree = "<group>"; };
+		46634A631F6159D1003D0DC6 /* WalleeSDK.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = WalleeSDK.podspec; path = ../../WalleeSDK.podspec; sourceTree = "<group>"; };
 		A63B64301F593D76007B9B15 /* WALDefaultPaymentFlowContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALDefaultPaymentFlowContainer.h; sourceTree = "<group>"; };
 		A63B64311F593D76007B9B15 /* WALDefaultPaymentFlowContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALDefaultPaymentFlowContainer.m; sourceTree = "<group>"; };
 		A63B64361F594B07007B9B15 /* WALPaymentFlowContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALPaymentFlowContainer.h; sourceTree = "<group>"; };
@@ -326,6 +330,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		46634A5B1F6125AE003D0DC6 /* Podspec Metadata */ = {
+			isa = PBXGroup;
+			children = (
+				46634A631F6159D1003D0DC6 /* WalleeSDK.podspec */,
+				46634A611F6159C8003D0DC6 /* LICENSE.txt */,
+			);
+			name = "Podspec Metadata";
+			path = WalleeSDK;
+			sourceTree = "<group>";
+		};
 		A63B642D1F593CF1007B9B15 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -565,6 +579,7 @@
 		A6DE8E701F41A77D006E082B = {
 			isa = PBXGroup;
 			children = (
+				46634A5B1F6125AE003D0DC6 /* Podspec Metadata */,
 				A6DE8E7C1F41A77D006E082B /* WalleeSDK */,
 				A6DE8E871F41A77E006E082B /* WalleeSDKTests */,
 				A6DE8E7B1F41A77D006E082B /* Products */,
@@ -889,6 +904,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46634A621F6159C8003D0DC6 /* LICENSE.txt in Resources */,
+				46634A641F6159D1003D0DC6 /* WalleeSDK.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -24,8 +24,12 @@
     return [super init];
 }
 
+- (instancetype)initWithCredentialsFetcher:(id<WALCredentialsFetcher>)credentialsFetcher {
+    return [self initWithCredentialsFetcher:credentialsFetcher operationQueue:nil];
+}
+
 - (instancetype)initWithCredentialsFetcher:(id<WALCredentialsFetcher>)credentialsFetcher operationQueue:(NSOperationQueue * _Nullable)operationQueue {
-    if (self = [self init]) {
+    if (self = [super init]) {
         _paymentFlowContainerFactory = [[WALDefaultPaymentFlowContainerFactory alloc] init];
         _viewControllerFactory = [[WALDefaultViewControllerFactory alloc] init];
         
