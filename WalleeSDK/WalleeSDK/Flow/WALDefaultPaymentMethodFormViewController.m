@@ -137,10 +137,12 @@ static CGFloat defaultButtonHeight = 44.0f;
 }
 
 - (void)viewDidStartLoading:(UIView *)viewController {
+    self.navigationalView.hidden = YES;
     [self.delegate viewDidStartLoading:viewController];
 }
 
 - (void)viewDidFinishLoading:(UIView *)viewController {
+    self.navigationalView.hidden = NO;
     [self.delegate viewDidFinishLoading:viewController];
 }
 

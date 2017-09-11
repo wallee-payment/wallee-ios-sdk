@@ -48,7 +48,7 @@ static NSString * const cellIdentifier = @"defaultCell";
 }
 
 - (NSString *)confirmationTitle {
-    return @"Token";
+    return WALLocalizedString(@"Go Back", @"title of the navigational go back or restart flow button on the paymentlist view");
 }
 
 - (void)confirmationTapped:(id)sender {

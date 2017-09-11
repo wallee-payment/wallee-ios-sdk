@@ -84,7 +84,6 @@
 }
 
 -(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
-    NSLog(@"webView: didFinishNavigation: %@", navigation);
     self.isLoading = NO;
     [self.delegate viewDidFinishLoading:self];
     [self scheduleTimer];
@@ -103,10 +102,13 @@
     [self.timeoutTimer invalidate];
     NSDate *expire = [NSDate dateWithTimeIntervalSince1970:self.mobileSdkUrl.expiryDate];
     NSTimeInterval interval = expire.timeIntervalSinceNow;
-    self.timeoutTimer = [NSTimer timerWithTimeInterval:interval target:self selector:@selector(timerTick) userInfo:nil repeats:NO];
+    
+    self.timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(timerTick) userInfo:nil repeats:NO];
+    
 }
 
 - (void)cancelTimer {
+    
     [self.timeoutTimer invalidate];
 }
 
@@ -116,7 +118,7 @@
 
 // MARK: - AJAX Handling
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
-    NSLog(@"Did REceive Message: %@ %@", message, message.body);
+    NSLog(@"Did Receive JS Message: %@ %@", message, message.body);
     
     NSString *url = message.body;
     __weak WALDefaultPaymentFormView *weakSelf = self;
@@ -129,7 +131,7 @@
 
 ///Connection to Localhost is handled in case of redirects etc.
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
-    NSLog(@"webView:  decidePolicyFor Action: %@ ", navigationAction.request);
+    NSLog(@"webView:  decidePolicyFor Action: %@ ", navigationAction.request.URL);
     
     __weak WALDefaultPaymentFormView *weakSelf = self;
     BOOL isCallback = [WALPaymentFormAJAXParser parseUrlString:navigationAction.request.URL.absoluteString
@@ -198,7 +200,10 @@
 - (void)sendValidationCommand {
     [self.webView evaluateJavaScript:@"javascript:(function () { MobileSdkHandler.validate(); })()"
                    completionHandler:^(id _Nullable object, NSError * _Nullable error) {
-                       NSLog(@"js evaluate object %@ error %@", object, error);
+                       if (error) {
+                           NSLog(@"js evaluate object %@ error %@", object, error);
+                           [self.delegate paymentView:nil didEncounterError:error];
+                       }
                    }];
 }
 
@@ -211,7 +216,10 @@
 - (void)sendSubmitCommand {
     [self.webView evaluateJavaScript:@"javascript:(function () { MobileSdkHandler.submit(); })()"
                    completionHandler:^(id _Nullable object, NSError * _Nullable error) {
-                       NSLog(@"js evaluate object %@ error %@", object, error);
+                       if (error) {
+                           NSLog(@"js evaluate object %@ error %@", object, error);
+                           [self.delegate paymentView:nil didEncounterError:error];
+                       }
                    }];
 }
 

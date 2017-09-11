@@ -25,8 +25,6 @@ static const CGFloat confirmationButtonPadding = 10.0f;
     self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:self.scrollView];
     
-//    _scrollView.contentInset = UIEdgeInsetsMake(self.topLayoutGuide.length, 0.0, self.bottomLayoutGuide.length, 0.0);
-    
     [self addSubviewsToContentView:self.scrollView];
     [self addConfirmationButton];
     self.scrollView.contentSize = [self contentSizeWithConfirmationButton];
@@ -44,7 +42,7 @@ static const CGFloat confirmationButtonPadding = 10.0f;
 }
 
 - (NSString *)confirmationTitle {
-    return @"none";
+    return @"";
 }
 
 - (void)addConfirmationButton {
