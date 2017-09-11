@@ -32,7 +32,7 @@
                                     <action selector="didTapPayment:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qzn-8F-L03"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sample_product_image" translatesAutoresizingMaskIntoConstraints="NO" id="Rnj-69-dFF">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sample_product_image" translatesAutoresizingMaskIntoConstraints="NO" id="Rnj-69-dFF">
                                 <rect key="frame" x="0.0" y="160" width="375" height="457"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Some Sample Product" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KGh-6j-8WG">

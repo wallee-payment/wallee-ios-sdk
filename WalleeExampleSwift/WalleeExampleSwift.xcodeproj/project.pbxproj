@@ -18,6 +18,7 @@
 		46E34A1F1F665AE1000B8664 /* TestCredentialsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E34A1E1F665AE1000B8664 /* TestCredentialsFetcher.swift */; };
 		46E34A2E1F6661AA000B8664 /* Crypto.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 46E34A251F665C41000B8664 /* Crypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		46E34A2F1F6661AA000B8664 /* CommonCrypto.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 46E34A231F665C37000B8664 /* CommonCrypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		46E34A301F667570000B8664 /* WalleeSDK.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4607F5331F62E234005B8774 /* WalleeSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				46E34A301F667570000B8664 /* WalleeSDK.framework in CopyFiles */,
 				46E34A2E1F6661AA000B8664 /* Crypto.framework in CopyFiles */,
 				46E34A2F1F6661AA000B8664 /* CommonCrypto.framework in CopyFiles */,
 			);
