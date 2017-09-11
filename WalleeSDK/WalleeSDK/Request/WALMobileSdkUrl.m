@@ -62,4 +62,11 @@ static NSString * const WallePaymentMethodQueryParamName = @"paymentMethodConfig
 - (NSString *)debugDescription{
     return [NSString stringWithFormat:@"<%@: %p, \"%@\">", [self class], self, [self description]];
 }
+
+// MARK: - Copy
+- (id)copyWithZone:(NSZone *)zone {
+    WALMobileSdkUrl *url = [[self.class allocWithZone:zone] initWithUrl:self.url expiryDate:self.expiryDate];
+    return url;
+}
+
 @end

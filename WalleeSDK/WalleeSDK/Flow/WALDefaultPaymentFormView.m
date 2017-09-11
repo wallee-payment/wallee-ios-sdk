@@ -10,8 +10,11 @@
 #import <WebKit/WebKit.h>
 #import "WALPaymentFormDelegate.h"
 #import "WALPaymentFormAJAXParser.h"
+#import "WALMobileSdkUrl.h"
 
 @interface WALDefaultPaymentFormView ()
+@property (nonatomic, copy) WALMobileSdkUrl *mobileSdkUrl;
+@property (nonatomic) NSUInteger paymentMethodId;
 @property (nonatomic, strong) WKWebView *webView;
 @property (nonatomic, readwrite) BOOL isLoading;
 @property (nonatomic, readwrite) CGSize contentSize;
@@ -19,7 +22,7 @@
 @property (nonatomic, readwrite) BOOL isSubmitted;
 
 /**
- the reported height of the ccontent via javascript
+ the reported height of the content via javascript
  */
 @property (nonatomic) CGFloat currentWebContentHeight;
 
@@ -28,6 +31,7 @@
  */
 @property (nonatomic) CGFloat currentContentHeight;
 
+@property (nonatomic, strong) NSTimer *timeoutTimer;
 @end
 
 @implementation WALDefaultPaymentFormView
@@ -50,6 +54,11 @@
     return self;
 }
 
+- (void)removeFromSuperview {
+    [self.timeoutTimer invalidate];
+    [super removeFromSuperview];
+}
+
 - (void)addAJAXController:(WKUserContentController *)controller {
     NSString *jsHandler = [self inlineScript];
     
@@ -58,32 +67,27 @@
     [controller addUserScript:ajaxHandler];
 }
 
-- (NSString *)inlineScript {
-    return @"$( document ).ajaxSend(function( event, request, settings )  {"
-    @"    callNativeApp (settings.url);"
-    @"});"
-    
-    @"function callNativeApp (data) {"
-    @"    try {"
-    @"        webkit.messageHandlers.callbackHandler.postMessage(data);"
-    @"    }"
-    @"    catch(err) {"
-    @"        console.log('The native context does not exist yet');"
-    @"    }"
-    @"}";
-
-}
-
-- (void)loadPaymentView:(NSURL *)mobileSdkUrl {
+- (void)loadPaymentView:(WALMobileSdkUrl *)mobileSdkUrl forPaymentMethodId:(NSUInteger)paymentMethodId {
     self.isLoading = YES;
     [self.delegate viewDidStartLoading:self];
-    [self.webView loadRequest:[NSURLRequest requestWithURL:mobileSdkUrl]];
+    
+    self.paymentMethodId = paymentMethodId;
+    self.mobileSdkUrl = mobileSdkUrl;
+    
+    NSError *error;
+    NSURL *url = [self.mobileSdkUrl buildPaymentMethodUrl:self.paymentMethodId error:&error];
+    if (!url) {
+        [self.delegate paymentView:nil didEncounterError:error];
+        return;
+    }
+    [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
 -(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     NSLog(@"webView: didFinishNavigation: %@", navigation);
     self.isLoading = NO;
     [self.delegate viewDidFinishLoading:self];
+    [self scheduleTimer];
 }
 
 
@@ -93,16 +97,51 @@
     // Keyboard can offset this so we disable it for the moment
 }
 
+// MARK: - Timer
+
+- (void)scheduleTimer {
+    [self.timeoutTimer invalidate];
+    NSDate *expire = [NSDate dateWithTimeIntervalSince1970:self.mobileSdkUrl.expiryDate];
+    NSTimeInterval interval = expire.timeIntervalSinceNow;
+    self.timeoutTimer = [NSTimer timerWithTimeInterval:interval target:self selector:@selector(timerTick) userInfo:nil repeats:NO];
+}
+
+- (void)cancelTimer {
+    [self.timeoutTimer invalidate];
+}
+
+- (void)timerTick {
+    [self.delegate viewControllerDidExpire:nil];
+}
+
 // MARK: - AJAX Handling
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
     NSLog(@"Did REceive Message: %@ %@", message, message.body);
     
     NSString *url = message.body;
     __weak WALDefaultPaymentFormView *weakSelf = self;
-    [WALPaymentFormAJAXParser parseUrlString:url resultBlock:^(WALPaymentFormAJAXOperationType resultType, id  _Nullable result) {
+    [WALPaymentFormAJAXParser parseUrlString:url
+                                 resultBlock:^(WALPaymentFormAJAXOperationType resultType, id  _Nullable result) {
+                                     WALDefaultPaymentFormView *strongSelf = weakSelf;
+                                     [strongSelf handleAJAXOperation:resultType withResult:result forDelegate:strongSelf.delegate];
+                                 }];
+}
+
+///Connection to Localhost is handled in case of redirects etc.
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+    NSLog(@"webView:  decidePolicyFor Action: %@ ", navigationAction.request);
+    
+    __weak WALDefaultPaymentFormView *weakSelf = self;
+    BOOL isCallback = [WALPaymentFormAJAXParser parseUrlString:navigationAction.request.URL.absoluteString
+                                                   resultBlock:^(WALPaymentFormAJAXOperationType resultType, id  _Nullable result) {
         WALDefaultPaymentFormView *strongSelf = weakSelf;
         [strongSelf handleAJAXOperation:resultType withResult:result forDelegate:strongSelf.delegate];
     }];
+    if (!isCallback) {
+        NSLog(@"we are forwarded to a new page and as such request more space");
+        [self.delegate paymentViewRequestsExpand];
+    }
+    decisionHandler(isCallback ? WKNavigationActionPolicyCancel : WKNavigationActionPolicyAllow);
 }
 
 - (void)handleAJAXOperation:(WALPaymentFormAJAXOperationType)operation withResult:(id _Nullable)result forDelegate:(id<WALPaymentFormDelegate> _Nullable)delegate {
@@ -134,6 +173,7 @@
             [delegate paymentView:nil didEncounterError:result];
             break;
         case WALPaymentFormAJAXOperationTypeEnlargeView:
+            [self.timeoutTimer invalidate];
             [delegate paymentViewRequestsExpand];
             break;
         case WALPaymentFormAJAXOperationTypeHeightChange:
@@ -207,20 +247,25 @@
 }
 
 
+- (NSString *)inlineScript {
+    return @"$( document ).ajaxSend(function( event, request, settings )  {"
+    @"    callNativeApp (settings.url);"
+    @"});"
+    
+    @"function callNativeApp (data) {"
+    @"    try {"
+    @"        webkit.messageHandlers.callbackHandler.postMessage(data);"
+    @"    }"
+    @"    catch(err) {"
+    @"        console.log('The native context does not exist yet');"
+    @"    }"
+    @"}";
+    
+}
+
 
 // MARK: - WKWebView Delegation
-///Connection to Localhost is handled in case of redirects etc.
-- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
-    NSLog(@"webView:  decidePolicyFor Action: %@ ", navigationAction.request);
-    
-    __weak WALDefaultPaymentFormView *weakSelf = self;
-    BOOL isCallback = [WALPaymentFormAJAXParser parseUrlString:navigationAction.request.URL.absoluteString resultBlock:^(WALPaymentFormAJAXOperationType resultType, id  _Nullable result) {
-        WALDefaultPaymentFormView *strongSelf = weakSelf;
-        [strongSelf handleAJAXOperation:resultType withResult:result forDelegate:strongSelf.delegate];
-    }];
-    
-    decisionHandler(isCallback ? WKNavigationActionPolicyCancel : WKNavigationActionPolicyAllow);
-}
+
 
 -(void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
     NSLog(@"webView:  decidePolicyFor RESPONSE: %@ ", navigationResponse);

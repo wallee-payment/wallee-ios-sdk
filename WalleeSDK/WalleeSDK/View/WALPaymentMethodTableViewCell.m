@@ -53,7 +53,7 @@
     self.paymentImageWebView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.paymentImageWebView.scrollView.scrollEnabled = false;
     self.paymentImageWebView.userInteractionEnabled = false;
-    self.paymentImageWebView.scrollView.contentMode = UIViewContentModeScaleToFill;
+    self.paymentImageWebView.scrollView.contentMode = UIViewContentModeScaleAspectFit;
     
     self.paymentImageWebView.scrollView.contentInset = UIEdgeInsetsZero;
     

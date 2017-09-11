@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 FOUNDATION_EXPORT WALTimestamp const WalleeMobileSdkUrlExpiryTime;
 FOUNDATION_EXPORT WALTimestamp const WalleeMobileSdkUrlThreshold;
 
-@interface WALMobileSdkUrl : NSObject
+@interface WALMobileSdkUrl : NSObject<NSCopying>
 @property (nonatomic, copy, readonly) NSString *url;
 @property (nonatomic, readonly) NSUInteger expiryDate;
 @property (nonatomic, readonly) BOOL isExpired;
