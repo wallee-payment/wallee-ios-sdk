@@ -19,6 +19,8 @@
 		46E34A2E1F6661AA000B8664 /* Crypto.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 46E34A251F665C41000B8664 /* Crypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		46E34A2F1F6661AA000B8664 /* CommonCrypto.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 46E34A231F665C37000B8664 /* CommonCrypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		46E34A301F667570000B8664 /* WalleeSDK.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4607F5331F62E234005B8774 /* WalleeSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		46E34A311F6675DC000B8664 /* Crypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46E34A251F665C41000B8664 /* Crypto.framework */; };
+		46E34A321F6675DF000B8664 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46E34A231F665C37000B8664 /* CommonCrypto.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +102,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46E34A321F6675DF000B8664 /* CommonCrypto.framework in Frameworks */,
+				46E34A311F6675DC000B8664 /* Crypto.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -540,6 +544,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 5NW5G4TUSD;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = WalleeExampleSwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.smoca.WalleeExampleSwiftTests;
@@ -555,6 +563,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 5NW5G4TUSD;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = WalleeExampleSwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.smoca.WalleeExampleSwiftTests;

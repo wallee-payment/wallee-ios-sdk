@@ -96,89 +96,6 @@ class WalleeExampleSwiftTests: XCTestCase {
 
     // MARK: Helpers
 
-    let USER_ID: UInt = 526
-    let HMAC_KEY: String = "R1x818iST62GkGMgkm1zYKQ3N0Y7YiRRFdrycbs7KII="
-    let SPACE_ID: UInt = 412
-
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-
-    func testCredentials() {
-        let expectation = self.expectation(description: "Credentials built")
-        self.createCredentials(userId: USER_ID,
-                spaceId: SPACE_ID,
-                macKey: HMAC_KEY,
-                completion: { (credentials: WALCredentials?, _: Error?) in
-                    XCTAssertNotNil(credentials, "Credentials are nil")
-                    expectation.fulfill()
-                })
-        self.waitForExpectations(timeout: 7.0, handler: { (error: Error?) -> Void in
-            if error != nil {
-                XCTFail("Credentials Timeout")
-            }
-        })
-    }
-
-    /// Tests correct authMessage creation according to:
-    /// https://app-wallee.com/en-us/doc/api/web-service#_example
-    func testHMACMessage() {
-        let inputString = self.walleeSecureString(macVersion: 1,
-                userId: 2481632,
-                timestamp: 1425387916,
-                method: "GET",
-                path: "/space/1/payment/transaction/987/iframe?paymentMeanConfigurationId=123")
-        guard let message = inputString.data(using: .utf8) else {
-            XCTFail("Could not convert String to data")
-            return
-        }
-        let hexString = self.walleeHexRepresentationFromData(data: message)
-        let authMessage = "0x31, 0x7c, 0x32, 0x34, 0x38, 0x31, 0x36, 0x33, 0x32, 0x7c, 0x31, 0x34, 0x32, 0x35, 0x33, 0x38, 0x37, 0x39, 0x31, 0x36, 0x7c, 0x47, 0x45, 0x54, 0x7c, 0x2f, 0x73, 0x70, 0x61, 0x63, 0x65, 0x2f, 0x31, 0x2f, 0x70, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x2f, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x2f, 0x39, 0x38, 0x37, 0x2f, 0x69, 0x66, 0x72, 0x61, 0x6d, 0x65, 0x3f, 0x70, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x4d, 0x65, 0x61, 0x6e, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x3d, 0x31, 0x32, 0x33"
-        XCTAssertEqual(hexString, authMessage, "Secure string is not correct.")
-    }
-
-    /// Tests correct key transformation according to:
-    /// https://app-wallee.com/en-us/doc/api/web-service#_example
-    func testHMACKey() {
-        let decodedSecret = Data(base64Encoded: "OWOMg2gnaSx1nukAM6SN2vxedfY1yLPONvcTKbhDv7I=",
-                options: .ignoreUnknownCharacters)
-        let hexKey = self.walleeHexRepresentationFromData(data: decodedSecret)
-        let encodedKey = "0x39, 0x63, 0x8c, 0x83, 0x68, 0x27, 0x69, 0x2c, 0x75, 0x9e, 0xe9, 0x00, 0x33, 0xa4, 0x8d, 0xda, 0xfc, 0x5e, 0x75, 0xf6, 0x35, 0xc8, 0xb3, 0xce, 0x36, 0xf7, 0x13, 0x29, 0xb8, 0x43, 0xbf, 0xb2"
-        XCTAssertEqual(hexKey, encodedKey, "Encoded key is not correct")
-    }
-
-    func testHMACGeneration() {
-        let inputString = self.walleeSecureString(macVersion: 1,
-                userId: 2481632,
-                timestamp: 1425387916,
-                method: "GET",
-                path: "/space/1/payment/transaction/987/iframe?paymentMeanConfigurationId=123")
-        guard let message = inputString.data(using: .utf8),
-              let decodedSecret = Data(base64Encoded: "OWOMg2gnaSx1nukAM6SN2vxedfY1yLPONvcTKbhDv7I=",
-                      options: .ignoreUnknownCharacters)
-                else {
-            XCTFail("Could not decode Message / Secret.")
-            return
-        }
-
-        let hMac = self.walleeMacValueFromMessage(message: message, withKey: decodedSecret)
-        let hexMac = walleeHexRepresentationFromData(data: hMac)
-        let mac = "0x1c, 0x71, 0x91, 0xd8, 0x34, 0x2a, 0xaa, 0x37, 0x7f, 0x3f, 0x97, 0x06, 0x9d, 0xa5, 0x7c, 0x03, 0x62, 0xbb, 0x69, 0x31, 0x05, 0xa7, 0xed, 0xfd, 0xd6, 0x1e, 0x74, 0x03, 0x26, 0x83, 0xd5, 0x88, 0x70, 0x35, 0xa3, 0xe3, 0xbf, 0x0f, 0xeb, 0xef, 0x4c, 0x11, 0xdf, 0x15, 0x81, 0xe7, 0xd3, 0x53, 0x83, 0x1d, 0xc5, 0x88, 0x04, 0x14, 0x77, 0x2f, 0xaf, 0x2d, 0xef, 0x20, 0xe1, 0x3e, 0x3c, 0x0e"
-        XCTAssertEqual(hexMac, mac, "MAC Data is not correct")
-
-        let base64Mac = "HHGR2DQqqjd/P5cGnaV8A2K7aTEFp+391h50AyaD1YhwNaPjvw/r70wR3xWB59NTgx3FiAQUdy+vLe8g4T48Dg=="
-        let base64MacCreated = hMac.base64EncodedString()
-        XCTAssertEqual(base64MacCreated, base64Mac, "Base64 encoded HMAC is not correct")
-    }
-
-    // MARK: Helpers
-
     func createCredentials(userId: UInt,
                            spaceId: UInt,
                            macKey: String,
@@ -318,30 +235,5 @@ class WalleeExampleSwiftTests: XCTestCase {
                 "  \"merchantReference\" : \"DEV-2630\"\n" +
                 "}"
         return dataString.data(using: .utf8)!
-    }
-
-    func walleeSecureString(macVersion: Int, userId: UInt, timestamp: UInt, method: String, path: String) -> String {
-        return "\(macVersion)|\(userId)|\(timestamp)|\(method)|\(path)"
-    }
-
-    func walleeMacValueFromMessage(message: Data, withKey key: Data) -> Data {
-        return HMAC.sign(data: message, algorithm: .sha512, key: key)
-    }
-
-    func walleeHexRepresentationFromData(data: Data?) -> String {
-        var hexString: String = ""
-        guard (data != nil) else {
-            return hexString
-        }
-        var firstbyte = true
-        for byte in data! {
-            if (!firstbyte) {
-                hexString = hexString.appending(", ")
-            }
-            hexString = hexString.appendingFormat("0x%02x", byte)
-            firstbyte = false
-        }
-        return hexString
-
     }
 }
