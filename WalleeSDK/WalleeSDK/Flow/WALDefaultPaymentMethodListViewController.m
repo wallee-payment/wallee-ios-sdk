@@ -7,7 +7,14 @@
 //
 
 #import "WALDefaultPaymentMethodListViewController.h"
+
 #import "WALPaymentMethodConfiguration.h"
+#import "WALLoadedPaymentMethods.h"
+
+#import "WALPaymentMethodTableViewCell.h"
+
+#import "WALTranslation.h"
+#import "WALDefaultTheme.h"
 
 static NSString * const cellIdentifier = @"defaultCell";
 
@@ -19,23 +26,45 @@ static NSString * const cellIdentifier = @"defaultCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.view.backgroundColor = self.theme.primaryBackgroundColor;
+    self.title = WALLocalizedString(@"Select PaymentMethod", @"title for the payment method list view controller");
+}
+
+- (void)addSubviewsToContentView:(UIView *)contentView {
+    CGFloat height = self.loadedPaymentMethods.paymentMethodConfigurations.count * WALPaymentMethodTableViewCell.defaultCellHeight;
+    CGRect tableRect = CGRectMake(contentView.bounds.origin.x, contentView.bounds.origin.y, contentView.bounds.size.width, height);
+    self.tableView = [[UITableView alloc] initWithFrame:tableRect style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    [self.view addSubview:self.tableView];
-    self.title = @"Select PaymentMethod";
+    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.tableView.scrollEnabled = false;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.backgroundColor = self.theme.secondaryBackgroundColor;
+    [contentView addSubview:self.tableView];
+}
+
+- (CGSize)contentSize {
+    return CGSizeMake(self.tableView.frame.size.width, self.tableView.frame.origin.y + self.tableView.frame.size.height);
+}
+
+- (NSString *)confirmationTitle {
+    return @"Token";
+}
+
+- (void)confirmationTapped:(id)sender {
+    self.onBack();
 }
 
 // MARK: - TableViewDelegate and Datasource
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    WALPaymentMethodConfiguration *method = self.paymentMethods[indexPath.row];
-    if (self.onPaymentMethodSelected) {
+    WALPaymentMethodConfiguration *method = self.loadedPaymentMethods.paymentMethodConfigurations[indexPath.row];
+    if (self.onPaymentMethodSelected && method) {
         self.onPaymentMethodSelected(method);
     }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.paymentMethods.count;
+    return self.loadedPaymentMethods.paymentMethodConfigurations.count;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -43,16 +72,17 @@ static NSString * const cellIdentifier = @"defaultCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    WALPaymentMethodTableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[WALPaymentMethodTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell.theme = self.theme;
     }
     
-    WALPaymentMethodConfiguration *method = self.paymentMethods[indexPath.row];
-    cell.textLabel.text = method.name;
+    WALPaymentMethodConfiguration *method = self.loadedPaymentMethods.paymentMethodConfigurations[indexPath.row];
+    WALPaymentMethodIcon *icon = self.loadedPaymentMethods.paymentMethodIcons[method];
+    [cell configureWith:method.name paymentIcon:icon];
     
     return cell;
-    //    cell.imageView
 }
 
 @end

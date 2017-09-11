@@ -11,8 +11,16 @@
 #import "WALFlowCoordinator+StateDelegate.h"
 #import "WALPaymentFlowDelegate.h"
 #import "WALFlowStateDelegate.h"
+
 #import "WALPaymentErrorHelper.h"
 #import "WALApiClient.h"
+#import "WALIconCache.h"
+#import "WALNSURLIconLoader.h"
+
+#import "WALTokenVersion.h"
+#import "WALConnectorConfiguration.h"
+#import "WALPaymentMethodConfiguration.h"
+#import "WALLoadedTokens.h"
 
 @interface WALTokenLoadingStateHandler ()
 
@@ -45,13 +53,23 @@
             return;
         }
         
-        // !!!: testing
         if (tokenVersions.count <= 0) {
-//        if (tokenVersions.count > 0) {
             [weakCoordinator changeStateTo:WALFlowStatePaymentMethodLoading parameters:nil];
         } else {
-            // TODO: Load icons for payment configurations
-            [weakCoordinator changeStateTo:WALFlowStateTokenSelection parameters:@{WALFlowTokensParameter: tokenVersions}];
+            
+            NSMutableArray *paymentMethodConfigurations = [NSMutableArray arrayWithCapacity:10];
+            for (WALTokenVersion *tokenVersion in tokenVersions) {
+                [paymentMethodConfigurations addObject: tokenVersion.paymentConnectorConfiguration.paymentMethodConfiguration];
+            }
+            
+            [weakCoordinator.configuration.iconCache fetchIcons:paymentMethodConfigurations completion:^(NSDictionary<WALPaymentMethodConfiguration *,WALPaymentMethodIcon *> * _Nullable paymentMethodIcons, NSError * _Nullable error) {
+                
+                WALLoadedTokens *loadedTokens = [[WALLoadedTokens alloc] initWithTokenVersions:tokenVersions paymentMethodIcons:paymentMethodIcons];
+                [weakCoordinator changeStateTo:WALFlowStateTokenSelection parameters:@{WALFlowTokensParameter: loadedTokens}];
+
+            }];
+
+            
         }
         
     }];

@@ -7,6 +7,7 @@
 //
 
 #import "WALDefaultAwaitingFinalStateViewController.h"
+#import "WALTranslation.h"
 
 @interface WALDefaultAwaitingFinalStateViewController ()
 
@@ -16,10 +17,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = UIColor.whiteColor;
-    UILabel *label = [[UILabel alloc] initWithFrame:self.view.bounds];
-    label.text = [NSString stringWithFormat:@"We are awaiting a feedback from your payment.\nThis may take several minutes until we receive a final feedback."];
-    [self.view addSubview:label];
+    self.stateLabel.text = WALLocalizedString(@"We are awaiting a feedback from your payment.\nThis may take several minutes until we receive a final feedback.", @"awaiting final state view controller message");
+    
 }
 
 - (void)didReceiveMemoryWarning {

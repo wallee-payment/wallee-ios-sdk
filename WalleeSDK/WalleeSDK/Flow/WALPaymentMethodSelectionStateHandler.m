@@ -8,6 +8,7 @@
 
 #import "WALPaymentMethodSelectionStateHandler.h"
 #import "WALPaymentMethodConfiguration.h"
+#import "WALLoadedPaymentMethods.h"
 
 #import "WALFlowCoordinator+StateDelegate.h"
 
@@ -21,7 +22,7 @@
 #import "WALApiClient.h"
 
 @interface WALPaymentMethodSelectionStateHandler ()
-@property (nonatomic, copy) NSArray<WALPaymentMethodConfiguration *> *paymentMethods;
+@property (nonatomic, copy) WALLoadedPaymentMethods *loadedPaymentMethods;
 @end
 
 @implementation WALPaymentMethodSelectionStateHandler
@@ -30,16 +31,16 @@
     return [self stateWithPaymentMethods:parameters[WALFlowPaymentMethodsParameter]];
 }
 
-+ (instancetype)stateWithPaymentMethods:(NSArray<WALPaymentMethodConfiguration *> *)paymentMethods {
-    if (!paymentMethods || paymentMethods.count <= 0) {
++ (instancetype)stateWithPaymentMethods:(WALLoadedPaymentMethods *)loadedPaymentMethods {
+    if (loadedPaymentMethods.paymentMethodConfigurations.count <= 0) {
         return nil;
     }
-    return [[self alloc] initWithPaymentMethods:paymentMethods];
+    return [[self alloc] initWithPaymentMethods:loadedPaymentMethods];
 }
 
-- (instancetype)initWithPaymentMethods:(NSArray<WALPaymentMethodConfiguration *> *)paymentMethods {
+- (instancetype)initWithPaymentMethods:(WALLoadedPaymentMethods *)loadedPaymentMethods {
     if (self = [super init]) {
-        _paymentMethods = paymentMethods;
+        _loadedPaymentMethods = loadedPaymentMethods;
     }
     return self;
 }
@@ -53,7 +54,7 @@
         return NO;
     }
     if ([self dryTriggerAction:flowAction]) {
-        [coordinator changeStateTo:WALFlowStatePaymentMethodLoading parameters:nil];
+        [coordinator changeStateTo:WALFlowStateTokenLoading parameters:nil];
         return YES;
     } else {
         return NO;
@@ -80,8 +81,11 @@
     };
     
     UIViewController *controller = [coordinator.configuration.viewControllerFactory
-                                    buildPaymentMethodListViewWith:self.paymentMethods
-                                    onSelection:onSelectionBlock];
+                                    buildPaymentMethodListViewWith:self.loadedPaymentMethods
+                                    onSelection:onSelectionBlock
+                                    onBack:^{
+                                        [weakSelf triggerAction:WALFlowActionGoBack WithCoordinator:weakCoordinator];
+                                    }];
     return controller;
 }
 

@@ -35,7 +35,7 @@
 - (void)startPaymentWithBuilderSyntax {
     NSError *error;
     TestCredentialsFetcher *fetcher = [[TestCredentialsFetcher alloc] init];
-    WALFlowConfigurationBuilder *builder = [[WALFlowConfigurationBuilder alloc] initWithCredentialsFetcher:fetcher];
+    WALFlowConfigurationBuilder *builder = [[WALFlowConfigurationBuilder alloc] initWithCredentialsFetcher:fetcher operationQueue:nil];
     //additional setup
     builder.delegate = self;
     

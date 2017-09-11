@@ -9,5 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface WALTranslation : NSObject
-+ (NSString *)WALLocalizedString:(NSString *)key;
++ (NSString * _Nullable)localizedString:(NSString * _Nonnull)key;
+
 @end
+
+static inline NSString * _Nonnull WALLocalizedString(NSString* _Nonnull key, NSString * _Nullable __unused comment) {
+    return [WALTranslation localizedString:key];
+}

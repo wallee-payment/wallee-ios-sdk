@@ -22,9 +22,9 @@ static NSString * const walItems = @"items";
 - (instancetype)initWithAvailableLanguages:(NSArray<NSString *> *)availableLanguages displayName:(NSString *)displayName items:(NSArray<WALDatabaseTranslatedStringItem *> *)items {
     self = [super init];
     if (self) {
-        _availableLanguages = availableLanguages;
-        _displayName = displayName;
-        _items = items;
+        _availableLanguages = availableLanguages.copy;
+        _displayName = displayName.copy;
+        _items = items.copy;
     }
     return self;
 }

@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WALDefaultStateBaseViewController.h"
+
 @class WALTransaction;
 
-@interface WALDefaultFailureViewController : UIViewController
+@interface WALDefaultFailureViewController : WALDefaultStateBaseViewController
 @property (nonatomic, copy) WALTransaction *transaction;
 @end

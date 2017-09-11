@@ -19,6 +19,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, weak) id<WALPaymentFormDelegate> delegate;
 
+/**
+ the webview that displayes the paymentform
+ */
+@property (nonatomic, strong, readonly) WKWebView *webView;
+
 @property (nonatomic, readonly) BOOL isLoading;
 @property (nonatomic, readonly) BOOL isSubmitted;
 /**

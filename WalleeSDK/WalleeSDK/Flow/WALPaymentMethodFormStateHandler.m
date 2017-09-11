@@ -117,7 +117,12 @@
         return nil;
     }
     if (!self.paymentForm) {
-        self.paymentForm = [coordinator.configuration.viewControllerFactory buildPaymentMethodFormViewWithURL:self.sdkUrl];
+        __weak WALPaymentMethodFormStateHandler *weakSelf = self;
+        self.paymentForm = [coordinator.configuration.viewControllerFactory buildPaymentMethodFormViewWithURL:self.sdkUrl onBack:^{
+            
+            [weakSelf triggerAction:WALFlowActionGoBack WithCoordinator:weakSelf.coordinatorDelegate];
+            
+        }];
         self.paymentForm.delegate = self;
     }
         // TODO: Callback for submit?
@@ -164,6 +169,7 @@
     [self readAndEvaluateTransactionForState:WALFlowStateAwaitingFinalState];
 }
 
+// MARK: - Internal
 - (void)readAndEvaluateTransactionForState:(WALFlowState)state {
     [self.coordinatorDelegate waiting];
     __weak WALPaymentMethodFormStateHandler *weakSelf = self;

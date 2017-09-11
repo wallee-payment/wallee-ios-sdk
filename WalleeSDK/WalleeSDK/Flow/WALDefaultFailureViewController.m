@@ -8,6 +8,7 @@
 
 #import "WALDefaultFailureViewController.h"
 #import "WALTransaction.h"
+#import "WALTranslation.h"
 
 @interface WALDefaultFailureViewController ()
 
@@ -17,12 +18,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = UIColor.whiteColor;
-    UILabel *label = [[UILabel alloc] initWithFrame:self.view.bounds];
-    label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    label.numberOfLines = 0;
-    label.text = [NSString stringWithFormat:@"Transaction Failed: %@", _transaction.userFailureMessage];
-    [self.view addSubview:label];
+    NSString *str = WALLocalizedString(@"Transaction Failed:", @"message preamble for a failed transaction");
+    self.stateLabel.text = [NSString stringWithFormat:@"%@\n %@", str, _transaction.userFailureMessage];
 }
 
 @end
