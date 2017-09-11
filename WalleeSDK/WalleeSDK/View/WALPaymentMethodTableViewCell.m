@@ -123,7 +123,7 @@
 - (void)layoutSubviews{
     [super layoutSubviews];
     static CGFloat contentVertPadding = 10.0f;
-    static CGFloat contentHozPadding = 2.0f
+    static CGFloat contentHozPadding = 2.0f;
     CGRect origin = self.contentView.bounds;
     CGRect imageRect = CGRectMake(contentVertPadding + origin.origin.x, origin.origin.y + contentHozPadding, origin.size.height, origin.size.height - 2*contentHozPadding);
     self.paymentImageWebView.frame = imageRect;
