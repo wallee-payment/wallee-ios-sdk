@@ -35,6 +35,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) id<WALApiClient> webServiceApiClient;
 
 /**
+ Initializes a Builder that validates correctly and as such can be used to initialize a PaymentFlow
+ uses the designated initializer with a nil @c operationQueue
+
+ @param credentialsFetcher the credentialsFetchr supplied by the implementor of the SDK
+ @return a fully initialized and usable Builder object
+ */
+- (instancetype)initWithCredentialsFetcher:(id<WALCredentialsFetcher>)credentialsFetcher;
+
+/**
  Initializes a Builder that validates correctly and as such can be used to initialize
  a PaymentFlow
 
@@ -43,8 +52,9 @@ NS_ASSUME_NONNULL_BEGIN
  and @c WALNSURLIconLoader . When @c nil the @c NSURLSession default queue is used
  @return a fully initialized and usable Builder object
  */
-- (instancetype)initWithCredentialsFetcher:(id<WALCredentialsFetcher>)credentialsFetcher operationQueue:(NSOperationQueue * _Nullable)operationQueue;
-- (instancetype)init;
+- (instancetype)initWithCredentialsFetcher:(id<WALCredentialsFetcher>)credentialsFetcher operationQueue:(NSOperationQueue * _Nullable)operationQueue NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_DESIGNATED_INITIALIZER;
 
 /**
  Checks if a `WALFLowConfiguration` Object can be created from this Builder
