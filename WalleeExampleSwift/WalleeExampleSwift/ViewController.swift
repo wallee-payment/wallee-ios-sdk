@@ -62,7 +62,7 @@ class ViewController: UIViewController, WALPaymentFlowDelegate {
     func flowCoordinator(_ coordinator: WALFlowCoordinator!, transactionDidFail transaction: WALTransaction!) {
         var error: NSError? = nil
         WALErrorHelper.populate(&error, withFailedTransaction: transaction)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.init(uptimeNanoseconds: 3 * NSEC_PER_SEC), execute: {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime(uptimeNanoseconds: 3 * NSEC_PER_SEC), execute: {
             guard let error = error else {
                 return
             }
