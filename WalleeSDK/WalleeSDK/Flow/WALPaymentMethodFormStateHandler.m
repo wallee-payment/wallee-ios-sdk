@@ -90,9 +90,7 @@
 - (void)performWithCoordinator:(WALFlowCoordinator *)coordinator {
     [coordinator waiting];
     self.coordinatorDelegate = coordinator;
-    // delegate
-    
-    //load payment url
+
     __weak WALFlowCoordinator *weakCoordinator = coordinator;
     __weak WALPaymentMethodFormStateHandler *weakSelf = self;
     [coordinator.configuration.webServiceApiClient buildMobileSdkUrl:^(WALMobileSdkUrl * _Nullable mobileSdkUrl, NSError * _Nullable error) {
@@ -124,7 +122,6 @@
                             }];
         self.paymentForm.delegate = self;
     }
-        // TODO: Callback for submit?
     return self.paymentForm;
 }
 

@@ -45,6 +45,7 @@ static NSString * const WallePaymentMethodQueryParamName = @"paymentMethodConfig
 
 - (NSURL *)buildPaymentMethodUrl:(NSUInteger)paymentMethodConfigurationId error:(NSError * _Nullable __autoreleasing *)error {
     NSTimeInterval current = [[NSDate date] timeIntervalSince1970];
+    
     if (self.expiryDate < current) {
         [WALErrorHelper populate:error withIllegalStateWithMessage:@"The URL is expired. It cannot be used anymore to create a payment method specific URL."];
         return nil;
