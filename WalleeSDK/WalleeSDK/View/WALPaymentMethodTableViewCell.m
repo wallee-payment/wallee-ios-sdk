@@ -53,7 +53,7 @@
     self.paymentImageWebView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.paymentImageWebView.scrollView.scrollEnabled = false;
     self.paymentImageWebView.userInteractionEnabled = false;
-    self.paymentImageWebView.scrollView.contentMode = UIViewContentModeScaleToFill;
+    self.paymentImageWebView.scrollView.contentMode = UIViewContentModeScaleAspectFit;
     
     self.paymentImageWebView.scrollView.contentInset = UIEdgeInsetsZero;
     
@@ -122,10 +122,13 @@
 
 - (void)layoutSubviews{
     [super layoutSubviews];
+    static CGFloat contentVertPadding = 10.0f;
+    static CGFloat contentHozPadding = 2.0f
     CGRect origin = self.contentView.bounds;
-    CGRect imageRect = CGRectMake(origin.origin.x, origin.origin.y, origin.size.height, origin.size.height);
+    CGRect imageRect = CGRectMake(contentVertPadding + origin.origin.x, origin.origin.y + contentHozPadding, origin.size.height, origin.size.height - 2*contentHozPadding);
     self.paymentImageWebView.frame = imageRect;
-    CGRect labelRect = CGRectMake(imageRect.size.width+30.0, origin.origin.y, origin.size.width - imageRect.size.width, origin.size.height);
+    CGFloat labelX = imageRect.origin.x + imageRect.size.width + contentVertPadding;
+    CGRect labelRect = CGRectMake(labelX, origin.origin.y, origin.size.width - imageRect.size.width, origin.size.height);
     self.paymentNameLabel.frame = labelRect;    
 }
 

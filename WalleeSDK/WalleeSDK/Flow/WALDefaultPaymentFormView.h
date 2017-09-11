@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
 #import "WALPaymentFormView.h"
+@class WALMobileSdkUrl;
 @protocol WALPaymentFormDelegate;
 
 @interface WALDefaultPaymentFormView : UIView<WALPaymentFormView, WKNavigationDelegate, WKScriptMessageHandler>
@@ -37,6 +38,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, readonly) CGSize contentSize;
 
-- (void)loadPaymentView:(NSURL *)mobileSdkUrl;
+/**
+ instructs the view to load the given @WALMobileSdkUrl
+
+ @param mobileSdkUrl the sdkUrl from which to create the end url
+ @param paymentMethodId the paymentMethodId to use for url creation
+ */
+- (void)loadPaymentView:(WALMobileSdkUrl *)mobileSdkUrl forPaymentMethodId:(NSUInteger)paymentMethodId;
+
 NS_ASSUME_NONNULL_END
 @end

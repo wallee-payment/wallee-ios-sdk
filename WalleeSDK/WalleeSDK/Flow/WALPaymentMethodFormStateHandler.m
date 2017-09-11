@@ -23,7 +23,7 @@
 
 @interface WALPaymentMethodFormStateHandler ()
 @property (nonatomic) NSUInteger paymentMethodId;
-@property (nonatomic, copy) NSURL *sdkUrl;
+@property (nonatomic, copy) WALMobileSdkUrl *sdkUrl;
 @property (nonatomic, strong) UIViewController<WALPaymentFormView> *paymentForm;
 /// this is the only state that has to hold a reference to the @c WALCoordinator
 /// because of its asynchronous delegate methods
@@ -90,9 +90,7 @@
 - (void)performWithCoordinator:(WALFlowCoordinator *)coordinator {
     [coordinator waiting];
     self.coordinatorDelegate = coordinator;
-    // delegate
-    
-    //load payment url
+
     __weak WALFlowCoordinator *weakCoordinator = coordinator;
     __weak WALPaymentMethodFormStateHandler *weakSelf = self;
     [coordinator.configuration.webServiceApiClient buildMobileSdkUrl:^(WALMobileSdkUrl * _Nullable mobileSdkUrl, NSError * _Nullable error) {
@@ -100,12 +98,8 @@
             [WALPaymentErrorHelper distributeNetworkError:error forCoordinator:weakCoordinator];
             return;
         }
-        WALPaymentMethodFormStateHandler *strongSelf = weakSelf;
-        strongSelf.sdkUrl = [mobileSdkUrl buildPaymentMethodUrl:strongSelf.paymentMethodId error:&error];
-        if (!strongSelf.sdkUrl) {
-            [WALPaymentErrorHelper distribute:error forCoordinator:weakCoordinator];
-            return;
-        }
+        
+        weakSelf.sdkUrl = mobileSdkUrl;
         
         // send on weak. noop if already deallocated
         [weakCoordinator ready];
@@ -118,14 +112,16 @@
     }
     if (!self.paymentForm) {
         __weak WALPaymentMethodFormStateHandler *weakSelf = self;
-        self.paymentForm = [coordinator.configuration.viewControllerFactory buildPaymentMethodFormViewWithURL:self.sdkUrl onBack:^{
-            
-            [weakSelf triggerAction:WALFlowActionGoBack WithCoordinator:weakSelf.coordinatorDelegate];
-            
-        }];
+        self.paymentForm = [coordinator.configuration.viewControllerFactory
+                            buildPaymentMethodFormViewWithURL:self.sdkUrl
+                            paymentMethod:self.paymentMethodId
+                            onBack:^{
+                                
+                                [weakSelf triggerAction:WALFlowActionGoBack WithCoordinator:weakSelf.coordinatorDelegate];
+                                
+                            }];
         self.paymentForm.delegate = self;
     }
-        // TODO: Callback for submit?
     return self.paymentForm;
 }
 
@@ -149,7 +145,7 @@
 }
 
 -(void)viewControllerDidExpire:(UIViewController *)viewController {
-// TODO: Did Expire! --> Handle State internally?
+
     [self.coordinatorDelegate changeStateTo:WALFlowStatePaymentForm parameters:@{WALFlowPaymentMethodsParameter: @(self.paymentMethodId)}];
 }
 
@@ -167,6 +163,22 @@
 
 - (void)paymentViewAwaitsFinalState:(UIViewController *)viewController {
     [self readAndEvaluateTransactionForState:WALFlowStateAwaitingFinalState];
+}
+
+- (void)paymentViewDidRequestChangePaymentMethod {
+    [self triggerAction:WALFlowActionGoBack WithCoordinator:self.coordinatorDelegate];
+}
+
+- (void)paymentViewDidChangeContentSize:(CGSize)size {
+    // the handler does not care about this message
+}
+
+- (void)paymentViewRequestsExpand {
+    // the handler does not care about this message
+}
+
+- (void)paymentViewRequestsReset {
+    // the handler does not care about this message
 }
 
 // MARK: - Internal

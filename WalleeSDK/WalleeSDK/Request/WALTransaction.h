@@ -26,7 +26,7 @@ typedef NS_ENUM(NSInteger, WALTransactionState){
 };
 
 @interface WALTransaction : NSObject<NSCopying, WALJSONDecodable, WALJSONAutoDecodable>
-
+//#include "WALAPIDataType.h"
 NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, copy) NSString *acceptHeader;
 //private List<PaymentMethodBrand> allowedPaymentMethodBrands;

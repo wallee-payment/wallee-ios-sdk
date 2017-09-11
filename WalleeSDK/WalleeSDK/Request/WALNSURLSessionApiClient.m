@@ -61,15 +61,30 @@
         NSString *endpoint = [NSString stringWithFormat:@"%@?credentials=%@", WalleeEndpointBuildMobilUrl, credentials.credentials];
         NSURL *url = [NSURL URLWithString:endpoint relativeToURL:self.baseURL];
         
-        NSURLSessionDataTask *task = [self.urlSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-            if (data) {
-                NSString *url = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                WALTimestamp expiryDate = [[NSDate date] timeIntervalSince1970] + WalleeMobileSdkUrlExpiryTime;
-                WALMobileSdkUrl *mobileUrl = [[WALMobileSdkUrl alloc] initWithUrl:url expiryDate:expiryDate];
-                completion(mobileUrl, nil);
-            } else {
-                completion(nil, error);
+        NSURLSessionDataTask *task = [self.urlSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable responseError) {
+            
+            NSError *error;
+            
+            if (!data) {
+                completion(nil, responseError);
+                return;
             }
+            BOOL shouldHandle = [WALNSURLSessionHelper shouldHandleResponseCode:response];
+            if (!shouldHandle) {
+                [WALNSURLSessionHelper jsonFromData:data response:response responseError:responseError error:&error];
+                completion(nil, error);
+                return;
+            }
+            
+            NSString *url = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            WALTimestamp expiryDate = [[NSDate date] timeIntervalSince1970] + WalleeMobileSdkUrlExpiryTime;
+            WALMobileSdkUrl *mobileUrl = [WALMobileSdkUrl mobileSdkUrlWith:url expiryDate:expiryDate error:&error];
+            if (!mobileUrl) {
+                completion(nil, error);
+                return;
+            }
+            completion(mobileUrl, nil);
+            
         }];
         
         [task resume];

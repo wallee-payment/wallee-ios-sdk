@@ -31,7 +31,7 @@ static NSString * const cellIdentifier = @"defaultCell";
 //    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = self.theme.primaryBackgroundColor;
     
-    self.title = WALLocalizedString(@"Select Token", @"title for the token list view controller");
+    self.title = WALLocalizedString(@"token_list_title", @"title for the token list view controller");
 }
 
 - (BOOL)isEqual:(id)object {
@@ -57,7 +57,7 @@ static NSString * const cellIdentifier = @"defaultCell";
 }
 
 - (NSString *)confirmationTitle {
-    return WALLocalizedString(@"Other", @"the title of the button to select another pament method");
+    return WALLocalizedString(@"token_list_chose_payment_method", @"the title of the button to select another pament method");
 }
 
 // MARK: - TableViewDelegate and Datasource

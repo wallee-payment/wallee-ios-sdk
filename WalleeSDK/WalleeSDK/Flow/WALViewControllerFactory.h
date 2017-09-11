@@ -25,11 +25,21 @@ typedef void(^WALPaymentMethodSubmited)(WALPaymentMethodConfiguration *_Nonnull)
                                          onSelection:(WALTokenVersionSelected _Nullable )callback
                                onChangePaymentMethod:(WALOnBackBlock _Nullable)changePaymentMethod;
 
-- (UIViewController *_Nonnull)buildPaymentMethodListViewWith:(WALLoadedPaymentMethods *_Nonnull)loadedPaymentMethods
-                                                 onSelection:(WALPaymentMethodSelected _Nullable )callback
-                                                      onBack:(WALOnBackBlock _Nonnull  _Nonnull )onBack;
+/**
+ The payment method selection view allows the user to select from a list of payment methods
+ the one which should be used to process the transaction with.
 
-- (UIViewController<WALPaymentFormView> *_Nonnull)buildPaymentMethodFormViewWithURL:(NSURL * _Nonnull)mobileSdkUrl
+ @param loadedPaymentMethods the payment methods from which the user can choose
+ @param callback the callback block to invoke when the user selects a payment method
+ @param onBack the block to invoke if the user wants to perform a back action (eg. to get to the TokenList)
+ @return the viewcontroller to display the payment methods
+ */
+- (UIViewController *_Nonnull)buildPaymentMethodListViewWith:(WALLoadedPaymentMethods *_Nonnull)loadedPaymentMethods
+                                                 onSelection:(WALPaymentMethodSelected _Nullable)callback
+                                                      onBack:(WALOnBackBlock _Nonnull)onBack;
+
+- (UIViewController<WALPaymentFormView> *_Nonnull)buildPaymentMethodFormViewWithURL:(WALMobileSdkUrl * _Nonnull)mobileSdkUrl
+                                                                      paymentMethod:(NSUInteger)paymentMethodId
                                                                              onBack:(WALOnBackBlock _Nonnull )onBack;
 
 @end

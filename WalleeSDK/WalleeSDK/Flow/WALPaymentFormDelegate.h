@@ -14,6 +14,7 @@
 - (void)paymentViewDidChangeContentSize:(CGSize)size;
 - (void)paymentViewRequestsExpand;
 - (void)paymentViewRequestsReset;
+- (void)paymentViewDidRequestChangePaymentMethod;
 - (void)paymentViewDidValidateSuccessful:(UIViewController *)viewController;
 - (void)paymentView:(UIViewController *)viewController didFailValidationWithErrors:(NSArray<NSError *> *)errors;
 - (void)paymentViewDidSucceed:(UIViewController *)viewController;

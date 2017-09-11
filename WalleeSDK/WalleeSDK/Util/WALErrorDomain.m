@@ -47,7 +47,15 @@ NSString *const WALErrorDomain = @"com.wallee.ios";
 + (BOOL)checkState:(id<WALLifeCycleObject> _Nullable)state error:(NSError * _Nullable __autoreleasing *)error {
     if (!state || !state.isValid) {
         NSString *msg = [NSString stringWithFormat:@"Trying to run Action on invalidated StateHandler: %@.", state];
-        [WALErrorHelper populate:error withIllegalStateWithMessage:msg];
+        [self populate:error withIllegalStateWithMessage:msg];
+        return NO;
+    }
+    return YES;
+}
+
++ (BOOL)checkValidUrl:(NSString * _Nullable)urlString withMessage:(NSString * _Nonnull)message error:(NSError * _Nullable __autoreleasing *)error {
+    if (!urlString || ![NSURL URLWithString:urlString]) {
+        [self populate:error withIllegalArgumentWithMessage:message];
         return NO;
     }
     return YES;
@@ -56,7 +64,7 @@ NSString *const WALErrorDomain = @"com.wallee.ios";
 + (BOOL)checkNotEmpty:(id _Nullable)object withMessage:(NSString *)message error:(NSError * _Nullable __autoreleasing *)error {
     if(!object ||
        ([object respondsToSelector:@selector(length)] && [object length] <= 0)){
-        [WALErrorHelper populate:error withIllegalArgumentWithMessage:message];
+        [self populate:error withIllegalArgumentWithMessage:message];
         return NO;
     }
     return YES;
@@ -64,7 +72,7 @@ NSString *const WALErrorDomain = @"com.wallee.ios";
 
 + (BOOL)checkArrayType:(id)object withMessage:(NSString *)message error:(NSError * _Nullable __autoreleasing *)error {
     if (![object isKindOfClass:[NSArray class]]) {
-        [WALErrorHelper populate:error withIllegalArgumentWithMessage:message];
+        [self populate:error withIllegalArgumentWithMessage:message];
         return NO;
     }
     return YES;
@@ -72,7 +80,7 @@ NSString *const WALErrorDomain = @"com.wallee.ios";
 
 + (BOOL)checkDictionaryType:(id)object withMessage:(NSString *)message error:(NSError * _Nullable __autoreleasing *)error {
     if (![object isKindOfClass:[NSDictionary class]]) {
-        [WALErrorHelper populate:error withIllegalArgumentWithMessage:message];
+        [self populate:error withIllegalArgumentWithMessage:message];
         return NO;
     }
     return YES;

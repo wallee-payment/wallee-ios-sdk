@@ -15,9 +15,14 @@
 @interface WALDefaultPaymentMethodFormViewController ()
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) WALDefaultPaymentFormView *paymentFormView;
+@property (nonatomic, strong) UIView *navigationalView;
 @property (nonatomic, strong) UIButton *submitButton;
 @property (nonatomic, strong) UIButton *backButton;
 @end
+
+
+static CGFloat contentPadding = 10.0f;
+static CGFloat defaultButtonHeight = 44.0f;
 
 @implementation WALDefaultPaymentMethodFormViewController
 
@@ -25,7 +30,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = self.theme.primaryBackgroundColor;
     self.automaticallyAdjustsScrollViewInsets = YES;
-    [self.view addSubview:self.submitButton];
+    [self.view addSubview:self.navigationalView];
     [self.view addSubview:self.paymentFormView];
     
 //            self.webView.scrollView.contentInset = UIEdgeInsetsMake(0, 0, self.test.frame.size.height, 0);
@@ -41,18 +46,19 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.paymentFormView loadPaymentView:self.mobileSdkUrl];
+    [self.paymentFormView loadPaymentView:self.mobileSdkUrl forPaymentMethodId:self.paymentMethodId];
 }
 
 - (CGRect)defaultPaymentRect {
     CGRect bounds = self.view.bounds;
-    CGRect paymentRect = CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height - self.submitButton.frame.size.height);
+    CGRect paymentRect = CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height - [self defaultNavigationalRect].size.height);
     return paymentRect;
 }
 
-- (CGRect)defaultButtonRect {
+- (CGRect)defaultNavigationalRect {
     CGRect bounds = self.view.bounds;
-    return CGRectMake(bounds.origin.x, bounds.size.height - 44.0f, bounds.size.width, 44.0f);
+    CGFloat height = self.hidesBackButton ? defaultButtonHeight : 2 * defaultButtonHeight + contentPadding;
+    return CGRectMake(bounds.origin.x, bounds.size.height - height, bounds.size.width, height);
 }
 
 - (WALDefaultPaymentFormView *)paymentFormView {
@@ -65,13 +71,23 @@
     return _paymentFormView;
 }
 
+- (UIView *)navigationalView {
+    if (!_navigationalView) {
+        _navigationalView = [[UIView alloc] initWithFrame:[self defaultNavigationalRect]];
+        _navigationalView.backgroundColor = self.theme.primaryBackgroundColor;
+        [_navigationalView addSubview:self.submitButton];
+        [_navigationalView addSubview:self.backButton];
+    }
+    return _navigationalView;
+}
+
 - (UIButton *)submitButton {
     if (!_submitButton) {
         _submitButton = [UIButton buttonWithType:UIButtonTypeCustom];
         
-        _submitButton.frame = [self defaultButtonRect];
+        _submitButton.frame = CGRectMake(0.0f, 0.0f, [self defaultNavigationalRect].size.width, defaultButtonHeight);
         _submitButton.autoresizingMask = (UIViewAutoresizingFlexibleWidth);
-        [_submitButton setTitle:WALLocalizedString(@"Submit", @"title of the submit button on the payment method form") forState:UIControlStateNormal];
+        [_submitButton setTitle:WALLocalizedString(@"payment_form_submit", @"title of the submit button on the payment method form") forState:UIControlStateNormal];
         _submitButton.backgroundColor = self.theme.accentBackgroundColor;
         [_submitButton setTitleColor:self.theme.accentColor forState:UIControlStateNormal];
         [_submitButton addTarget:self action:@selector(submitTaped) forControlEvents:UIControlEventTouchUpInside];
@@ -83,14 +99,14 @@
     if (!_backButton) {
         _backButton = [UIButton buttonWithType:UIButtonTypeCustom];
         
-        _backButton.frame = [self defaultButtonRect];
+        _backButton.frame = CGRectMake(0.0f, defaultButtonHeight + contentPadding, [self defaultNavigationalRect].size.width, defaultButtonHeight);
         _backButton.autoresizingMask = (UIViewAutoresizingFlexibleWidth);
-        [_backButton setTitle:WALLocalizedString(@"Submit", @"title of the submit button on the payment method form") forState:UIControlStateNormal];
+        [_backButton setTitle:WALLocalizedString(@"payment_form_change_method", @"title of the back button on the payment method form") forState:UIControlStateNormal];
         _backButton.backgroundColor = self.theme.accentBackgroundColor;
         [_backButton setTitleColor:self.theme.accentColor forState:UIControlStateNormal];
-        [_backButton addTarget:self action:@selector(submitTaped) forControlEvents:UIControlEventTouchUpInside];
+        [_backButton addTarget:self action:@selector(backTaped) forControlEvents:UIControlEventTouchUpInside];
     }
-    return _submitButton;
+    return _backButton;
 }
 
 // MARK: - WALPaymentForm Navigation Controls Delegate
@@ -104,15 +120,15 @@
 }
 
 - (void)paymentViewDidChangeContentSize:(CGSize)size {
-    CGRect buttonDefaultRect = [self defaultButtonRect];
+    CGRect buttonDefaultRect = [self defaultNavigationalRect];
     if (size.height < buttonDefaultRect.origin.y) {
         self.paymentFormView.scrollingEnabled = NO;
         self.paymentFormView.frame = CGRectMake(self.paymentFormView.frame.origin.x, self.paymentFormView.frame.origin.y, self.paymentFormView.frame.size.width, size.height);
-        self.submitButton.frame = CGRectMake(buttonDefaultRect.origin.x, size.height, buttonDefaultRect.size.width, buttonDefaultRect.size.height);
+        self.navigationalView.frame = CGRectMake(buttonDefaultRect.origin.x, size.height, buttonDefaultRect.size.width, buttonDefaultRect.size.height);
     } else {
         self.paymentFormView.scrollingEnabled = YES;
         self.paymentFormView.frame = [self defaultPaymentRect];
-        self.submitButton.frame = [self defaultButtonRect];
+        self.navigationalView.frame = [self defaultNavigationalRect];
     }
 }
 
@@ -121,20 +137,20 @@
 }
 
 - (void)viewDidStartLoading:(UIView *)viewController {
+    self.navigationalView.hidden = YES;
     [self.delegate viewDidStartLoading:viewController];
 }
 
 - (void)viewDidFinishLoading:(UIView *)viewController {
+    self.navigationalView.hidden = NO;
     [self.delegate viewDidFinishLoading:viewController];
 }
 
 - (void)paymentViewDidValidateSuccessful:(UIViewController *)viewController {
-    NSLog(@"VALID");
     [self.delegate paymentViewDidValidateSuccessful:viewController];
 }
 
 - (void)paymentView:(UIViewController *)viewController didFailValidationWithErrors:(NSArray<NSError *> *)errors {
-    NSLog(@"INVALID");
     [self.delegate paymentView:viewController didFailValidationWithErrors:errors];
 }
 - (void)paymentView:(UIViewController *)viewController didEncounterError:(NSError *)error {
@@ -157,6 +173,10 @@
     [self.delegate viewControllerDidExpire:viewController];
 }
 
+- (void)paymentViewDidRequestChangePaymentMethod {
+    [self.delegate paymentViewDidRequestChangePaymentMethod];
+}
+
 // MARK: - PaymentForm Protocol
 - (BOOL)isSubmitted {
     return self.paymentFormView.isSubmitted;
@@ -174,26 +194,8 @@
     [self.paymentFormView validate];
 }
 
-
+- (void)backTaped {
+    [self.delegate paymentViewDidRequestChangePaymentMethod];
+}
 
 @end
-
-// MARK: - Resizing
-//- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
-//    static CGFloat contentHeight = 0.0;
-//    if (object == self.webView.scrollView && [keyPath isEqual:@"contentSize"]) {
-//
-//        UIScrollView *webScrollView = self.webView.scrollView;
-//        CGFloat newContentHeight = webScrollView.contentSize.height;
-//        NSLog(@"New contentSize: %f x %f", webScrollView.contentSize.width, newContentHeight);
-//        if (contentHeight == newContentHeight) {
-//            return;
-//        }
-//        contentHeight = newContentHeight;
-////        self.webView.frame = CGRectMake(self.scrollView.bounds.origin.x, self.scrollView.bounds.origin.y, self.scrollView.bounds.size.width, newContentHeight);
-//        self.paymentFormView.frame = CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y+30.0f, self.view.bounds.size.width, self.view.bounds.size.height - 30.0f);
-////        self.submitButton.frame = CGRectMake(self.scrollView.bounds.origin.x, self.webView.frame.size.height, self.scrollView.bounds.size.width, 30.0f);
-//        self.submitButton.frame = CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, 30.0f);
-//        self.scrollView.contentSize = CGSizeMake(self.view.bounds.size.width, self.paymentFormView.frame.size.height+self.submitButton.frame.size.height);
-//    }
-//}

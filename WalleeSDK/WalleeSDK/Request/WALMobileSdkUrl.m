@@ -25,6 +25,15 @@ static NSString * const WallePaymentMethodQueryParamName = @"paymentMethodConfig
 
 @implementation WALMobileSdkUrl
 
++ (instancetype)mobileSdkUrlWith:(NSString *)mobileSdkUrl expiryDate:(WALTimestamp)expiryDate error:(NSError**)error {
+    
+    if (![WALErrorHelper checkValidUrl:mobileSdkUrl withMessage:@"the WALMobileSdkUrl is constructed with an invalid url" error:error]) {
+        
+        return nil;
+    }
+    return [[self alloc] initWithUrl:mobileSdkUrl expiryDate:expiryDate];
+}
+
 -(instancetype)initWithUrl:(NSString *)url expiryDate:(WALTimestamp)expiryDate {
     self = [super init];
     if (self) {
@@ -45,6 +54,7 @@ static NSString * const WallePaymentMethodQueryParamName = @"paymentMethodConfig
 
 - (NSURL *)buildPaymentMethodUrl:(NSUInteger)paymentMethodConfigurationId error:(NSError * _Nullable __autoreleasing *)error {
     NSTimeInterval current = [[NSDate date] timeIntervalSince1970];
+    
     if (self.expiryDate < current) {
         [WALErrorHelper populate:error withIllegalStateWithMessage:@"The URL is expired. It cannot be used anymore to create a payment method specific URL."];
         return nil;
@@ -62,4 +72,11 @@ static NSString * const WallePaymentMethodQueryParamName = @"paymentMethodConfig
 - (NSString *)debugDescription{
     return [NSString stringWithFormat:@"<%@: %p, \"%@\">", [self class], self, [self description]];
 }
+
+// MARK: - Copy
+- (id)copyWithZone:(NSZone *)zone {
+    WALMobileSdkUrl *url = [[self.class allocWithZone:zone] initWithUrl:self.url expiryDate:self.expiryDate];
+    return url;
+}
+
 @end

@@ -67,10 +67,10 @@
     [self handleError:error];
 }
 - (void)flowCoordinator:(WALFlowCoordinator *)coordinator encouteredApiClientError:(WALApiClientError *)error {
-    [self handleError:error];
+    [self handleError:(NSError *)error];
 }
 - (void)flowCoordinator:(WALFlowCoordinator *)coordinator encouteredApiServerError:(WALApiServerError *)error {
-    [self handleError:error];
+    [self handleError:(NSError *)error];
 }
 
 - (void)flowCoordinator:(WALFlowCoordinator *)coordinator transactionDidSucceed:(WALTransaction *)transaction {

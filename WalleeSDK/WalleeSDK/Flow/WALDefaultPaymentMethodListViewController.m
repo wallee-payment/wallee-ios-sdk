@@ -27,7 +27,7 @@ static NSString * const cellIdentifier = @"defaultCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = self.theme.primaryBackgroundColor;
-    self.title = WALLocalizedString(@"Select PaymentMethod", @"title for the payment method list view controller");
+    self.title = WALLocalizedString(@"payment_list_title", @"title for the payment method list view controller");
 }
 
 - (void)addSubviewsToContentView:(UIView *)contentView {
@@ -48,7 +48,7 @@ static NSString * const cellIdentifier = @"defaultCell";
 }
 
 - (NSString *)confirmationTitle {
-    return @"Token";
+    return WALLocalizedString(@"payment_list_get_token", @"title of the navigational payment_list_get_token or restart flow button on the paymentlist view");
 }
 
 - (void)confirmationTapped:(id)sender {
