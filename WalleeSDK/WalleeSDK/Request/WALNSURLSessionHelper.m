@@ -49,7 +49,6 @@
     NSInteger statusCode = ((NSHTTPURLResponse *)response).statusCode;
     if (![self shouldHandleResponseCode:response]) {
         if (error) {
-            //TODO: impl? Cilent vs Server Error Classes
             if (statusCode == WalleClientErrorReturnCode) {
                 WALApiClientError *clientError = [WALApiClientError decodedObjectFromJSON:json error:error];
                 if (clientError) {

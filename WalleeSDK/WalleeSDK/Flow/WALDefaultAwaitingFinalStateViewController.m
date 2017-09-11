@@ -17,7 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.stateLabel.text = WALLocalizedString(@"We are awaiting a feedback from your payment.\nThis may take several minutes until we receive a final feedback.", @"awaiting final state view controller message");
+    self.stateLabel.text = WALLocalizedString(@"transaction_awaiting_final_result_text", @"awaiting final state view controller message");
     
 }
 

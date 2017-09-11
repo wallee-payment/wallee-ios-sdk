@@ -37,6 +37,7 @@ typedef NS_ENUM(NSUInteger, WALError){
 + (void)populate:(NSError **)error withFailedTransaction:(WALTransaction *)transaction;
 
 + (BOOL)checkState:(id<WALLifeCycleObject> _Nullable)state error:(NSError * _Nullable __autoreleasing *)error;
++ (BOOL)checkValidUrl:(NSString * _Nullable)urlString withMessage:(NSString * _Nonnull)message error:(NSError * _Nullable __autoreleasing *)error;
 + (BOOL)checkNotEmpty:(id _Nullable)object withMessage:(NSString *)message error:(NSError * _Nullable __autoreleasing *)error;
 + (BOOL)checkArrayType:(id)object withMessage:(NSString * _Nullable)message error:(NSError * _Nullable __autoreleasing *)error;
 + (BOOL)checkDictionaryType:(id)object withMessage:(NSString *)message error:(NSError * _Nullable __autoreleasing *)error;

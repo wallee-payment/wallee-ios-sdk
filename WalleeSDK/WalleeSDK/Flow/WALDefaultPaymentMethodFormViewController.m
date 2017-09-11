@@ -87,7 +87,7 @@ static CGFloat defaultButtonHeight = 44.0f;
         
         _submitButton.frame = CGRectMake(0.0f, 0.0f, [self defaultNavigationalRect].size.width, defaultButtonHeight);
         _submitButton.autoresizingMask = (UIViewAutoresizingFlexibleWidth);
-        [_submitButton setTitle:WALLocalizedString(@"Submit", @"title of the submit button on the payment method form") forState:UIControlStateNormal];
+        [_submitButton setTitle:WALLocalizedString(@"payment_form_submit", @"title of the submit button on the payment method form") forState:UIControlStateNormal];
         _submitButton.backgroundColor = self.theme.accentBackgroundColor;
         [_submitButton setTitleColor:self.theme.accentColor forState:UIControlStateNormal];
         [_submitButton addTarget:self action:@selector(submitTaped) forControlEvents:UIControlEventTouchUpInside];
@@ -101,7 +101,7 @@ static CGFloat defaultButtonHeight = 44.0f;
         
         _backButton.frame = CGRectMake(0.0f, defaultButtonHeight + contentPadding, [self defaultNavigationalRect].size.width, defaultButtonHeight);
         _backButton.autoresizingMask = (UIViewAutoresizingFlexibleWidth);
-        [_backButton setTitle:WALLocalizedString(@"Change Payment Method", @"title of the back button on the payment method form") forState:UIControlStateNormal];
+        [_backButton setTitle:WALLocalizedString(@"payment_form_change_method", @"title of the back button on the payment method form") forState:UIControlStateNormal];
         _backButton.backgroundColor = self.theme.accentBackgroundColor;
         [_backButton setTitleColor:self.theme.accentColor forState:UIControlStateNormal];
         [_backButton addTarget:self action:@selector(backTaped) forControlEvents:UIControlEventTouchUpInside];

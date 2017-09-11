@@ -17,7 +17,9 @@ FOUNDATION_EXPORT WALTimestamp const WalleeMobileSdkUrlThreshold;
 @property (nonatomic, copy, readonly) NSString *url;
 @property (nonatomic, readonly) NSUInteger expiryDate;
 @property (nonatomic, readonly) BOOL isExpired;
-- (instancetype)initWithUrl:(NSString *)url expiryDate:(WALTimestamp)expiryDate NS_DESIGNATED_INITIALIZER;
+
++ (instancetype)mobileSdkUrlWith:(NSString *)mobileSdkUrl expiryDate:(WALTimestamp)expiryDate error:(NSError**)error;
+//#include "WALAPIDataType.h"
 
 /**
   This method constructs a new URL which is usable to load the payment form for the provided

@@ -18,7 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSString *str = WALLocalizedString(@"Transaction Failed:", @"message preamble for a failed transaction");
+    NSString *str = WALLocalizedString(@"transaction_failed_preamble", @"message preamble for a failed transaction");
     self.stateLabel.text = [NSString stringWithFormat:@"%@\n %@", str, _transaction.userFailureMessage];
 }
 

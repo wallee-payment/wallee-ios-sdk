@@ -25,6 +25,15 @@ static NSString * const WallePaymentMethodQueryParamName = @"paymentMethodConfig
 
 @implementation WALMobileSdkUrl
 
++ (instancetype)mobileSdkUrlWith:(NSString *)mobileSdkUrl expiryDate:(WALTimestamp)expiryDate error:(NSError**)error {
+    
+    if (![WALErrorHelper checkValidUrl:mobileSdkUrl withMessage:@"the WALMobileSdkUrl is constructed with an invalid url" error:error]) {
+        
+        return nil;
+    }
+    return [[self alloc] initWithUrl:mobileSdkUrl expiryDate:expiryDate];
+}
+
 -(instancetype)initWithUrl:(NSString *)url expiryDate:(WALTimestamp)expiryDate {
     self = [super init];
     if (self) {

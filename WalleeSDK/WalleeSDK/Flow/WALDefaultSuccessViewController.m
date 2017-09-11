@@ -18,7 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.label.text = WALLocalizedString(@"Transaction Successfull", @"message on transaction succes view controller");
+    self.label.text = WALLocalizedString(@"transaction_success_text", @"message on transaction succes view controller");
 }
 
 @end
