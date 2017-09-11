@@ -60,9 +60,33 @@ NS_ASSUME_NONNULL_END
     }
 }
 
+- (BOOL)dryTriggerAction:(WALFlowAction)flowAction {
+    @synchronized (self) {
+        return [self.stateHandler dryTriggerAction:flowAction];
+    }
+}
+
+- (BOOL)triggerAction:(WALFlowAction)flowAction {
+    @synchronized (self) {
+        return [self.stateHandler triggerAction:flowAction WithCoordinator:self];
+    }
+}
+
 - (id<WALPaymentFlowContainer>)paymentContainer {
     if (!_paymentContainer) {
-        _paymentContainer = [self.configuration.paymentFlowContainerFactory build]; // TODO: check rootview
+        __weak WALFlowCoordinator *weakSelf = self;
+        WALContainerBackAction backAction = ^BOOL(void){
+            WALFlowCoordinator *strongSelf = weakSelf;
+            if (!strongSelf) {
+                return NO;
+            }
+            if ([strongSelf dryTriggerAction:WALFlowActionGoBack]) {
+                return [strongSelf triggerAction:WALFlowActionGoBack];
+            } else {
+                return NO;
+            }
+        };
+        _paymentContainer = [self.configuration.paymentFlowContainerFactory buildWithBackAction:backAction];
     }
     return _paymentContainer;
 }

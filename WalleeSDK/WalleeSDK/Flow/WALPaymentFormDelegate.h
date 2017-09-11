@@ -11,6 +11,9 @@
 #import "WALExpiringViewDelegate.h"
 
 @protocol WALPaymentFormDelegate <NSObject, WALLoadingViewDelegate, WALExpiringViewDelegate>
+- (void)paymentViewDidChangeContentSize:(CGSize)size;
+- (void)paymentViewRequestsExpand;
+- (void)paymentViewRequestsReset;
 - (void)paymentViewDidValidateSuccessful:(UIViewController *)viewController;
 - (void)paymentView:(UIViewController *)viewController didFailValidationWithErrors:(NSArray<NSError *> *)errors;
 - (void)paymentViewDidSucceed:(UIViewController *)viewController;

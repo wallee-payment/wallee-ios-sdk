@@ -11,10 +11,10 @@
 #import "WALDefaultPaymentFlowContainer.h"
 
 @implementation WALDefaultPaymentFlowContainerFactory
-- (id<WALPaymentFlowContainer>)build {
+- (id<WALPaymentFlowContainer>)buildWithBackAction:(WALContainerBackAction)onBackAction {
     UIViewController *emptyRoot = [[UIViewController alloc] initWithNibName:nil bundle:nil];
     emptyRoot.view.backgroundColor = UIColor.whiteColor;
-    WALDefaultPaymentFlowContainer *container = [[WALDefaultPaymentFlowContainer alloc] initWithRootViewController:emptyRoot];
+    WALDefaultPaymentFlowContainer *container = [[WALDefaultPaymentFlowContainer alloc] initWithRootViewController:emptyRoot backAction:onBackAction];
     return container;
 }
 @end

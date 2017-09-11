@@ -10,11 +10,11 @@
 #import "WALFlowStateHandler.h"
 #import "WALSimpleFlowStateHandler.h"
 
-@class WALTokenVersion;
+@class WALLoadedTokens;
 
 @interface WALTokenSelectionStateHandler : WALSimpleFlowStateHandler<WALFlowStateHandler>
 //#include "WALStaticInit.h"
 NS_ASSUME_NONNULL_BEGIN
-+ (instancetype)statetWithTokens:(NSArray<WALTokenVersion *> *)tokens;
++ (instancetype)statetWithTokens:(WALLoadedTokens *)loadedTokens;
 NS_ASSUME_NONNULL_END
 @end

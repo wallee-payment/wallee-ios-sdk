@@ -10,12 +10,12 @@
 #import "WALFlowConfiguration.h"
 @protocol WALCredentialsFetcher;
 @protocol WALPaymentFlowContainerFactory, WALViewControllerFactory;
-@protocol WALIconCache, WALFLowListener, WALIconRequestManager, WALApiClient;
+@protocol WALIconCache, WALFLowListener, WALApiClient;
 
 /**
  * The builder allows to construct a flow configuration.
  *
- * @note The default @c -init method provides the simplest possible configuration which works out of the
+ * @note The @c -initWithCredentialsFetcher: @c operationQueue: initializer provides the simplest possible configuration which works out of the
  * box. No further customization is required.
  *
  */
@@ -32,11 +32,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) id<WALIconCache> iconCache;
 @property (nonatomic, weak) id<WALPaymentFlowDelegate> delegate;
-@property (nonatomic, strong) id<WALIconRequestManager> iconRequestManager;
 @property (nonatomic, strong) id<WALApiClient> webServiceApiClient;
 
-- (instancetype)initWithCredentialsFetcher:(id<WALCredentialsFetcher>)credentialsFetcher;
-- (instancetype)init NS_DESIGNATED_INITIALIZER;
+/**
+ Initializes a Builder that validates correctly and as such can be used to initialize
+ a PaymentFlow
+
+ @param credentialsFetcher the credentialsFetcher supplied by the implementor of the SDK
+ @param operationQueue operation queue to be used by the default implementations: @c WALNSURLSessionApiClient 
+ and @c WALNSURLIconLoader . When @c nil the @c NSURLSession default queue is used
+ @return a fully initialized and usable Builder object
+ */
+- (instancetype)initWithCredentialsFetcher:(id<WALCredentialsFetcher>)credentialsFetcher operationQueue:(NSOperationQueue * _Nullable)operationQueue;
+- (instancetype)init;
 
 /**
  Checks if a `WALFLowConfiguration` Object can be created from this Builder

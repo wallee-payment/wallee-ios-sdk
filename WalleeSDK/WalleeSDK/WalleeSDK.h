@@ -30,3 +30,4 @@ FOUNDATION_EXPORT const unsigned char WalleeSDKVersionString[];
 #import "WalleeSDK/WALCredentials.h"
 
 #import "WalleeSDK/WALErrorDomain.h"
+#import "WalleeSDK/WALFlowTypes.h"

@@ -30,7 +30,6 @@
         _viewControllerFactory = builder.viewControllerFactory;
         _delegate = builder.delegate;
         _iconCache = builder.iconCache;
-        _iconRequestManager = builder.iconRequestManager;
         _webServiceApiClient = builder.webServiceApiClient;
     }
     return self;

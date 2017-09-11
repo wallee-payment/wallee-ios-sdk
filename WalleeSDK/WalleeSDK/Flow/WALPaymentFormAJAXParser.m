@@ -63,7 +63,7 @@ NSString * WalleeJSProtocol = @"https://localhost/mobile-sdk-callback/";
     return range.location == NSNotFound ? callbackPart : [callbackPart substringToIndex:range.location];
 }
 
-+ (NSDictionary<NSString *, NSString *> *)extractData:(NSString *)url {
++ (id _Nullable)extractData:(NSString *)url {
     if (![url hasPrefix:WalleeJSProtocol]) {
         return nil;
     }
@@ -83,7 +83,8 @@ NSString * WalleeJSProtocol = @"https://localhost/mobile-sdk-callback/";
     NSString *dataString = [queryString substringWithRange:[match rangeAtIndex:1]];
     NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    return json;
+    
+    return json ?:dataString;
 }
 
 @end

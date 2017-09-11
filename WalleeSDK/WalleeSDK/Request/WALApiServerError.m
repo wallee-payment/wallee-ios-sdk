@@ -7,6 +7,7 @@
 //
 
 #import "WALApiServerError.h"
+#import "WALErrorDomain.h"
 #import "WALJSONParser.h"
 #import "WALApiConfig.h"
 
@@ -17,7 +18,8 @@
 }
 
 + (instancetype)decodedObjectFromJSON:(NSDictionary<NSString *,id> *)dictionary error:(NSError * _Nullable __autoreleasing *)error {
-    WALApiServerError *serverError = [[self.class alloc] initInternal];
+    WALApiServerError *serverError = [self.class errorWithDomain:WALErrorDomain code:WALErrorTransactionFailure userInfo:dictionary];
+    
     if (![WALJSONParser populate:serverError withDictionary:dictionary error:error]) {
         return nil;
     }
@@ -40,7 +42,7 @@
 
 // MARK: - Description
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@", @{WalleeDate: _date, WalleeObjectId: _objectId, WalleeMessage: _message}];
+    return [NSString stringWithFormat:@"%@", @{WalleeDate: _date ?: NSNull.null, WalleeObjectId: _objectId ?: NSNull.null, WalleeMessage: _message ?: NSNull.null}];
 }
 
 - (NSString *)debugDescription{

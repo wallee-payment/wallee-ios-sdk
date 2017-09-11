@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "WALViewControllerFactory.h"
+@class WALDefaultTheme;
 
 @interface WALDefaultViewControllerFactory : NSObject<WALViewControllerFactory>
-
+@property (nonatomic, copy, null_resettable) WALDefaultTheme *theme;
 @end

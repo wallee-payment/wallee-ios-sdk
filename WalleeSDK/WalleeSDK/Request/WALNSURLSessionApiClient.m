@@ -16,9 +16,8 @@
 #import "WALCredentials.h"
 #import "WALCredentialsProvider.h"
 
+#import "WALNSURLSessionHelper.h"
 #import "WALErrorDomain.h"
-#import "WALApiClientError.h"
-#import "WALApiServerError.h"
 
 @interface WALNSURLSessionApiClient ()
 @property (nonatomic, strong, readwrite) WALCredentialsProvider *credentialsProvider;
@@ -28,26 +27,26 @@
 
 @implementation WALNSURLSessionApiClient
 
-- (instancetype)initWithBaseUrl:(NSString*) baseUrl credentialsProvider:(WALCredentialsProvider *)credentialsProvider {
+- (instancetype)initWithBaseUrl:(NSString*) baseUrl credentialsProvider:(WALCredentialsProvider *)credentialsProvider operationQueue:(NSOperationQueue *)queue {
     if (self = [super init]) {
         _baseURL = [NSURL URLWithString:baseUrl];
-        _urlSession = [NSURLSession sessionWithConfiguration:[self configuration]];
+        _urlSession = [NSURLSession sessionWithConfiguration:self.configuration delegate:nil delegateQueue:queue];
         _credentialsProvider = credentialsProvider;
     }
     return self;
 }
 
 - (NSURLSessionConfiguration *)configuration {
-    return [NSURLSessionConfiguration defaultSessionConfiguration];
+    return [NSURLSessionConfiguration ephemeralSessionConfiguration];
 }
 
-+ (instancetype)clientWithCredentialsProvider:(WALCredentialsProvider *)credentialsProvider {
-    return [self clientWithBaseUrl:WalleeBaseUrl credentialsProvider:credentialsProvider];
++ (instancetype)clientWithCredentialsProvider:(WALCredentialsProvider *)credentialsProvider operationQueue:(NSOperationQueue * _Nullable)queue {
+    return [self clientWithBaseUrl:WalleeBaseUrl credentialsProvider:credentialsProvider operationQueue:queue];
 }
 
-+ (instancetype)clientWithBaseUrl:(NSString *)baseUrl credentialsProvider:(WALCredentialsProvider *)credentialsProvider {
++ (instancetype)clientWithBaseUrl:(NSString *)baseUrl credentialsProvider:(WALCredentialsProvider *)credentialsProvider operationQueue:(NSOperationQueue * _Nullable)queue{
     // validation
-    return [[self alloc] initWithBaseUrl:baseUrl credentialsProvider:credentialsProvider];
+    return [[self alloc] initWithBaseUrl:baseUrl credentialsProvider:credentialsProvider operationQueue:queue];
 }
 
 // MARK: API implementation
@@ -91,7 +90,7 @@
         NSURLSessionDataTask *task = [self.urlSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable responseError) {
             
             NSError *error;
-            NSArray * json = [WALNSURLSessionApiClient jsonFromData:data response:response responseError:responseError error:&error];
+            NSArray * json = [WALNSURLSessionHelper jsonFromData:data response:response responseError:responseError error:&error];
             
             if (!json || ![WALErrorHelper checkArrayType:json withMessage:@"PaymentMethodConfiguration json response is not an array" error:&error]) {
                 completion(nil, error);
@@ -135,7 +134,7 @@
         NSURLSessionDataTask *task = [self.urlSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable responseError) {
             
             NSError *error;
-            NSArray * json = [WALNSURLSessionApiClient jsonFromData:data response:response responseError:responseError error:&error];
+            NSArray * json = [WALNSURLSessionHelper jsonFromData:data response:response responseError:responseError error:&error];
             
             if (!json || ![WALErrorHelper checkArrayType:json withMessage:@"FetchTokenVersions json response is not an array" error:&error]) {
                 completion(nil, error);
@@ -179,7 +178,7 @@
         NSURL *url = [self urlForEndpoint:WalleeEndpointReadTransaction withCredentials:credentials.credentials];
         NSURLSessionTask *task = [self.urlSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable responseError) {
             NSError *error;
-            NSDictionary * json = [WALNSURLSessionApiClient jsonFromData:data response:response responseError:responseError error:&error];
+            NSDictionary * json = [WALNSURLSessionHelper jsonFromData:data response:response responseError:responseError error:&error];
             if (!json) {
                 completion(nil, error);
                 return;
@@ -210,7 +209,10 @@
         request.HTTPMethod = @"POST";
         NSURLSessionTask *task = [self.urlSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable responseError) {
             NSError *error;
-            NSDictionary * json = [WALNSURLSessionApiClient jsonFromData:data response:response responseError:responseError error:&error];
+            NSDictionary * json = [WALNSURLSessionHelper jsonFromData:data
+                                                             response:response
+                                                        responseError:responseError
+                                                                error:&error];
             if (!json) {
                 completion(nil, error);
                 return;
@@ -242,59 +244,7 @@
     return [NSURL URLWithString:urlString relativeToURL:self.baseURL];
 }
 
-+ (nullable id)jsonFromData:(NSData * _Nullable)data response:(NSURLResponse * _Nullable)response responseError:(NSError * _Nullable )responseError error:(NSError * _Nullable *)error {
-    
-    if (data) {
-        NSError *jsonError;
-        NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data
-                                                        options:kNilOptions
-                                                          error:&jsonError];
-        if (!json) {
-            if (error) {
-                *error = jsonError;
-            }
-            return nil;
-        }
-        
-        // status codes != 200 are not handled as errors by NSURLConnection
-        if (![WALNSURLSessionApiClient shouldHandleResponseCode:response withJson:json error:&jsonError]) {
-            if (error) {
-                *error = jsonError;
-            }
-            return nil;
-        }
-        
-        return json;
-    } else {
-        if (error) {
-            *error = responseError;
-        }
-        return nil;
-    }
-}
 
-+ (BOOL)shouldHandleResponseCode:(NSURLResponse *)response withJson:(NSDictionary *)json error:(NSError **)error {
-    NSInteger statusCode = ((NSHTTPURLResponse *)response).statusCode;
-    if (statusCode == 0 || statusCode > 399) {
-        if (error) {
-            //TODO: impl? Cilent vs Server Error Classes
-            if (statusCode == WalleClientErrorReturnCode) {
-                WALApiClientError *clientError = [WALApiClientError decodedObjectFromJSON:json error:error];
-                if (clientError) {
-                    *error = clientError;
-                }
-            } else if(statusCode == WalleServerErrorReturnCode) {
-                WALApiServerError *serverError = [WALApiServerError decodedObjectFromJSON:json error:error];
-                if (serverError) {
-                    *error = serverError;
-                }
-            } else {
-                *error = [NSError errorWithDomain:WALErrorDomain code:WALErrorHTTPError userInfo:@{@"statusCode": @(statusCode), @"response": response, @"data": json}];
-            }
-        }
-        return NO;
-    }
-    return YES;
-}
+
 
 @end

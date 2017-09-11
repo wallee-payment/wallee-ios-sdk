@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "WALViewControllerFactory.h"
+#import "WALDefaultListViewController.h"
 
-@interface WALDefaultPaymentMethodListViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@interface WALDefaultPaymentMethodListViewController : WALDefaultListViewController<UITableViewDelegate, UITableViewDataSource>
 NS_ASSUME_NONNULL_BEGIN
-@property (nonatomic, copy) NSArray<WALPaymentMethodConfiguration *> *paymentMethods;
+@property (nonatomic, copy) WALLoadedPaymentMethods *loadedPaymentMethods;
 @property (nonatomic) WALPaymentMethodSelected onPaymentMethodSelected;
+@property (nonatomic) WALOnBackBlock onBack;
 NS_ASSUME_NONNULL_END
 @end

@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "WALFlowStateHandler.h"
 #import "WALSimpleFlowStateHandler.h"
-@class WALPaymentMethodConfiguration;
+@class WALLoadedPaymentMethods;
 
 @interface WALPaymentMethodSelectionStateHandler : WALSimpleFlowStateHandler<WALFlowStateHandler>
 //#include "WALStaticInit.h"
-+ (instancetype)stateWithPaymentMethods:(NSArray<WALPaymentMethodConfiguration *> *)paymentMethods;
++ (instancetype)stateWithPaymentMethods:(WALLoadedPaymentMethods *)loadedPaymentMethods;
 @end

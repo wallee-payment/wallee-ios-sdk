@@ -50,7 +50,7 @@ static NSString * const walState = @"state";
 }
 
 + (NSDictionary<NSString *,Class> *)jsonComplexMapping {
-    return @{walToken: WALToken.class};
+    return @{walToken: WALToken.class, walPaymentConnectorConfiguration: WALConnectorConfiguration.class};
 }
 
 + (NSDictionary<NSString *,NSString *> *)jsonReMapping {

@@ -42,10 +42,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- * The icon cache is required to cache the downloaded icons locally on the device to avoid
- * downloading them over and over again.
+ * Each payment method has an icon. The icon is configured through the backend of wallee.
+ * Therefore the icon is downloaded dynamically.
+ * The icon provider should handle the download and caching of those icons on request
  *
- * @return the icon cache in which the payment method icons are cached in.
+ * @return the icon provider in which the payment method icons are downloaded and cached.
  */
 @property (nonatomic, copy, readonly) id<WALIconCache> iconCache;
 
@@ -57,15 +58,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, weak, readonly) id<WALPaymentFlowDelegate> delegate;
 
-/**
- * Each payment method has an icon. The icon is configured through the backend of wallee.
- * Therefore the icon is downloaded dynamically. The icon request manager is responsible to
- * manage this download process.
- *
- * @return the icon request manager is used to download the payment method icons from the remote
- * server.
- */
-@property (nonatomic, copy, readonly) id<WALIconRequestManager> iconRequestManager;
 
 /**
  * The web service API client allows to access directly the web service API of wallee. This

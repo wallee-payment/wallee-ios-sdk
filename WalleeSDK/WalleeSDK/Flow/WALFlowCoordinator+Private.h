@@ -21,5 +21,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readwrite) id<WALPaymentFlowContainer> paymentContainer;
 
 - (instancetype)initWithConfiguration:(WALFlowConfiguration *)configuration;
+
 NS_ASSUME_NONNULL_END
 @end

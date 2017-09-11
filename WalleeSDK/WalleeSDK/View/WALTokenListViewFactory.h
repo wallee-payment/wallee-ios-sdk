@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class UIViewController, WALTokenVersion;
+@class UIViewController, WALTokenVersion, WALPaymentMethodIcon;
 @protocol WALTokenViewListener;
 
 /**

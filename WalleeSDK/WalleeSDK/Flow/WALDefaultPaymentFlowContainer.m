@@ -6,29 +6,81 @@
 //  Copyright © 2017 smoca AG. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "WALDefaultPaymentFlowContainer.h"
 
+#import "WALDefaultTheme.h"
+
 @interface WALDefaultPaymentFlowContainer ()
-@property (nonatomic, strong) UIView *activityIndicatorBackgroundView;
+@property (nonatomic, copy) WALContainerBackAction onBackAction;
+@property (nonatomic, strong) UIView *loadingViewContainer;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @end
 
 @implementation WALDefaultPaymentFlowContainer
 
+- (WALDefaultTheme *)theme {
+    return _theme ?: [WALDefaultTheme defaultTheme];
+}
+
+- (instancetype)initWithRootViewController:(UIViewController *)rootViewController backAction:(WALContainerBackAction)onBackAction {
+    if (self = [self initWithRootViewController:rootViewController]) {
+        self.onBackAction = onBackAction;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    [self.activityIndicator startAnimating];
+    self.interactivePopGestureRecognizer.enabled = NO;
+}
+
+- (UIView *)loadingView {
     
-    self.activityIndicatorBackgroundView = [[UIView alloc] initWithFrame:self.activityIndicator.bounds];
-    self.activityIndicatorBackgroundView.backgroundColor = [UIColor greenColor];
-    [self.activityIndicatorBackgroundView addSubview:self.activityIndicator];
+    if (!self.loadingViewContainer) {
+        self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        [self.activityIndicator startAnimating];
+        
+        //        UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
+        //        UIVibrancyEffect *fibrancy = [UIVibrancyEffect effectForBlurEffect:blur];
+        //        UIVisualEffectView *effectView =[[UIVisualEffectView alloc] initWithEffect:fibrancy];
+        
+        CGFloat width = self.activityIndicator.frame.size.width + 10.0;
+        self.loadingViewContainer = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, width, width)];
+        self.loadingViewContainer.layer.cornerRadius = width/2;
+        self.loadingViewContainer.layer.masksToBounds = YES;
+        self.loadingViewContainer.backgroundColor = [self indicatorBackgroundColor];
+        
+        [self.loadingViewContainer addSubview:self.activityIndicator];
+        self.activityIndicator.center = self.loadingViewContainer.center;
+    }
+    return self.loadingViewContainer;
 }
 
 - (void)displayViewController:(UIViewController *)viewController {
-    [self.activityIndicatorBackgroundView removeFromSuperview];
+    self.view.userInteractionEnabled = YES;
+    [self.loadingView removeFromSuperview];
+    
+    // if in stack ... replace
+    NSMutableArray *rebuiltStack = [[NSMutableArray alloc] initWithCapacity:self.viewControllers.count];
+    BOOL isInStack = NO;
+    for (UIViewController *controller in self.viewControllers) {
+        if ([controller isKindOfClass:viewController.class]) {
+            isInStack = YES;
+            break;
+        } else {
+            [rebuiltStack addObject:controller];
+        }
+    }
+    
+    if (isInStack) {
+        [rebuiltStack addObject:viewController];
+        [self setViewControllers:rebuiltStack animated:NO];
+        return;
+    }
+    
     if (viewController != self.currentlyDisplayedViewController) {
-        [self pushViewController:viewController animated:YES];
+        [self pushViewController:viewController animated:NO];
     } else {
         NSLog(@"ViewController already on top of Stack");
     }
@@ -39,15 +91,35 @@
 }
 
 - (void)displayLoading {
-    if (!self.activityIndicatorBackgroundView.superview) {
-        self.activityIndicatorBackgroundView.center = self.view.center;
-        [self.view addSubview:self.activityIndicatorBackgroundView];
-    }
+    self.view.userInteractionEnabled = NO;
+    [self.loadingView removeFromSuperview];
+    self.loadingView.center = self.view.center;
+    [self.view addSubview:self.loadingView];
 }
 
 - (UIViewController *)viewController {
     return self;
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    self.loadingView.center = self.view.center;
+}
+
+- (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item {
+    self.onBackAction();
+    return NO;
+}
+
+
+// MARK: - Helper
+- (UIColor *)indicatorBackgroundColor {
+    CGFloat hue;
+    CGFloat saturation;
+    CGFloat brightness;
+    CGFloat alpha;
+    [self.theme.primaryBackgroundColor getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha];
+    return [UIColor colorWithHue:hue saturation:saturation brightness:(brightness - 0.1f) alpha:alpha];
+}
 @end
 

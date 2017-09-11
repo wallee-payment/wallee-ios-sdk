@@ -18,6 +18,16 @@
 
 @property (nonatomic, readwrite) BOOL isSubmitted;
 
+/**
+ the reported height of the ccontent via javascript
+ */
+@property (nonatomic) CGFloat currentWebContentHeight;
+
+/**
+ the current height reported by the @c scrollview.contentSize
+ */
+@property (nonatomic) CGFloat currentContentHeight;
+
 @end
 
 @implementation WALDefaultPaymentFormView
@@ -30,11 +40,10 @@
         
         [self addAJAXController:controller];
         configuration.userContentController = controller;
-        self.webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:configuration];
+        self.webView = [[WKWebView alloc] initWithFrame:self.bounds configuration:configuration];
         self.webView.navigationDelegate = self;
-        
+        self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         self.scrollingEnabled = YES;
-        //    self.webView.scrollView.scrollEnabled = NO;
         [self addSubview:self.webView];
         
     }
@@ -42,10 +51,27 @@
 }
 
 - (void)addAJAXController:(WKUserContentController *)controller {
-    NSString *jsHandler = [NSString stringWithContentsOfURL:[[NSBundle mainBundle]URLForResource:@"ajax" withExtension:@"js"] encoding:NSUTF8StringEncoding error:NULL];
+    NSString *jsHandler = [self inlineScript];
+    
     WKUserScript *ajaxHandler = [[WKUserScript alloc]initWithSource:jsHandler injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:NO];
     [controller addScriptMessageHandler:self name:@"callbackHandler"];
     [controller addUserScript:ajaxHandler];
+}
+
+- (NSString *)inlineScript {
+    return @"$( document ).ajaxSend(function( event, request, settings )  {"
+    @"    callNativeApp (settings.url);"
+    @"});"
+    
+    @"function callNativeApp (data) {"
+    @"    try {"
+    @"        webkit.messageHandlers.callbackHandler.postMessage(data);"
+    @"    }"
+    @"    catch(err) {"
+    @"        console.log('The native context does not exist yet');"
+    @"    }"
+    @"}";
+
 }
 
 - (void)loadPaymentView:(NSURL *)mobileSdkUrl {
@@ -60,14 +86,17 @@
     [self.delegate viewDidFinishLoading:self];
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    self.webView.frame = self.bounds;
+
+- (void)setScrollingEnabled:(BOOL)scrollingEnabled {
+    _scrollingEnabled = scrollingEnabled;
+//    self.webView.scrollView.scrollEnabled = _scrollingEnabled;
+    // Keyboard can offset this so we disable it for the moment
 }
 
 // MARK: - AJAX Handling
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
     NSLog(@"Did REceive Message: %@ %@", message, message.body);
+    
     NSString *url = message.body;
     __weak WALDefaultPaymentFormView *weakSelf = self;
     [WALPaymentFormAJAXParser parseUrlString:url resultBlock:^(WALPaymentFormAJAXOperationType resultType, id  _Nullable result) {
@@ -76,14 +105,15 @@
     }];
 }
 
-- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
-    NSLog(@"webView: FAIL PROVISIONAL: %@ ERROR: %@", navigation, error);
-}
-
 - (void)handleAJAXOperation:(WALPaymentFormAJAXOperationType)operation withResult:(id _Nullable)result forDelegate:(id<WALPaymentFormDelegate> _Nullable)delegate {
     if (!delegate) {
         return;
     }
+    CGFloat floatResult = 0;
+    if ([result respondsToSelector:@selector(floatValue)]) {
+        floatResult = [((NSNumber*)result) floatValue];
+    }
+    
     switch (operation) {
         case WALPaymentFormAJAXOperationTypeSuccess:
             [delegate paymentViewDidSucceed:nil];
@@ -104,7 +134,12 @@
             [delegate paymentView:nil didEncounterError:result];
             break;
         case WALPaymentFormAJAXOperationTypeEnlargeView:
+            [delegate paymentViewRequestsExpand];
+            break;
         case WALPaymentFormAJAXOperationTypeHeightChange:
+            self.currentWebContentHeight = floatResult;
+            [delegate paymentViewDidChangeContentSize:CGSizeMake(self.frame.size.width, floatResult + self.webView.scrollView.contentInset.top)];
+            break;
         case WALPaymentFormAJAXOperationTypeInitialize:
         case WALPaymentFormAJAXOperationTypeUnknown:
             // fall thru
@@ -154,24 +189,20 @@
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
-    static CGFloat contentHeight = 0.0;
+    
     if (object == self.webView.scrollView && [keyPath isEqual:@"contentSize"]) {
         
-        if (self.scrollingEnabled) {
+//        if (self.scrollingEnabled) {
+//            return;
+//        }
+
+        CGFloat newContentHeight =  self.webView.scrollView.contentSize.height;
+
+        if (self.currentContentHeight == newContentHeight) {
             return;
         }
-        
-        UIScrollView *webScrollView = self.webView.scrollView;
-        CGFloat newContentHeight = webScrollView.contentSize.height;
-        CGFloat newContentWidth = webScrollView.contentSize.width;
-        NSLog(@"New contentSize: %f x %f", webScrollView.contentSize.width, newContentHeight);
-        if (contentHeight == newContentHeight) {
-            return;
-        }
-        contentHeight = newContentHeight;
-        //        self.webView.frame = CGRectMake(self.scrollView.bounds.origin.x, self.scrollView.bounds.origin.y, self.scrollView.bounds.size.width, newContentHeight);
-        self.webView.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, newContentHeight);
-        
+        self.currentContentHeight = newContentHeight;
+        [self.delegate paymentViewDidChangeContentSize:CGSizeMake(self.frame.size.width, newContentHeight)];
     }
 }
 
