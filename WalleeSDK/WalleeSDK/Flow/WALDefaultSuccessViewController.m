@@ -8,6 +8,7 @@
 
 #import "WALDefaultSuccessViewController.h"
 #import "WALTransaction.h"
+#import "WALTranslation.h"
 
 @interface WALDefaultSuccessViewController ()
 @property (nonatomic, strong) UILabel *label;
@@ -17,10 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = UIColor.whiteColor;
-    self.label = [[UILabel alloc] initWithFrame:self.view.bounds];
-    self.label.text = @"Transaction Successfull";
-    [self.view addSubview:self.label];
+    self.label.text = WALLocalizedString(@"Transaction Successfull", @"message on transaction succes view controller");
 }
 
 @end

@@ -16,7 +16,7 @@
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) WALDefaultPaymentFormView *paymentFormView;
 @property (nonatomic, strong) UIButton *submitButton;
-
+@property (nonatomic, strong) UIButton *backButton;
 @end
 
 @implementation WALDefaultPaymentMethodFormViewController
@@ -27,8 +27,6 @@
     self.automaticallyAdjustsScrollViewInsets = YES;
     [self.view addSubview:self.submitButton];
     [self.view addSubview:self.paymentFormView];
-    
-//    self.paymentFormView.webView.scrollView.contentOffset = CGPointMake(self.topLayoutGuide.length, self.bottomLayoutGuide.length);
     
 //            self.webView.scrollView.contentInset = UIEdgeInsetsMake(0, 0, self.test.frame.size.height, 0);
 //            self.webView.scrollView.contentOffset = CGPointMake(0, self.test.frame.size.height);
@@ -77,6 +75,20 @@
         _submitButton.backgroundColor = self.theme.accentBackgroundColor;
         [_submitButton setTitleColor:self.theme.accentColor forState:UIControlStateNormal];
         [_submitButton addTarget:self action:@selector(submitTaped) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _submitButton;
+}
+
+- (UIButton *)backButton {
+    if (!_backButton) {
+        _backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        _backButton.frame = [self defaultButtonRect];
+        _backButton.autoresizingMask = (UIViewAutoresizingFlexibleWidth);
+        [_backButton setTitle:WALLocalizedString(@"Submit", @"title of the submit button on the payment method form") forState:UIControlStateNormal];
+        _backButton.backgroundColor = self.theme.accentBackgroundColor;
+        [_backButton setTitleColor:self.theme.accentColor forState:UIControlStateNormal];
+        [_backButton addTarget:self action:@selector(submitTaped) forControlEvents:UIControlEventTouchUpInside];
     }
     return _submitButton;
 }
@@ -159,9 +171,10 @@
 }
 
 - (void)submitTaped {
-    NSLog(@"tapp");
     [self.paymentFormView validate];
 }
+
+
 
 @end
 

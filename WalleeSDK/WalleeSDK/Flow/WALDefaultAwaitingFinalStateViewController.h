@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WALDefaultBaseViewController.h"
+#import "WALDefaultStateBaseViewController.h"
 
-@interface WALDefaultAwaitingFinalStateViewController : WALDefaultBaseViewController
+@interface WALDefaultAwaitingFinalStateViewController : WALDefaultStateBaseViewController
 
 @end

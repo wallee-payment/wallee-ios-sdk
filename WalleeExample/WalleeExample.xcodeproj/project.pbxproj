@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		A63B64CD1F5BF3AE007B9B15 /* WalleeSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A63B64CA1F5BF2EF007B9B15 /* WalleeSDK.framework */; };
 		A63B64D21F5C0EDA007B9B15 /* TestCredentialsFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = A63B64D11F5C0EDA007B9B15 /* TestCredentialsFetcher.m */; };
-		A6670D901F5EEA9900C3B229 /* ajax.js in Resources */ = {isa = PBXBuildFile; fileRef = A6670D8F1F5EEA9900C3B229 /* ajax.js */; };
 		A6DE8EA21F41A911006E082B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DE8EA11F41A911006E082B /* main.m */; };
 		A6DE8EA51F41A911006E082B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DE8EA41F41A911006E082B /* AppDelegate.m */; };
 		A6DE8EA81F41A911006E082B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DE8EA71F41A911006E082B /* ViewController.m */; };
@@ -62,7 +61,6 @@
 		A63B64C41F5BF2EF007B9B15 /* WalleeSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WalleeSDK.xcodeproj; path = ../WalleeSDK/WalleeSDK.xcodeproj; sourceTree = "<group>"; };
 		A63B64D01F5C0EDA007B9B15 /* TestCredentialsFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestCredentialsFetcher.h; sourceTree = "<group>"; };
 		A63B64D11F5C0EDA007B9B15 /* TestCredentialsFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestCredentialsFetcher.m; sourceTree = "<group>"; };
-		A6670D8F1F5EEA9900C3B229 /* ajax.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ajax.js; sourceTree = "<group>"; };
 		A6DE8E9D1F41A911006E082B /* WalleeExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WalleeExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6DE8EA11F41A911006E082B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A6DE8EA31F41A911006E082B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -150,7 +148,6 @@
 				A6DE8EAC1F41A911006E082B /* Assets.xcassets */,
 				A6DE8EAE1F41A911006E082B /* LaunchScreen.storyboard */,
 				A6DE8EB11F41A911006E082B /* Info.plist */,
-				A6670D8F1F5EEA9900C3B229 /* ajax.js */,
 				A6DE8EA01F41A911006E082B /* Supporting Files */,
 			);
 			path = WalleeExample;
@@ -317,7 +314,6 @@
 			files = (
 				A6DE8EB01F41A911006E082B /* LaunchScreen.storyboard in Resources */,
 				A6DE8EAD1F41A911006E082B /* Assets.xcassets in Resources */,
-				A6670D901F5EEA9900C3B229 /* ajax.js in Resources */,
 				A6DE8EAB1F41A911006E082B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

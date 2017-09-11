@@ -51,10 +51,27 @@
 }
 
 - (void)addAJAXController:(WKUserContentController *)controller {
-    NSString *jsHandler = [NSString stringWithContentsOfURL:[[NSBundle mainBundle]URLForResource:@"ajax" withExtension:@"js"] encoding:NSUTF8StringEncoding error:NULL];
+    NSString *jsHandler = [self inlineScript];
+    
     WKUserScript *ajaxHandler = [[WKUserScript alloc]initWithSource:jsHandler injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:NO];
     [controller addScriptMessageHandler:self name:@"callbackHandler"];
     [controller addUserScript:ajaxHandler];
+}
+
+- (NSString *)inlineScript {
+    return @"$( document ).ajaxSend(function( event, request, settings )  {"
+    @"    callNativeApp (settings.url);"
+    @"});"
+    
+    @"function callNativeApp (data) {"
+    @"    try {"
+    @"        webkit.messageHandlers.callbackHandler.postMessage(data);"
+    @"    }"
+    @"    catch(err) {"
+    @"        console.log('The native context does not exist yet');"
+    @"    }"
+    @"}";
+
 }
 
 - (void)loadPaymentView:(NSURL *)mobileSdkUrl {
@@ -73,7 +90,7 @@
 - (void)setScrollingEnabled:(BOOL)scrollingEnabled {
     _scrollingEnabled = scrollingEnabled;
 //    self.webView.scrollView.scrollEnabled = _scrollingEnabled;
-    // Keyboard an offset this
+    // Keyboard can offset this so we disable it for the moment
 }
 
 // MARK: - AJAX Handling
