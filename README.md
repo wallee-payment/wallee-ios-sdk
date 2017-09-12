@@ -1,16 +1,19 @@
+<!--
 [![Build Status](https://travis-ci.org/wallee-payment/wallee-ios-sdk.svg?branch=master)](https://travis-ci.org/wallee-payment/wallee-ios-sdk)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.wallee/wallee-ios-sdk/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.wallee/wallee-ios-sdk)
+-->
 
 # wallee-ios-sdk
 
 This project allows to integrate the <a href="https://wallee.com">wallee payment service</a> into
 iOS apps.
 
+<!--
 # Install Dependency
 
 The simplest way to start using wallee API is via cocoapods
 
-<!-- ### CocoaPods
+ ### CocoaPods
 
 [CocoaPods](http://cocoapods.org) is a dependency manager for Cocoa projects.
 
