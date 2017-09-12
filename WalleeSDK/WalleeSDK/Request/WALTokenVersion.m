@@ -44,7 +44,8 @@
 
 // MARK: - Sort
 + (NSArray<NSSortDescriptor *> *)sortDescriptors {
-    return @[[NSSortDescriptor sortDescriptorWithKey:WalleeName ascending:YES]];
+    return @[[NSSortDescriptor sortDescriptorWithKey:WalleeName ascending:YES],
+             [NSSortDescriptor sortDescriptorWithKey:WalleeObjectId ascending:YES]];
 }
 
 // MARK: - Description

@@ -26,7 +26,8 @@ Pod::Spec.new do |s|
 
   # https://guides.cocoapods.org/syntax/podspec.html#source
   # s.source        = { :git => 'https://gitlab.smoca.ch/smoca/wallee-ios.git', :tag => s.version.to_s }
-  s.source           = { :git => 'https://gitlab.smoca.ch/smoca/wallee-ios.git', :branch => '6-cocoapods' }
+  s.source           = { :git => 'https://gitlab.smoca.ch/smoca/wallee-ios.git'}
+  #, :branch => '6-cocoapods' 
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'

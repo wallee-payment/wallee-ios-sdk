@@ -10,7 +10,7 @@ iOS apps.
 
 The simplest way to start using wallee API is via cocoapods
 
-### CocoaPods
+<!-- ### CocoaPods
 
 [CocoaPods](http://cocoapods.org) is a dependency manager for Cocoa projects.
 
@@ -31,7 +31,7 @@ Then, run the following command:
 ```bash
 $ pod install
 ```
-
+ -->
 # Basic Usage
 
 The simplest way to use the SDK is by instantiating a `WALFlowConfigurationBuilder` with a `WALCredentialsFetcher`. 
