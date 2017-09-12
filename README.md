@@ -80,6 +80,7 @@ use the SDK.
 
 To see how to use the `WALFlowCoordinator` the best is to take a look at the sample app.
 
+<!--
 # Advanced Usage
 
 The SDK is build in layers:
@@ -90,11 +91,12 @@ The SDK is build in layers:
 * Various Views: There are different views for each of the used screens.
 * Flow Coordinator: The flow coordinator binds the API request handling and the views layer together.
   The flow coordinator implies a specific flow as described above.
-* Fragments: The fragments we provide simplifies the usage of the flow coordinator.
+* ViewControllers: The ViewControllers we provide simplifies the usage of the flow coordinator.
 
 Each of the above layers can be used as pleased. This implies that an app can use only the web
 services and implements the rest by itself or it can also use the different views, but with a
 different flow.
+-->
 
 # Documentation
 
