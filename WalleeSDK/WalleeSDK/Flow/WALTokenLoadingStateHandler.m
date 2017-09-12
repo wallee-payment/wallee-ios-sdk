@@ -35,6 +35,12 @@
     return nil;
 }
 
+- (instancetype)initInternal {
+    self = [super initInternal];
+    
+    return self;
+}
+
 + (instancetype)stateWithParameters:(NSDictionary *)parameters {
     return [[self alloc] initInternal];
 }

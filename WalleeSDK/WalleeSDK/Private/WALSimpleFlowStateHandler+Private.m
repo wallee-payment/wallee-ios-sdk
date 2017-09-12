@@ -8,5 +8,14 @@
 
 #import "WALSimpleFlowStateHandler+Private.h"
 
+
 @implementation WALSimpleFlowStateHandler (Private)
+@dynamic alive;
+
+- (instancetype)initInternal {
+    if (self = [super init]) {
+        self.alive = YES;
+    }
+    return self;
+}
 @end

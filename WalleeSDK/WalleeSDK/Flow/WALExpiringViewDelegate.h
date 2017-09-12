@@ -15,11 +15,11 @@
  */
 @protocol WALExpiringViewDelegate <NSObject>
 /**
- * This method is invoked when the viewController has been expired. The implementor should take some
- * action to solve this issue. For example reload the view or remove it and cancel the payment
- * process.
- *
- * @param viewController the viewController which has been expired.
+  This method is invoked when the viewController has been expired. The implementor should take some
+  action to solve this issue. For example reload the view or remove it and cancel the payment
+  process.
+ 
+  @param viewController the viewController which has been expired.
  */
 - (void)viewControllerDidExpire:(UIViewController *)viewController;
 @end

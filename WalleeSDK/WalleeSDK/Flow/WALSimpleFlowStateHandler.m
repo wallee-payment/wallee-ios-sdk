@@ -20,13 +20,6 @@
 
 @implementation WALSimpleFlowStateHandler
 
-- (instancetype)initInternal {
-    if (self = [super init]) {
-        _alive = YES;
-    }
-    return self;
-}
-
 - (BOOL)isValid {
     return self.alive;
 }

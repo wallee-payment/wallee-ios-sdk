@@ -27,6 +27,7 @@
 @property (nonatomic) NSUInteger paymentMethodId;
 @property (nonatomic, copy) WALMobileSdkUrl *sdkUrl;
 @property (nonatomic, strong) UIViewController<WALPaymentFormView> *paymentForm;
+
 /// this is the only state that has to hold a reference to the @c WALCoordinator
 /// because of its asynchronous delegate methods
 @property (nonatomic, weak) WALFlowCoordinator *coordinatorDelegate;

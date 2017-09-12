@@ -10,6 +10,7 @@
 
 @interface WALSimpleFlowStateHandler (Private)
 NS_ASSUME_NONNULL_BEGIN
+@property (nonatomic) BOOL alive;
 - (instancetype)initInternal;
 NS_ASSUME_NONNULL_END
 @end
