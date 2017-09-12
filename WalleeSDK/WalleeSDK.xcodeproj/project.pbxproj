@@ -80,7 +80,7 @@
 		A68202931F617D2B00844B5F /* WALPaymentMethodIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = A68202911F617D2B00844B5F /* WALPaymentMethodIcon.m */; };
 		A68202961F61824200844B5F /* WALNSURLSessionHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = A68202941F61824200844B5F /* WALNSURLSessionHelper.h */; };
 		A68202971F61824200844B5F /* WALNSURLSessionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A68202951F61824200844B5F /* WALNSURLSessionHelper.m */; };
-		A68202991F62B87800844B5F /* WALIconCache.h in Headers */ = {isa = PBXBuildFile; fileRef = A68202981F62B87800844B5F /* WALIconCache.h */; };
+		A68202991F62B87800844B5F /* WALIconCache.h in Headers */ = {isa = PBXBuildFile; fileRef = A68202981F62B87800844B5F /* WALIconCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A682029C1F62C14B00844B5F /* WALDefaultIconCache.h in Headers */ = {isa = PBXBuildFile; fileRef = A682029A1F62C14B00844B5F /* WALDefaultIconCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A682029D1F62C14B00844B5F /* WALDefaultIconCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A682029B1F62C14B00844B5F /* WALDefaultIconCache.m */; };
 		A682029F1F62DEB800844B5F /* WALIconStore.h in Headers */ = {isa = PBXBuildFile; fileRef = A682029E1F62DEB800844B5F /* WALIconStore.h */; settings = {ATTRIBUTES = (Public, ); }; };

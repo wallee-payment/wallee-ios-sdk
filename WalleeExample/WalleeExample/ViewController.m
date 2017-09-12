@@ -36,6 +36,7 @@
     NSError *error;
     TestCredentialsFetcher *fetcher = [[TestCredentialsFetcher alloc] init];
     WALFlowConfigurationBuilder *builder = [[WALFlowConfigurationBuilder alloc] initWithCredentialsFetcher:fetcher operationQueue:nil];
+    
     //additional setup
     builder.delegate = self;
     
@@ -51,12 +52,6 @@
     [self presentViewController:self.coordinator.paymentContainer.viewController animated:YES completion:^{
         NSLog(@"display completed");
     }];
-}
-
-- (void)startPaymentWithBlockSyntax {
-//    WALFlowConfiguration *configuration = [WALFlowConfiguration makeWithBlock:^(WALFlowConfigurationBuilder * _Nonnull builder) {
-//        builder.webServiceApiClient = nil;
-//    } error:&error];
 }
 
 // MARK: - Delegate
