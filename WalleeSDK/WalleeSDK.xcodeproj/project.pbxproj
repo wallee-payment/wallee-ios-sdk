@@ -355,18 +355,18 @@
 			isa = PBXGroup;
 			children = (
 				A63B64A21F5AC3F8007B9B15 /* WALViewControllerFactory.h */,
-				A63B64A41F5AC439007B9B15 /* WALDefaultViewControllerFactory.h */,
-				A63B64A51F5AC439007B9B15 /* WALDefaultViewControllerFactory.m */,
+				A63B64461F595CD6007B9B15 /* WALPaymentFlowContainerFactory.h */,
+				A63B64361F594B07007B9B15 /* WALPaymentFlowContainer.h */,
 				A6670D861F5ECA2000C3B229 /* Delegate */,
 				A6670D721F5D58D800C3B229 /* Method */,
 				A6670D7B1F5D77D500C3B229 /* Status */,
 				A63B64781F59C3F2007B9B15 /* Token */,
-				A63B64461F595CD6007B9B15 /* WALPaymentFlowContainerFactory.h */,
-				A63B64361F594B07007B9B15 /* WALPaymentFlowContainer.h */,
 				A63B64301F593D76007B9B15 /* WALDefaultPaymentFlowContainer.h */,
 				A63B64311F593D76007B9B15 /* WALDefaultPaymentFlowContainer.m */,
 				A63B64401F595C32007B9B15 /* WALDefaultPaymentFlowContainerFactory.h */,
 				A63B64411F595C32007B9B15 /* WALDefaultPaymentFlowContainerFactory.m */,
+				A63B64A41F5AC439007B9B15 /* WALDefaultViewControllerFactory.h */,
+				A63B64A51F5AC439007B9B15 /* WALDefaultViewControllerFactory.m */,
 				A68202B41F65248E00844B5F /* WALDefaultBaseViewController.h */,
 				A68202B51F65248E00844B5F /* WALDefaultBaseViewController.m */,
 			);
