@@ -137,13 +137,13 @@
     [self.coordinatorDelegate ready];
 }
 
-- (void)paymentViewDidValidateSuccessful:(UIViewController *)viewController {
+- (void)paymentViewDidValidateSuccessful {
     if (!self.paymentForm.isSubmitted) {
         [self.paymentForm submit];
     }
 }
 
-- (void)paymentView:(UIViewController *)viewController didFailValidationWithErrors:(NSArray<NSError *> *)errors {
+- (void)paymentViewDidFailValidationWithErrors:(NSArray<NSError *> *)errors {
     // no action needed
 }
 
@@ -152,19 +152,19 @@
     [self.coordinatorDelegate changeStateTo:WALFlowStatePaymentForm parameters:@{WALFlowPaymentMethodsParameter: @(self.paymentMethodId)}];
 }
 
-- (void)paymentView:(UIViewController *)viewController didEncounterError:(NSError *)error {
+- (void)paymentViewDidEncounterError:(NSError *)error {
     [WALPaymentErrorHelper distribute:error forCoordinator:self.coordinatorDelegate];
 }
 
-- (void)paymentViewDidSucceed:(UIViewController *)viewController {
+- (void)paymentViewDidSucceed {
     [self readAndEvaluateTransactionForState:WALFlowStateSuccess];
 }
 
-- (void)paymentViewDidFail:(UIViewController *)viewController {
+- (void)paymentViewDidFail {
     [self readAndEvaluateTransactionForState:WALFlowStateFailure];
 }
 
-- (void)paymentViewAwaitsFinalState:(UIViewController *)viewController {
+- (void)paymentViewAwaitsFinalState {
     [self readAndEvaluateTransactionForState:WALFlowStateAwaitingFinalState];
 }
 

@@ -10,8 +10,8 @@
 
 
 /**
- * This interface defines a view to expire automatically after awhile. The listener allows to act on
- * the fact when the view is expired.
+  This interface defines a view to expire automatically after awhile. The listener allows to act on
+  the fact when the view is expired.
  */
 @protocol WALExpiringViewDelegate <NSObject>
 /**

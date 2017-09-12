@@ -26,6 +26,7 @@ typedef BOOL(^WALContainerBackAction)(void);
 
 /**
  Must Return a @c WALPaymentFlowContainer.
+ 
  <p>Since states go stale and cannot be reused it is not possible to payment_list_get_token to previous UIViewControllers.
  Instead Navigation has to always go thru the @c [WALFlowCoordinator @c triggerAction:]. the @c onBackAction
  is a convenient way to achieve this from Navigation Items (like the @c UINavigationBar Back Button)</p>
