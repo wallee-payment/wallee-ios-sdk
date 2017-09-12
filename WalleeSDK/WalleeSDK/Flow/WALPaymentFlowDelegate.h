@@ -14,6 +14,12 @@
  */
 @protocol WALPaymentFlowDelegate <NSObject>
 
+- (void)flowCoordinator:(WALFlowCoordinator *)coordinator transactionDidSucceed:(WALTransaction *)transaction;
+- (void)flowCoordinator:(WALFlowCoordinator *)coordinator transactionDidFail:(WALTransaction *)transaction;
+- (void)flowCoordinator:(WALFlowCoordinator *)coordinator encouteredInternalError:(NSError*)error;
+- (void)flowCoordinator:(WALFlowCoordinator *)coordinator encouteredApiError:(NSError*)error;
+
+@optional
 - (void)flowCoordinatorWillLoadToken:(WALFlowCoordinator *)coordinator;
 - (void)flowCoordinatorWillDisplayTokenSelection:(WALFlowCoordinator *)coordinator;
 - (void)flowCoordinator:(WALFlowCoordinator *)coordinator didSelectToken:(WALTokenVersion *)token;
@@ -22,11 +28,4 @@
 - (void)flowCoordinatorWillDisplayPaymentMethodSelection:(WALFlowCoordinator *)coordinator;
 - (void)flowCoordinator:(WALFlowCoordinator *)coordinator didSelectPaymentMethod:(WALPaymentMethodConfiguration *)paymentMethod;
 
-- (void)flowCoordinator:(WALFlowCoordinator *)coordinator transactionDidSucceed:(WALTransaction *)transaction;
-- (void)flowCoordinator:(WALFlowCoordinator *)coordinator transactionDidFail:(WALTransaction *)transaction;
-
-- (void)flowCoordinator:(WALFlowCoordinator *)coordinator encouteredInternalError:(NSError*)error;
-- (void)flowCoordinator:(WALFlowCoordinator *)coordinator encouteredApiClientError:(WALApiClientError*)error;
-- (void)flowCoordinator:(WALFlowCoordinator *)coordinator encouteredApiServerError:(WALApiServerError*)error;
-- (void)flowCoordinator:(WALFlowCoordinator *)coordinator encouteredApiNetworktError:(NSError*)error;
 @end

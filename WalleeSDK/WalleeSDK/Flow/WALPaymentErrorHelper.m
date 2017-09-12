@@ -18,13 +18,9 @@
     if (!error || !coordinator) {
         return;
     }
-    if ([error isKindOfClass:WALApiServerError.class]) {
-        [coordinator.configuration.delegate flowCoordinator:coordinator encouteredApiServerError:(WALApiServerError *)error];
-    } else if ([error isKindOfClass:WALApiClientError.class]) {
-        [coordinator.configuration.delegate flowCoordinator:coordinator encouteredApiClientError:(WALApiClientError *)error];
-    } else {
-        [coordinator.configuration.delegate flowCoordinator:coordinator encouteredApiNetworktError:error];
-    }
+
+    [coordinator.configuration.delegate flowCoordinator:coordinator  encouteredApiError:error];
+    
 }
 
 + (void)distribute:(NSError *)error forCoordinator:(WALFlowCoordinator *)coordinator {
