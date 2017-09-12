@@ -41,7 +41,10 @@ With this a basic configuration is valid and can be used to create a `WALFlowCoo
 
 Be sure to keep a strong reference to the `WALFlowCoordinator` because the whole payment process is not self contained and terminates once it is not referenced by anyone anymore.
 
-Once you start the payment process by `[WALFlowCoordinator start]` the coordinator pulls all required data automatically via the credentialsFetcher.
+Once you start the payment process by `[WALFlowCoordinator start]` the coordinator pulls all required data automatically via the credentialsFetcher. The payment process itself runs in a view container which the implementing app has to present.
+The simplest way to do this is by simply showing it as a modal ViewController.
+
+Receive the view container via the coordinators properties: `coordinator.paymentContainer.viewController`.
 
 The `WALPaymentFlowDelegate` has mandatory delegate methods which are indicating the payment process terminal state.
 As in either success or failure.
@@ -69,7 +72,7 @@ This flow can be adapted see the advanced usage section for more information abo
 To run the sample application the easiest way is to checkout the repository and to launch the
 `WalleeSDKExample` through `XCode`.
 
-The `sample app` shows how to use the `WALFlowCoordinator`. This is the simplest way to
+The `sample app` shows how to use the `WALFlowCoordinator` with a default configuration. This is the simplest way to
 use the SDK.
 
 To see how to use the `WALFlowCoordinator` the best is to take a look at the sample app.
