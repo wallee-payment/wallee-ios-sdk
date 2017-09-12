@@ -13,6 +13,7 @@
 @class WALPaymentMethodConfiguration;
 
 @interface WALPaymentMethodFormStateHandler : WALSimpleFlowStateHandler<WALFlowStateHandler, WALPaymentFormDelegate>
-//#include "WALStaticInit.h"
+NS_ASSUME_NONNULL_BEGIN
 + (instancetype)stateWithPaymentMethodId:(NSUInteger)paymentMethodId;
+NS_ASSUME_NONNULL_END
 @end

@@ -9,17 +9,17 @@
 #import <Foundation/Foundation.h>
 #import "WALJSONDecodable.h"
 #import "WALJSONAutoDecodable.h"
+#import "WALDataObject.h"
 @class WALConnectorConfiguration, WALToken;
 
-@interface WALTokenVersion : NSObject<WALJSONDecodable, WALJSONAutoDecodable>
-//#include "WALAPIDataType.h"
+@interface WALTokenVersion : WALDataObject<WALJSONDecodable, WALJSONAutoDecodable>
 
 NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, copy) NSString *activatedOn;
 //private Address billingAddress;
 @property (nonatomic, readonly, copy) NSString *createdOn;
 //private ChargeAttemptEnvironment environment;
-@property (nonatomic, readonly, assign) NSUInteger id;
+@property (nonatomic, readonly, assign) NSUInteger objectId;
 //private List<Label> labels;
 @property (nonatomic, readonly, copy) NSString *language;
 @property (nonatomic, readonly, assign) NSUInteger linkedSpaceId;

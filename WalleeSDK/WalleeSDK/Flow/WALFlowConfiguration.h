@@ -23,8 +23,10 @@ typedef void(^WALFlowConfigurationBuilderBlock)(WALFlowConfigurationBuilder * _N
  * relies on the a @c WALFlowConfigurationBuilder to be properly initialized
  */
 @interface WALFlowConfiguration : NSObject
-//#include "WALStaticInit.h"
 NS_ASSUME_NONNULL_BEGIN
+
+- (instancetype _Nullable)init __attribute__((unavailable("Dont initialize this type directly, use the parameterized initializer")));
++ (instancetype _Nullable)new __attribute__((unavailable("Dont initialize this type directly, use the parameterized initializer")));
 
 /**
  * The payment flow container factory creates the view which handle the flow and display of other views and interactions.

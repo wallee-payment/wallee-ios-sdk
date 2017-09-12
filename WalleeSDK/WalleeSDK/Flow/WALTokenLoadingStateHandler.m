@@ -7,6 +7,8 @@
 //
 
 #import "WALTokenLoadingStateHandler.h"
+#import "WALSimpleFlowStateHandler+Private.h"
+
 #import "WALFlowConfiguration.h"
 #import "WALFlowCoordinator+StateDelegate.h"
 #import "WALPaymentFlowDelegate.h"
@@ -28,8 +30,13 @@
 
 @implementation WALTokenLoadingStateHandler
 
+- (instancetype)init {
+    NSAssert(YES, @"initializer unavailable");
+    return nil;
+}
+
 + (instancetype)stateWithParameters:(NSDictionary *)parameters {
-    return [[self alloc] init];
+    return [[self alloc] initInternal];
 }
 
 - (BOOL)dryTriggerAction:(WALFlowAction)flowAction {

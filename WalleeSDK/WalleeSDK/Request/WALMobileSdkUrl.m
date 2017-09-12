@@ -8,7 +8,7 @@
 
 #import "WALMobileSdkUrl.h"
 #import "WALErrorDomain.h"
-
+#import "WALDataObject+Private.h"
 
 /// Walle MobileSdkURL expiration time.
 WALTimestamp const WalleeMobileSdkUrlExpiryTime = 15 * 60;
@@ -35,7 +35,7 @@ static NSString * const WallePaymentMethodQueryParamName = @"paymentMethodConfig
 }
 
 -(instancetype)initWithUrl:(NSString *)url expiryDate:(WALTimestamp)expiryDate {
-    self = [super init];
+    self = [super initInternal];
     if (self) {
         _url = url.copy;
         _expiryDate = expiryDate;

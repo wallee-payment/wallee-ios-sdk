@@ -7,6 +7,8 @@
 //
 
 #import "WALTokenSelectionStateHandler.h"
+#import "WALSimpleFlowStateHandler+Private.h"
+
 #import "WALFlowConfiguration.h"
 #import "WALFlowCoordinator+StateDelegate.h"
 #import "WALFlowStateDelegate.h"
@@ -38,7 +40,7 @@
 }
 
 - (instancetype)initWithTokens:(WALLoadedTokens *)loadedTokens {
-    if (self = [super init]) {
+    if (self = [self initInternal]) {
         _loadedTokens = loadedTokens;
     }
     return self;

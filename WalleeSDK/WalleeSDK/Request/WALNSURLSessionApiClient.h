@@ -12,8 +12,8 @@
 @class WALCredentialsProvider;
 
 @interface WALNSURLSessionApiClient : NSObject <WALApiClient>
-//#include "WALStaticInit.h"
 NS_ASSUME_NONNULL_BEGIN
+
 /**
  Returns a fully initialized @c WALApiClient using the default WalleeBaseURL
 
@@ -31,6 +31,10 @@ NS_ASSUME_NONNULL_BEGIN
  @return fully initialized apiClient
  */
 + (instancetype)clientWithBaseUrl:(NSString*)baseUrl credentialsProvider:(WALCredentialsProvider *)credentialsProvider operationQueue:(NSOperationQueue *_Nullable)queue;
+
+- (instancetype _Nullable)init __attribute__((unavailable("Dont initialize this type directly, use the static method")));
++ (instancetype _Nullable)new __attribute__((unavailable("Dont initialize this type directly, use the static method")));
+
 NS_ASSUME_NONNULL_END
 @end
 

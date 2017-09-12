@@ -9,6 +9,8 @@
 #import "WALPaymentMethodFormStateHandler.h"
 #import "WALPaymentFormView.h"
 
+#import "WALSimpleFlowStateHandler+Private.h"
+
 #import "WALFlowConfiguration.h"
 #import "WALFlowCoordinator+StateDelegate.h"
 #import "WALViewControllerFactory.h"
@@ -45,7 +47,7 @@
 }
 
 - (instancetype)initWithPaymentMethodId:(NSUInteger)paymentMethodId {
-    if (self = [super init]) {
+    if (self = [super initInternal]) {
         self.paymentMethodId = paymentMethodId;
     }
     return self;

@@ -10,6 +10,7 @@
 #import "WALPaymentMethodConfiguration.h"
 #import "WALLoadedPaymentMethods.h"
 
+#import "WALSimpleFlowStateHandler+Private.h"
 #import "WALFlowCoordinator+StateDelegate.h"
 
 #import "WALFlowConfiguration.h"
@@ -39,7 +40,7 @@
 }
 
 - (instancetype)initWithPaymentMethods:(WALLoadedPaymentMethods *)loadedPaymentMethods {
-    if (self = [super init]) {
+    if (self = [super initInternal]) {
         _loadedPaymentMethods = loadedPaymentMethods;
     }
     return self;

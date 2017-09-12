@@ -7,9 +7,12 @@
 //
 
 #import "WALSimpleFlowStateHandler.h"
+#import "WALSimpleFlowStateHandler+Private.h"
+
 #import "WALFlowCoordinator.h"
 #import "WALErrorDomain.h"
 #import "WALPaymentErrorHelper.h"
+
 
 @interface WALSimpleFlowStateHandler ()
 @property (nonatomic) BOOL alive;
@@ -17,7 +20,7 @@
 
 @implementation WALSimpleFlowStateHandler
 
-- (instancetype)init {
+- (instancetype)initInternal {
     if (self = [super init]) {
         _alive = YES;
     }

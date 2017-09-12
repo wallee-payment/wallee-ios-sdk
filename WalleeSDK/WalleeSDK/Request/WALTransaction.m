@@ -11,11 +11,13 @@
 #import "WALJSONParser.h"
 #import "WALToken.h"
 #import "WALFailureReason.h"
+#import "WALDataObject+Private.h"
+
 
 @implementation WALTransaction
 
 - (instancetype)initInternal {
-    self = [super init];
+    self = [super initInternal];
     return self;
 }
 

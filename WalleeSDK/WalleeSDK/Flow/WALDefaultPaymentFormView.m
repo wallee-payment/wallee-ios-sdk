@@ -274,13 +274,6 @@
 
 // MARK: - WKWebView Delegation
 
-
--(void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
-    NSLog(@"webView:  decidePolicyFor RESPONSE: %@ ", navigationResponse);
-    
-    decisionHandler(WKNavigationResponsePolicyAllow);
-}
-
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
     NSLog(@"webView: didStart: %@" , navigation);
 }

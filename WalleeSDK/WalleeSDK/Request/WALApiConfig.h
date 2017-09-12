@@ -76,6 +76,23 @@ FOUNDATION_EXPORT NSString *const WalleePaymentMethodConfiguration;
 FOUNDATION_EXPORT NSString *const WalleePriority;
 FOUNDATION_EXPORT NSString *const WalleeProcessorConfiguration;
 
+FOUNDATION_EXPORT NSString * const WalleeActivatedOn;
+FOUNDATION_EXPORT NSString * const WalleeObsoletedOn;
+FOUNDATION_EXPORT NSString * const WalleeProcessorToken;
+
+FOUNDATION_EXPORT NSString * const WalleePaymentMethod;
+FOUNDATION_EXPORT NSString * const WalleeSpaceId;
+FOUNDATION_EXPORT NSString * const WalleeSortOrder;
+FOUNDATION_EXPORT NSString * const WalleeResolvedTitle;
+FOUNDATION_EXPORT NSString * const WalleeResolvedImageUrl;
+FOUNDATION_EXPORT NSString * const WalleeResolvedDescription;
+FOUNDATION_EXPORT NSString * const WalleeDescription;
+FOUNDATION_EXPORT NSString * const WalleeTitle;
+FOUNDATION_EXPORT NSString * const WalleeDescriptionText;
+
+FOUNDATION_EXPORT NSString *const WalleeCategory;
+FOUNDATION_EXPORT NSString *const WalleeFeatures;
+
 FOUNDATION_EXPORT NSUInteger const WalleClientErrorReturnCode;
 FOUNDATION_EXPORT NSUInteger const WalleServerErrorReturnCode;
 
