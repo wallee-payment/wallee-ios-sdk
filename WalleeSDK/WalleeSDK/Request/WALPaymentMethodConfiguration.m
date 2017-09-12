@@ -54,7 +54,8 @@
 
 + (NSArray<NSSortDescriptor *> *)sortDescriptors {
     return @[[NSSortDescriptor sortDescriptorWithKey:WalleeSortOrder ascending:YES],
-             [NSSortDescriptor sortDescriptorWithKey:WalleeName ascending:YES]];
+             [NSSortDescriptor sortDescriptorWithKey:WalleeName ascending:YES],
+             [NSSortDescriptor sortDescriptorWithKey:WalleeObjectId ascending:YES]];
 }
 
 // MARK: - Enum
