@@ -14,6 +14,9 @@
 
 @interface WALSimpleFlowStateHandler : NSObject<WALLifeCycleObject>
 NS_ASSUME_NONNULL_BEGIN
+- (instancetype _Nullable)init NS_UNAVAILABLE;
++ (instancetype _Nullable)new __attribute__((unavailable("Dont initialize this type directly, use the parameterized initializer")));
+
 - (BOOL)isValid;
 - (void)invalidate;
 

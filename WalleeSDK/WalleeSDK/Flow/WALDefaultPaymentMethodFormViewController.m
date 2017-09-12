@@ -146,27 +146,27 @@ static CGFloat defaultButtonHeight = 44.0f;
     [self.delegate viewDidFinishLoading:viewController];
 }
 
-- (void)paymentViewDidValidateSuccessful:(UIViewController *)viewController {
-    [self.delegate paymentViewDidValidateSuccessful:viewController];
+- (void)paymentViewDidValidateSuccessful {
+    [self.delegate paymentViewDidValidateSuccessful];
 }
 
-- (void)paymentView:(UIViewController *)viewController didFailValidationWithErrors:(NSArray<NSError *> *)errors {
-    [self.delegate paymentView:viewController didFailValidationWithErrors:errors];
+- (void)paymentViewDidFailValidationWithErrors:(NSArray<NSError *> *)errors {
+    [self.delegate paymentViewDidFailValidationWithErrors:errors];
 }
-- (void)paymentView:(UIViewController *)viewController didEncounterError:(NSError *)error {
-    [self.delegate paymentView:viewController didEncounterError:error];
-}
-
-- (void)paymentViewAwaitsFinalState:(UIViewController *)viewController {
-    [self.delegate paymentViewAwaitsFinalState:viewController];
+- (void)paymentViewDidEncounterError:(NSError *)error {
+    [self.delegate paymentViewDidEncounterError:error];
 }
 
-- (void)paymentViewDidSucceed:(UIViewController *)viewController {
-    [self.delegate paymentViewDidSucceed:viewController];
+- (void)paymentViewAwaitsFinalState {
+    [self.delegate paymentViewAwaitsFinalState];
 }
 
-- (void)paymentViewDidFail:(UIViewController *)viewController {
-    [self.delegate paymentViewDidFail:viewController];
+- (void)paymentViewDidSucceed {
+    [self.delegate paymentViewDidSucceed];
+}
+
+- (void)paymentViewDidFail {
+    [self.delegate paymentViewDidFail];
 }
 
 - (void)viewControllerDidExpire:(UIViewController *)viewController {

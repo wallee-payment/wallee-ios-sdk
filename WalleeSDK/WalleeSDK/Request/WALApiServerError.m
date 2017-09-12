@@ -18,6 +18,11 @@
 }
 
 + (instancetype)decodedObjectFromJSON:(NSDictionary<NSString *,id> *)dictionary error:(NSError * _Nullable __autoreleasing *)error {
+    
+    NSMutableDictionary *mutable = [NSMutableDictionary dictionaryWithDictionary:dictionary];
+    mutable[NSLocalizedDescriptionKey] = dictionary[WalleeMessage] ?: dictionary[WalleeDefaultMessage] ?: NSNull.null;
+    
+    
     WALApiServerError *serverError = [self.class errorWithDomain:WALErrorDomain code:WALErrorTransactionFailure userInfo:dictionary];
     
     if (![WALJSONParser populate:serverError withDictionary:dictionary error:error]) {

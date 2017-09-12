@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "WALJSONDecodable.h"
 #import "WALJSONAutoDecodable.h"
+#import "WALDataObject.h"
+
 @class WALFailureReason, WALToken;
 
 typedef NS_ENUM(NSInteger, WALTransactionState){
@@ -25,8 +27,8 @@ typedef NS_ENUM(NSInteger, WALTransactionState){
     WALTransactionStateUnknown
 };
 
-@interface WALTransaction : NSObject<NSCopying, WALJSONDecodable, WALJSONAutoDecodable>
-//#include "WALAPIDataType.h"
+@interface WALTransaction : WALDataObject<NSCopying, WALJSONDecodable, WALJSONAutoDecodable>
+
 NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, copy) NSString *acceptHeader;
 //private List<PaymentMethodBrand> allowedPaymentMethodBrands;

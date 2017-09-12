@@ -76,6 +76,22 @@ NSString *const WalleePaymentMethodConfiguration = @"paymentMethodConfiguration"
 NSString *const WalleePriority = @"priority";
 NSString *const WalleeProcessorConfiguration = @"processorConfiguration";
 
+NSString * const WalleeActivatedOn = @"activatedOn";
+NSString * const WalleeObsoletedOn = @"obsoletedOn";
+NSString * const WalleeProcessorToken = @"processorToken";
+
+NSString * const WalleePaymentMethod = @"paymentMethod";
+NSString * const WalleeSpaceId = @"spaceId";
+NSString * const WalleeSortOrder = @"sortOrder";
+NSString * const WalleeResolvedTitle = @"resolvedTitle";
+NSString * const WalleeResolvedImageUrl = @"resolvedImageUrl";
+NSString * const WalleeResolvedDescription = @"resolvedDescription";
+NSString * const WalleeDescription = @"description";
+NSString * const WalleeTitle = @"title";
+NSString * const WalleeDescriptionText = @"descriptionText";
+
+NSString *const WalleeCategory = @"category";
+NSString *const WalleeFeatures = @"features";
 
 NSUInteger const WalleClientErrorReturnCode = 442;
 NSUInteger const WalleServerErrorReturnCode = 542;

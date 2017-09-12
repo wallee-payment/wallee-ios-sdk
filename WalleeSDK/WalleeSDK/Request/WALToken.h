@@ -9,9 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "WALJSONDecodable.h"
 #import "WALJSONAutoDecodable.h"
+#import "WALDataObject.h"
 
-@interface WALToken : NSObject<NSCopying, WALJSONDecodable, WALJSONAutoDecodable>
-//#include "WALAPIDataType.h"
+@interface WALToken : WALDataObject<NSCopying, WALJSONDecodable, WALJSONAutoDecodable>
+
 NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, copy) NSString *createdOn;
 @property (nonatomic, readonly, copy) NSString *customerEmailAddress;

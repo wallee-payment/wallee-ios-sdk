@@ -7,6 +7,7 @@
 //
 
 #import "WALAwaitingFinalStateHandler.h"
+#import "WALSimpleFlowStateHandler+Private.h"
 
 #import "WALViewControllerFactory.h"
 #import "WALFlowCoordinator+StateDelegate.h"
@@ -44,7 +45,7 @@
 }
 
 - (instancetype)initWithTransaction:(WALTransaction *)transaction {
-    if (self = [super init]) {
+    if (self = [super initInternal]) {
         _transaction = transaction;
     }
     return self;

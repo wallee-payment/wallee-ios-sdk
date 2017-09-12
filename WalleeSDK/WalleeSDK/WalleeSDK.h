@@ -16,14 +16,19 @@ FOUNDATION_EXPORT const unsigned char WalleeSDKVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <WalleeSDK/PublicHeader.h>
 
-//#import <WalleeSDK/WALStaticInit.h>
-
 #import "WalleeSDK/WALFlowCoordinator.h"
 #import "WalleeSDK/WALFlowConfiguration.h"
 #import "WalleeSDK/WALFlowConfigurationBuilder.h"
-#import "WalleeSDK/WALPaymentFlowDelegate.h"
 
+#import "WalleeSDK/WALPaymentFlowDelegate.h"
 #import "WalleeSDK/WALPaymentFlowContainer.h"
+
+#import "WalleeSDK/WALApiClient.h"
+#import "WalleeSDK/WALApiConfig.h"
+
+#import "WalleeSDK/WALIconCache.h"
+#import "WalleeSDK/WALIconLoader.h"
+#import "WalleeSDK/WALIconStore.h"
 
 #import "WalleeSDK/WALCredentialsFetcher.h"
 #import "WalleeSDK/WALCredentialsProvider.h"
@@ -37,3 +42,8 @@ FOUNDATION_EXPORT const unsigned char WalleeSDKVersionString[];
 #import "WalleeSDK/WALApiServerError.h"
 #import "WalleeSDK/WALApiClientError.h"
 #import "WalleeSDK/WALFlowTypes.h"
+
+#import "WalleeSDK/WALInMemoryIconStore.h"
+#import "WalleeSDK/WALNSURLIconLoader.h"
+#import "WalleeSDK/WALNSURLSessionApiClient.h"
+#import "WalleeSDK/WALDefaultIconCache.h"

@@ -77,7 +77,7 @@
     NSError *error;
     NSURL *url = [self.mobileSdkUrl buildPaymentMethodUrl:self.paymentMethodId error:&error];
     if (!url) {
-        [self.delegate paymentView:nil didEncounterError:error];
+        [self.delegate paymentViewDidEncounterError:error];
         return;
     }
     [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
@@ -157,22 +157,22 @@
     
     switch (operation) {
         case WALPaymentFormAJAXOperationTypeSuccess:
-            [delegate paymentViewDidSucceed:nil];
+            [delegate paymentViewDidSucceed];
             break;
         case WALPaymentFormAJAXOperationTypeFailure:
-            [delegate paymentViewDidFail:nil];
+            [delegate paymentViewDidFail];
             break;
         case WALPaymentFormAJAXOperationTypeAwaitingFinalStatus:
-            [delegate paymentViewAwaitsFinalState:nil];
+            [delegate paymentViewAwaitsFinalState];
             break;
         case WALPaymentFormAJAXOperationTypeValidationSuccess:
-            [delegate paymentViewDidValidateSuccessful:nil];
+            [delegate paymentViewDidValidateSuccessful];
             break;
         case WALPaymentFormAJAXOperationTypeValidationFailure:
-            [delegate paymentView:nil didFailValidationWithErrors:result];
+            [delegate paymentViewDidFailValidationWithErrors:result];
             break;
         case WALPaymentFormAJAXOperationTypeError:
-            [delegate paymentView:nil didEncounterError:result];
+            [delegate paymentViewDidEncounterError:result];
             break;
         case WALPaymentFormAJAXOperationTypeEnlargeView:
             [self.timeoutTimer invalidate];
@@ -202,7 +202,7 @@
                    completionHandler:^(id _Nullable object, NSError * _Nullable error) {
                        if (error) {
                            NSLog(@"js evaluate object %@ error %@", object, error);
-                           [self.delegate paymentView:nil didEncounterError:error];
+                           [self.delegate paymentViewDidEncounterError:error];
                        }
                    }];
 }
@@ -218,7 +218,7 @@
                    completionHandler:^(id _Nullable object, NSError * _Nullable error) {
                        if (error) {
                            NSLog(@"js evaluate object %@ error %@", object, error);
-                           [self.delegate paymentView:nil didEncounterError:error];
+                           [self.delegate paymentViewDidEncounterError:error];
                        }
                    }];
 }
@@ -273,13 +273,6 @@
 
 
 // MARK: - WKWebView Delegation
-
-
--(void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
-    NSLog(@"webView:  decidePolicyFor RESPONSE: %@ ", navigationResponse);
-    
-    decisionHandler(WKNavigationResponsePolicyAllow);
-}
 
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
     NSLog(@"webView: didStart: %@" , navigation);

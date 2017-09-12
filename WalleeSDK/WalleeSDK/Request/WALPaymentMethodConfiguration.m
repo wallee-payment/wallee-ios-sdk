@@ -12,6 +12,8 @@
 #import "WALJSONParser.h"
 #import "WALApiConfig.h"
 
+#import "WALDataObject+Private.h"
+
 @interface WALPaymentMethodConfiguration ()
 - (instancetype) initInternal;
 + (WALDataCollectionType)dataCollectionTypeFrom:(NSString*)name;
@@ -22,7 +24,7 @@
 @implementation WALPaymentMethodConfiguration
 
 - (instancetype)initInternal {
-    self = [super init];
+    self = [super initInternal];
     return self;
 }
 
@@ -31,20 +33,28 @@
     if (![WALJSONParser populate:configuration withDictionary:dictionary error:error]) {
         return nil;
     }
+    
     return configuration;
 }
 
 // MARK: - JSONAutoDecoding
 + (NSArray<NSString*> *)jsonMapping {
-    return @[ WalleeObjectId, WalleeLinkedSpaceId, @"name", @"paymentMethod", @"plannedPurgeDate", @"resolvedDescription", @"resolvedDescription", @"resolvedImageUrl",@"resolvedTitle",@"sortOrder", @"spaceId", @"version"];
+    return @[ WalleeObjectId, WalleeLinkedSpaceId, WalleeName, WalleePaymentMethod, WalleePlannedPurgeDate, WalleeResolvedDescription, WalleeResolvedImageUrl, WalleeResolvedTitle, WalleeSortOrder, WalleeSpaceId, WalleeVersion];
 }
 
 + (NSDictionary<NSString *, Class> *)jsonComplexMapping {
-    return @{@"descriptionText": WALDatabaseTranslatedString.class, @"title": WALDatabaseTranslatedString.class};
+    return @{WalleeDescriptionText: WALDatabaseTranslatedString.class, WalleeTitle: WALDatabaseTranslatedString.class};
 }
 
 + (NSDictionary<NSString*,NSString*> *)jsonReMapping {
-    return @{WalleeObjectId: WalleeId, @"descriptionText": @"description"};
+    return @{WalleeObjectId: WalleeId, WalleeDescriptionText: WalleeDescription};
+}
+
+// MARK: - Sort
+
++ (NSArray<NSSortDescriptor *> *)sortDescriptors {
+    return @[[NSSortDescriptor sortDescriptorWithKey:WalleeSortOrder ascending:YES],
+             [NSSortDescriptor sortDescriptorWithKey:WalleeName ascending:YES]];
 }
 
 // MARK: - Enum
@@ -82,6 +92,7 @@
                            @"title": _resolvedTitle ?: NSNull.null,
                            @"description": _resolvedDescription ?: NSNull.null,
                            @"imageUrl": _resolvedImageUrl ?: NSNull.null,
+                           WalleeSortOrder: @(_sortOrder),
                            @"version": @(_version)
                            };
     return [NSString stringWithFormat:@"%@", desc];

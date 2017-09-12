@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'WalleeSDK'
   s.version          = '0.1.0'
-  s.summary          = 'TODO short description'
+  s.summary          = 'WalleeSDK for iOS Apps implementing payment via Wallee payment service'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -17,14 +17,12 @@ Pod::Spec.new do |s|
 #   * Write the description between the DESC delimiters below.
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
-  s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
+  s.description      = 'WalleeSDK for iOS Apps implementing payment via Wallee payment service'
 
-  s.homepage         = 'https://smoca.ch'
+  s.homepage         = 'https://wallee.com'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE.txt' }
-  s.author           = { 'Tobias Ballat' => 'baltob@smoca.ch' }
+  s.author           = { 'Daniel Schmid' => 'daniel@smoca.ch' }
 
   # https://guides.cocoapods.org/syntax/podspec.html#source
   # s.source        = { :git => 'https://gitlab.smoca.ch/smoca/wallee-ios.git', :tag => s.version.to_s }
@@ -39,6 +37,7 @@ TODO: Add long description of the pod here.
      'WalleeSDK' => ['WalleeSDK/WalleeSDK/Resources/*']
   }
 
+  s.private_header_files = 'WalleeSDK/WalleeSDK/Private/*'
   # s.public_header_files = 'Pod/Classes/**/*.h'
   s.frameworks = 'UIKit'
   # s.dependency 'AFNetworking', '~> 2.3'

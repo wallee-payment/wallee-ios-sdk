@@ -9,14 +9,12 @@
 #import "WALFailureReason.h"
 #import "WALJSONParser.h"
 #import "WALApiConfig.h"
+#import "WALDataObject+Private.h"
 
-NSString *const WalleeCategory = @"category";
-NSString *const WalleeDescriptionText = @"descriptionText";
-NSString *const WalleeFeatures = @"features";
 
 @implementation WALFailureReason
 - (instancetype)initInternal {
-    return [super init];
+    return [super initInternal];
 }
 
 + (instancetype)decodedObjectFromJSON:(NSDictionary<NSString *,id> *)dictionary error:(NSError * _Nullable __autoreleasing *)error {
@@ -38,7 +36,7 @@ NSString *const WalleeFeatures = @"features";
 }
 
 + (NSDictionary<NSString *,NSString *> *)jsonReMapping {
-    return @{WalleeObjectId: WalleeId, WalleeDescriptionText: @"description"};
+    return @{WalleeObjectId: WalleeId, WalleeDescriptionText: WalleeDescription};
 }
 
 // MARK: - Description

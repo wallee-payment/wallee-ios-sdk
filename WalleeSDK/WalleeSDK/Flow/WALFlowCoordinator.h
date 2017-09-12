@@ -13,8 +13,12 @@
 @protocol WALPaymentFlowContainer;
 
 @interface WALFlowCoordinator : NSObject
-//#include "WALStaticInit.h"
 NS_ASSUME_NONNULL_BEGIN
+
+- (instancetype _Nullable)init __attribute__((unavailable("Dont initialize this type directly, use the static method")));
++ (instancetype _Nullable)new __attribute__((unavailable("Dont initialize this type directly, use the static method")));
+
+
 @property (nonatomic, copy, readonly) WALFlowConfiguration *configuration;
 @property (nonatomic, strong, readonly) id<WALPaymentFlowContainer> paymentContainer;
 

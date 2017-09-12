@@ -126,6 +126,7 @@
             }];
             
             if (paymentConfigurations) {
+                [paymentConfigurations sortUsingDescriptors:[WALPaymentMethodConfiguration sortDescriptors]];
                 completion(paymentConfigurations, nil);
             } else {
                 completion(nil, paymentMethodError);

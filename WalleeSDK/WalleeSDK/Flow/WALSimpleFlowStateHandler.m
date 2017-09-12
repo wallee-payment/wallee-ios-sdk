@@ -7,22 +7,18 @@
 //
 
 #import "WALSimpleFlowStateHandler.h"
+#import "WALSimpleFlowStateHandler+Private.h"
+
 #import "WALFlowCoordinator.h"
 #import "WALErrorDomain.h"
 #import "WALPaymentErrorHelper.h"
+
 
 @interface WALSimpleFlowStateHandler ()
 @property (nonatomic) BOOL alive;
 @end
 
 @implementation WALSimpleFlowStateHandler
-
-- (instancetype)init {
-    if (self = [super init]) {
-        _alive = YES;
-    }
-    return self;
-}
 
 - (BOOL)isValid {
     return self.alive;

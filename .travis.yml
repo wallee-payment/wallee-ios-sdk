@@ -1,0 +1,21 @@
+osx_image: xcode8.3
+language: objective-c
+
+sudo: false
+
+# cache:
+#   directories:
+#     - $HOME/.gradle/caches/
+#     - $HOME/.m2/repository
+
+script:
+- set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace Example/${POD_NAME}.xcworkspace -scheme ${POD_NAME}-Example -sdk iphonesimulator9.3 ONLY_ACTIVE_ARCH=NO | xcpretty
+- pod lib lint
+
+before_deploy: ./before_deploy.sh
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: ./deploy.sh
+  on:
+    tags: true

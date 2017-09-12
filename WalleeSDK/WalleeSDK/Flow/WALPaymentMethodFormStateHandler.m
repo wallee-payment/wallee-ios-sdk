@@ -9,6 +9,8 @@
 #import "WALPaymentMethodFormStateHandler.h"
 #import "WALPaymentFormView.h"
 
+#import "WALSimpleFlowStateHandler+Private.h"
+
 #import "WALFlowConfiguration.h"
 #import "WALFlowCoordinator+StateDelegate.h"
 #import "WALViewControllerFactory.h"
@@ -25,6 +27,7 @@
 @property (nonatomic) NSUInteger paymentMethodId;
 @property (nonatomic, copy) WALMobileSdkUrl *sdkUrl;
 @property (nonatomic, strong) UIViewController<WALPaymentFormView> *paymentForm;
+
 /// this is the only state that has to hold a reference to the @c WALCoordinator
 /// because of its asynchronous delegate methods
 @property (nonatomic, weak) WALFlowCoordinator *coordinatorDelegate;
@@ -45,7 +48,7 @@
 }
 
 - (instancetype)initWithPaymentMethodId:(NSUInteger)paymentMethodId {
-    if (self = [super init]) {
+    if (self = [super initInternal]) {
         self.paymentMethodId = paymentMethodId;
     }
     return self;
@@ -134,13 +137,13 @@
     [self.coordinatorDelegate ready];
 }
 
-- (void)paymentViewDidValidateSuccessful:(UIViewController *)viewController {
+- (void)paymentViewDidValidateSuccessful {
     if (!self.paymentForm.isSubmitted) {
         [self.paymentForm submit];
     }
 }
 
-- (void)paymentView:(UIViewController *)viewController didFailValidationWithErrors:(NSArray<NSError *> *)errors {
+- (void)paymentViewDidFailValidationWithErrors:(NSArray<NSError *> *)errors {
     // no action needed
 }
 
@@ -149,19 +152,19 @@
     [self.coordinatorDelegate changeStateTo:WALFlowStatePaymentForm parameters:@{WALFlowPaymentMethodsParameter: @(self.paymentMethodId)}];
 }
 
-- (void)paymentView:(UIViewController *)viewController didEncounterError:(NSError *)error {
+- (void)paymentViewDidEncounterError:(NSError *)error {
     [WALPaymentErrorHelper distribute:error forCoordinator:self.coordinatorDelegate];
 }
 
-- (void)paymentViewDidSucceed:(UIViewController *)viewController {
+- (void)paymentViewDidSucceed {
     [self readAndEvaluateTransactionForState:WALFlowStateSuccess];
 }
 
-- (void)paymentViewDidFail:(UIViewController *)viewController {
+- (void)paymentViewDidFail {
     [self readAndEvaluateTransactionForState:WALFlowStateFailure];
 }
 
-- (void)paymentViewAwaitsFinalState:(UIViewController *)viewController {
+- (void)paymentViewAwaitsFinalState {
     [self readAndEvaluateTransactionForState:WALFlowStateAwaitingFinalState];
 }
 

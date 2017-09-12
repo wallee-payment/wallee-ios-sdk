@@ -8,7 +8,7 @@
 
 #import "WALToken.h"
 #import "WALJSONParser.h"
-
+#import "WALDataObject+Private.h"
 
 static NSString * const walCustomerEmailAddress = @"customerEmailAddress";
 static NSString * const walCreatedOn = @"createdOn";
@@ -26,7 +26,7 @@ static NSString * const walVersion = @"version";
 @implementation WALToken
 
 - (instancetype)initInternal {
-    self = [super init];
+    self = [super initInternal];
     return self;
 }
 

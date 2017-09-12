@@ -36,6 +36,7 @@
     NSError *error;
     TestCredentialsFetcher *fetcher = [[TestCredentialsFetcher alloc] init];
     WALFlowConfigurationBuilder *builder = [[WALFlowConfigurationBuilder alloc] initWithCredentialsFetcher:fetcher operationQueue:nil];
+    
     //additional setup
     builder.delegate = self;
     
@@ -53,24 +54,12 @@
     }];
 }
 
-- (void)startPaymentWithBlockSyntax {
-//    WALFlowConfiguration *configuration = [WALFlowConfiguration makeWithBlock:^(WALFlowConfigurationBuilder * _Nonnull builder) {
-//        builder.webServiceApiClient = nil;
-//    } error:&error];
-}
-
 // MARK: - Delegate
-- (void)flowCoordinator:(WALFlowCoordinator *)coordinator encouteredApiNetworktError:(NSError *)error {
+- (void)flowCoordinator:(WALFlowCoordinator *)coordinator  encouteredApiError:(NSError *)error {
     [self handleError:error];
 }
 - (void)flowCoordinator:(WALFlowCoordinator *)coordinator encouteredInternalError:(NSError *)error {
     [self handleError:error];
-}
-- (void)flowCoordinator:(WALFlowCoordinator *)coordinator encouteredApiClientError:(WALApiClientError *)error {
-    [self handleError:(NSError *)error];
-}
-- (void)flowCoordinator:(WALFlowCoordinator *)coordinator encouteredApiServerError:(WALApiServerError *)error {
-    [self handleError:(NSError *)error];
 }
 
 - (void)flowCoordinator:(WALFlowCoordinator *)coordinator transactionDidSucceed:(WALTransaction *)transaction {

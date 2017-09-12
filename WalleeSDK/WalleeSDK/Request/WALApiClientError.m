@@ -22,11 +22,15 @@
 @implementation WALApiClientError
 
 + (instancetype)decodedObjectFromJSON:(NSDictionary<NSString *,id> *)dictionary error:(NSError * _Nullable __autoreleasing *)error {
-    WALApiClientError *clientError = [self.class errorWithDomain:WALErrorDomain code:WALErrorTransactionFailure userInfo:dictionary];
-    if (![WALJSONParser populate:clientError withDictionary:dictionary error:error]) {
+    
+    NSMutableDictionary *mutable = [NSMutableDictionary dictionaryWithDictionary:dictionary];
+    mutable[NSLocalizedDescriptionKey] = dictionary[WalleeMessage] ?: dictionary[WalleeDefaultMessage] ?: NSNull.null;
+    
+    WALApiClientError *clientError = [self.class errorWithDomain:WALErrorDomain code:WALErrorTransactionFailure userInfo:mutable];
+    if (![WALJSONParser populate:clientError withDictionary:mutable error:error]) {
         return nil;
     }
-    clientError.type = [WALApiClientError errorTypeFrom:dictionary[WalleeType]];
+    clientError.type = [WALApiClientError errorTypeFrom:mutable[WalleeType]];
     return clientError;
 }
 

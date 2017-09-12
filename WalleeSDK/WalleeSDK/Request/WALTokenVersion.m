@@ -7,32 +7,17 @@
 //
 
 #import "WALTokenVersion.h"
+#import "WALDataObject+Private.h"
 #import "WALJSONParser.h"
 #import "WALToken.h"
 #import "WALConnectorConfiguration.h"
+#import "WALApiConfig.h"
 
-static NSString * const walActivatedOn = @"activatedOn";
-static NSString * const walCreatedOn = @"createdOn";
-static NSString * const walId = @"id";
-static NSString * const walLanguage = @"language";
-static NSString * const walLinkedSpaceId = @"linkedSpaceId";
-static NSString * const walName = @"name";
-static NSString * const walObsoletedOn = @"obsoletedOn";
-static NSString * const walPaymentConnectorConfiguration = @"paymentConnectorConfiguration";
-static NSString * const walPlannedPurgeDate = @"plannedPurgeDate";
-static NSString * const walProcessorToken = @"processorToken";
-static NSString * const walVersion = @"version";
-static NSString * const walToken = @"token";
-static NSString * const walBillingAddress = @"billingAddress";
-static NSString * const walEnvironment = @"environment";
-static NSString * const walLabels = @"labels";
-static NSString * const walShippingAddress = @"shippingAddress";
-static NSString * const walState = @"state";
 
 @implementation WALTokenVersion
 
 - (instancetype)initInternal {
-    self = [super init];
+    self = [super initInternal];
     return self;
 }
 
@@ -46,32 +31,37 @@ static NSString * const walState = @"state";
 
 // MARK: - JSON
 +(NSArray<NSString *> *)jsonMapping {
-    return @[walActivatedOn, walCreatedOn, walId, walLanguage, walLinkedSpaceId, walName, walObsoletedOn, walPlannedPurgeDate, walProcessorToken, walVersion];
+    return @[WalleeActivatedOn, WalleeCreatedOn, WalleeObjectId, WalleeLanguage, WalleeLinkedSpaceId, WalleeName, WalleeObsoletedOn, WalleePlannedPurgeDate, WalleeProcessorToken, WalleeVersion];
 }
 
 + (NSDictionary<NSString *,Class> *)jsonComplexMapping {
-    return @{walToken: WALToken.class, walPaymentConnectorConfiguration: WALConnectorConfiguration.class};
+    return @{WalleeToken: WALToken.class, WalleePaymentConnectorConfiguration: WALConnectorConfiguration.class};
 }
 
 + (NSDictionary<NSString *,NSString *> *)jsonReMapping {
-    return nil;
+    return @{WalleeObjectId: WalleeId};
+}
+
+// MARK: - Sort
++ (NSArray<NSSortDescriptor *> *)sortDescriptors {
+    return @[[NSSortDescriptor sortDescriptorWithKey:WalleeName ascending:YES]];
 }
 
 // MARK: - Description
 - (NSString *)description {
     return [NSString stringWithFormat:@"%@", @{
-                                               walLinkedSpaceId: @(_linkedSpaceId),
-                                               walId: @(_id),
-                                               walName: _name ?:@"nil",
-                                               walCreatedOn: _createdOn ?:@"nil",
-                                               walActivatedOn: _activatedOn ?:@"nil",
-                                               walObsoletedOn: _obsoletedOn ?:@"nil",
-                                               walLanguage: _language ?:@"nil",
-                                               walPaymentConnectorConfiguration: _paymentConnectorConfiguration ?: NSNull.null,
-                                               walPlannedPurgeDate: _plannedPurgeDate ?:@"nil",
-                                               walProcessorToken: _processorToken ?:@"nil",
-                                               walToken: _token ?:@"nil",
-                                               walVersion: @(_version)
+                                               WalleeLinkedSpaceId: @(_linkedSpaceId),
+                                               WalleeObjectId: @(_objectId),
+                                               WalleeName: _name ?: NSNull.null,
+                                               WalleeCreatedOn: _createdOn ?: NSNull.null,
+                                               WalleeActivatedOn: _activatedOn ?: NSNull.null,
+                                               WalleeObsoletedOn: _obsoletedOn ?: NSNull.null,
+                                               WalleeLanguage: _language ?: NSNull.null,
+                                               WalleePaymentConnectorConfiguration: _paymentConnectorConfiguration ?: NSNull.null,
+                                               WalleePlannedPurgeDate: _plannedPurgeDate ?: NSNull.null,
+                                               WalleeProcessorToken: _processorToken ?: NSNull.null,
+                                               WalleeToken: _token ?: NSNull.null,
+                                               WalleeVersion: @(_version)
                                                }];
 }
 
