@@ -61,16 +61,17 @@
 - (void)testMobileSdkUrlValid {
     NSError *error;
     WALTimestamp validTimestamp = [[NSDate date] timeIntervalSince1970] + 3*60;
-    WALMobileSdkUrl *mobileSdkUrl = [[WALMobileSdkUrl alloc] initWithUrl:@"" expiryDate:validTimestamp];
+    
+    WALMobileSdkUrl *mobileSdkUrl = [WALMobileSdkUrl mobileSdkUrlWith:@"" expiryDate:validTimestamp error:nil];
     NSURL *paymentMethodUrl = [mobileSdkUrl buildPaymentMethodUrl:3 error:&error];
-    XCTAssertNotNil(paymentMethodUrl, @"paymentMethod should not be created");
+    XCTAssertNotNil(paymentMethodUrl, @"paymentMethod should not be nil");
     XCTAssertNil(error, @"paymentMethod error should not be nil");
 }
 
 - (void)testMobileSdkUrlInvalid {
     NSError *error;
     WALTimestamp validTimestamp = [[NSDate date] timeIntervalSince1970] - 60;
-    WALMobileSdkUrl *mobileSdkUrl = [[WALMobileSdkUrl alloc] initWithUrl:@"" expiryDate:validTimestamp];
+    WALMobileSdkUrl *mobileSdkUrl = [WALMobileSdkUrl mobileSdkUrlWith:@"" expiryDate:validTimestamp error:nil];
     BOOL isExpired = mobileSdkUrl.isExpired;
     XCTAssertTrue(isExpired, @"mobileSdkUrl is not correctly marked as expired");
     NSURL *paymentMethodUrl = [mobileSdkUrl buildPaymentMethodUrl:3 error:&error];

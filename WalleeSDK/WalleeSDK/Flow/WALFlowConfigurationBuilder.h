@@ -15,7 +15,7 @@
 /**
  * The builder allows to construct a flow configuration.
  *
- * @note The @c -initWithCredentialsFetcher: @c operationQueue: initializer provides the simplest possible configuration which works out of the
+ * @note The @c `-initWithCredentialsFetcher: @c operationQueue:´ initializer provides the simplest possible configuration which works out of the
  * box. No further customization is required.
  *
  */

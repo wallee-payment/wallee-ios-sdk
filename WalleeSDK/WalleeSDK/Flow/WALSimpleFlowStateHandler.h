@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "WALFlowStateDelegate.h"
 #import "WALFlowStateHandler.h"
 
 @class WALFlowConfiguration, WALFlowCoordinator;

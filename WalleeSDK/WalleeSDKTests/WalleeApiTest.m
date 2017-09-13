@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-//#include <CommonCrypto/CommonHMAC.h>
+#include <CommonCrypto/CommonHMAC.h>
 
 #import "WALNSURLSessionApiClient.h"
 
@@ -55,7 +55,7 @@ static NSUInteger const SPACE_ID = 412l;
             XCTAssertNotNil(credentials, @"CredentialsProvider does not return credentials");
             [expectation fulfill];
         }];
-        self.client = [WALNSURLSessionApiClient clientWithBaseUrl:TestBaseUrl credentialsProvider:self.credentialsProvider];
+        self.client = [WALNSURLSessionApiClient clientWithBaseUrl:TestBaseUrl credentialsProvider:self.credentialsProvider operationQueue:nil];
     }];
     
     [self await:@[expectation]];
@@ -82,7 +82,7 @@ static NSUInteger const SPACE_ID = 412l;
 - (void)testBuildMobileSdkUrl {
     XCTestExpectation *expectation = [self expectationWithDescription:@"MobileSdkUrl built"];
 
-    id<WALApiClient> client = [WALNSURLSessionApiClient clientWithBaseUrl:TestBaseUrl credentialsProvider:self.credentialsProvider];
+    id<WALApiClient> client = [WALNSURLSessionApiClient clientWithBaseUrl:TestBaseUrl credentialsProvider:self.credentialsProvider operationQueue:nil];
     [client buildMobileSdkUrl:^(WALMobileSdkUrl * _Nullable mobileSdkUrl, NSError * _Nullable error) {
         XCTAssertNotNil(mobileSdkUrl, @"MobileSdk is not created");
         NSString *mobileSdkUrlPrefix = [NSString stringWithFormat:@"https://app-wallee.com/s/%@/payment/transaction/mobile-sdk", @(SPACE_ID)];
@@ -146,10 +146,10 @@ static NSUInteger const SPACE_ID = 412l;
         XCTAssertFalse(transaction.state == WALTransactionStatePending, @"The present transaction is not pending and therefore the OneClickToken cannot be used.");
         transactionAfter = transaction;
         
-        XCTAssertFalse(transactionAfter.state == WALTransactionStateFailed, @"Unexpected state of the transaction with ID: %lu", transactionAfter.id);
-        XCTAssertFalse(transactionAfter.state == WALTransactionStatePending, @"Unexpected state of the transaction with ID: %lu", transactionAfter.id);
-        XCTAssertFalse(transactionAfter.state == WALTransactionStateProcessing, @"Unexpected state of the transaction with ID: %lu", transactionAfter.id);
-        XCTAssertFalse(transactionAfter.state == WALTransactionStateConfirmed, @"Unexpected state of the transaction with ID: %lu", transactionAfter.id);
+        XCTAssertFalse(transactionAfter.state == WALTransactionStateFailed, @"Unexpected state of the transaction with ID: %lu", transactionAfter.objectId);
+        XCTAssertFalse(transactionAfter.state == WALTransactionStatePending, @"Unexpected state of the transaction with ID: %lu", transactionAfter.objectId);
+        XCTAssertFalse(transactionAfter.state == WALTransactionStateProcessing, @"Unexpected state of the transaction with ID: %lu", transactionAfter.objectId);
+        XCTAssertFalse(transactionAfter.state == WALTransactionStateConfirmed, @"Unexpected state of the transaction with ID: %lu", transactionAfter.objectId);
         
         [expectation fulfill];
     };

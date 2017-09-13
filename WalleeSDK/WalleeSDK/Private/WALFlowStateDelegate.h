@@ -15,7 +15,7 @@
  <p>This is the way the FlowStateHandler communicates with the {@link
  FlowCoordinator}.</p>
  *
- <p>This interface is intentionally package protected to prevent using it by other classes to
+ <p>This interface is intentionally private to prevent using it by other classes to
  trigger something.</p>
  */
 @protocol WALFlowStateDelegate <NSObject>

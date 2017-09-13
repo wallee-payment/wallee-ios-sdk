@@ -18,7 +18,7 @@
 
 @implementation WALTranslation
 + (NSString *)localizedString:(NSString *)key {
-    // try load from main
+    // try load from main (app) bundle
     NSString * string = [[NSBundle mainBundle] localizedStringForKey:key value:nil table:nil];
     if (![string isEqualToString:key]) {
         return string;
