@@ -1,30 +1,18 @@
 language: objective-c
 osx_image: xcode8.3
-# branches:
-#   only:
-#     - master
 sudo: false
 env:
   global:
   - LC_CTYPE=en_US.UTF-8
   - LANG=en_US.UTF-8
-
-# cache:
-#   directories:
-#     - $HOME/.gradle/caches/
-#     - $HOME/.m2/repository
-
+  - secure: dcuvQ1Q6DlK/JMD/2SdIRar/4cCwtLIkZDju6HaTVUhlmie4Tt3e+jbeBd5Ts+Qf3YhJnVqmtJ4SOyQZHYMoQQGyDwpwHGft9Cnqx/zVXPlbkvYs6JOE/GYtK3yKOSw4Z1ePwXD8jfQdrWoJwk9XrxXpvQalolDI97J1ixm4R/xftoEnATectB499O/vRe7hjt8qfOEorylG1HPoJN3yMsJ9XBnQuyMx0RFDV8jrO0WqtURwfYAM9dY9TeszGIqAx4sjdZpD1S2rrqHuEHb2Lp/cVhyEwT+jKhD77kelW/yHUtuM0RlnzlSwThkpnM7TUpt+XXml+WHz0e72YGeil9z4R/jGT5SJs6lu26DlbjgQHJ4hpUBwQ3zN3L/UTyhcPJM3mSLgl8lccRlI3K+qqXkhBRtUHh+QgIbOvbftwykLWkhhUS6MfN8y0u99pIJi56UZveBZo9m9u/lgHrjOzQyqf9gRxz/xj8J/+pAQdnM5uwknR2YVnmoI0C03hU+CZBT7l/Gv9lcZap5ehbx9TyXw+36GWPBGobCKthgFBZkkzY+/CPKg90m4rPjpAKQWiNk3xoiIN1GtfPqw8Nk6J6MsdU+4e2t0ygVFSnWnW2XwngFhyaOi5ZJyXv6eKxoAKfjjWFbx625DeIKFVOk2qa0LA06K9bl6zOvjqXYkos8=
+  
 script:
-  - cd WalleeSDK && xcodebuild -project WalleeSDK.xcodeproj -scheme "WalleeSDK" -sdk "iphonesimulator10.3" -destination "OS=10.3.1,name=iPhone 6" test | xcpretty 
-  - pod lib lint
-  # - xcodebuild -project WalleeSDK.xcodeproj -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" 
-# - set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace Example/${POD_NAME}.xcworkspace -scheme ${POD_NAME}-Example -sdk iphonesimulator9.3 ONLY_ACTIVE_ARCH=NO | xcpretty
-# - pod lib lint
-
-before_deploy: ./before_deploy.sh
+- xcodebuild -project WalleeSDK/WalleeSDK.xcodeproj -scheme "WalleeSDK" -sdk "iphonesimulator10.3"
+  -destination "OS=10.3.1,name=iPhone 6" test | xcpretty
 deploy:
   skip_cleanup: true
   provider: script
-  script: ./deploy.sh
+  script: "./deploy_cocoapods.sh"
   on:
     tags: true
