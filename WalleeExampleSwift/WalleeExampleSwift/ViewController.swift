@@ -96,7 +96,7 @@ class ViewController: UIViewController, WALPaymentFlowDelegate {
     }
 
     // MARK: Error delegate functions
-    func flowCoordinator(_ coordinator: WALFlowCoordinator!, encouteredApiNetworktError error: Error!) {
+    func flowCoordinator(_ coordinator: WALFlowCoordinator!, encouteredApiError error: Error!) {
         self.handleError(error: error)
     }
 
@@ -104,13 +104,6 @@ class ViewController: UIViewController, WALPaymentFlowDelegate {
         handleError(error: error)
     }
 
-    func flowCoordinator(_ coordinator: WALFlowCoordinator!, encouteredApiClientError error: WALApiClientError!) {
-        handleError(error: error)
-    }
-
-    func flowCoordinator(_ coordinator: WALFlowCoordinator!, encouteredApiServerError error: WALApiServerError!) {
-        handleError(error: error)
-    }
 
     // MARK: Stub functions for protocol
     func flowCoordinator(_ coordinator: WALFlowCoordinator!,

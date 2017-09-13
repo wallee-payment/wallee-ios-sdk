@@ -1,7 +1,13 @@
-osx_image: xcode8.3
 language: objective-c
-
+osx_image: xcode8.3
+# branches:
+#   only:
+#     - master
 sudo: false
+env:
+  global:
+  - LC_CTYPE=en_US.UTF-8
+  - LANG=en_US.UTF-8
 
 # cache:
 #   directories:
@@ -9,8 +15,11 @@ sudo: false
 #     - $HOME/.m2/repository
 
 script:
-- set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace Example/${POD_NAME}.xcworkspace -scheme ${POD_NAME}-Example -sdk iphonesimulator9.3 ONLY_ACTIVE_ARCH=NO | xcpretty
-- pod lib lint
+  - cd WalleeSDK && xcodebuild -project WalleeSDK.xcodeproj -scheme "WalleeSDK" -sdk "iphonesimulator10.3" -destination "OS=10.3.1,name=iPhone 6" test | xcpretty 
+  - pod lib lint
+  # - xcodebuild -project WalleeSDK.xcodeproj -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" 
+# - set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace Example/${POD_NAME}.xcworkspace -scheme ${POD_NAME}-Example -sdk iphonesimulator9.3 ONLY_ACTIVE_ARCH=NO | xcpretty
+# - pod lib lint
 
 before_deploy: ./before_deploy.sh
 deploy:
