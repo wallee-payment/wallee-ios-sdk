@@ -8,6 +8,9 @@ then
   echo "This is pull request. Skipping deployment to cocoapods."
 else
   echo "[INFO] Publishing artifacts to cocoapods."
+  source ~/.rvm/scripts/rvm
+	rvm use default
   pod lib lint
   pod trunk push
 fi
+
