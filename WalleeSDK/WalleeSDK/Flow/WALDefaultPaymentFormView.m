@@ -131,7 +131,7 @@
 
 ///Connection to Localhost is handled in case of redirects etc.
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
-    NSLog(@"webView:  decidePolicyFor Action: %@ ", navigationAction.request.URL);
+//    NSLog(@"webView:  decidePolicyFor Action: %@ ", navigationAction.request.URL);
     
     __weak WALDefaultPaymentFormView *weakSelf = self;
     BOOL isCallback = [WALPaymentFormAJAXParser parseUrlString:navigationAction.request.URL.absoluteString
@@ -269,34 +269,6 @@
     @"    }"
     @"}";
     
-}
-
-
-// MARK: - WKWebView Delegation
-
-- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
-    NSLog(@"webView: didStart: %@" , navigation);
-}
-
-- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
-    NSLog(@"webView: FAIL: %@ ERROR: %@", navigation, error);
-}
-
--(void)webViewWebContentProcessDidTerminate:(WKWebView *)webView {
-    NSLog(@"Webcontent process didterminate");
-}
-
-- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation {
-    NSLog(@"webView: didCommit: %@", navigation);
-}
-
-- (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler {
-    NSLog(@"Did receive auth challenge");
-    completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
-}
-
-- (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation *)navigation {
-    NSLog(@"webView: REDIRECT: %@", navigation);
 }
 
 @end

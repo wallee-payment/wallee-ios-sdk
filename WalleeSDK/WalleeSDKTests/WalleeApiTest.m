@@ -289,12 +289,6 @@ static NSUInteger const SPACE_ID = 412l;
                                    @"Content-Type": contentType};
     [request setAllHTTPHeaderFields:headerFields];
 
-//    NSLog(@" -- headerfields: %@", headerFields);
-//    NSLog(@" -- secureString: \n%@", secureString);
-//    NSLog(@" -- secureData: \n%@", secureData);
-//    NSLog(@" -- secret: \n%@", decodedSecret);
-//    NSLog(@" -- Mac: \n%@", hMac);
-
     return request;
 }
 

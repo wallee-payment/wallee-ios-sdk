@@ -34,7 +34,6 @@
 - (void)testCredentialsInvalid {
     NSError *error;
     WALCredentials *credentials = [WALCredentials credentialsWithCredentials:@"" error:&error];
-//    NSLo g(@"error: %@", error);
     XCTAssertNil(credentials, "Credentials should not be initialized");
     XCTAssertNotNil(error, "NSError should be populated");
 }
@@ -42,7 +41,6 @@
 - (void)testCredentialsInvalid2 {
     NSError *error2 = nil;
     WALCredentials *credentials = [WALCredentials credentialsWithCredentials:@"abc-def-cg" error:&error2];
-//    NSLog(@"error: %@", error2);
     XCTAssertNil(credentials, "Credentials should not be initialized");
     XCTAssertNotNil(error2, "NSError should be populated");
     XCTAssertEqual(error2.code, WALErrorInvalidCredentials, @"error.code should be InvalidCredentials");
