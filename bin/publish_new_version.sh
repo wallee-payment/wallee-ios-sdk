@@ -25,6 +25,13 @@ esac
 shift # past argument or value
 done
 
+if [[ -n "git status --porcelain" ]]; then
+  echo "yes"
+else
+  echo "no"
+fi
+exit 0
+
 if [[ -n "git status --porcelain" && ! $FORCE ]]; then
   echo "this command should be run on a clean repository (use -f to force anyway). aborting..."
   exit 0
