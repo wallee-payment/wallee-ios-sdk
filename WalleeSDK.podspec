@@ -1,7 +1,7 @@
 # https://guides.cocoapods.org/syntax/podspec.html#source
 Pod::Spec.new do |s|
   s.name             = 'WalleeSDK'
-  s.version          = '1.0.0'
+  s.version          = '1.0.1'
   s.summary          = 'WalleeSDK for iOS Apps implementing payment via Wallee payment service'
   s.homepage         = 'https://wallee.com'
   s.license          = { :type => 'Apache 2', :file => 'LICENSE' }
@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'WalleeSDK/WalleeSDK/**/*.{h,m}'
-  s.resource_bundles = { 'WalleeSDK' => ['WalleeSDK/WalleeSDK/Resources/*'] }
+  s.ios.resource_bundle = { 'WalleeSDK' => 'WalleeSDK/WalleeSDK/Resources/**/*' }
   s.private_header_files = 'WalleeSDK/WalleeSDK/Private/*.h'
   # s.public_header_files = 'Pod/Classes/**/*.h'
   s.frameworks = 'UIKit'

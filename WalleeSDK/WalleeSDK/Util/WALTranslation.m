@@ -23,8 +23,16 @@
     if (![string isEqualToString:key]) {
         return string;
     }
+    
     //load from our bundle
     NSBundle *bundle = [NSBundle bundleForClass:[WALTranslationInternal class]];
-    return [bundle localizedStringForKey:key value:nil table:nil];
+    string = [bundle localizedStringForKey:key value:nil table:nil];
+    if (![string isEqualToString:key]) {
+        return string;
+    }
+    
+    //load from our bundl in case of dynamic framework (cocoapod)
+    string = [[NSBundle bundleWithPath:[bundle pathForResource:@"WalleeSDK" ofType:@"bundle"]] localizedStringForKey:key value:nil table:nil];
+    return string;
 }
 @end
