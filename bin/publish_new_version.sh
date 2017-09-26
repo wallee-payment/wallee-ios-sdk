@@ -79,6 +79,6 @@ git add ..
 git commit -m "$COMMIT_MESSAGE"
 
 git tag -a $GIT_VERSION_NUMBER -m "$GIT_VERSION_NUMBER"
-git push --tags
+git push --follow-tags
 
 echo "Tag $GIT_VERSION_NUMBER pushed to origin"
