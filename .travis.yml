@@ -21,5 +21,5 @@ deploy:
   on:
     - tags: true
     - all_branches: true
-  only:
-    - /^v\d+\.\d+\.\d+.*$/
+#  only:
+#    - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
