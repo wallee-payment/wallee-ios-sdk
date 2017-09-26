@@ -1,5 +1,15 @@
   #!/usr/bin/env bash
 
+#
+# usage: ./publish_new_version.sh 1.0.0
+#
+# updates the necessary files to the given semantic version.
+#
+# options:  -f force
+#           -p commits and pushes to remote (which will start a cocoapod deployment)
+#           -v verbose
+#
+
 while [[ $# -gt 0 ]]
 do
 key="$1"
@@ -24,6 +34,11 @@ case $key in
 esac
 shift # past argument or value
 done
+
+if [[ ! $VERSION ]]; then
+  echo "no version number supplied. aborting..."
+  exit 0
+fi
 
 if [[ -n "$(git status --porcelain)" && ! $FORCE ]]; then
   echo "this command should be run on a clean repository (use -f to force anyway). aborting..."
@@ -62,6 +77,7 @@ fi
 COMMIT_MESSAGE="Version Bump to $GIT_VERSION_NUMBER"
 git add ..
 git commit -m "$COMMIT_MESSAGE"
+
 git tag -a $GIT_VERSION_NUMBER -m "$GIT_VERSION_NUMBER"
 git push --tags
 
