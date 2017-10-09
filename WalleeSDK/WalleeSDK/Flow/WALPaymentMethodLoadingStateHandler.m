@@ -19,6 +19,7 @@
 #import "WALIconCache.h"
 
 #import "WALLoadedPaymentMethods.h"
+#import "WALPaymentMethodConfiguration.h"
 
 @implementation WALPaymentMethodLoadingStateHandler
 
@@ -52,11 +53,11 @@
         }
         
         if (paymentMethodConfigurations.count == 1) {
+            NSUInteger paymentId = paymentMethodConfigurations[0].objectId;
             [weakCoordinator changeStateTo:WALFlowStatePaymentForm
-                                parameters:@{WALFlowPaymentMethodsParameter: paymentMethodConfigurations[0]}];
+                                parameters:@{WALFlowPaymentMethodsParameter: @(paymentId)}];
             
         } else {
-            // TODO: Load icons for payment configurations
             [weakCoordinator.configuration.iconCache fetchIcons:paymentMethodConfigurations completion:^(NSDictionary<WALPaymentMethodConfiguration *,WALPaymentMethodIcon *> * _Nullable paymentMethodIcons, NSError * _Nullable error) {
                 
                 WALLoadedPaymentMethods *loaded = [[WALLoadedPaymentMethods alloc] initWithPaymentMethodConfigurations:paymentMethodConfigurations paymentMethodIcons:paymentMethodIcons];
