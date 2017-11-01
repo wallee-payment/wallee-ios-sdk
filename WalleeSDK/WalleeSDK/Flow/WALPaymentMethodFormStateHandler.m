@@ -36,8 +36,8 @@
 @implementation WALPaymentMethodFormStateHandler
 
 + (instancetype)stateWithParameters:(NSDictionary *)parameters {
-    WALPaymentMethodConfiguration *paymentMethod = parameters[WALFlowPaymentMethodsParameter];
-    return [self.class stateWithPaymentMethodId:paymentMethod.objectId];
+    NSNumber *paymentMethodId = parameters[WALFlowPaymentMethodsParameter];
+    return [self.class stateWithPaymentMethodId:paymentMethodId.unsignedIntegerValue];
 }
 
 + (instancetype)stateWithPaymentMethodId:(NSUInteger)paymentMethodId {
