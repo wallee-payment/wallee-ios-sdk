@@ -27,9 +27,9 @@ static NSString * const cellIdentifier = @"defaultCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
 //    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = self.theme.primaryBackgroundColor;
-    
     self.title = WALLocalizedString(@"token_list_title", @"title for the token list view controller");
 }
 
@@ -57,6 +57,10 @@ static NSString * const cellIdentifier = @"defaultCell";
 
 - (NSString *)confirmationTitle {
     return WALLocalizedString(@"token_list_chose_payment_method", @"the title of the button to select another pament method");
+}
+
+- (NSString *)backTitle {
+    return WALLocalizedString(@"token_list_go_back", @"the title of the button to step back out of the payment process");
 }
 
 // MARK: - TableViewDelegate and Datasource
@@ -90,6 +94,10 @@ static NSString * const cellIdentifier = @"defaultCell";
 
 - (void)confirmationTapped:(id)sender {
     self.onPaymentMethodChange();
+}
+
+- (void)backTapped:(id)sender {
+    self.onBack();
 }
 
 @end

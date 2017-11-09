@@ -11,6 +11,8 @@
 		A60AA8461FB4B2840069F88B /* WALCancelHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A60AA8441FB4B2840069F88B /* WALCancelHandler.m */; };
 		A60AA8491FB4B4330069F88B /* WALDefaultCancelViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A60AA8471FB4B4330069F88B /* WALDefaultCancelViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A60AA84A1FB4B4330069F88B /* WALDefaultCancelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A60AA8481FB4B4330069F88B /* WALDefaultCancelViewController.m */; };
+		A60AA84D1FB5A0CD0069F88B /* WALButton.h in Headers */ = {isa = PBXBuildFile; fileRef = A60AA84B1FB5A0CD0069F88B /* WALButton.h */; };
+		A60AA84E1FB5A0CD0069F88B /* WALButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A60AA84C1FB5A0CD0069F88B /* WALButton.m */; };
 		A63B64321F593D76007B9B15 /* WALDefaultPaymentFlowContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = A63B64301F593D76007B9B15 /* WALDefaultPaymentFlowContainer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A63B64331F593D76007B9B15 /* WALDefaultPaymentFlowContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = A63B64311F593D76007B9B15 /* WALDefaultPaymentFlowContainer.m */; };
 		A63B64371F594B07007B9B15 /* WALPaymentFlowContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = A63B64361F594B07007B9B15 /* WALPaymentFlowContainer.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -173,6 +175,8 @@
 		A60AA8441FB4B2840069F88B /* WALCancelHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALCancelHandler.m; sourceTree = "<group>"; };
 		A60AA8471FB4B4330069F88B /* WALDefaultCancelViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WALDefaultCancelViewController.h; sourceTree = "<group>"; };
 		A60AA8481FB4B4330069F88B /* WALDefaultCancelViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WALDefaultCancelViewController.m; sourceTree = "<group>"; };
+		A60AA84B1FB5A0CD0069F88B /* WALButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WALButton.h; sourceTree = "<group>"; };
+		A60AA84C1FB5A0CD0069F88B /* WALButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WALButton.m; sourceTree = "<group>"; };
 		A63B64301F593D76007B9B15 /* WALDefaultPaymentFlowContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALDefaultPaymentFlowContainer.h; sourceTree = "<group>"; };
 		A63B64311F593D76007B9B15 /* WALDefaultPaymentFlowContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALDefaultPaymentFlowContainer.m; sourceTree = "<group>"; };
 		A63B64361F594B07007B9B15 /* WALPaymentFlowContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALPaymentFlowContainer.h; sourceTree = "<group>"; };
@@ -685,6 +689,8 @@
 				A6E66DD91F57F8DB00BBACF8 /* Method */,
 				A68202851F61325800844B5F /* WALDefaultTheme.h */,
 				A68202861F61325800844B5F /* WALDefaultTheme.m */,
+				A60AA84B1FB5A0CD0069F88B /* WALButton.h */,
+				A60AA84C1FB5A0CD0069F88B /* WALButton.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -785,6 +791,7 @@
 				A6DE8E8B1F41A77E006E082B /* WalleeSDK.h in Headers */,
 				A6670D7E1F5D781E00C3B229 /* WALDefaultAwaitingFinalStateViewController.h in Headers */,
 				A63B64511F59803D007B9B15 /* WALFlowStateHandlerFactory.h in Headers */,
+				A60AA84D1FB5A0CD0069F88B /* WALButton.h in Headers */,
 				A6C7B5B41F4898DC003CCB97 /* WALTypes.h in Headers */,
 				A68202A61F63E11E00844B5F /* WALLoadedTokens.h in Headers */,
 				A6670D6C1F5D4EE500C3B229 /* WALPaymentMethodFormStateHandler.h in Headers */,
@@ -974,6 +981,7 @@
 				A6C7B5AB1F435DC7003CCB97 /* WALApiConfig.m in Sources */,
 				A68202AF1F6415FC00844B5F /* WALLoadedPaymentMethods.m in Sources */,
 				A6EECF181F569CB400954E02 /* WALFlowTypes.m in Sources */,
+				A60AA84E1FB5A0CD0069F88B /* WALButton.m in Sources */,
 				A6EECF091F5449BA00954E02 /* WALFailureReason.m in Sources */,
 				A68202881F61325800844B5F /* WALDefaultTheme.m in Sources */,
 				A60AA8461FB4B2840069F88B /* WALCancelHandler.m in Sources */,

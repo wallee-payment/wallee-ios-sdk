@@ -49,7 +49,7 @@
 // MARK: -
 
 - (BOOL)dryTriggerAction:(WALFlowAction)flowAction {
-    return flowAction == WALFlowActionSwitchToPaymentMethodSelection;
+    return flowAction == WALFlowActionSwitchToPaymentMethodSelection || flowAction == WALFlowActionGoBack;
 }
 
 - (BOOL)triggerAction:(WALFlowAction)flowAction WithCoordinator:(WALFlowCoordinator *)coordinator {
@@ -59,6 +59,9 @@
     if(flowAction == WALFlowActionSwitchToPaymentMethodSelection) {
         [coordinator changeStateTo:WALFlowStatePaymentMethodLoading
                         parameters:@{WALFlowTokensParameter: self.loadedTokens}];
+        return YES;
+    } else if (flowAction == WALFlowActionGoBack) {
+        [coordinator changeStateTo:WALFlowStateCancel parameters:nil];
         return YES;
     }
     return NO;
@@ -123,7 +126,18 @@
         [strongSelf triggerAction:WALFlowActionSwitchToPaymentMethodSelection WithCoordinator:strongCoordinator];
     };
     
-    UIViewController *controller = [coordinator.configuration.viewControllerFactory buildTokenListViewWith:self.loadedTokens onSelection:tokenSelected onChangePaymentMethod:paymentMethodChange];
+    WALOnBackBlock onBack = ^(void) {
+        WALFlowCoordinator *strongCoordinator = weakCoordinator;
+        WALTokenSelectionStateHandler *strongSelf = weakSelf;
+        
+        if (![WALSimpleFlowStateHandler isStateValid:strongSelf WithCoordinator:strongCoordinator]) {
+            return;
+        }
+        
+        [strongSelf triggerAction:WALFlowActionGoBack WithCoordinator:strongCoordinator];
+    };
+    
+    UIViewController *controller = [coordinator.configuration.viewControllerFactory buildTokenListViewWith:self.loadedTokens onSelection:tokenSelected onChangePaymentMethod:paymentMethodChange onBack:onBack];
     return controller;
 }
 
