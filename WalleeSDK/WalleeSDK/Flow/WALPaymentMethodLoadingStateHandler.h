@@ -9,9 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "WALFlowStateHandler.h"
 #import "WALSimpleFlowStateHandler.h"
+#import "WALLoadedTokens.h"
 
 @interface WALPaymentMethodLoadingStateHandler : WALSimpleFlowStateHandler<WALFlowStateHandler>
 NS_ASSUME_NONNULL_BEGIN
-
++ (instancetype)stateWithTokens:(WALLoadedTokens *)loadedTokens;
 NS_ASSUME_NONNULL_END
 @end

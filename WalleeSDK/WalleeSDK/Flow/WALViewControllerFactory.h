@@ -77,6 +77,15 @@ typedef void(^WALPaymentMethodSubmited)(WALPaymentMethodConfiguration *_Nonnull 
 
 
 /**
+ This method is responsible to create the view which is shown to the customer when the trancation is
+ canceled by the customer.
+
+ @param transaction can be nil
+ @return a view controller to display
+ */
+- (UIViewController *_Nonnull)buildCancelViewWith:(WALTransaction * _Nullable)transaction;
+
+/**
  
   The token list allows the user to select from a list of stored payment details (like card or a
   PayPal account). The list is generated based up on the transaction and as such on the customer ID

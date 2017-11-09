@@ -24,24 +24,29 @@
 
 @interface WALPaymentMethodSelectionStateHandler ()
 @property (nonatomic, copy) WALLoadedPaymentMethods *loadedPaymentMethods;
+@property (nonatomic, copy) WALLoadedTokens *loadedTokens;
 @end
 
 @implementation WALPaymentMethodSelectionStateHandler
 
 + (instancetype)stateWithParameters:(NSDictionary *)parameters {
-    return [self stateWithPaymentMethods:parameters[WALFlowPaymentMethodsParameter]];
+    return [self stateWithPaymentMethods:parameters[WALFlowPaymentMethodsParameter]
+                               andTokens:parameters[WALFlowTokensParameter]];
 }
 
-+ (instancetype)stateWithPaymentMethods:(WALLoadedPaymentMethods *)loadedPaymentMethods {
-    if (loadedPaymentMethods.paymentMethodConfigurations.count <= 0) {
++ (instancetype)stateWithPaymentMethods:(WALLoadedPaymentMethods *)loadedPaymentMethods
+                                    andTokens:(WALLoadedTokens *)loadedTokens {
+    if (loadedPaymentMethods.paymentMethodConfigurations.count <= 0 || !loadedTokens) {
         return nil;
     }
-    return [[self alloc] initWithPaymentMethods:loadedPaymentMethods];
+    return [[self alloc] initWithPaymentMethods:loadedPaymentMethods andTokens:loadedTokens];
 }
 
-- (instancetype)initWithPaymentMethods:(WALLoadedPaymentMethods *)loadedPaymentMethods {
+- (instancetype)initWithPaymentMethods:(WALLoadedPaymentMethods *)loadedPaymentMethods
+                             andTokens:(WALLoadedTokens *) loadedTokens {
     if (self = [super initInternal]) {
         _loadedPaymentMethods = loadedPaymentMethods;
+        _loadedTokens = loadedTokens;
     }
     return self;
 }
@@ -55,7 +60,11 @@
         return NO;
     }
     if ([self dryTriggerAction:flowAction]) {
-        [coordinator changeStateTo:WALFlowStateTokenLoading parameters:nil];
+        if (self.loadedTokens.tokenVersions.count <= 0) {
+            [coordinator changeStateTo:WALFlowStateCancel parameters:nil];
+        } else {
+            [coordinator changeStateTo:WALFlowStateTokenLoading parameters:nil];
+        }
         return YES;
     } else {
         return NO;
@@ -64,6 +73,7 @@
 
 - (void)performWithCoordinator:(WALFlowCoordinator *)coordinator {
     [super performWithCoordinator:coordinator];
+    
     if ([coordinator.configuration.delegate respondsToSelector:@selector(flowCoordinatorWillDisplayPaymentMethodSelection:)]) {
         [coordinator.configuration.delegate flowCoordinatorWillDisplayPaymentMethodSelection:coordinator];
     }
@@ -77,7 +87,9 @@
         if (![WALSimpleFlowStateHandler isStateValid:weakSelf WithCoordinator:weakCoordinator]) {
             return;
         }
-        NSDictionary *parameter = @{WALFlowPaymentMethodsParameter: @(paymentMethod.objectId)};
+        NSDictionary *parameter = @{WALFlowPaymentMethodIdParameter: @(paymentMethod.objectId),
+                                    WALFlowPaymentMethodsParameter: self.loadedPaymentMethods,
+                                    WALFlowTokensParameter: self.loadedTokens};
         [weakCoordinator changeStateTo:WALFlowStatePaymentForm parameters:parameter];
     };
     

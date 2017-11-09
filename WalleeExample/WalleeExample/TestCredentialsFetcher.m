@@ -10,7 +10,7 @@
 #include <CommonCrypto/CommonHMAC.h>
 
 @import WalleeSDK;
-/// ExampleFragment
+/// Example
 //static NSUInteger const USER_ID = 480l;
 //static NSString *const HMAC_KEY = @"644gZTvd8KR2V+Lf4I9zmSnZVuXxd5YTT2U/CTKXHhk=";
 //static NSUInteger const SPACE_ID = 316l;
@@ -21,9 +21,15 @@
 //static NSUInteger const SPACE_ID = 658l;
 
 ///  Unit Test: Token Processing
-static NSUInteger const USER_ID = 526l;
-static NSString *const HMAC_KEY = @"R1x818iST62GkGMgkm1zYKQ3N0Y7YiRRFdrycbs7KII=";
-static NSUInteger const SPACE_ID = 412l;
+//static NSUInteger const USER_ID = 526l;
+//static NSString *const HMAC_KEY = @"R1x818iST62GkGMgkm1zYKQ3N0Y7YiRRFdrycbs7KII=";
+//static NSUInteger const SPACE_ID = 412l;
+
+// smi User
+static NSUInteger const USER_ID = 1052l;
+static NSString *const HMAC_KEY = @"SrwKpw/z0fnqHc1pBSRHsJcjvXftq9+GTrkav4RkMhk=";
+static NSUInteger const SPACE_ID = 655l; //534l
+
 
 @implementation TestCredentialsFetcher
 

@@ -11,9 +11,13 @@
 #import "WALSimpleFlowStateHandler.h"
 #import "WALPaymentFormDelegate.h"
 @class WALPaymentMethodConfiguration;
+@class WALLoadedPaymentMethods;
+@class WALLoadedTokens;
 
 @interface WALPaymentMethodFormStateHandler : WALSimpleFlowStateHandler<WALFlowStateHandler, WALPaymentFormDelegate>
 NS_ASSUME_NONNULL_BEGIN
-+ (instancetype)stateWithPaymentMethodId:(NSUInteger)paymentMethodId;
++ (instancetype)stateWithPaymentMethodId:(NSUInteger)paymentMethodId
+                       andPaymentMethods:(WALLoadedPaymentMethods *)loadedMethods
+                               andTokens:(WALLoadedTokens *)loadedTokens;
 NS_ASSUME_NONNULL_END
 @end

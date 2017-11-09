@@ -21,12 +21,31 @@
 #import "WALLoadedPaymentMethods.h"
 #import "WALPaymentMethodConfiguration.h"
 
+@interface WALPaymentMethodLoadingStateHandler ()
+@property (nonatomic, copy) WALLoadedTokens *loadedTokens;
+@end
+
 @implementation WALPaymentMethodLoadingStateHandler
 
 + (instancetype)stateWithParameters:(NSDictionary *)parameters {
-    return [[self alloc] initInternal];
+    return [self stateWithTokens:parameters[WALFlowTokensParameter]];
 }
 
++ (instancetype)stateWithTokens:(WALLoadedTokens *)loadedTokens {
+    if (!loadedTokens.tokenVersions) {
+        return nil;
+    }
+    return [[self alloc] initWithTokens:loadedTokens];
+}
+
+- (instancetype)initWithTokens:(WALLoadedTokens *)loadedTokens {
+    if (self = [self initInternal]) {
+        _loadedTokens = loadedTokens;
+    }
+    return self;
+}
+
+// MARK: -
 - (BOOL)dryTriggerAction:(WALFlowAction)flowAction {
     return NO;
 }
@@ -45,6 +64,8 @@
     if ([coordinator.configuration.delegate respondsToSelector:@selector(flowCoordinatorWillLoadPaymentMethod:)]) {
         [coordinator.configuration.delegate flowCoordinatorWillLoadPaymentMethod:coordinator];
     }
+    
+    __weak WALPaymentMethodLoadingStateHandler *weakSelf = self;
     __weak WALFlowCoordinator *weakCoordinator = coordinator;
     [coordinator.configuration.webServiceApiClient fetchPaymentMethodConfigurations:^(NSArray<WALPaymentMethodConfiguration *> * _Nullable paymentMethodConfigurations, NSError * _Nullable error) {
         if (!paymentMethodConfigurations) {
@@ -52,17 +73,26 @@
             return;
         }
         
-        if (paymentMethodConfigurations.count == 1) {
+        if (paymentMethodConfigurations.count <= 0) {
+            
+            [weakCoordinator changeStateTo:WALFlowStateCancel parameters:nil];
+            
+        } else if (paymentMethodConfigurations.count == 1) {
             NSUInteger paymentId = paymentMethodConfigurations[0].objectId;
             [weakCoordinator changeStateTo:WALFlowStatePaymentForm
-                                parameters:@{WALFlowPaymentMethodsParameter: @(paymentId)}];
+                                parameters:@{WALFlowTokensParameter: weakSelf.loadedTokens,
+                                             WALFlowPaymentMethodsParameter: paymentMethodConfigurations,
+                                             WALFlowPaymentMethodIdParameter: @(paymentId)}];
             
         } else {
             [weakCoordinator.configuration.iconCache fetchIcons:paymentMethodConfigurations completion:^(NSDictionary<WALPaymentMethodConfiguration *,WALPaymentMethodIcon *> * _Nullable paymentMethodIcons, NSError * _Nullable error) {
                 
-                WALLoadedPaymentMethods *loaded = [[WALLoadedPaymentMethods alloc] initWithPaymentMethodConfigurations:paymentMethodConfigurations paymentMethodIcons:paymentMethodIcons];
+                WALLoadedPaymentMethods *loaded = [[WALLoadedPaymentMethods alloc] initWithPaymentMethodConfigurations:paymentMethodConfigurations
+                                                                                                    paymentMethodIcons:paymentMethodIcons];
                 
-            [weakCoordinator changeStateTo:WALFlowStatePaymentMethodSelection parameters:@{WALFlowPaymentMethodsParameter: loaded}];
+            [weakCoordinator changeStateTo:WALFlowStatePaymentMethodSelection
+                                parameters:@{WALFlowTokensParameter: weakSelf.loadedTokens,
+                                             WALFlowPaymentMethodsParameter: loaded}];
             }];
         }
     }];

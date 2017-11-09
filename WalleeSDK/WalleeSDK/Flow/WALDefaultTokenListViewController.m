@@ -27,7 +27,6 @@ static NSString * const cellIdentifier = @"defaultCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.hidesBackButton = YES;
 //    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = self.theme.primaryBackgroundColor;
     

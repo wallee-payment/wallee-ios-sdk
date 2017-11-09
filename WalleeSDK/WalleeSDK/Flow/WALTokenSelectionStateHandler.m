@@ -28,7 +28,7 @@
 @end
 
 @implementation WALTokenSelectionStateHandler
-+ (instancetype)statetWithTokens:(WALLoadedTokens *)loadedTokens {
++ (instancetype)stateWithTokens:(WALLoadedTokens *)loadedTokens {
     if (!loadedTokens.tokenVersions || loadedTokens.tokenVersions.count <= 0) {
         return nil;
     }
@@ -36,7 +36,7 @@
 }
 
 + (instancetype)stateWithParameters:(NSDictionary *)parameters {
-    return [self statetWithTokens:parameters[WALFlowTokensParameter]];
+    return [self stateWithTokens:parameters[WALFlowTokensParameter]];
 }
 
 - (instancetype)initWithTokens:(WALLoadedTokens *)loadedTokens {
@@ -45,6 +45,8 @@
     }
     return self;
 }
+
+// MARK: -
 
 - (BOOL)dryTriggerAction:(WALFlowAction)flowAction {
     return flowAction == WALFlowActionSwitchToPaymentMethodSelection;
@@ -55,7 +57,8 @@
         return NO;
     }
     if(flowAction == WALFlowActionSwitchToPaymentMethodSelection) {
-        [coordinator changeStateTo:WALFlowStatePaymentMethodLoading parameters:nil];
+        [coordinator changeStateTo:WALFlowStatePaymentMethodLoading
+                        parameters:@{WALFlowTokensParameter: self.loadedTokens}];
         return YES;
     }
     return NO;
@@ -72,6 +75,7 @@
 - (UIViewController *)viewControllerForCoordinator:(WALFlowCoordinator *)coordinator {
     __weak WALTokenSelectionStateHandler *weakSelf = self;
     __weak WALFlowCoordinator *weakCoordinator = coordinator;
+    
     WALTransactionCompletion transactionCompletion = ^(WALTransaction * _Nullable transaction, NSError * _Nullable error) {
         if (transaction) {
             NSDictionary *params = @{WALFlowTransactionParameter: transaction};

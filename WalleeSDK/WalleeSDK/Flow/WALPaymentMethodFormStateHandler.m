@@ -22,9 +22,13 @@
 #import "WALPaymentMethodConfiguration.h"
 #import "WALMobileSdkUrl.h"
 #import "WALTransaction.h"
+#import "WALLoadedTokens.h"
+#import "WALLoadedPaymentMethods.h"
 
 @interface WALPaymentMethodFormStateHandler ()
 @property (nonatomic) NSUInteger paymentMethodId;
+@property (nonatomic, copy) WALLoadedPaymentMethods *loadedPaymentMethods;
+@property (nonatomic, copy) WALLoadedTokens *loadedTokens;
 @property (nonatomic, copy) WALMobileSdkUrl *sdkUrl;
 @property (nonatomic, strong) UIViewController<WALPaymentFormView> *paymentForm;
 
@@ -36,20 +40,30 @@
 @implementation WALPaymentMethodFormStateHandler
 
 + (instancetype)stateWithParameters:(NSDictionary *)parameters {
-    NSNumber *paymentMethodId = parameters[WALFlowPaymentMethodsParameter];
-    return [self.class stateWithPaymentMethodId:paymentMethodId.unsignedIntegerValue];
+    NSNumber *paymentMethodId = parameters[WALFlowPaymentMethodIdParameter];
+    return [self.class stateWithPaymentMethodId:paymentMethodId.unsignedIntegerValue
+                              andPaymentMethods:parameters[WALFlowPaymentMethodsParameter]
+                                      andTokens:parameters[WALFlowTokensParameter]];
 }
 
-+ (instancetype)stateWithPaymentMethodId:(NSUInteger)paymentMethodId {
-    if (paymentMethodId == 0) {
++ (instancetype)stateWithPaymentMethodId:(NSUInteger)paymentMethodId
+                       andPaymentMethods:(WALLoadedPaymentMethods *)loadedMethods
+                               andTokens:(WALLoadedTokens *)loadedTokens {
+    if (paymentMethodId == 0 || !loadedMethods || !loadedTokens) {
         return nil;
     }
-    return [[self alloc] initWithPaymentMethodId:paymentMethodId];
+    return [[self alloc] initWithPaymentMethodId:paymentMethodId
+                               andPaymentMethods:loadedMethods
+                                       andTokens:loadedTokens];
 }
 
-- (instancetype)initWithPaymentMethodId:(NSUInteger)paymentMethodId {
+- (instancetype)initWithPaymentMethodId:(NSUInteger)paymentMethodId
+                      andPaymentMethods:(WALLoadedPaymentMethods *)loadedMethods
+                              andTokens:(WALLoadedTokens *)loadedTokens {
     if (self = [super initInternal]) {
         self.paymentMethodId = paymentMethodId;
+        self.loadedPaymentMethods = loadedMethods;
+        self.loadedTokens = loadedTokens;
     }
     return self;
 }
@@ -81,7 +95,14 @@
             [WALErrorHelper populate:&error withIllegalStateWithMessage:@"GoBack action received while the PaymentForm was already submitted. Should never occure since it is checked in dryAction before"];
             [WALPaymentErrorHelper distribute:error forCoordinator:coordinator];
         } else {
-            [coordinator changeStateTo:WALFlowStatePaymentMethodLoading parameters:nil];
+            if (self.loadedPaymentMethods.paymentMethodConfigurations.count > 1) {
+                [coordinator changeStateTo:WALFlowStatePaymentMethodLoading
+                                parameters:@{WALFlowTokensParameter: self.loadedTokens}];
+            } else if (self.loadedTokens.tokenVersions.count >= 1) {
+                [coordinator changeStateTo:WALFlowStateTokenLoading parameters:nil];
+            } else {
+                [coordinator changeStateTo:WALFlowStateCancel parameters:nil];
+            }
         }
     } else {
         NSAssert(true, @"When dryAction is correctly implemented we will never get here...");
@@ -149,7 +170,7 @@
 
 -(void)viewControllerDidExpire:(UIViewController *)viewController {
 
-    [self.coordinatorDelegate changeStateTo:WALFlowStatePaymentForm parameters:@{WALFlowPaymentMethodsParameter: @(self.paymentMethodId)}];
+    [self.coordinatorDelegate changeStateTo:WALFlowStatePaymentForm parameters:@{WALFlowPaymentMethodIdParameter: @(self.paymentMethodId)}];
 }
 
 - (void)paymentViewDidEncounterError:(NSError *)error {

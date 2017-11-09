@@ -17,6 +17,7 @@
 
 #import "WALDefaultAwaitingFinalStateViewController.h"
 #import "WALDefaultSuccessViewController.h"
+#import "WALDefaultCancelViewController.h"
 #import "WALDefaultFailureViewController.h"
 
 
@@ -28,6 +29,7 @@
 
 - (UIViewController *)buildTokenListViewWith:(WALLoadedTokens *)loadedTokens onSelection:(WALTokenVersionSelected)callback onChangePaymentMethod:(WALOnBackBlock)changePaymentMethod {
     WALDefaultTokenListViewController *controller = [[WALDefaultTokenListViewController alloc] init];
+    controller.navigationItem.hidesBackButton = YES;
     controller.loadedTokens = loadedTokens;
     controller.onTokenSelected = callback;
     controller.onPaymentMethodChange = changePaymentMethod;
@@ -37,6 +39,7 @@
 
 - (UIViewController *)buildPaymentMethodListViewWith:(WALLoadedPaymentMethods *)loadedPaymentMethods onSelection:(WALPaymentMethodSelected)callback onBack:(WALOnBackBlock)onBack {
     WALDefaultPaymentMethodListViewController *controller = [[WALDefaultPaymentMethodListViewController alloc] init];
+    controller.navigationItem.hidesBackButton = YES;
     controller.loadedPaymentMethods = loadedPaymentMethods;
     controller.onPaymentMethodSelected = callback;
     controller.onBack = onBack;
@@ -46,6 +49,7 @@
 
 - (UIViewController *)buildPaymentMethodFormViewWithURL:(WALMobileSdkUrl *)mobileSdkUrl paymentMethod:(NSUInteger)paymentMethodId onBack:(WALOnBackBlock)onBack {
     WALDefaultPaymentMethodFormViewController *controller = [[WALDefaultPaymentMethodFormViewController alloc] init];
+    controller.navigationItem.hidesBackButton = YES;
     controller.mobileSdkUrl = mobileSdkUrl;
     controller.paymentMethodId = paymentMethodId;
     controller.onBack = onBack;
@@ -62,6 +66,13 @@
 
 - (UIViewController *)buildSuccessViewWith:(WALTransaction *)transaction {
     WALDefaultSuccessViewController *controller = [[WALDefaultSuccessViewController alloc] init];
+    controller.transaction = transaction;
+    controller.theme = self.theme;
+    return controller;
+}
+
+- (UIViewController *)buildCancelViewWith:(WALTransaction *)transaction {
+    WALDefaultCancelViewController *controller = [[WALDefaultCancelViewController alloc] init];
     controller.transaction = transaction;
     controller.theme = self.theme;
     return controller;

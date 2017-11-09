@@ -18,6 +18,7 @@
 
 #import "WALAwaitingFinalStateHandler.h"
 #import "WALSuccessHandler.h"
+#import "WALCancelHandler.h"
 #import "WALFailureHandler.h"
 
 @implementation WALFlowStateHandlerFactory
@@ -44,6 +45,9 @@
             break;
         case WALFlowStateSuccess:
             return [WALSuccessHandler stateWithParameters:parameters];
+            break;
+        case WALFlowStateCancel:
+            return [WALCancelHandler stateWithParameters:parameters];
             break;
         case WALFlowStateFailure:
             return [WALFailureHandler stateWithParameters:parameters];
