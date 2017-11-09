@@ -17,11 +17,19 @@
 @interface WALDefaultListViewController : WALDefaultBaseViewController
 NS_ASSUME_NONNULL_BEGIN
 
-@property (nonatomic, strong, readonly) UIButton *submitButton;
+//@property (nonatomic, strong, readonly) UIButton *submitButton;
+//@property (nonatomic, strong, readonly) UIButton *backButton;
+
+@property (nonatomic, readwrite) BOOL hidesBackButton;
+@property (nonatomic, readwrite) BOOL hidesConfirmationButton;
+
 - (void)addSubviewsToContentView:(UIView *)contentView;
 - (CGSize)contentSize;
 
 - (NSString *)confirmationTitle;
 - (void)confirmationTapped:(id)sender;
+
+- (NSString *)backTitle;
+- (void)backTapped:(id)sender;
 NS_ASSUME_NONNULL_END
 @end

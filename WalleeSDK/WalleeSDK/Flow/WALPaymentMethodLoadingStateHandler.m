@@ -21,6 +21,8 @@
 #import "WALLoadedPaymentMethods.h"
 #import "WALPaymentMethodConfiguration.h"
 
+#import "WALErrorDomain.h"
+
 @interface WALPaymentMethodLoadingStateHandler ()
 @property (nonatomic, copy) WALLoadedTokens *loadedTokens;
 @end
@@ -74,25 +76,26 @@
         }
         
         if (paymentMethodConfigurations.count <= 0) {
-            
-            [weakCoordinator changeStateTo:WALFlowStateCancel parameters:nil];
-            
-        } else if (paymentMethodConfigurations.count == 1) {
-            NSUInteger paymentId = paymentMethodConfigurations[0].objectId;
-            [weakCoordinator changeStateTo:WALFlowStatePaymentForm
-                                parameters:@{WALFlowTokensParameter: weakSelf.loadedTokens,
-                                             WALFlowPaymentMethodsParameter: paymentMethodConfigurations,
-                                             WALFlowPaymentMethodIdParameter: @(paymentId)}];
-            
+            NSError *error;
+            [WALErrorHelper populate:&error withIllegalStateWithMessage:@"There are no Payment Methods defined for this Space"];
+            [WALPaymentErrorHelper distribute:error forCoordinator:coordinator];
         } else {
             [weakCoordinator.configuration.iconCache fetchIcons:paymentMethodConfigurations completion:^(NSDictionary<WALPaymentMethodConfiguration *,WALPaymentMethodIcon *> * _Nullable paymentMethodIcons, NSError * _Nullable error) {
                 
                 WALLoadedPaymentMethods *loaded = [[WALLoadedPaymentMethods alloc] initWithPaymentMethodConfigurations:paymentMethodConfigurations
                                                                                                     paymentMethodIcons:paymentMethodIcons];
-                
-            [weakCoordinator changeStateTo:WALFlowStatePaymentMethodSelection
+                if (paymentMethodConfigurations.count == 1) {
+                    NSUInteger paymentId = paymentMethodConfigurations[0].objectId;
+                    [weakCoordinator changeStateTo:WALFlowStatePaymentForm
+                                        parameters:@{WALFlowTokensParameter: weakSelf.loadedTokens,
+                                                     WALFlowPaymentMethodsParameter: loaded,
+                                                     WALFlowPaymentMethodIdParameter: @(paymentId)}];
+                }
+                else {
+                    [weakCoordinator changeStateTo:WALFlowStatePaymentMethodSelection
                                 parameters:@{WALFlowTokensParameter: weakSelf.loadedTokens,
                                              WALFlowPaymentMethodsParameter: loaded}];
+                }
             }];
         }
     }];
