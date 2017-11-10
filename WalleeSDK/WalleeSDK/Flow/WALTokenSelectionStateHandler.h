@@ -14,6 +14,6 @@
 
 @interface WALTokenSelectionStateHandler : WALSimpleFlowStateHandler<WALFlowStateHandler>
 NS_ASSUME_NONNULL_BEGIN
-+ (instancetype)statetWithTokens:(WALLoadedTokens *)loadedTokens;
++ (instancetype)stateWithTokens:(WALLoadedTokens *)loadedTokens;
 NS_ASSUME_NONNULL_END
 @end

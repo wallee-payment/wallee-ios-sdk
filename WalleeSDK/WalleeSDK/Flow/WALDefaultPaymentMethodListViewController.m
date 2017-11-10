@@ -47,11 +47,11 @@ static NSString * const cellIdentifier = @"defaultCell";
     return CGSizeMake(self.tableView.frame.size.width, self.tableView.frame.origin.y + self.tableView.frame.size.height);
 }
 
-- (NSString *)confirmationTitle {
+- (NSString *)backTitle {
     return WALLocalizedString(@"payment_list_get_token", @"title of the navigational payment_list_get_token or restart flow button on the paymentlist view");
 }
 
-- (void)confirmationTapped:(id)sender {
+- (void)backTapped:(id)sender {
     self.onBack();
 }
 

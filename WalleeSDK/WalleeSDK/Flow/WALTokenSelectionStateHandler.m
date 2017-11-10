@@ -28,7 +28,7 @@
 @end
 
 @implementation WALTokenSelectionStateHandler
-+ (instancetype)statetWithTokens:(WALLoadedTokens *)loadedTokens {
++ (instancetype)stateWithTokens:(WALLoadedTokens *)loadedTokens {
     if (!loadedTokens.tokenVersions || loadedTokens.tokenVersions.count <= 0) {
         return nil;
     }
@@ -36,7 +36,7 @@
 }
 
 + (instancetype)stateWithParameters:(NSDictionary *)parameters {
-    return [self statetWithTokens:parameters[WALFlowTokensParameter]];
+    return [self stateWithTokens:parameters[WALFlowTokensParameter]];
 }
 
 - (instancetype)initWithTokens:(WALLoadedTokens *)loadedTokens {
@@ -46,8 +46,10 @@
     return self;
 }
 
+// MARK: -
+
 - (BOOL)dryTriggerAction:(WALFlowAction)flowAction {
-    return flowAction == WALFlowActionSwitchToPaymentMethodSelection;
+    return flowAction == WALFlowActionSwitchToPaymentMethodSelection || flowAction == WALFlowActionGoBack;
 }
 
 - (BOOL)triggerAction:(WALFlowAction)flowAction WithCoordinator:(WALFlowCoordinator *)coordinator {
@@ -55,7 +57,11 @@
         return NO;
     }
     if(flowAction == WALFlowActionSwitchToPaymentMethodSelection) {
-        [coordinator changeStateTo:WALFlowStatePaymentMethodLoading parameters:nil];
+        [coordinator changeStateTo:WALFlowStatePaymentMethodLoading
+                        parameters:@{WALFlowTokensParameter: self.loadedTokens}];
+        return YES;
+    } else if (flowAction == WALFlowActionGoBack) {
+        [coordinator changeStateTo:WALFlowStateCancel parameters:nil];
         return YES;
     }
     return NO;
@@ -72,6 +78,7 @@
 - (UIViewController *)viewControllerForCoordinator:(WALFlowCoordinator *)coordinator {
     __weak WALTokenSelectionStateHandler *weakSelf = self;
     __weak WALFlowCoordinator *weakCoordinator = coordinator;
+    
     WALTransactionCompletion transactionCompletion = ^(WALTransaction * _Nullable transaction, NSError * _Nullable error) {
         if (transaction) {
             NSDictionary *params = @{WALFlowTransactionParameter: transaction};
@@ -119,7 +126,18 @@
         [strongSelf triggerAction:WALFlowActionSwitchToPaymentMethodSelection WithCoordinator:strongCoordinator];
     };
     
-    UIViewController *controller = [coordinator.configuration.viewControllerFactory buildTokenListViewWith:self.loadedTokens onSelection:tokenSelected onChangePaymentMethod:paymentMethodChange];
+    WALOnBackBlock onBack = ^(void) {
+        WALFlowCoordinator *strongCoordinator = weakCoordinator;
+        WALTokenSelectionStateHandler *strongSelf = weakSelf;
+        
+        if (![WALSimpleFlowStateHandler isStateValid:strongSelf WithCoordinator:strongCoordinator]) {
+            return;
+        }
+        
+        [strongSelf triggerAction:WALFlowActionGoBack WithCoordinator:strongCoordinator];
+    };
+    
+    UIViewController *controller = [coordinator.configuration.viewControllerFactory buildTokenListViewWith:self.loadedTokens onSelection:tokenSelected onChangePaymentMethod:paymentMethodChange onBack:onBack];
     return controller;
 }
 

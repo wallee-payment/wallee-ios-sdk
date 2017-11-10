@@ -10,6 +10,7 @@
 
 NSString * const WALFlowTokensParameter = @"WALFlowTokens";
 NSString * const WALFlowPaymentMethodsParameter = @"WALFlowPaymentMethods";
+NSString * const WALFlowPaymentMethodIdParameter = @"WALFlowPaymentMethodId";
 NSString * const WALFlowTransactionParameter = @"WALFlowTransaction";
 
 @implementation WALFlowTypes

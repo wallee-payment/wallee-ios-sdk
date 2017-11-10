@@ -67,7 +67,8 @@
         }
         
         if (tokenVersions.count <= 0) {
-            [weakCoordinator changeStateTo:WALFlowStatePaymentMethodLoading parameters:nil];
+            WALLoadedTokens *loadedTokens = [[WALLoadedTokens alloc] initWithTokenVersions:tokenVersions paymentMethodIcons:[NSDictionary dictionary]];
+            [weakCoordinator changeStateTo:WALFlowStatePaymentMethodLoading parameters:@{WALFlowTokensParameter: loadedTokens}];
         } else {
             
             NSMutableArray *paymentMethodConfigurations = [NSMutableArray arrayWithCapacity:10];
@@ -81,7 +82,6 @@
                 [weakCoordinator changeStateTo:WALFlowStateTokenSelection parameters:@{WALFlowTokensParameter: loadedTokens}];
 
             }];
-
             
         }
         

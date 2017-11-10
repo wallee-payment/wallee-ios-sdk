@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A60AA8451FB4B2840069F88B /* WALCancelHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = A60AA8431FB4B2840069F88B /* WALCancelHandler.h */; };
+		A60AA8461FB4B2840069F88B /* WALCancelHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A60AA8441FB4B2840069F88B /* WALCancelHandler.m */; };
+		A60AA8491FB4B4330069F88B /* WALDefaultCancelViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A60AA8471FB4B4330069F88B /* WALDefaultCancelViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A60AA84A1FB4B4330069F88B /* WALDefaultCancelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A60AA8481FB4B4330069F88B /* WALDefaultCancelViewController.m */; };
+		A60AA84D1FB5A0CD0069F88B /* WALButton.h in Headers */ = {isa = PBXBuildFile; fileRef = A60AA84B1FB5A0CD0069F88B /* WALButton.h */; };
+		A60AA84E1FB5A0CD0069F88B /* WALButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A60AA84C1FB5A0CD0069F88B /* WALButton.m */; };
 		A63B64321F593D76007B9B15 /* WALDefaultPaymentFlowContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = A63B64301F593D76007B9B15 /* WALDefaultPaymentFlowContainer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A63B64331F593D76007B9B15 /* WALDefaultPaymentFlowContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = A63B64311F593D76007B9B15 /* WALDefaultPaymentFlowContainer.m */; };
 		A63B64371F594B07007B9B15 /* WALPaymentFlowContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = A63B64361F594B07007B9B15 /* WALPaymentFlowContainer.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -165,6 +171,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A60AA8431FB4B2840069F88B /* WALCancelHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALCancelHandler.h; sourceTree = "<group>"; };
+		A60AA8441FB4B2840069F88B /* WALCancelHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALCancelHandler.m; sourceTree = "<group>"; };
+		A60AA8471FB4B4330069F88B /* WALDefaultCancelViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WALDefaultCancelViewController.h; sourceTree = "<group>"; };
+		A60AA8481FB4B4330069F88B /* WALDefaultCancelViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WALDefaultCancelViewController.m; sourceTree = "<group>"; };
+		A60AA84B1FB5A0CD0069F88B /* WALButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WALButton.h; sourceTree = "<group>"; };
+		A60AA84C1FB5A0CD0069F88B /* WALButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WALButton.m; sourceTree = "<group>"; };
 		A63B64301F593D76007B9B15 /* WALDefaultPaymentFlowContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALDefaultPaymentFlowContainer.h; sourceTree = "<group>"; };
 		A63B64311F593D76007B9B15 /* WALDefaultPaymentFlowContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WALDefaultPaymentFlowContainer.m; sourceTree = "<group>"; };
 		A63B64361F594B07007B9B15 /* WALPaymentFlowContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WALPaymentFlowContainer.h; sourceTree = "<group>"; };
@@ -385,6 +397,8 @@
 				A6670D6B1F5D4EE500C3B229 /* WALPaymentMethodFormStateHandler.m */,
 				A63B64891F5AB237007B9B15 /* WALSuccessHandler.h */,
 				A63B648A1F5AB237007B9B15 /* WALSuccessHandler.m */,
+				A60AA8431FB4B2840069F88B /* WALCancelHandler.h */,
+				A60AA8441FB4B2840069F88B /* WALCancelHandler.m */,
 				A63B64AE1F5AD42B007B9B15 /* WALFailureHandler.h */,
 				A63B64AF1F5AD42B007B9B15 /* WALFailureHandler.m */,
 				A6670D6E1F5D4EF300C3B229 /* WALAwaitingFinalStateHandler.h */,
@@ -442,6 +456,8 @@
 				A63B64AB1F5AD23D007B9B15 /* WALDefaultFailureViewController.m */,
 				A6670D7C1F5D781E00C3B229 /* WALDefaultAwaitingFinalStateViewController.h */,
 				A6670D7D1F5D781E00C3B229 /* WALDefaultAwaitingFinalStateViewController.m */,
+				A60AA8471FB4B4330069F88B /* WALDefaultCancelViewController.h */,
+				A60AA8481FB4B4330069F88B /* WALDefaultCancelViewController.m */,
 			);
 			name = Status;
 			sourceTree = "<group>";
@@ -673,6 +689,8 @@
 				A6E66DD91F57F8DB00BBACF8 /* Method */,
 				A68202851F61325800844B5F /* WALDefaultTheme.h */,
 				A68202861F61325800844B5F /* WALDefaultTheme.m */,
+				A60AA84B1FB5A0CD0069F88B /* WALButton.h */,
+				A60AA84C1FB5A0CD0069F88B /* WALButton.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -735,6 +753,7 @@
 				A68202C51F67C06000844B5F /* WALDataObject.h in Headers */,
 				A6FF3E2E1F69477C007BEE0F /* WALFlowCoordinator+StateDelegate.h in Headers */,
 				A6670D8A1F5ECA4C00C3B229 /* WALLoadingViewDelegate.h in Headers */,
+				A60AA8491FB4B4330069F88B /* WALDefaultCancelViewController.h in Headers */,
 				A682029C1F62C14B00844B5F /* WALDefaultIconCache.h in Headers */,
 				A63B64B01F5AD42B007B9B15 /* WALFailureHandler.h in Headers */,
 				A6EECEE91F501D4D00954E02 /* WALJSONParser.h in Headers */,
@@ -772,6 +791,7 @@
 				A6DE8E8B1F41A77E006E082B /* WalleeSDK.h in Headers */,
 				A6670D7E1F5D781E00C3B229 /* WALDefaultAwaitingFinalStateViewController.h in Headers */,
 				A63B64511F59803D007B9B15 /* WALFlowStateHandlerFactory.h in Headers */,
+				A60AA84D1FB5A0CD0069F88B /* WALButton.h in Headers */,
 				A6C7B5B41F4898DC003CCB97 /* WALTypes.h in Headers */,
 				A68202A61F63E11E00844B5F /* WALLoadedTokens.h in Headers */,
 				A6670D6C1F5D4EE500C3B229 /* WALPaymentMethodFormStateHandler.h in Headers */,
@@ -780,6 +800,7 @@
 				A6A194EE1F4EF3DE00374E92 /* WALCredentialsFetcher.h in Headers */,
 				A6670D681F5D4ED300C3B229 /* WALPaymentMethodSelectionStateHandler.h in Headers */,
 				A63B64321F593D76007B9B15 /* WALDefaultPaymentFlowContainer.h in Headers */,
+				A60AA8451FB4B2840069F88B /* WALCancelHandler.h in Headers */,
 				A6670D981F5EF97700C3B229 /* WALPaymentFormAJAXParser.h in Headers */,
 				A682028F1F6150F200844B5F /* WALIconLoader.h in Headers */,
 				A68202AE1F6415FC00844B5F /* WALLoadedPaymentMethods.h in Headers */,
@@ -949,6 +970,7 @@
 				A68202B31F642CC400844B5F /* WALDefaultListViewController.m in Sources */,
 				A6C7B5BA1F49A87A003CCB97 /* WALNSURLSessionApiClient.m in Sources */,
 				A6DE8ED71F41CFA9006E082B /* WALCredentials.m in Sources */,
+				A60AA84A1FB4B4330069F88B /* WALDefaultCancelViewController.m in Sources */,
 				A63B645C1F59A086007B9B15 /* WALApiClientError.m in Sources */,
 				A63B64601F59A2F8007B9B15 /* WALApiServerError.m in Sources */,
 				A63B64721F59BBD2007B9B15 /* WALTokenSelectionStateHandler.m in Sources */,
@@ -959,8 +981,10 @@
 				A6C7B5AB1F435DC7003CCB97 /* WALApiConfig.m in Sources */,
 				A68202AF1F6415FC00844B5F /* WALLoadedPaymentMethods.m in Sources */,
 				A6EECF181F569CB400954E02 /* WALFlowTypes.m in Sources */,
+				A60AA84E1FB5A0CD0069F88B /* WALButton.m in Sources */,
 				A6EECF091F5449BA00954E02 /* WALFailureReason.m in Sources */,
 				A68202881F61325800844B5F /* WALDefaultTheme.m in Sources */,
+				A60AA8461FB4B2840069F88B /* WALCancelHandler.m in Sources */,
 				A63B64581F5982F0007B9B15 /* WALSimpleFlowStateHandler.m in Sources */,
 				A63B64861F59C4D7007B9B15 /* WALDefaultTokenListViewController.m in Sources */,
 				A63B64641F59AC1A007B9B15 /* WALPaymentErrorHelper.m in Sources */,

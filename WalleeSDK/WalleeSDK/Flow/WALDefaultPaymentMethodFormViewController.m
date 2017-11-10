@@ -30,6 +30,7 @@ static CGFloat defaultButtonHeight = 44.0f;
     [super viewDidLoad];
     self.view.backgroundColor = self.theme.primaryBackgroundColor;
     self.automaticallyAdjustsScrollViewInsets = YES;
+    
     [self.view addSubview:self.navigationalView];
     [self.view addSubview:self.paymentFormView];
     

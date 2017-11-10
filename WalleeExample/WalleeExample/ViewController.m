@@ -15,6 +15,7 @@
 @interface ViewController ()
 @property (nonatomic, strong) WALFlowCoordinator *coordinator;
 @property (nonatomic, strong) UIColor *successColor;
+@property (nonatomic, strong) UIColor *warnColor;
 @property (nonatomic, strong) UIColor *failureColor;
 @end
 
@@ -24,6 +25,7 @@
     [super viewDidLoad];
     self.successColor = [UIColor colorWithRed:0.165 green:0.749 blue:0.035 alpha:1.0];
     self.failureColor = [UIColor colorWithRed:0.937 green:0.314 blue:0.314 alpha:1.0];
+    self.warnColor = [UIColor colorWithRed:1 green:0.69 blue:0.19 alpha:1];
     self.messageView.hidden = YES;
     self.messageLabel.textColor = UIColor.whiteColor;
 }
@@ -76,6 +78,15 @@
     [WALErrorHelper populate:&error withFailedTransaction:transaction];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         [self handleError:error];
+    });
+}
+
+- (void)flowCoordinator:(WALFlowCoordinator *)coordinator transactionDidCancel:(WALTransaction *)transaction {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.messageView.hidden = NO;
+        self.messageView.backgroundColor = self.warnColor;
+        self.messageLabel.text = @"The Payment was cancelled.";
+        [self dismissViewControllerAnimated:YES completion:nil];
     });
 }
 

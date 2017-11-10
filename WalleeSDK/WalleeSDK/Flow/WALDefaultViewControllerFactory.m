@@ -17,6 +17,7 @@
 
 #import "WALDefaultAwaitingFinalStateViewController.h"
 #import "WALDefaultSuccessViewController.h"
+#import "WALDefaultCancelViewController.h"
 #import "WALDefaultFailureViewController.h"
 
 
@@ -26,17 +27,29 @@
     return _theme ?: [WALDefaultTheme defaultTheme];
 }
 
-- (UIViewController *)buildTokenListViewWith:(WALLoadedTokens *)loadedTokens onSelection:(WALTokenVersionSelected)callback onChangePaymentMethod:(WALOnBackBlock)changePaymentMethod {
+- (UIViewController *)buildTokenListViewWith:(WALLoadedTokens *)loadedTokens
+                                 onSelection:(WALTokenVersionSelected)callback
+                       onChangePaymentMethod:(WALOnBackBlock)changePaymentMethod
+                                      onBack:(WALOnBackBlock)onBack {
     WALDefaultTokenListViewController *controller = [[WALDefaultTokenListViewController alloc] init];
+    controller.navigationItem.hidesBackButton = YES;
+    controller.hidesBackButton = NO;
+    controller.hidesConfirmationButton = NO;
     controller.loadedTokens = loadedTokens;
     controller.onTokenSelected = callback;
     controller.onPaymentMethodChange = changePaymentMethod;
+    controller.onBack = onBack;
     controller.theme = self.theme;
     return controller;
 }
 
-- (UIViewController *)buildPaymentMethodListViewWith:(WALLoadedPaymentMethods *)loadedPaymentMethods onSelection:(WALPaymentMethodSelected)callback onBack:(WALOnBackBlock)onBack {
+- (UIViewController *)buildPaymentMethodListViewWith:(WALLoadedPaymentMethods *)loadedPaymentMethods
+                                         onSelection:(WALPaymentMethodSelected)callback
+                                              onBack:(WALOnBackBlock)onBack {
     WALDefaultPaymentMethodListViewController *controller = [[WALDefaultPaymentMethodListViewController alloc] init];
+    controller.navigationItem.hidesBackButton = YES;
+    controller.hidesBackButton = NO;
+    controller.hidesConfirmationButton = YES;
     controller.loadedPaymentMethods = loadedPaymentMethods;
     controller.onPaymentMethodSelected = callback;
     controller.onBack = onBack;
@@ -44,8 +57,11 @@
     return controller;
 }
 
-- (UIViewController *)buildPaymentMethodFormViewWithURL:(WALMobileSdkUrl *)mobileSdkUrl paymentMethod:(NSUInteger)paymentMethodId onBack:(WALOnBackBlock)onBack {
+- (UIViewController *)buildPaymentMethodFormViewWithURL:(WALMobileSdkUrl *)mobileSdkUrl
+                                          paymentMethod:(NSUInteger)paymentMethodId
+                                                 onBack:(WALOnBackBlock)onBack {
     WALDefaultPaymentMethodFormViewController *controller = [[WALDefaultPaymentMethodFormViewController alloc] init];
+    controller.navigationItem.hidesBackButton = YES;
     controller.mobileSdkUrl = mobileSdkUrl;
     controller.paymentMethodId = paymentMethodId;
     controller.onBack = onBack;
@@ -62,6 +78,13 @@
 
 - (UIViewController *)buildSuccessViewWith:(WALTransaction *)transaction {
     WALDefaultSuccessViewController *controller = [[WALDefaultSuccessViewController alloc] init];
+    controller.transaction = transaction;
+    controller.theme = self.theme;
+    return controller;
+}
+
+- (UIViewController *)buildCancelViewWith:(WALTransaction *)transaction {
+    WALDefaultCancelViewController *controller = [[WALDefaultCancelViewController alloc] init];
     controller.transaction = transaction;
     controller.theme = self.theme;
     return controller;
