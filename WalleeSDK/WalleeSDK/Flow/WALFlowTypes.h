@@ -64,11 +64,13 @@ typedef NS_ENUM(NSUInteger, WALFlowState){
     WALFlowStatePaymentForm,
     WALFlowStateSuccess,
     WALFlowStateFailure,
+    WALFlowStateCancel,
     WALFlowStateAwaitingFinalState
 };
 
 FOUNDATION_EXPORT NSString * const WALFlowTokensParameter;
 FOUNDATION_EXPORT NSString * const WALFlowPaymentMethodsParameter;
+FOUNDATION_EXPORT NSString * const WALFlowPaymentMethodIdParameter;
 FOUNDATION_EXPORT NSString * const WALFlowTransactionParameter;
 
 @interface WALFlowTypes : NSObject

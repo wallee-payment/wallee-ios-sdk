@@ -17,5 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) WALLoadedTokens *loadedTokens;
 @property (nonatomic) WALTokenVersionSelected onTokenSelected;
 @property (nonatomic) WALOnBackBlock onPaymentMethodChange;
+@property (nonatomic) WALOnBackBlock onBack;
 NS_ASSUME_NONNULL_END
 @end

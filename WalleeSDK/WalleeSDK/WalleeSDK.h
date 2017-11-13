@@ -88,3 +88,6 @@ FOUNDATION_EXPORT const unsigned char WalleeSDKVersionString[];
 #import "WalleeSDK/WALTypes.h"
 #import "WalleeSDK/WALDefaultTheme.h"
 #import "WalleeSDK/WALPaymentMethodTableViewCell.h"
+#import "WalleeSDK/WALDefaultCancelViewController.h"
+#import "WalleeSDK/WALButton.h"
+#import "WalleeSDK/WALCancelHandler.h"

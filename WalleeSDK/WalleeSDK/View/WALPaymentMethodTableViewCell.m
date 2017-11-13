@@ -111,6 +111,7 @@
 }
 
 - (void)prepareForReuse {
+    [super prepareForReuse];
     self.paymentNameLabel.text = nil;
     [self.paymentImageWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"about:blank"]]];
 }

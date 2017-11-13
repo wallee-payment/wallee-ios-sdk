@@ -15,6 +15,7 @@
 @protocol WALPaymentFlowDelegate <NSObject>
 
 - (void)flowCoordinator:(WALFlowCoordinator *)coordinator transactionDidSucceed:(WALTransaction *)transaction;
+- (void)flowCoordinator:(WALFlowCoordinator *)coordinator transactionDidCancel:(WALTransaction *)transaction;
 - (void)flowCoordinator:(WALFlowCoordinator *)coordinator transactionDidFail:(WALTransaction *)transaction;
 - (void)flowCoordinator:(WALFlowCoordinator *)coordinator encouteredInternalError:(NSError*)error;
 - (void)flowCoordinator:(WALFlowCoordinator *)coordinator encouteredApiError:(NSError*)error;
