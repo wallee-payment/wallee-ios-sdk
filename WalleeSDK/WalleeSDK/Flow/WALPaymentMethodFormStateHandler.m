@@ -140,9 +140,7 @@
                             buildPaymentMethodFormViewWithURL:self.sdkUrl
                             paymentMethod:self.paymentMethodId
                             onBack:^{
-                                
                                 [weakSelf triggerAction:WALFlowActionGoBack WithCoordinator:weakSelf.coordinatorDelegate];
-                                
                             }];
         self.paymentForm.delegate = self;
     }
