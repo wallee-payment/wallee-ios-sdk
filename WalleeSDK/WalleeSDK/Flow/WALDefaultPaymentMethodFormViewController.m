@@ -40,9 +40,10 @@ static CGFloat defaultButtonHeight = 44.0f;
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    CGFloat top = self.topLayoutGuide.length;
-    self.paymentFormView.webView.scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(top, 0, self.bottomLayoutGuide.length, 0);
-    self.paymentFormView.webView.scrollView.contentInset = UIEdgeInsetsMake(top, 0, self.bottomLayoutGuide.length, 0);
+    CGFloat top = 0;//self.topLayoutGuide.length;
+    CGFloat bottom = 0; //self.bottomLayoutGuide.length;
+    self.paymentFormView.webView.scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(top, 0, bottom, 0);
+    self.paymentFormView.webView.scrollView.contentInset = UIEdgeInsetsMake(top, 0, bottom, 0);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -64,7 +65,6 @@ static CGFloat defaultButtonHeight = 44.0f;
 
 - (WALDefaultPaymentFormView *)paymentFormView {
     if (!_paymentFormView) {
-        
         _paymentFormView = [[WALDefaultPaymentFormView alloc] initWithFrame:[self defaultPaymentRect]];
         _paymentFormView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
         _paymentFormView.delegate = self;
@@ -85,7 +85,6 @@ static CGFloat defaultButtonHeight = 44.0f;
 - (UIButton *)submitButton {
     if (!_submitButton) {
         _submitButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        
         _submitButton.frame = CGRectMake(0.0f, 0.0f, [self defaultNavigationalRect].size.width, defaultButtonHeight);
         _submitButton.autoresizingMask = (UIViewAutoresizingFlexibleWidth);
         [_submitButton setTitle:WALLocalizedString(@"payment_form_submit", @"title of the submit button on the payment method form") forState:UIControlStateNormal];
@@ -122,10 +121,11 @@ static CGFloat defaultButtonHeight = 44.0f;
 
 - (void)paymentViewDidChangeContentSize:(CGSize)size {
     CGRect buttonDefaultRect = [self defaultNavigationalRect];
-    if (size.height < buttonDefaultRect.origin.y) {
+    CGFloat height = size.height + self.topLayoutGuide.length;
+    if (height < buttonDefaultRect.origin.y) {
         self.paymentFormView.scrollingEnabled = NO;
-        self.paymentFormView.frame = CGRectMake(self.paymentFormView.frame.origin.x, self.paymentFormView.frame.origin.y, self.paymentFormView.frame.size.width, size.height);
-        self.navigationalView.frame = CGRectMake(buttonDefaultRect.origin.x, size.height, buttonDefaultRect.size.width, buttonDefaultRect.size.height);
+        self.paymentFormView.frame = CGRectMake(self.paymentFormView.frame.origin.x, self.paymentFormView.frame.origin.y, self.paymentFormView.frame.size.width, height);
+        self.navigationalView.frame = CGRectMake(buttonDefaultRect.origin.x, height, buttonDefaultRect.size.width, buttonDefaultRect.size.height);
     } else {
         self.paymentFormView.scrollingEnabled = YES;
         self.paymentFormView.frame = [self defaultPaymentRect];

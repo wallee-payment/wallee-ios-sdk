@@ -84,7 +84,7 @@
 }
 
 -(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
-    self.isLoading = NO;
+   self.isLoading = NO;
     [self.delegate viewDidFinishLoading:self];
     [self scheduleTimer];
 }
@@ -119,7 +119,6 @@
 // MARK: - AJAX Handling
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
     NSLog(@"Did Receive JS Message: %@ %@", message, message.body);
-    
     NSString *url = message.body;
     __weak WALDefaultPaymentFormView *weakSelf = self;
     [WALPaymentFormAJAXParser parseUrlString:url
