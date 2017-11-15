@@ -128,6 +128,7 @@ typedef void(^WALPaymentMethodSubmited)(WALPaymentMethodConfiguration *_Nonnull 
  */
 - (UIViewController<WALPaymentFormView> *_Nonnull)buildPaymentMethodFormViewWithURL:(WALMobileSdkUrl * _Nonnull)mobileSdkUrl
                                                                       paymentMethod:(NSUInteger)paymentMethodId
+                                                                  paymentMethodName:(NSString * _Nonnull)paymentMethodName
                                                                              onBack:(WALOnBackBlock _Nonnull )onBack;
 
 @end

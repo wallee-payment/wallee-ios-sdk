@@ -64,6 +64,7 @@
                              self.view.bounds.size.width,
                              height);
     UIView *navigationView = [[UIView alloc] initWithFrame:rect];
+    navigationView.autoresizingMask = (UIViewAutoresizingFlexibleWidth);
     if (!self.hidesConfirmationButton) {
         [navigationView addSubview:[self createConfirmationButton]];
     }
@@ -104,4 +105,6 @@
 }
 
 - (void)confirmationTapped:(id)sender {}
+- (void)backTapped:(id)sender {}
+
 @end

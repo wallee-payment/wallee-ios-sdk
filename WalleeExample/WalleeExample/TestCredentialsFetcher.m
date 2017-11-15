@@ -16,14 +16,14 @@
 //static NSUInteger const SPACE_ID = 316l;
 
 // Unit Test: Single Payment Method with Tokenization
-static NSUInteger const USER_ID = 961l;
-static NSString *const HMAC_KEY = @"WkLd/olw3KVyElv7stuS2w9bSFJnN7gNrsm4awJ3aBI=";
-static NSUInteger const SPACE_ID = 658l;
+//static NSUInteger const USER_ID = 961l;
+//static NSString *const HMAC_KEY = @"WkLd/olw3KVyElv7stuS2w9bSFJnN7gNrsm4awJ3aBI=";
+//static NSUInteger const SPACE_ID = 658l;
 
 ///  Unit Test: Token Processing
-//static NSUInteger const USER_ID = 526l;
-//static NSString *const HMAC_KEY = @"R1x818iST62GkGMgkm1zYKQ3N0Y7YiRRFdrycbs7KII=";
-//static NSUInteger const SPACE_ID = 412l;
+static NSUInteger const USER_ID = 526l;
+static NSString *const HMAC_KEY = @"R1x818iST62GkGMgkm1zYKQ3N0Y7YiRRFdrycbs7KII=";
+static NSUInteger const SPACE_ID = 412l;
 
 @implementation TestCredentialsFetcher
 

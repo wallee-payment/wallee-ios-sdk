@@ -25,6 +25,8 @@
 #import "WALLoadedTokens.h"
 #import "WALLoadedPaymentMethods.h"
 
+#import "WALTranslation.h"
+
 @interface WALPaymentMethodFormStateHandler ()
 @property (nonatomic) NSUInteger paymentMethodId;
 @property (nonatomic, copy) WALLoadedPaymentMethods *loadedPaymentMethods;
@@ -139,10 +141,9 @@
         self.paymentForm = [coordinator.configuration.viewControllerFactory
                             buildPaymentMethodFormViewWithURL:self.sdkUrl
                             paymentMethod:self.paymentMethodId
+                            paymentMethodName:[self paymentMethodName]
                             onBack:^{
-                                
                                 [weakSelf triggerAction:WALFlowActionGoBack WithCoordinator:weakSelf.coordinatorDelegate];
-                                
                             }];
         self.paymentForm.delegate = self;
     }
@@ -206,6 +207,15 @@
 }
 
 // MARK: - Internal
+- (NSString *)paymentMethodName {
+    for (WALPaymentMethodConfiguration *paymentMethod in self.loadedPaymentMethods.paymentMethodConfigurations) {
+        if (self.paymentMethodId == paymentMethod.objectId) {
+            return paymentMethod.name;
+        }
+    }
+    return WALLocalizedString(@"payment_form_title", @"title for the payment method form view controller if none is found in the payment method");
+}
+
 - (void)readAndEvaluateTransactionForState:(WALFlowState)state {
     [self.coordinatorDelegate waiting];
     __weak WALPaymentMethodFormStateHandler *weakSelf = self;
