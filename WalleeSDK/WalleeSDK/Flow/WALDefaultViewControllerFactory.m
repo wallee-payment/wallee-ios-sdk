@@ -59,11 +59,13 @@
 
 - (UIViewController *)buildPaymentMethodFormViewWithURL:(WALMobileSdkUrl *)mobileSdkUrl
                                           paymentMethod:(NSUInteger)paymentMethodId
+                                      paymentMethodName:(NSString *)paymentMethodName
                                                  onBack:(WALOnBackBlock)onBack {
     WALDefaultPaymentMethodFormViewController *controller = [[WALDefaultPaymentMethodFormViewController alloc] init];
     controller.navigationItem.hidesBackButton = YES;
     controller.mobileSdkUrl = mobileSdkUrl;
     controller.paymentMethodId = paymentMethodId;
+    controller.paymentMethodName = paymentMethodName;
     controller.onBack = onBack;
     controller.theme = self.theme;
     controller.hidesBackButton = NO;

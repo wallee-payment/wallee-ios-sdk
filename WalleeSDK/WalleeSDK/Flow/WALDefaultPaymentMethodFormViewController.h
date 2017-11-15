@@ -22,6 +22,7 @@
 NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) WALMobileSdkUrl *mobileSdkUrl;
 @property (nonatomic) NSUInteger paymentMethodId;
+@property (nonatomic, copy) NSString *paymentMethodName;
 @property (nonatomic, weak) id<WALPaymentFormDelegate> delegate;
 @property (nonatomic) WALOnBackBlock onBack;
 

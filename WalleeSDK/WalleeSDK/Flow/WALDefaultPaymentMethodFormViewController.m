@@ -34,7 +34,7 @@ static CGFloat defaultButtonHeight = 44.0f;
     [self.view addSubview:self.navigationalView];
     [self.view addSubview:self.paymentFormView];
     
-    self.title = WALLocalizedString(@"payment_list_title", @"title for the payment method list view controller");
+    self.title = self.paymentMethodName;
 }
 
 - (void)viewDidLayoutSubviews {
