@@ -171,7 +171,10 @@
 
 -(void)viewControllerDidExpire:(UIViewController *)viewController {
 
-    [self.coordinatorDelegate changeStateTo:WALFlowStatePaymentForm parameters:@{WALFlowPaymentMethodIdParameter: @(self.paymentMethodId)}];
+    [self.coordinatorDelegate changeStateTo:WALFlowStatePaymentForm
+                                 parameters:@{WALFlowTokensParameter: self.loadedTokens,
+                                              WALFlowPaymentMethodsParameter: self.loadedPaymentMethods,
+                                              WALFlowPaymentMethodIdParameter: @(self.paymentMethodId)}];
 }
 
 - (void)paymentViewDidEncounterError:(NSError *)error {
