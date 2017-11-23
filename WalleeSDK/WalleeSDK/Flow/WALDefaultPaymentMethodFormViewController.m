@@ -43,7 +43,8 @@ static CGFloat defaultButtonHeight = 44.0f;
     if (!isBeyondIOS11) {
         CGFloat top = self.topLayoutGuide.length;
         CGFloat bottom = self.bottomLayoutGuide.length;
-        self.paymentFormView.webView.scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(top, 0, bottom, 0);
+//        self.paymentFormView.webView.scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(top, 0, bottom, 0);
+//        self.paymentFormView.webView.scrollView.contentOffset = CGPointMake(top, -top);
         self.paymentFormView.webView.scrollView.contentInset = UIEdgeInsetsMake(top, 0, bottom, 0);
     }
 }
@@ -53,21 +54,30 @@ static CGFloat defaultButtonHeight = 44.0f;
     [self.paymentFormView loadPaymentView:self.mobileSdkUrl forPaymentMethodId:self.paymentMethodId];
 }
 
-- (CGRect)defaultPaymentRect {
+- (CGRect)maximalPaymentRect {
     CGRect bounds = self.view.bounds;
     CGRect paymentRect = CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height - [self defaultNavigationalRect].size.height);
     return paymentRect;
 }
 
+- (CGFloat)currentBackButtonHeight {
+    return self.hidesBackButton ? 0.0 : defaultButtonHeight;
+}
+
+- (CGFloat)currentSubmitButtonHeight {
+    return self.hidesSubmitButton ? 0.0 : defaultButtonHeight;
+}
+
 - (CGRect)defaultNavigationalRect {
     CGRect bounds = self.view.bounds;
-    CGFloat height = self.hidesBackButton ? defaultButtonHeight : 2 * defaultButtonHeight + contentPadding;
+    CGFloat height = self.currentSubmitButtonHeight + self.currentBackButtonHeight;
+    height = height > defaultButtonHeight ? height + contentPadding : height;
     return CGRectMake(bounds.origin.x, bounds.size.height - height, bounds.size.width, height);
 }
 
 - (WALDefaultPaymentFormView *)paymentFormView {
     if (!_paymentFormView) {
-        _paymentFormView = [[WALDefaultPaymentFormView alloc] initWithFrame:[self defaultPaymentRect]];
+        _paymentFormView = [[WALDefaultPaymentFormView alloc] initWithFrame:[self maximalPaymentRect]];
         _paymentFormView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
         _paymentFormView.delegate = self;
     }
@@ -79,8 +89,13 @@ static CGFloat defaultButtonHeight = 44.0f;
         _navigationalView = [[UIView alloc] initWithFrame:[self defaultNavigationalRect]];
         _navigationalView.backgroundColor = self.theme.primaryBackgroundColor;
         _navigationalView.autoresizingMask = (UIViewAutoresizingFlexibleWidth);
-        [_navigationalView addSubview:self.submitButton];
-        [_navigationalView addSubview:self.backButton];
+        
+        if (!_hidesSubmitButton) {
+            [_navigationalView addSubview:self.submitButton];
+        }
+        if (!_hidesBackButton) {
+            [_navigationalView addSubview:self.backButton];
+        }
     }
     return _navigationalView;
 }
@@ -129,15 +144,25 @@ static CGFloat defaultButtonHeight = 44.0f;
     }
     
     CGRect buttonDefaultRect = [self defaultNavigationalRect];
-    CGFloat height = size.height + self.topLayoutGuide.length;
+    CGFloat height = size.height;// + self.topLayoutGuide.length;
     if (height < buttonDefaultRect.origin.y) {
         self.paymentFormView.scrollingEnabled = NO;
         self.paymentFormView.frame = CGRectMake(self.paymentFormView.frame.origin.x, self.paymentFormView.frame.origin.y, self.paymentFormView.frame.size.width, height);
         self.navigationalView.frame = CGRectMake(buttonDefaultRect.origin.x, height, buttonDefaultRect.size.width, buttonDefaultRect.size.height);
     } else {
         self.paymentFormView.scrollingEnabled = YES;
-        self.paymentFormView.frame = [self defaultPaymentRect];
+        self.paymentFormView.frame = [self maximalPaymentRect];
         self.navigationalView.frame = [self defaultNavigationalRect];
+    }
+    [self updateButtons];
+}
+
+- (void)updateButtons {
+    self.submitButton.frame = CGRectMake(0.0f, 0.0f, [self defaultNavigationalRect].size.width, defaultButtonHeight);
+    if (self.hidesSubmitButton) {
+        self.backButton.frame = CGRectMake(0.0f, 0.0f, [self defaultNavigationalRect].size.width, defaultButtonHeight);
+    } else {
+        self.backButton.frame = CGRectMake(0.0f, defaultButtonHeight + contentPadding, [self defaultNavigationalRect].size.width, defaultButtonHeight);
     }
 }
 
@@ -147,7 +172,7 @@ static CGFloat defaultButtonHeight = 44.0f;
 
 - (void)viewDidStartLoading:(UIView *)viewController {
     self.navigationalView.hidden = YES;
-    [self.delegate viewDidStartLoading:viewController];
+    [self.delegate viewDidStartLoading:viewController]; 
 }
 
 - (void)viewDidFinishLoading:(UIView *)viewController {
@@ -155,14 +180,25 @@ static CGFloat defaultButtonHeight = 44.0f;
     [self.delegate viewDidFinishLoading:viewController];
 }
 
+- (void)paymentViewReady:(BOOL)userInteractionNeeded {
+    if (!userInteractionNeeded) {
+        [self submitTaped];
+    }
+    [self.delegate paymentViewReady:userInteractionNeeded];
+}
+
 - (void)paymentViewDidValidateSuccessful {
     [self.delegate paymentViewDidValidateSuccessful];
 }
 
 - (void)paymentViewDidFailValidationWithErrors:(NSArray<NSError *> *)errors {
+    self.navigationalView.hidden = NO;
+    self.submitButton.hidden = NO;
+    self.hidesSubmitButton = NO;
     [self.delegate paymentViewDidFailValidationWithErrors:errors];
 }
 - (void)paymentViewDidEncounterError:(NSError *)error {
+    self.navigationalView.hidden = NO;
     [self.delegate paymentViewDidEncounterError:error];
 }
 
@@ -175,6 +211,7 @@ static CGFloat defaultButtonHeight = 44.0f;
 }
 
 - (void)paymentViewDidFail {
+    self.navigationalView.hidden = NO;
     [self.delegate paymentViewDidFail];
 }
 
@@ -200,6 +237,9 @@ static CGFloat defaultButtonHeight = 44.0f;
 }
 
 - (void)submitTaped {
+    self.navigationalView.hidden = YES;
+    self.submitButton.hidden = YES;
+    self.hidesSubmitButton = YES;
     [self.paymentFormView validate];
 }
 

@@ -197,6 +197,10 @@
     [self triggerAction:WALFlowActionGoBack WithCoordinator:self.coordinatorDelegate];
 }
 
+- (void)paymentViewReady:(BOOL)userInteractionNeeded {
+    // the handler does not care about this message
+}
+
 - (void)paymentViewDidChangeContentSize:(CGSize)size {
     // the handler does not care about this message
 }

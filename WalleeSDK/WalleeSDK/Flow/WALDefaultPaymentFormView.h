@@ -33,6 +33,18 @@ NS_ASSUME_NONNULL_BEGIN
  you should then observe @c defaultPaymentFragment.contentSize and adapt your ViewController Layout accordingly.
  */
 @property (nonatomic) BOOL scrollingEnabled;
+
+/**
+ Defaults to false.
+ indicates it this form can be submited via AJAX
+ */
+@property (nonatomic) BOOL canSubmitForm;
+/**
+ Defaults to false.
+ indicates it this form can be validated via AJAX
+ */
+@property (nonatomic) BOOL canValidateForm;
+
 /**
  the contens size of the loaded @c NSURL
  */
