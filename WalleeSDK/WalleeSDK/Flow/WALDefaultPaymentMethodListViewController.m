@@ -85,4 +85,8 @@ static NSString * const cellIdentifier = @"defaultCell";
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return WALPaymentMethodTableViewCell.defaultCellHeight;
+}
+
 @end

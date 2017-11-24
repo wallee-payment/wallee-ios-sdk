@@ -32,6 +32,8 @@
 @property (nonatomic) CGFloat currentContentHeight;
 
 @property (nonatomic, strong) NSTimer *timeoutTimer;
+
+@property (nonatomic) BOOL isFirstRequest;
 @end
 
 @implementation WALDefaultPaymentFormView
@@ -52,7 +54,7 @@
         self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         self.scrollingEnabled = YES;
         [self addSubview:self.webView];
-        
+        self.isFirstRequest = YES;
     }
     return self;
 }
@@ -83,13 +85,21 @@
         [self.delegate paymentViewDidEncounterError:error];
         return;
     }
+    self.webView.frame = CGRectMake(0, 0, 0, 0);
     [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
 -(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
-   self.isLoading = NO;
+    self.isLoading = NO;
+    
+    if (self.isFirstRequest) {
+        self.isFirstRequest = NO;
+        self.webView.frame = self.frame;
+        [self scheduleTimer];
+        [self performSelector:@selector(evaluatePaymentFormReady) withObject:nil afterDelay:0.1f];
+    }
+
     [self.delegate viewDidFinishLoading:self];
-    [self scheduleTimer];
 }
 
 
@@ -111,7 +121,6 @@
 }
 
 - (void)cancelTimer {
-    
     [self.timeoutTimer invalidate];
 }
 
@@ -142,7 +151,7 @@
         [strongSelf handleAJAXOperation:resultType withResult:result forDelegate:strongSelf.delegate];
     }];
     if (!isCallback) {
-        NSLog(@"we are forwarded to a new page and as such request more space");
+        NSLog(@" -- we are forwarded to a new page and as such request more space");
         [self.delegate paymentViewRequestsExpand];
     }
     decisionHandler(isCallback ? WKNavigationActionPolicyCancel : WKNavigationActionPolicyAllow);
@@ -156,7 +165,7 @@
     if ([result respondsToSelector:@selector(floatValue)]) {
         floatResult = [((NSNumber*)result) floatValue];
     }
-    
+
     switch (operation) {
         case WALPaymentFormAJAXOperationTypeSuccess:
             [delegate paymentViewDidSucceed];
@@ -192,7 +201,17 @@
     }
 
 }
+
 // MARK: - Commands
+
+- (void)checkValidationCommandExistance:(void (^)(BOOL))completion {
+    [self.webView evaluateJavaScript:@"javascript:(function () { if (typeof MobileSdkHandler.validate === \"function\") { return true; } else { console.log(' validate Command does not exist'); return false; } })()"
+                   completionHandler:^(id _Nullable object, NSError * _Nullable error) {
+                       BOOL canValidateForm =  (!error && object && [object boolValue]);
+                       completion(canValidateForm);
+                   }];
+}
+
 - (void)validate {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self sendValidationCommand];
@@ -241,12 +260,8 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
     
     if (object == self.webView.scrollView && [keyPath isEqual:@"contentSize"]) {
-        
-//        if (self.scrollingEnabled) {
-//            return;
-//        }
 
-        CGFloat newContentHeight =  self.webView.scrollView.contentSize.height;
+        CGFloat newContentHeight = self.webView.scrollView.contentSize.height;
 
         if (self.currentContentHeight == newContentHeight) {
             return;
@@ -256,6 +271,18 @@
     }
 }
 
+- (void)evaluatePaymentFormReady {
+    [self getWebViewHeight:^(CGFloat height) {
+        [self.delegate paymentViewReady:(height > 62.0)];
+    }];
+}
+- (void)getWebViewHeight:(void(^)(CGFloat))onHeightEvaluated {
+    
+    [self.webView evaluateJavaScript: @"document.body.scrollHeight" completionHandler: ^(id response, NSError *error) {
+//        NSLog(@" -- webViewHeight: %@", response);
+        onHeightEvaluated([response floatValue]);
+    }];
+}
 
 - (NSString *)inlineScript {
     return @"$( document ).ajaxSend(function( event, request, settings )  {"

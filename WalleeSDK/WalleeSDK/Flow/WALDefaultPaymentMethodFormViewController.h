@@ -30,5 +30,6 @@ NS_ASSUME_NONNULL_BEGIN
  You can controll the display of the on view backButton with this property
  */
 @property (nonatomic) BOOL hidesBackButton;
+@property (nonatomic) BOOL hidesSubmitButton;
 NS_ASSUME_NONNULL_END
 @end

@@ -17,12 +17,17 @@
 @interface WALPaymentMethodTableViewCell ()
 @property (nonatomic, retain) UILabel *paymentNameLabel;
 @property (nonatomic, retain) WKWebView *paymentImageWebView;
+@property (nonatomic, strong) WALPaymentMethodIcon *icon;
 @end
 
 @implementation WALPaymentMethodTableViewCell
 
 + (CGFloat)defaultCellHeight {
-    return 44.0;
+    return 50.0;
+}
+
++ (CGFloat)defaultImageWidth {
+    return 75.0;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
@@ -65,22 +70,24 @@
     [self.contentView addSubview:self.paymentNameLabel];
 }
 
-- (NSString *)wrapInHTML:(NSString *)content contentType:(NSString *)contentType forSize:(CGSize)size {
++ (NSString *)wrapInHTML:(NSString *)content contentType:(NSString *)contentType forSize:(CGSize)size {
     CGFloat dimension = fmax(size.height, size.width);
     
-    NSString *viewportHTML = [NSString stringWithFormat:@"<meta charset=\"UTF-8\" name=\"viewport\" content=\"width=%.0f, shrink-to-fit=YES\">", dimension];
+    NSString *viewportHTML = [NSString stringWithFormat:@"<meta charset=\"UTF-8\" name=\"viewport\" content=\"width=%.0f, shrink-to-fit=YES, maximum-scale=1.0; initial-scale=1.0\"><style>img{max-width:100%%;max-height:100%% !important;width:auto !important;};</style>", dimension];
     
-    NSString *imageTagString = @"        <img style=\"width:100%;height:100%;margin:0;padding:0\" alt=\"tick\" src=\"data:%@"
+    NSString *imageTagString = @"        <img style=\"margin:0;padding:0\" alt=\"tick\" src=\"data:%@"
     @"        ;base64,%@\" />";
     
     NSString *imageTag = [NSString stringWithFormat:imageTagString, contentType, content];
     
     NSString *htmlWrapper = @"<!DOCTYPE html><html style=\"overflow: hidden\">"
-    @"    <head>%@</head><body style=\"overflow: hidden; width:100\%; height:100\%; margin:0; padding:0;\">"
+    @"    <head>%@</head><body style=\"overflow: hidden; margin:0; text-align:center; padding:0;\">"
+    @"      <div style=\"display: -webkit-flex; align-items:center; justify-content:center; height:%.0fpx\">"
     @"        %@"
+    @"      </div>"
     @"    </body></html>";
     
-    NSString *wrappedString = [NSString stringWithFormat:htmlWrapper, viewportHTML, imageTag];
+    NSString *wrappedString = [NSString stringWithFormat:htmlWrapper, viewportHTML, size.height, imageTag];
     return wrappedString;
 }
 
@@ -102,10 +109,16 @@
 
 - (void)configureWith:(NSString *)paymentName paymentIcon:(WALPaymentMethodIcon *)paymentIcon {
     [self applyTheme];
-    
+    self.icon = paymentIcon;
     self.paymentNameLabel.text = paymentName;
-    if (paymentIcon) {
-        NSString *htmlyfiedString = [self wrapInHTML:paymentIcon.dataAsBase64String contentType:paymentIcon.mimeType forSize:self.paymentImageWebView.frame.size];
+    [self updateIcon];
+}
+
+- (void)updateIcon {
+    if (self.icon) {
+        NSString *htmlyfiedString = [WALPaymentMethodTableViewCell wrapInHTML:self.icon.dataAsBase64String
+                                                                  contentType:self.icon.mimeType
+                                                                      forSize:self.paymentImageWebView.frame.size];
         [self.paymentImageWebView loadHTMLString:htmlyfiedString baseURL:nil];
     }
 }
@@ -124,13 +137,16 @@
 - (void)layoutSubviews{
     [super layoutSubviews];
     static CGFloat contentVertPadding = 10.0f;
-    static CGFloat contentHozPadding = 2.0f;
+    static CGFloat contentHozPadding = 5.0f;
     CGRect origin = self.contentView.bounds;
-    CGRect imageRect = CGRectMake(contentVertPadding + origin.origin.x, origin.origin.y + contentHozPadding, origin.size.height, origin.size.height - 2*contentHozPadding);
+    CGRect imageRect = CGRectMake(contentVertPadding + origin.origin.x, origin.origin.y + contentHozPadding, WALPaymentMethodTableViewCell.defaultImageWidth, origin.size.height - 2*contentHozPadding);
     self.paymentImageWebView.frame = imageRect;
+    
     CGFloat labelX = imageRect.origin.x + imageRect.size.width + contentVertPadding;
     CGRect labelRect = CGRectMake(labelX, origin.origin.y, origin.size.width - imageRect.size.width, origin.size.height);
-    self.paymentNameLabel.frame = labelRect;    
+    self.paymentNameLabel.frame = labelRect;
+
+    [self updateIcon];
 }
 
 @end

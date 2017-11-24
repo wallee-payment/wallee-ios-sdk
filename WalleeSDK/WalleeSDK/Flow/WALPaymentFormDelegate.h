@@ -16,6 +16,13 @@
  the WALPaymentFormView use these methods to communicate back internal  state changes, requests and errors
  */
 @protocol WALPaymentFormDelegate <NSObject, WALLoadingViewDelegate, WALExpiringViewDelegate>
+
+/**
+ * Called when the payment form is ready.
+ * The user may enter some data.
+ */
+- (void)paymentViewReady:(BOOL)userInteractionNeeded;
+
 /**
  called whenever the WALPaymentFormView changed its content size
 
