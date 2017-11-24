@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) WALDefaultTheme *theme;
 
 + (CGFloat)defaultCellHeight;
++ (CGFloat)defaultImageWidth;
+
 - (void)configureWith:(NSString *)paymentMethod paymentIcon:(WALPaymentMethodIcon * _Nullable)paymentIcon;
 NS_ASSUME_NONNULL_END
 @end
