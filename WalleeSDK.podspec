@@ -1,7 +1,7 @@
 # https://guides.cocoapods.org/syntax/podspec.html#source
 Pod::Spec.new do |s|
   s.name             = 'WalleeSDK'
-  s.version          = '1.0.2'
+  s.version          = '1.0.3'
   s.summary          = 'WalleeSDK for iOS Apps implementing payment via Wallee payment service'
   s.homepage         = 'https://wallee.com'
   s.license          = { :type => 'Apache 2', :file => 'LICENSE' }
