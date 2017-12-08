@@ -27,7 +27,7 @@ case $key in
     *)
     if ! [[ $key =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
       echo "the version number has to be in format 1.0.0  aborting..."
-      exit 0
+      exit 1
     fi
     VERSION=$key
     ;;
@@ -42,7 +42,7 @@ fi
 
 if [[ -n "$(git status --porcelain)" && ! $FORCE ]]; then
   echo "this command should be run on a clean repository (use -f to force anyway). aborting..."
-  exit 0
+  exit 1
 else
   git status --porcelain
 fi
@@ -50,6 +50,11 @@ fi
 GIT_VERSION_NUMBER="v$VERSION"
 PLIST_PATH="../WalleeSDK/WalleeSDK/Info.plist"
 PODSPEC_PATH="../WalleeSDK.podspec"
+
+if [ ! -f $PODSPEC_PATH ]; then
+    echo "$PODSPEC_PATH file not found! Are you running this script from ./bin ?"
+    exit 1
+fi
 
 sed -i '' "s/\(s\.version.*\)\'\(.*\)\'/\1\'$VERSION\'/g" $PODSPEC_PATH
 
