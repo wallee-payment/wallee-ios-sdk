@@ -13,6 +13,7 @@ NSString * WalleeJSProtocol = @"https://localhost/mobile-sdk-callback/";
 @implementation WALPaymentFormAJAXParser
 + (BOOL)parseUrlString:(NSString *)url resultBlock:(WALPaymentFormAJAXParserResult)resultBlock {
     NSString *callback = [self extractCallbackName:url];
+    NSLog(@" -- url: %@",url);
     if (callback) {
         
         WALPaymentFormAJAXOperationType ajaxOperation = [self operationTypeFromString:callback];

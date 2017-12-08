@@ -15,10 +15,11 @@
 #import "WALPaymentFormView.h"
 #import "WALPaymentFormDelegate.h"
 #import "WALDefaultPaymentFormView.h"
+#import "WALPaymentFormNavigation.h"
 
 @class WALMobileSdkUrl;
 
-@interface WALDefaultPaymentMethodFormViewController : WALDefaultBaseViewController<WALPaymentFormView, WALPaymentFormDelegate>
+@interface WALDefaultPaymentMethodFormViewController : WALDefaultBaseViewController<WALPaymentFormView, WALPaymentFormDelegate, WALPaymentFormNavigationDelegate>
 NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) WALMobileSdkUrl *mobileSdkUrl;
 @property (nonatomic) NSUInteger paymentMethodId;

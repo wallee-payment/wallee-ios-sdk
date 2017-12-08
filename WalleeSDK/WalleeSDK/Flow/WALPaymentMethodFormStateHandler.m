@@ -97,14 +97,7 @@
             [WALErrorHelper populate:&error withIllegalStateWithMessage:@"GoBack action received while the PaymentForm was already submitted. Should never occure since it is checked in dryAction before"];
             [WALPaymentErrorHelper distribute:error forCoordinator:coordinator];
         } else {
-            if (self.loadedPaymentMethods.paymentMethodConfigurations.count > 1) {
-                [coordinator changeStateTo:WALFlowStatePaymentMethodLoading
-                                parameters:@{WALFlowTokensParameter: self.loadedTokens}];
-            } else if (self.loadedTokens.tokenVersions.count >= 1) {
-                [coordinator changeStateTo:WALFlowStateTokenLoading parameters:nil];
-            } else {
-                [coordinator changeStateTo:WALFlowStateCancel parameters:nil];
-            }
+            [coordinator changeStateTo:WALFlowStateCancel parameters:nil];
         }
     } else {
         NSAssert(true, @"When dryAction is correctly implemented we will never get here...");
